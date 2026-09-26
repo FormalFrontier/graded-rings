@@ -1,0 +1,89 @@
+version: "v0.4"
+
+project:
+  name: Graded Rings
+  description: >-
+    Graded quotients and localizations, irrelevant-ideal finiteness,
+    homogeneous prime correspondence, symmetric algebras, and
+    prime-multiplicity valuations with homogeneous polynomial applications.
+  authors:
+    - Formal Frontier Agents
+  license: Apache-2.0
+
+sources:
+  - title: "The Rising Sea: Foundations of Algebraic Geometry"
+    authors:
+      - Ravi Vakil
+    type: book
+    location: "October 21, 2025 draft, graded-ring exercises 4.5.F–H and 5.4.N"
+    relationship: background
+    note: >-
+      Mathematical motivation for reusable constructions; neither complete
+      source coverage nor redistribution of the source text is asserted.
+      The generic Lean expression was separately developed in this library.
+  - title: "mathlib"
+    authors:
+      - The mathlib contributors
+    type: formalization
+    id: "leanprover-community/mathlib4@83abb3e776bdefcbc447a1e44d0debe4010039e5"
+    relationship: background
+    note: >-
+      Pinned formal dependency supplying graded-algebra, localization,
+      symmetric-algebra, ideal, multiplicity and valuation infrastructure.
+      Dependency sources are not bundled in the library source tree.
+
+status:
+  scope: >-
+    Nine production leaves, an aggregate native module, private regression
+    clients and four standalone example modules. Quotient and localization
+    constructions include degenerate commutative rings; valuation applications
+    use their stated domain, divisibility, field and degree hypotheses.
+    No complete-source or release-acceptance claim follows from this metadata.
+  main_results:
+    - declaration: Ideal.Quotient.gradedRing
+      file: GradedRings/Quotient.lean
+    - declaration: GradedLocalization.gradedRing
+      file: GradedRings/Localization.lean
+    - declaration: GradedAlgebra.irrelevant_fg_iff_finiteType
+      file: GradedRings/FiniteType.lean
+    - declaration: GradedAlgebra.isNoetherianRing_iff_gradeZero_and_irrelevant_fg
+      file: GradedRings/Noetherian.lean
+    - declaration: GradedRing.homogeneousPrimeEquivDegreeZeroPrime
+      file: GradedRings/HomogeneousPrime.lean
+    - declaration: SymmetricAlgebra.gradedAlgebra
+      file: GradedRings/SymmetricAlgebra.lean
+    - declaration: PrimeMultiplicity.localizationValuation
+      file: GradedRings/PrimeMultiplicity.lean
+    - declaration: HomogeneousLocalization.awayPrimeMultiplicityValuation
+      file: GradedRings/HomogeneousPrimeMultiplicity.lean
+    - declaration: MvPolynomial.irreducible_of_awayPrimeMultiplicityValuation_eq_exp_one
+      file: GradedRings/MvPolynomialAway.lean
+
+automation:
+  methods:
+    - method: agent
+      tool_setup: >-
+        Formal Frontier agents using Lean, Lake, pinned mathlib and
+        independent review of exact revisions.
+  notes: >-
+    AI agents authored mathematical constructions, proofs, interfaces,
+    examples and documentation. Model identities and resource usage are
+    not inferred from Git authorship.
+
+review:
+  status: "Revision-specific independent review and release decisions are recorded externally"
+  notes: >-
+    This artifact description does not certify proof integrity, rights
+    clearance, publication or source completion. Full exact-candidate
+    review and acceptance remain separate from ordinary earlier reviews.
+
+acknowledgements: >-
+  Atlas authored the original mathematical units, quotient repair,
+  remaining native assembly and reader examples. Three Worker A Tasks
+  contributed compatibility, native interfaces and localization repair;
+  Worker B supplied a bounded origin inventory. Exact revisions and Task
+  identities are preserved in docs/PROVENANCE.md. Lean and the mathlib
+  contributors supplied the formal foundations and reusable APIs.
+  Atlas adapted the native Markdown renderer from the earlier project recipes,
+  including Anchor's original ideal-completion recipe; docs/README.md records
+  that lineage. Prior artifact approval is not transferred.

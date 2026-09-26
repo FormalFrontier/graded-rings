@@ -1,0 +1,627 @@
+{
+  "modules": {
+    "GradedRings": "GradedRings.lean",
+    "GradedRings.FiniteType": "GradedRings/FiniteType.lean",
+    "GradedRings.HomogeneousPrime": "GradedRings/HomogeneousPrime.lean",
+    "GradedRings.HomogeneousPrimeMultiplicity": "GradedRings/HomogeneousPrimeMultiplicity.lean",
+    "GradedRings.Localization": "GradedRings/Localization.lean",
+    "GradedRings.MvPolynomialAway": "GradedRings/MvPolynomialAway.lean",
+    "GradedRings.Noetherian": "GradedRings/Noetherian.lean",
+    "GradedRings.PrimeMultiplicity": "GradedRings/PrimeMultiplicity.lean",
+    "GradedRings.Quotient": "GradedRings/Quotient.lean",
+    "GradedRings.SymmetricAlgebra": "GradedRings/SymmetricAlgebra.lean",
+    "FinitenessAndPrimes": "examples/FinitenessAndPrimes.lean",
+    "Multiplicity": "examples/Multiplicity.lean",
+    "QuotientLocalization": "examples/QuotientLocalization.lean",
+    "Symmetric": "examples/Symmetric.lean",
+    "Axioms": "test/Axioms.lean",
+    "FiniteType": "test/FiniteType.lean",
+    "HomogeneousPrime": "test/HomogeneousPrime.lean",
+    "InterfaceClient": "test/InterfaceClient.lean",
+    "Localization": "test/Localization.lean",
+    "LocalizationInterface": "test/LocalizationInterface.lean",
+    "LocalizationRootInterface": "test/LocalizationRootInterface.lean",
+    "Noetherian": "test/Noetherian.lean",
+    "PrimeInterface": "test/PrimeInterface.lean",
+    "PrimeRootInterface": "test/PrimeRootInterface.lean",
+    "Quotient": "test/Quotient.lean",
+    "QuotientInterface": "test/QuotientInterface.lean",
+    "QuotientRootInterface": "test/QuotientRootInterface.lean",
+    "RootClient": "test/RootClient.lean"
+  },
+  "expected": {
+    "GradedAlgebra.irrelevant_fg_iff_finiteType": [
+      "theorem",
+      "GradedRings.FiniteType"
+    ],
+    "GradedAlgebra.irrelevant_fg_of_finiteType": [
+      "theorem",
+      "GradedRings.FiniteType"
+    ],
+    "GradedAlgebra.irrelevant_le_span_of_adjoin_eq_top": [
+      "theorem",
+      "GradedRings.FiniteType"
+    ],
+    "GradedAlgebra.finiteType_of_irrelevant_fg": [
+      "theorem",
+      "GradedRings.FiniteType"
+    ],
+    "GradedAlgebra.irrelevant_exists_finset_span_eq_of_fg": [
+      "theorem",
+      "GradedRings.FiniteType"
+    ],
+    "HomogeneousIdeal.exists_finset_span_eq_of_fg": [
+      "theorem",
+      "GradedRings.FiniteType"
+    ],
+    "GradedRing.homogeneousPrimeEquivDegreeZeroPrime": [
+      "def",
+      "GradedRings.HomogeneousPrime"
+    ],
+    "GradedRing.radical_map_comap_degreeZero": [
+      "theorem",
+      "GradedRings.HomogeneousPrime"
+    ],
+    "GradedRing.radical_map_degreeZero_isPrime": [
+      "theorem",
+      "GradedRings.HomogeneousPrime"
+    ],
+    "GradedRing.map_degreeZero_isHomogeneous": [
+      "theorem",
+      "GradedRings.HomogeneousPrime"
+    ],
+    "GradedRing.comap_map_degreeZero": [
+      "theorem",
+      "GradedRings.HomogeneousPrime"
+    ],
+    "GradedRing.degreeZeroProjection_surjective": [
+      "theorem",
+      "GradedRings.HomogeneousPrime"
+    ],
+    "GradedRing.degreeZeroProjection": [
+      "def",
+      "GradedRings.HomogeneousPrime"
+    ],
+    "GradedRing.unit_zpow_mem": [
+      "theorem",
+      "GradedRings.HomogeneousPrime"
+    ],
+    "GradedRing.inv_mem_of_isUnit": [
+      "theorem",
+      "GradedRings.HomogeneousPrime"
+    ],
+    "HomogeneousLocalization.awayPrimeMultiplicityValuation_mk": [
+      "theorem",
+      "GradedRings.HomogeneousPrimeMultiplicity"
+    ],
+    "HomogeneousLocalization.isDomain_away": [
+      "theorem",
+      "GradedRings.HomogeneousPrimeMultiplicity"
+    ],
+    "HomogeneousLocalization.awayPrimeMultiplicityValuation": [
+      "def",
+      "GradedRings.HomogeneousPrimeMultiplicity"
+    ],
+    "GradedLocalization.gradedRing": [
+      "def",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.decomposition": [
+      "def",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.isInternal": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.coe_surjective": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.coe_injective": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.projection_coe": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.projection_eq_zero_of_mem": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.projection_eq_self_of_mem": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.projection_mem_component": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.projection": [
+      "def",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.projectionFun_mk": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.projectionFun": [
+      "def",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.homogeneousLocalizationEquivZeroComponent": [
+      "def",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.toZeroComponent_surjective": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.toZeroComponent_injective": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.toZeroComponent": [
+      "def",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.zeroComponent": [
+      "def",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.componentGradedMonoid": [
+      "instance",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.algebraMap_mem_component": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.mk_mem_component": [
+      "theorem",
+      "GradedRings.Localization"
+    ],
+    "GradedLocalization.component": [
+      "def",
+      "GradedRings.Localization"
+    ],
+    "MvPolynomial.irreducible_of_awayPrimeMultiplicityValuation_eq_exp_one": [
+      "theorem",
+      "GradedRings.MvPolynomialAway"
+    ],
+    "MvPolynomial.awayPrimeMultiplicityValuation_eq_one_iff_isUnit": [
+      "theorem",
+      "GradedRings.MvPolynomialAway"
+    ],
+    "MvPolynomial.exists_awayPrimeMultiplicityValuation_eq_exp_nat": [
+      "theorem",
+      "GradedRings.MvPolynomialAway"
+    ],
+    "MvPolynomial.one_le_awayPrimeMultiplicityValuation": [
+      "theorem",
+      "GradedRings.MvPolynomialAway"
+    ],
+    "MvPolynomial.isUnit_away_mk_of_multiplicity_eq": [
+      "theorem",
+      "GradedRings.MvPolynomialAway"
+    ],
+    "MvPolynomial.homogeneousAwayCoefficientHom": [
+      "def",
+      "GradedRings.MvPolynomialAway"
+    ],
+    "MvPolynomial.exists_eq_pow_mul_C_of_multiplicity_eq": [
+      "theorem",
+      "GradedRings.MvPolynomialAway"
+    ],
+    "MvPolynomial.multiplicity_le_of_isHomogeneous": [
+      "theorem",
+      "GradedRings.MvPolynomialAway"
+    ],
+    "GradedAlgebra.isNoetherianRing_iff_gradeZero_and_irrelevant_fg": [
+      "theorem",
+      "GradedRings.Noetherian"
+    ],
+    "GradedAlgebra.isNoetherianRing_of_gradeZero_of_irrelevant_fg": [
+      "theorem",
+      "GradedRings.Noetherian"
+    ],
+    "GradedAlgebra.irrelevant_fg_of_isNoetherianRing": [
+      "theorem",
+      "GradedRings.Noetherian"
+    ],
+    "PrimeMultiplicity.awayValuation_mk_pow_of_ne_zero": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.awayValuation_mk'": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.awayValuation": [
+      "def",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.powers_le_nonZeroDivisors": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.localizationValuation_mk'": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.localizationValuation": [
+      "def",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuation_ne_zero": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuation_apply_pow": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuation_apply_of_ne_zero": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuation_apply": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuation": [
+      "def",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuationDef_add_le_max": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.min_multiplicity_le_multiplicity_add": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuationDef_mul": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuationDef_of_ne_zero": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuationDef_one": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuationDef_pow": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuationDef_zero": [
+      "theorem",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "PrimeMultiplicity.valuationDef": [
+      "def",
+      "GradedRings.PrimeMultiplicity"
+    ],
+    "Ideal.Quotient.gradedRing": [
+      "def",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedDecomposition": [
+      "def",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedDecompose_rightInverse": [
+      "theorem",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedDecompose_leftInverse": [
+      "theorem",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.coe_gradedDecomposePre": [
+      "theorem",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedDecompose_mk": [
+      "theorem",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedDecompose": [
+      "def",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedDecomposePre": [
+      "def",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedComponentMap": [
+      "def",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedComponentGradedMonoid": [
+      "instance",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedRingHom_surjective": [
+      "theorem",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedRingHom_toRingHom": [
+      "theorem",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedRingHom_apply": [
+      "theorem",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedRingHom": [
+      "def",
+      "GradedRings.Quotient"
+    ],
+    "Ideal.Quotient.gradedComponent": [
+      "def",
+      "GradedRings.Quotient"
+    ],
+    "SymmetricAlgebra.equivMvPolynomialSymmGradedHom_apply": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.equivMvPolynomialSymmGradedHom": [
+      "def",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.equivMvPolynomialGradedHom_apply": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.equivMvPolynomialGradedHom": [
+      "def",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.equivMvPolynomial_symm_mem_homogeneousSubmodule": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.equivMvPolynomial_mem_homogeneousSubmodule": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.congr_symm_apply": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.congr_apply": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.congr": [
+      "def",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.gradedMap_apply": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.gradedMap": [
+      "def",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.map_mem_homogeneousSubmodule": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.map_comp": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.map_id": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.map_ι_apply": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.map": [
+      "def",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.gradedAlgebra": [
+      "instance",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.GradedAlgebra.ι_apply": [
+      "theorem",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.GradedAlgebra.ι": [
+      "def",
+      "GradedRings.SymmetricAlgebra"
+    ],
+    "SymmetricAlgebra.homogeneousSubmodule": [
+      "def",
+      "GradedRings.SymmetricAlgebra"
+    ]
+  },
+  "display": {
+    "GradedAlgebra.irrelevant_fg_iff_finiteType": "theorem",
+    "GradedAlgebra.irrelevant_fg_of_finiteType": "theorem",
+    "GradedAlgebra.irrelevant_le_span_of_adjoin_eq_top": "theorem",
+    "GradedAlgebra.finiteType_of_irrelevant_fg": "theorem",
+    "GradedAlgebra.irrelevant_exists_finset_span_eq_of_fg": "theorem",
+    "HomogeneousIdeal.exists_finset_span_eq_of_fg": "theorem",
+    "GradedRing.homogeneousPrimeEquivDegreeZeroPrime": "def",
+    "GradedRing.radical_map_comap_degreeZero": "theorem",
+    "GradedRing.radical_map_degreeZero_isPrime": "theorem",
+    "GradedRing.map_degreeZero_isHomogeneous": "theorem",
+    "GradedRing.comap_map_degreeZero": "theorem",
+    "GradedRing.degreeZeroProjection_surjective": "theorem",
+    "GradedRing.degreeZeroProjection": "def",
+    "GradedRing.unit_zpow_mem": "theorem",
+    "GradedRing.inv_mem_of_isUnit": "theorem",
+    "HomogeneousLocalization.awayPrimeMultiplicityValuation_mk": "theorem",
+    "HomogeneousLocalization.isDomain_away": "theorem",
+    "HomogeneousLocalization.awayPrimeMultiplicityValuation": "noncomputable def",
+    "GradedLocalization.gradedRing": "noncomputable def",
+    "GradedLocalization.decomposition": "noncomputable def",
+    "GradedLocalization.isInternal": "theorem",
+    "GradedLocalization.coe_surjective": "theorem",
+    "GradedLocalization.coe_injective": "theorem",
+    "GradedLocalization.projection_coe": "theorem",
+    "GradedLocalization.projection_eq_zero_of_mem": "theorem",
+    "GradedLocalization.projection_eq_self_of_mem": "theorem",
+    "GradedLocalization.projection_mem_component": "theorem",
+    "GradedLocalization.projection": "noncomputable def",
+    "GradedLocalization.projectionFun_mk": "theorem",
+    "GradedLocalization.projectionFun": "noncomputable def",
+    "GradedLocalization.homogeneousLocalizationEquivZeroComponent": "noncomputable def",
+    "GradedLocalization.toZeroComponent_surjective": "theorem",
+    "GradedLocalization.toZeroComponent_injective": "theorem",
+    "GradedLocalization.toZeroComponent": "def",
+    "GradedLocalization.zeroComponent": "def",
+    "GradedLocalization.componentGradedMonoid": "instance",
+    "GradedLocalization.algebraMap_mem_component": "theorem",
+    "GradedLocalization.mk_mem_component": "theorem",
+    "GradedLocalization.component": "def",
+    "MvPolynomial.irreducible_of_awayPrimeMultiplicityValuation_eq_exp_one": "theorem",
+    "MvPolynomial.awayPrimeMultiplicityValuation_eq_one_iff_isUnit": "theorem",
+    "MvPolynomial.exists_awayPrimeMultiplicityValuation_eq_exp_nat": "theorem",
+    "MvPolynomial.one_le_awayPrimeMultiplicityValuation": "theorem",
+    "MvPolynomial.isUnit_away_mk_of_multiplicity_eq": "theorem",
+    "MvPolynomial.homogeneousAwayCoefficientHom": "noncomputable def",
+    "MvPolynomial.exists_eq_pow_mul_C_of_multiplicity_eq": "theorem",
+    "MvPolynomial.multiplicity_le_of_isHomogeneous": "theorem",
+    "GradedAlgebra.isNoetherianRing_iff_gradeZero_and_irrelevant_fg": "theorem",
+    "GradedAlgebra.isNoetherianRing_of_gradeZero_of_irrelevant_fg": "theorem",
+    "GradedAlgebra.irrelevant_fg_of_isNoetherianRing": "theorem",
+    "PrimeMultiplicity.awayValuation_mk_pow_of_ne_zero": "theorem",
+    "PrimeMultiplicity.awayValuation_mk'": "theorem",
+    "PrimeMultiplicity.awayValuation": "noncomputable def",
+    "PrimeMultiplicity.powers_le_nonZeroDivisors": "theorem",
+    "PrimeMultiplicity.localizationValuation_mk'": "theorem",
+    "PrimeMultiplicity.localizationValuation": "noncomputable def",
+    "PrimeMultiplicity.valuation_ne_zero": "theorem",
+    "PrimeMultiplicity.valuation_apply_pow": "theorem",
+    "PrimeMultiplicity.valuation_apply_of_ne_zero": "theorem",
+    "PrimeMultiplicity.valuation_apply": "theorem",
+    "PrimeMultiplicity.valuation": "noncomputable def",
+    "PrimeMultiplicity.valuationDef_add_le_max": "theorem",
+    "PrimeMultiplicity.min_multiplicity_le_multiplicity_add": "theorem",
+    "PrimeMultiplicity.valuationDef_mul": "theorem",
+    "PrimeMultiplicity.valuationDef_of_ne_zero": "theorem",
+    "PrimeMultiplicity.valuationDef_one": "theorem",
+    "PrimeMultiplicity.valuationDef_pow": "theorem",
+    "PrimeMultiplicity.valuationDef_zero": "theorem",
+    "PrimeMultiplicity.valuationDef": "noncomputable def",
+    "Ideal.Quotient.gradedRing": "def",
+    "Ideal.Quotient.gradedDecomposition": "def",
+    "Ideal.Quotient.gradedDecompose_rightInverse": "theorem",
+    "Ideal.Quotient.gradedDecompose_leftInverse": "theorem",
+    "Ideal.Quotient.coe_gradedDecomposePre": "theorem",
+    "Ideal.Quotient.gradedDecompose_mk": "theorem",
+    "Ideal.Quotient.gradedDecompose": "def",
+    "Ideal.Quotient.gradedDecomposePre": "def",
+    "Ideal.Quotient.gradedComponentMap": "def",
+    "Ideal.Quotient.gradedComponentGradedMonoid": "instance",
+    "Ideal.Quotient.gradedRingHom_surjective": "theorem",
+    "Ideal.Quotient.gradedRingHom_toRingHom": "theorem",
+    "Ideal.Quotient.gradedRingHom_apply": "theorem",
+    "Ideal.Quotient.gradedRingHom": "def",
+    "Ideal.Quotient.gradedComponent": "def",
+    "SymmetricAlgebra.equivMvPolynomialSymmGradedHom_apply": "theorem",
+    "SymmetricAlgebra.equivMvPolynomialSymmGradedHom": "noncomputable def",
+    "SymmetricAlgebra.equivMvPolynomialGradedHom_apply": "theorem",
+    "SymmetricAlgebra.equivMvPolynomialGradedHom": "noncomputable def",
+    "SymmetricAlgebra.equivMvPolynomial_symm_mem_homogeneousSubmodule": "theorem",
+    "SymmetricAlgebra.equivMvPolynomial_mem_homogeneousSubmodule": "theorem",
+    "SymmetricAlgebra.congr_symm_apply": "theorem",
+    "SymmetricAlgebra.congr_apply": "theorem",
+    "SymmetricAlgebra.congr": "def",
+    "SymmetricAlgebra.gradedMap_apply": "theorem",
+    "SymmetricAlgebra.gradedMap": "def",
+    "SymmetricAlgebra.map_mem_homogeneousSubmodule": "theorem",
+    "SymmetricAlgebra.map_comp": "theorem",
+    "SymmetricAlgebra.map_id": "theorem",
+    "SymmetricAlgebra.map_ι_apply": "theorem",
+    "SymmetricAlgebra.map": "def",
+    "SymmetricAlgebra.gradedAlgebra": "instance",
+    "SymmetricAlgebra.GradedAlgebra.ι_apply": "theorem",
+    "SymmetricAlgebra.GradedAlgebra.ι": "def",
+    "SymmetricAlgebra.homogeneousSubmodule": "abbrev"
+  },
+  "missing_docstrings": [
+    "GradedLocalization.algebraMap_mem_component",
+    "GradedLocalization.coe_injective",
+    "GradedLocalization.coe_surjective",
+    "GradedLocalization.mk_mem_component",
+    "GradedLocalization.projectionFun_mk",
+    "GradedLocalization.projection_coe",
+    "GradedLocalization.projection_eq_self_of_mem",
+    "GradedLocalization.projection_eq_zero_of_mem",
+    "GradedLocalization.projection_mem_component",
+    "GradedLocalization.toZeroComponent_injective",
+    "GradedLocalization.toZeroComponent_surjective",
+    "HomogeneousLocalization.awayPrimeMultiplicityValuation_mk",
+    "Ideal.Quotient.coe_gradedDecomposePre",
+    "Ideal.Quotient.gradedDecompose_mk",
+    "Ideal.Quotient.gradedRingHom_apply",
+    "Ideal.Quotient.gradedRingHom_toRingHom",
+    "PrimeMultiplicity.awayValuation_mk'",
+    "PrimeMultiplicity.awayValuation_mk_pow_of_ne_zero",
+    "PrimeMultiplicity.localizationValuation_mk'",
+    "PrimeMultiplicity.min_multiplicity_le_multiplicity_add",
+    "PrimeMultiplicity.powers_le_nonZeroDivisors",
+    "PrimeMultiplicity.valuationDef_add_le_max",
+    "PrimeMultiplicity.valuationDef_mul",
+    "PrimeMultiplicity.valuationDef_of_ne_zero",
+    "PrimeMultiplicity.valuationDef_one",
+    "PrimeMultiplicity.valuationDef_zero",
+    "PrimeMultiplicity.valuation_apply",
+    "PrimeMultiplicity.valuation_apply_of_ne_zero",
+    "PrimeMultiplicity.valuation_apply_pow",
+    "PrimeMultiplicity.valuation_ne_zero",
+    "SymmetricAlgebra.GradedAlgebra.ι_apply",
+    "SymmetricAlgebra.congr_apply",
+    "SymmetricAlgebra.congr_symm_apply",
+    "SymmetricAlgebra.equivMvPolynomialGradedHom_apply",
+    "SymmetricAlgebra.equivMvPolynomialSymmGradedHom_apply",
+    "SymmetricAlgebra.gradedMap_apply",
+    "SymmetricAlgebra.map_comp",
+    "SymmetricAlgebra.map_id",
+    "SymmetricAlgebra.map_ι_apply"
+  ],
+  "module_doc_counts": {
+    "GradedRings": 0,
+    "GradedRings.FiniteType": 1,
+    "GradedRings.HomogeneousPrime": 1,
+    "GradedRings.HomogeneousPrimeMultiplicity": 1,
+    "GradedRings.Localization": 1,
+    "GradedRings.MvPolynomialAway": 1,
+    "GradedRings.Noetherian": 1,
+    "GradedRings.PrimeMultiplicity": 1,
+    "GradedRings.Quotient": 1,
+    "GradedRings.SymmetricAlgebra": 1,
+    "FinitenessAndPrimes": 1,
+    "Multiplicity": 1,
+    "QuotientLocalization": 1,
+    "Symmetric": 1,
+    "Axioms": 0,
+    "FiniteType": 0,
+    "HomogeneousPrime": 0,
+    "InterfaceClient": 0,
+    "Localization": 0,
+    "LocalizationInterface": 1,
+    "LocalizationRootInterface": 1,
+    "Noetherian": 0,
+    "PrimeInterface": 1,
+    "PrimeRootInterface": 1,
+    "Quotient": 1,
+    "QuotientInterface": 1,
+    "QuotientRootInterface": 1,
+    "RootClient": 0
+  }
+}
