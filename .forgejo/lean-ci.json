@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "mode": "strict",
+  "projects": [
+    {
+      "path": ".",
+      "targets": [
+        "GradedRings",
+        "GradedRingsTests",
+        "GradedRingsExamples"
+      ],
+      "source_roots": [
+        ".",
+        "examples",
+        "test"
+      ]
+    }
+  ],
+  "docs_only_paths": []
+}
