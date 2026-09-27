@@ -3,9 +3,10 @@ version: "v0.4"
 project:
   name: Graded Rings
   description: >-
-    Graded quotients and localizations, irrelevant-ideal finiteness,
-    homogeneous prime correspondence, symmetric algebras, and
-    prime-multiplicity valuations with homogeneous polynomial applications.
+    Graded quotients and localizations, degree-multiplying maps of homogeneous
+    localizations, irrelevant-ideal finiteness, homogeneous prime correspondence,
+    symmetric algebras, and prime-multiplicity valuations with homogeneous
+    polynomial applications.
   authors:
     - Formal Frontier Agents
   license: Apache-2.0
@@ -34,9 +35,11 @@ sources:
 
 status:
   scope: >-
-    Nine production leaves, an aggregate native module, private regression
+    Ten production leaves, an aggregate native module, fifteen private regression
     clients and four standalone example modules. Quotient and localization
-    constructions include degenerate commutative rings; valuation applications
+    constructions include degenerate commutative rings; degree-multiplying maps
+    require an explicit natural-degree compatibility witness and mapped
+    denominators, not a domain or regularity assumption. Valuation applications
     use their stated domain, divisibility, field and degree hypotheses.
     No complete-source or release-acceptance claim follows from this metadata.
   main_results:
@@ -44,6 +47,8 @@ status:
       file: GradedRings/Quotient.lean
     - declaration: GradedLocalization.gradedRing
       file: GradedRings/Localization.lean
+    - declaration: HomogeneousLocalization.mapDegreeMul
+      file: GradedRings/HomogeneousLocalizationMap.lean
     - declaration: GradedAlgebra.irrelevant_fg_iff_finiteType
       file: GradedRings/FiniteType.lean
     - declaration: GradedAlgebra.isNoetherianRing_iff_gradeZero_and_irrelevant_fg
@@ -84,6 +89,9 @@ acknowledgements: >-
   Worker B supplied a bounded origin inventory. Exact revisions and Task
   identities are preserved in docs/PROVENANCE.md. Lean and the mathlib
   contributors supplied the formal foundations and reusable APIs.
+  A separate Worker A Task supplied the degree-multiplying localization producer
+  and client in the incubator; another Worker A Task adapted them for this
+  library. Exact Task identities and revisions are in docs/PROVENANCE.md.
   Atlas adapted the native Markdown renderer from the earlier project recipes,
   including Anchor's original ideal-completion recipe; docs/README.md records
   that lineage. Prior artifact approval is not transferred.

@@ -1,7 +1,8 @@
 # Graded rings
 
-Reusable Lean constructions for graded quotients and localizations, finiteness,
-homogeneous prime ideals, symmetric algebras and prime-multiplicity valuations.
+Reusable Lean constructions for graded quotients and localizations,
+degree-multiplying homogeneous-localization maps, finiteness, homogeneous prime
+ideals, symmetric algebras and prime-multiplicity valuations.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
 under [Apache-2.0](LICENSE). Atlas is the responsible maintainer on behalf of the
@@ -15,6 +16,7 @@ clients and documentation; exact contributions are listed in
 | --- | --- |
 | [Quotient](GradedRings/Quotient.lean) | `Ideal.Quotient.gradedRing` equips a quotient by a homogeneous ideal with the image grading. The index is an additive monoid with decidable equality; the coefficient ring is commutative, possibly the zero ring. `gradedRingHom` bundles the quotient map. |
 | [Localization](GradedRings/Localization.lean) | `GradedLocalization.gradedRing` grades ordinary localization at a submonoid of homogeneous elements, with an additive commutative **group** of degrees. `homogeneousLocalizationEquivZeroComponent` identifies equal-degree homogeneous fractions with the zero component. No domain or non-zero-divisor hypothesis is imposed on this construction. |
+| [HomogeneousLocalizationMap](GradedRings/HomogeneousLocalizationMap.lean) | `HomogeneousLocalization.mapDegreeMul` sends naturally graded homogeneous localizations across an **ordinary** unital ring homomorphism multiplying natural degrees by `d`, given explicit degree compatibility and mapped denominators. It supports arbitrary source charts and restriction along a homogeneous factor, factor-one recovery, identity and composition. No domain, denominator-regularity or positive-`d` assumption. See the [thirteen-name guide](docs/degree-multiplying-homogeneous-localization.md). |
 | [FiniteType](GradedRings/FiniteType.lean) | `GradedAlgebra.irrelevant_fg_iff_finiteType`: for a naturally graded commutative ring, the irrelevant ideal is finitely generated exactly when the ring is finite type over degree zero. Includes extraction of finite homogeneous ideal generators. |
 | [Noetherian](GradedRings/Noetherian.lean) | `isNoetherianRing_iff_gradeZero_and_irrelevant_fg`: Noetherianity is equivalent to Noetherianity of degree zero plus finite generation of the irrelevant ideal. No domain or nontriviality assumption. |
 | [HomogeneousPrime](GradedRings/HomogeneousPrime.lean) | In an integer-graded commutative ring with a positive-degree homogeneous unit, `homogeneousPrimeEquivDegreeZeroPrime` identifies homogeneous prime ideals with primes of degree zero. The inverse is **radical extension**, not plain extension. |
@@ -24,13 +26,18 @@ clients and documentation; exact contributions are listed in
 | [MvPolynomialAway](GradedRings/MvPolynomialAway.lean) | Over a field and an arbitrary variable type, bounds multiplicity by homogeneous degree, characterizes units by valuation one, and proves irreducibility at denominator order one for a positive-degree homogeneous prime polynomial. |
 
 The full localized ring and its degree-zero subring are different objects.
+The degree-multiplying map is distinct from this same-ring localization grading;
+`d = 0` still requires an explicit degree-compatibility witness, and the chart
+element need not be homogeneous for the restriction square. It does not construct
+a Proj or scheme map.
 The polynomial results do not identify a general graded ring with a polynomial
 ring, and the valuation results do not apply to arbitrary rings with zero divisors.
 No claim about complete coverage of a mathematical book follows from this API.
 
-The [native API reference](docs/API.md) records the complete displayed public
-signatures and their source links. See [documentation reproduction](docs/README.md)
-for exact inputs, limitations and the separately pinned generator.
+The [current hand-maintained API map](docs/API.md) links the original leaves and
+the new guide. The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
+applies only to the earlier 28-module tree; see [documentation reproduction](docs/README.md)
+for its exact inputs, limits and separately pinned generator.
 
 ## Build and use
 
@@ -46,7 +53,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all fourteen regression-test modules and
+build includes the aggregate library, all fifteen regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -54,10 +61,11 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 28 shipped Lean modules use Lean's native module system. A downstream native
+All 30 shipped Lean modules use Lean's native module system. A downstream native
 module can ordinary-import `GradedRings` for the full API, or a subject leaf
-such as `GradedRings.Quotient` or `GradedRings.SymmetricAlgebra`. Public
-imports re-export the intended interfaces; implementation helpers remain private.
+such as `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient` or
+`GradedRings.SymmetricAlgebra`. Public imports re-export the intended
+interfaces; implementation helpers remain private.
 Clients do not need `import all` or access to private names.
 
 The quotient, localization and prime-multiplicity tests compare full public

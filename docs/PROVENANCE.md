@@ -65,6 +65,39 @@ Worker B's no-build origin inventory informed this attribution: Task
 `9fa53f6bcdbf9f1a3cd83c2a24f2d19f15c4f7d5`. That bounded inventory was not
 an independent final-candidate review or a legal clearance.
 
+## Degree-multiplying homogeneous-localization maps
+
+The producer [`HomogeneousLocalizationMap.lean`](../GradedRings/HomogeneousLocalizationMap.lean)
+was carried byte-for-byte from the isolated incubator leaf
+`803803a1a72fbe9fb0031f7b6cb892e0b9bd54cd` (producer SHA256
+`4b504c4685a3d99b26b60f59a0399ac6f249c7b38042efb0ae39e1011f34214b`).
+Original producer, proofs and [direct client](../test/HomogeneousLocalizationMap.lean)
+were authored by worker-a Task
+`hive-request-b0b74cdb7e102204e305196597835a728b60ad9a`, UID
+`02a35b9d-d5a4-4ab9-bebc-4d467cf904c6`. Its accepted isolated algebraic
+scope was independently reviewed by worker-b Task
+`hive-request-69717dafcfc6768e408517e86285b84e286a79ee`, UID
+`dd54184b-2e1a-44c9-b378-36c54f128810`, at review revision
+`21941d8e30a8139e67339b05d508b58db458d919`. The focused evidence at
+`cf157b47bf9cb1633b5f8c7c7584ea33e27958e1` covers the isolated producer
+and client, not the full combined incubator or destination graph. Historical
+review and evidence do not certify this library's expanded test/root closure.
+
+Transfer worker-a Task `hive-request-da147dee68ad90f804621f1f9a7f233b492b197f`,
+UID `13960c20-49f8-4964-9222-020d8a4a1f7f`, retained the producer's proof
+expressions unchanged, adapted only the client import and namespace, added root
+registration and an aggregate-import witness, and prepared the documentation
+and metadata. This distinct transfer credit neither reattributes the original
+proofs nor subsumes the earlier three Worker A contributions. Exact destination
+revision, review, checks, maintainer acceptance and publication are tracked in
+the project record; this description makes no source-coverage or release claim.
+
+The copied producer retains **Jujian Zhang's 2022 copyright notice**, its
+Apache-2.0 notice and the native homogeneous-localization authors **Jujian Zhang
+and Eric Wieser**, alongside the original Task credit. Native quotient and
+same-index map constructions remain dependencies of the new algebraic proofs;
+the destination's collective author credit does not replace those notices.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at

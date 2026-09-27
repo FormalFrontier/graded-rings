@@ -109,4 +109,20 @@ private theorem homogeneous_away_order_one_irreducible (hp : Prime p)
 
 end MultivariatePolynomial
 
+section DegreeMultiplyingLocalization
+
+variable {A : Type u} {B : Type v} {σ : Type w} {τ : Type x}
+variable [CommRing A] [SetLike σ A] [AddSubgroupClass σ A]
+  (𝒜 : ℕ → σ) [GradedRing 𝒜]
+variable [CommRing B] [SetLike τ B] [AddSubgroupClass τ B]
+  (ℬ : ℕ → τ) [GradedRing ℬ]
+
+private def homogeneous_localization_degree_mul_map (f : A →+* B) (d : ℕ)
+    (hdeg : ∀ n a, a ∈ 𝒜 n → f a ∈ ℬ (d * n))
+    {P : Submonoid A} {Q : Submonoid B} (hPQ : P ≤ Q.comap f) :
+    HomogeneousLocalization 𝒜 P →+* HomogeneousLocalization ℬ Q :=
+  HomogeneousLocalization.mapDegreeMul 𝒜 ℬ f d hdeg hPQ
+
+end DegreeMultiplyingLocalization
+
 end GradedRingsTest.RootClient
