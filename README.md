@@ -3,7 +3,8 @@
 Reusable Lean constructions for graded quotients and localizations,
 degree-multiplying homogeneous-localization maps, homogeneous polynomial lifts,
 finiteness, homogeneous prime ideals, symmetric algebras, selected-component
-Veronese rings and prime-multiplicity valuations.
+Veronese rings, positive-Veronese degree-one generation and prime-multiplicity
+valuations.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
 under [Apache-2.0](LICENSE). Atlas is the responsible maintainer on behalf of the
@@ -27,6 +28,7 @@ clients and documentation; exact contributions are listed in
 | [HomogeneousPrimeMultiplicity](GradedRings/HomogeneousPrimeMultiplicity.lean) | Restricts that valuation to degree-zero homogeneous localization. On a nonzero homogeneous numerator over `p^n`, its value is `exp (n - multiplicity p x)`. Degrees form an additive commutative monoid. |
 | [MvPolynomialAway](GradedRings/MvPolynomialAway.lean) | Over a field and an arbitrary variable type, bounds multiplicity by homogeneous degree, characterizes units by valuation one, and proves irreducibility at denominator order one for a positive-degree homogeneous prime polynomial. |
 | [Veronese](GradedRings/Veronese.lean) | `GradedRing.Veronese.VeroneseRing 𝒮 n` selects the whole old components `𝒮 (n*j)` and has an internal grading for any `n`. The canonical inclusion is injective and identifies the whole degree-zero component when `0 < n`. No finiteness/domain assumption or scheme API. See the [selected-component guide](docs/Veronese.md). |
+| [VeroneseDegreeOne](GradedRings/VeroneseDegreeOne.lean) | `GradedRing.Veronese.adjoin_component_one_eq_top`: if `0 < n` and `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the whole selected ring is generated over its **actual new degree-zero component** by **all** of its new degree-one component. No finite-variable, finite-type, domain, field, reducedness or nontriviality assumption. See the [degree-one-generation guide](docs/VeroneseDegreeOne.md). |
 
 The full localized ring and its degree-zero subring are different objects.
 The degree-multiplying map is distinct from this same-ring localization grading;
@@ -35,10 +37,12 @@ element need not be homogeneous for the restriction square. It does not construc
 a Proj or scheme map.
 The polynomial results do not identify a general graded ring with a polynomial
 ring, and the valuation results do not apply to arbitrary rings with zero divisors.
-No claim about complete coverage of a mathematical book follows from this API.
+The positive-Veronese result is algebraic generation, not a coefficient-
+regrouping theorem or a chart/scheme equivalence. No claim about complete
+coverage of a mathematical book follows from this API.
 
 The [current hand-maintained API map](docs/API.md) links the original leaves and
-the localization, homogeneous-lifts and Veronese guides. The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
+the localization, homogeneous-lifts and both Veronese guides. The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
 applies only to the earlier 28-module tree; see [documentation reproduction](docs/README.md)
 for its exact inputs, limits and separately pinned generator.
 
@@ -56,7 +60,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all seventeen regression-test modules and
+build includes the aggregate library, all eighteen regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -64,10 +68,11 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 34 shipped Lean modules use Lean's native module system. A downstream native
+All 36 shipped Lean modules use Lean's native module system. A downstream native
 module can ordinary-import `GradedRings` for the full API, or a subject leaf
 such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
-`GradedRings.Veronese` or `GradedRings.SymmetricAlgebra`. Public imports
+`GradedRings.Veronese`, `GradedRings.VeroneseDegreeOne` or
+`GradedRings.SymmetricAlgebra`. Public imports
 re-export the intended interfaces. The selected-ring leaf also exports its
 named technical grading and reindexing helpers; clients do not need to rely on
 them for the main API.
@@ -79,7 +84,7 @@ constructions with their original constructions by private ordinary-import
 names. Named axiom prints in tests/examples complement, but do not replace,
 the release's separate complete private/stored-body proof audit.
 
-## Observed build resources
+## Historical observed build resources
 
 A Linux preparation run configured with `LAKE_JOBS=1` and `LEAN_NUM_THREADS=1`
 fetched the matching mathlib cache in about 95 seconds. With that cache present,
@@ -147,9 +152,11 @@ Ravi Vakil, *The Rising Sea: Foundations of Algebraic Geometry*, October 21, 202
 draft, exercises around 4.5.F–H and 5.4.N motivate several constructions.
 Section 7.4.4, Exercise 7.4.D motivates the selected-component Veronese ring;
 this library supplies its algebraic ring layer, not the Proj isomorphism.
-Section 7.4.4, Exercise 7.4.E (printed page 215) also motivates homogeneous
-polynomial lifts as a prerequisite, not a proof of Veronese degree-one
-generation or coefficient regrouping.
+Section 7.4.4, Exercise 7.4.E (printed page 215; degree-zero coefficient
+convention in §4.5.6, pp. 151–152) motivates homogeneous polynomial lifts
+and positive-Veronese degree-one generation under old-ring generation. The
+library does not supply coefficient regrouping, chart/Proj invariance or
+a source-specific correspondence decision.
 The basis-free symmetric algebra also supports projective-space applications.
 These are mathematical references; no source PDF, figures or substantial source
 prose is distributed. Detailed source correspondence and gaps are maintained
@@ -164,4 +171,10 @@ private-inclusive standard-axiom run 712, received independent code approval
 4476, and was accepted and integrated by the maintainer on 2026-09-28 at
 09:12:13 UTC. These are code checks and acceptance, not acceptance or
 publication of this subsequent documentary release candidate or a source-
-coverage decision.
+coverage decision. The positive-Veronese transfer was initially prepared
+without destination computation. Its exact code at
+`d14e0ae469b2b13d004bb9ef192ec452a5465760` subsequently passed native
+three-target build and complete private/generated-inclusive standard-axiom
+run 727 on 2026-09-28 at 10:32 UTC. Independent promotion review, maintainer
+acceptance and release publication are recorded separately; neither this
+computational result nor the earlier isolated checks supplies those decisions.

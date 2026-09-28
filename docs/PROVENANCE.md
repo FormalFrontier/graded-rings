@@ -185,8 +185,9 @@ private/generated-inclusive standard-axiom audit. Atlas separately accepted
 the code and rights and protected-integrated it on 2026-09-28 at 09:12:13 UTC.
 These destination results are not conferred by the isolated review or preceding
 Veronese publication, and do not accept or publish a subsequent release.
-No positive Veronese-generation, Proj, source correspondence or coverage claim
-is made here.
+This homogeneous-lifts subsection makes no positive Veronese-generation,
+Proj, source correspondence or coverage claim; the separate positive-index
+generation transfer is documented below.
 
 Documentary release preparation from that accepted code was authored by
 worker-b Hive Task `hive-request-4dea59bdf7ad709e15baf8946d40199f5c045cdd`
@@ -195,6 +196,63 @@ README, API and homogeneous-lifts guides, this attribution, and release metadata
 it does not claim original mathematical authorship, independent review, release
 acceptance or verified publication. The original producer, separate transfer,
 third-party dependency and prior project contributor notices remain credited.
+
+## Positive-Veronese degree-one generation
+
+The original mathematical proof and [direct client](../test/VeroneseDegreeOne.lean)
+were authored by worker-b Hive Task
+`hive-request-45b307ef0b08baacd6a851dadec8faa23ee22d69` (UID
+`65fe43bb-2c1b-4320-b724-f8b1f1fa063a`) in the *isolated, unregistered*
+incubator commit `f97749780abe31d39fc8a470cb8358a9cd53beb6` (tree
+`2d9cc0a21ad1269975047b43024f96e0b95f4dbd`). Its 4,696-byte
+`Incubator/RingTheory/GradedAlgebra/VeroneseDegreeOne.lean` producer has
+SHA-256 `52dd526dab228168fbac305998e70f3ae463cafd0ee7f7094c50aa7caeb0dee1`.
+The original client has SHA-256
+`ef3063e9f19a21e7b40c71c62c8dea75a2f632ab78c34b8c0c9b20666bc2af42`.
+Its original Apache-2.0 header and Task author attribution remain unchanged in
+the [destination producer](../GradedRings/VeroneseDegreeOne.lean), which is
+byte-identical to the isolated producer. The direct client changes **only**
+the public import and opening/closing namespace. The [destination
+guide](VeroneseDegreeOne.md), aggregate wiring, root witness, API map and
+metadata are new transfer work, not new original proof authorship.
+
+The original mathematical plan belongs in the source-vakil-foag repository at
+`0f5efcced8f8f9cf632f8e7613b641c6bb45a8bc`; its independent *plan*
+review at `3344351e10652ec9ec01fe59a0da7641089b36b4` is not code
+approval. The original code review at
+`69ed24cd8d1b2cbd7f95e4f33e7918896f6c1da7` found guide attribution
+and reproduction gaps only; Atlas's **guide-only repair** at
+`3502cfa2dad3fca95c6aac8471da379e19cbf85d` (tree
+`1c4b4a3d8b72b0c5f79b333f2c108dad23a648b3`) was separately assessed
+by a fresh reviewer at `8be88e9f998c8015604e749f1911e00e7455f72d`.
+Atlas then accepted isolated readiness, not destination acceptance. Focused
+cache-first build and five-declaration actual-origin axiom evidence at
+`c9fdc86f3bd73a5d658f77ef15a0d16853f20725` has not been rerun for this
+new destination origin, adapted client or root witness.
+
+Worker-b transfer Hive Task
+`hive-request-f02ddb3e712c8d7d3a8fcf158241077be901618e` (UID
+`3e891418-b2ba-4675-8135-5bc756be8433`) supplied this destination package
+from accepted Graded Rings main `9c7519a1bb52569d6db5306cffc36779143d86db`.
+Its exact destination commit and fresh review/checks are recorded in the owning
+promotion record, not self-referentially in its shipping Git tree. The
+original proof author, separate guide repair, plan and code reviewers and
+transfer contributor have distinct roles. The mathematical motivation is
+Vakil, *The Rising Sea*, October 21, 2025 draft, §7.4.4, Exercise 7.4.E,
+printed p. 215, with the coefficient convention in §4.5.6, pp. 151–152;
+the original source has not been copied and no source coverage is asserted.
+
+Rights: the isolated proof and client are identified original Formal Frontier
+project expression, rather than copied textbook proof or external code;
+mathlib and the prior Graded producer APIs are dependencies, not bundled
+third-party source. The preserved original Apache-2.0 notice and named
+contributor provide traceability but **alone** do not clear rights. The
+reviewed original-source locator, byte comparisons, identifiable author
+records and absence of reproduced substantive source prose support this
+transfer's rights assessment; destination rights acceptance remains with
+Atlas and the independent promotion/release reviewers. Existing third-party
+notices and dependency attribution are untouched. No source PDF, images or
+internal service URLs enter the shipping tree.
 
 ## Dependencies and redistribution boundaries
 

@@ -7,7 +7,8 @@ doc-gen4 run, a complete declaration listing or a proof certificate. Import
 clients, see the [mathematical overview](../README.md), the
 [degree-multiplying localization guide](degree-multiplying-homogeneous-localization.md),
 the [homogeneous-lifts guide](HomogeneousLifts.md), the
-[selected-component Veronese guide](Veronese.md), and the
+[selected-component Veronese guide](Veronese.md), the
+[positive-Veronese generation guide](VeroneseDegreeOne.md), and the
 [documentation notes](README.md).
 
 The [initial native snapshot](API-initial-snapshot.md) displays 104 declarations
@@ -32,6 +33,7 @@ links are accurate in the original revision, not necessarily here.
 | [`GradedRings.HomogeneousPrimeMultiplicity`](../GradedRings/HomogeneousPrimeMultiplicity.lean) | `HomogeneousLocalization.awayPrimeMultiplicityValuation`. |
 | [`GradedRings.MvPolynomialAway`](../GradedRings/MvPolynomialAway.lean) | Homogeneous polynomial multiplicity bound, unit criterion and irreducibility application. |
 | [`GradedRings.Veronese`](../GradedRings/Veronese.lean) | `GradedRing.Veronese.VeroneseRing` and its whole selected-degree `component`; `inclusion`, `inclusion_injective` for positive index, `subring` as its exact range, and `zeroRingEquiv` for positive index. See the [guide](Veronese.md). |
+| [`GradedRings.VeroneseDegreeOne`](../GradedRings/VeroneseDegreeOne.lean) | `GradedRing.Veronese.adjoin_component_one_eq_top`: assuming `0 < n` and `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the entire selected ring is generated over `component 𝒮 n 0` by its whole `component 𝒮 n 1`. See the [guide](VeroneseDegreeOne.md). |
 
 The degree-multiplying map module does **not** replace the existing same-ring grading or
 zero-component equivalence. For natural gradings `𝒜`, `ℬ` of arbitrary
@@ -63,7 +65,7 @@ arbitrary nonnegative graded `CommRing S`. `exists_isHomogeneous_aeval` returns
 a degree-`m` homogeneous polynomial evaluating to `s ∈ 𝒮 m`, including `m=0`,
 provided exactly `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`. It does not
 assume a finite set of generators, a domain, a reduced ring, a nontrivial
-ring, a field, or a conclusion about positive Veronese degree-one generation.
+ring, a field, or by itself a conclusion about positive Veronese degree-one generation.
 The [standalone guide](HomogeneousLifts.md) includes a direct free-polynomial
 client that **proves** this algebra-generation premise rather than assuming it.
 
@@ -71,16 +73,34 @@ For the exact destination code at `99df5f2effcf2ebe52a91d94cbd15c3090401cca`,
 native three-target, private-inclusive standard-axiom run 712 succeeded;
 author-distinct review 4476 approved its code, and the maintainer accepted and
 protected-integrated it on 2026-09-28 at 09:12:13 UTC. Subsequent documentary
-release preparation needs its own review and verified publication; these code
-results do not establish positive-Veronese generation or source coverage.
+release preparation has its own review and publication record; these lifts
+code results alone do not establish positive-Veronese generation or source coverage.
+
+## Positive Veronese generation
+
+`GradedRing.Veronese.adjoin_component_one_eq_top` combines homogeneous lifts
+with the entire selected-component ring for `0 < n` and exactly the old
+degree-one algebra-generation hypothesis. It uses the actual selected degree-zero
+ring as coefficients and the whole selected degree-one component as generators;
+see the [standalone guide](VeroneseDegreeOne.md), its
+[direct client](../test/VeroneseDegreeOne.lean) and the
+[aggregate-import witness](../test/RootClient.lean). It does not address
+`n = 0`, coefficient regrouping, Proj or source-specific correspondence.
+This destination addition was initially prepared without destination computation.
+Exact code `d14e0ae469b2b13d004bb9ef192ec452a5465760` subsequently passed
+native three-target build and private/generated-inclusive standard-axiom run
+727 on 2026-09-28 at 10:32 UTC. Independent promotion review and maintainer
+acceptance are separate, revision-specific decisions; the original incubator
+evidence is not the evidence for this new destination graph.
 
 ## Aggregate, clients and examples
 
-[`GradedRings`](../GradedRings.lean) publicly imports all twelve production leaves.
-The default test target registers seventeen private regression clients, including
+[`GradedRings`](../GradedRings.lean) publicly imports all thirteen production leaves.
+The default test target registers eighteen private regression clients, including
 the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 [direct homogeneous-lifts client](../test/HomogeneousLifts.lean), the
-[direct Veronese client](../test/Veronese.lean), and the
+[direct Veronese client](../test/Veronese.lean), the
+[degree-one-generation client](../test/VeroneseDegreeOne.lean), and the
 [aggregate-import witness](../test/RootClient.lean). Four standalone
 [examples](../examples/) remain registered. These clients and examples
 are not extra advertised public interfaces. For old native displayed types

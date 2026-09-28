@@ -72,8 +72,9 @@ passed native run 712 (all three targets and a complete private/generated-
 inclusive standard-axiom audit), received independent code approval 4476,
 and was accepted and protected-integrated by the maintainer on 2026-09-28 at
 09:12:13 UTC. Those code results are not review, acceptance or verified
-publication of the subsequent documentary release candidate. Neither this
-degree-preserving lift nor the
-[selected-component ring](Veronese.md) proves degree-one generation of a
-positive Veronese subring, coefficient regrouping, a Proj equivalence, or
-source coverage.
+publication of the subsequent documentary release candidate. This lift
+**alone** does not prove positive-Veronese degree-one generation; the separate
+[positive-Veronese module](VeroneseDegreeOne.md) combines it with the
+[selected-component ring](Veronese.md) and a power argument under `0 < n` and
+the original `hgen`. None of these modules proves coefficient regrouping,
+a Proj equivalence or source-specific correspondence.

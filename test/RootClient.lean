@@ -136,6 +136,20 @@ private def selected_veronese_inclusion (n : ℕ) :
 
 end Veronese
 
+section VeroneseDegreeOne
+
+variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]
+  [AddSubgroupClass σ S] (𝒮 : ℕ → σ) [GradedRing 𝒮]
+
+private theorem veronese_degree_one_generated (n : ℕ) (hn : 0 < n)
+    (hgen : Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤) :
+    Algebra.adjoin (GradedRing.Veronese.component 𝒮 n 0)
+      (GradedRing.Veronese.component 𝒮 n 1 :
+        Set (GradedRing.Veronese.VeroneseRing 𝒮 n)) = ⊤ :=
+  GradedRing.Veronese.adjoin_component_one_eq_top 𝒮 n hn hgen
+
+end VeroneseDegreeOne
+
 section HomogeneousLifts
 
 variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]
