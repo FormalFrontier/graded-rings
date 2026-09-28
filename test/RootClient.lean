@@ -136,4 +136,18 @@ private def selected_veronese_inclusion (n : ℕ) :
 
 end Veronese
 
+section HomogeneousLifts
+
+variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]
+  [AddSubgroupClass σ S] (𝒮 : ℕ → σ) [GradedRing 𝒮]
+
+private theorem homogeneous_polynomial_lift
+    (hgen : Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤)
+    {m : ℕ} {s : S} (hs : s ∈ 𝒮 m) :
+    ∃ p : MvPolynomial (𝒮 1) (𝒮 0), p.IsHomogeneous m ∧
+      MvPolynomial.aeval (fun a : 𝒮 1 => (a : S)) p = s :=
+  MvPolynomial.exists_isHomogeneous_aeval 𝒮 hgen hs
+
+end HomogeneousLifts
+
 end GradedRingsTest.RootClient

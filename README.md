@@ -1,9 +1,9 @@
 # Graded rings
 
 Reusable Lean constructions for graded quotients and localizations,
-degree-multiplying homogeneous-localization maps, finiteness, homogeneous prime
-ideals, symmetric algebras, selected-component Veronese rings and
-prime-multiplicity valuations.
+degree-multiplying homogeneous-localization maps, homogeneous polynomial lifts,
+finiteness, homogeneous prime ideals, symmetric algebras, selected-component
+Veronese rings and prime-multiplicity valuations.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
 under [Apache-2.0](LICENSE). Atlas is the responsible maintainer on behalf of the
@@ -18,6 +18,7 @@ clients and documentation; exact contributions are listed in
 | [Quotient](GradedRings/Quotient.lean) | `Ideal.Quotient.gradedRing` equips a quotient by a homogeneous ideal with the image grading. The index is an additive monoid with decidable equality; the coefficient ring is commutative, possibly the zero ring. `gradedRingHom` bundles the quotient map. |
 | [Localization](GradedRings/Localization.lean) | `GradedLocalization.gradedRing` grades ordinary localization at a submonoid of homogeneous elements, with an additive commutative **group** of degrees. `homogeneousLocalizationEquivZeroComponent` identifies equal-degree homogeneous fractions with the zero component. No domain or non-zero-divisor hypothesis is imposed on this construction. |
 | [HomogeneousLocalizationMap](GradedRings/HomogeneousLocalizationMap.lean) | `HomogeneousLocalization.mapDegreeMul` sends naturally graded homogeneous localizations across an **ordinary** unital ring homomorphism multiplying natural degrees by `d`, given explicit degree compatibility and mapped denominators. It supports arbitrary source charts and restriction along a homogeneous factor, factor-one recovery, identity and composition. No domain, denominator-regularity or positive-`d` assumption. See the [thirteen-name guide](docs/degree-multiplying-homogeneous-localization.md). |
+| [HomogeneousLifts](GradedRings/HomogeneousLifts.lean) | `GradedRingHom.surjective_gradedAddHom` sends ambient surjectivity to every whole graded-semiring component. For any nonnegative grading of a commutative ring `S`, `MvPolynomial.exists_isHomogeneous_aeval` lifts `s ∈ 𝒮 m` through evaluation of degree-`m` polynomials with coefficients in the actual `𝒮 0` and all of `𝒮 1` as variables, given exactly `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`. Degree zero is included; no finite-generation, domain or field assumption. See the [homogeneous-lifts guide](docs/HomogeneousLifts.md). |
 | [FiniteType](GradedRings/FiniteType.lean) | `GradedAlgebra.irrelevant_fg_iff_finiteType`: for a naturally graded commutative ring, the irrelevant ideal is finitely generated exactly when the ring is finite type over degree zero. Includes extraction of finite homogeneous ideal generators. |
 | [Noetherian](GradedRings/Noetherian.lean) | `isNoetherianRing_iff_gradeZero_and_irrelevant_fg`: Noetherianity is equivalent to Noetherianity of degree zero plus finite generation of the irrelevant ideal. No domain or nontriviality assumption. |
 | [HomogeneousPrime](GradedRings/HomogeneousPrime.lean) | In an integer-graded commutative ring with a positive-degree homogeneous unit, `homogeneousPrimeEquivDegreeZeroPrime` identifies homogeneous prime ideals with primes of degree zero. The inverse is **radical extension**, not plain extension. |
@@ -37,7 +38,7 @@ ring, and the valuation results do not apply to arbitrary rings with zero diviso
 No claim about complete coverage of a mathematical book follows from this API.
 
 The [current hand-maintained API map](docs/API.md) links the original leaves and
-the localization and Veronese guides. The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
+the localization, homogeneous-lifts and Veronese guides. The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
 applies only to the earlier 28-module tree; see [documentation reproduction](docs/README.md)
 for its exact inputs, limits and separately pinned generator.
 
@@ -55,7 +56,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all sixteen regression-test modules and
+build includes the aggregate library, all seventeen regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -63,9 +64,9 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 32 shipped Lean modules use Lean's native module system. A downstream native
+All 34 shipped Lean modules use Lean's native module system. A downstream native
 module can ordinary-import `GradedRings` for the full API, or a subject leaf
-such as `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
+such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
 `GradedRings.Veronese` or `GradedRings.SymmetricAlgebra`. Public imports
 re-export the intended interfaces. The selected-ring leaf also exports its
 named technical grading and reindexing helpers; clients do not need to rely on
@@ -146,6 +147,9 @@ Ravi Vakil, *The Rising Sea: Foundations of Algebraic Geometry*, October 21, 202
 draft, exercises around 4.5.F–H and 5.4.N motivate several constructions.
 Section 7.4.4, Exercise 7.4.D motivates the selected-component Veronese ring;
 this library supplies its algebraic ring layer, not the Proj isomorphism.
+Section 7.4.4, Exercise 7.4.E (printed page 215) also motivates homogeneous
+polynomial lifts as a prerequisite, not a proof of Veronese degree-one
+generation or coefficient regrouping.
 The basis-free symmetric algebra also supports projective-space applications.
 These are mathematical references; no source PDF, figures or substantial source
 prose is distributed. Detailed source correspondence and gaps are maintained
@@ -154,5 +158,10 @@ outside this reusable library.
 Lean and mathlib supply the underlying formal language and foundational APIs.
 See [provenance](docs/PROVENANCE.md) for the original project expression and
 subsequent interface work. Revision-specific mathematical, proof, rights and
-release decisions are recorded separately; this documentation is not itself
-a certificate of acceptance or publication.
+release decisions are recorded separately. The homogeneous-lifts code at
+`99df5f2effcf2ebe52a91d94cbd15c3090401cca` passed native three-target,
+private-inclusive standard-axiom run 712, received independent code approval
+4476, and was accepted and integrated by the maintainer on 2026-09-28 at
+09:12:13 UTC. These are code checks and acceptance, not acceptance or
+publication of this subsequent documentary release candidate or a source-
+coverage decision.

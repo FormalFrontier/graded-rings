@@ -4,7 +4,8 @@ project:
   name: Graded Rings
   description: >-
     Graded quotients and localizations, degree-multiplying maps of homogeneous
-    localizations, irrelevant-ideal finiteness, homogeneous prime correspondence,
+    localizations, homogeneous component surjectivity and polynomial lifts,
+    irrelevant-ideal finiteness, homogeneous prime correspondence,
     symmetric algebras, selected-component Veronese rings, and
     prime-multiplicity valuations with homogeneous polynomial applications.
   authors:
@@ -16,12 +17,14 @@ sources:
     authors:
       - Ravi Vakil
     type: book
-    location: "October 21, 2025 draft, exercises 4.5.F–H, 5.4.N and §7.4.4/7.4.D"
+    location: "October 21, 2025 draft, exercises 4.5.F–H, 5.4.N and §7.4.4/7.4.D–E (printed p. 215)"
     relationship: background
     note: >-
       Mathematical motivation for reusable constructions, including the
-      selected-component Veronese ring in §7.4.4, Exercise 7.4.D; this
-      library supplies only its algebraic ring layer, not Proj invariance.
+      selected-component Veronese ring in §7.4.4, Exercise 7.4.D, and
+      the old-degree homogeneous polynomial-lift prerequisite to Exercise 7.4.E.
+      This library does not establish positive-Veronese degree-one generation,
+      coefficient regrouping or Proj invariance.
       Neither complete source coverage nor redistribution of the source text is asserted.
       The generic Lean expression was separately developed in this library.
   - title: "mathlib"
@@ -37,7 +40,7 @@ sources:
 
 status:
   scope: >-
-    Eleven production leaves, an aggregate native module, sixteen private regression
+    Twelve production leaves, an aggregate native module, seventeen private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
@@ -45,7 +48,13 @@ status:
     use their stated domain, divisibility, field and degree hypotheses.
     The selected-component Veronese ring and its internal grading exist for any
     natural index; injective inclusion and the degree-zero equivalence require
-    a positive index. No chart or scheme equivalence is supplied here.
+    a positive index. Ambient-surjective graded semiring maps are surjective
+    on each whole component; homogeneous polynomial lifts in arbitrary
+    nonnegative graded commutative rings use actual degree-zero coefficients,
+    every degree-one element as a variable, and exactly the degree-one
+    algebra-generation premise. Degree zero is included, without finite
+    generation, domain, reducedness, nontriviality or field assumptions.
+    No positive-Veronese generation, chart or scheme equivalence is supplied here.
     No complete-source or release-acceptance claim follows from this metadata.
   main_results:
     - declaration: Ideal.Quotient.gradedRing
@@ -76,6 +85,14 @@ status:
       file: GradedRings/Veronese.lean
     - declaration: GradedRing.Veronese.zeroRingEquiv
       file: GradedRings/Veronese.lean
+    - declaration: GradedRingHom.surjective_gradedAddHom
+      file: GradedRings/HomogeneousLifts.lean
+    - declaration: MvPolynomial.isHomogeneous_aeval_degreeOne
+      file: GradedRings/HomogeneousLifts.lean
+    - declaration: MvPolynomial.aevalDegreeOneGradedHom
+      file: GradedRings/HomogeneousLifts.lean
+    - declaration: MvPolynomial.exists_isHomogeneous_aeval
+      file: GradedRings/HomogeneousLifts.lean
 
 automation:
   methods:
@@ -91,12 +108,17 @@ automation:
 review:
   status: "Revision-specific independent review and release decisions are recorded externally"
   notes: >-
-    This artifact description does not certify proof integrity, rights
-    clearance, publication or source completion. The Veronese destination
-    code has exact-revision independent promotion review, owner code acceptance
-    and applicable successful three-target build and complete transitive
-    standard-axiom checks, including private and generated declarations.
-    Final release-candidate review, acceptance and publication remain separate.
+    This metadata does not independently certify proof integrity, rights,
+    release publication or source completion. The Veronese-only official
+    release completed final review, acceptance and verified publication.
+    Separately, homogeneous-lifts destination code at commit
+    99df5f2effcf2ebe52a91d94cbd15c3090401cca passed exact-input native
+    three-target build and complete transitive standard-axiom audit including
+    private and generated declarations (run 712); author-distinct code review
+    4476 approved it, and the maintainer accepted and protected-integrated it
+    on 2026-09-28 at 09:12:13 UTC. Neither the earlier Veronese release nor
+    this code acceptance certifies a subsequent documentary release candidate,
+    its final review, acceptance, publication or source correspondence.
 
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
@@ -112,6 +134,10 @@ acknowledgements: >-
   algebra-only examples in the incubator; a later Worker B Task transferred
   them into this library without changing the mathematical proof expressions.
   Their distinct identities and exact source are in docs/PROVENANCE.md.
+  Another Worker B Task wrote the homogeneous-lifts producer and client in the
+  incubator; a distinct Worker B Task transferred its producer byte-for-byte,
+  adapted the direct client, and added destination wiring, prose and metadata.
+  Both actual Task identities and the isolated review are in docs/PROVENANCE.md.
   Atlas adapted the native Markdown renderer from the earlier project recipes,
   including Anchor's original ideal-completion recipe; docs/README.md records
   that lineage. Prior artifact approval is not transferred.

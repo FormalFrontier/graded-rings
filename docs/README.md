@@ -1,13 +1,16 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** eleven-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** twelve-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
 The [selected-component Veronese guide](Veronese.md) explains the whole-component
 direct sum, its internal grading, its positive-index embedding and degree-zero
-equivalence, and the five direct-import examples. Neither guide is a new native
-documentation run or a proof certificate for the expanded graph.
+equivalence, and the five direct-import examples. The
+[homogeneous-lifts guide](HomogeneousLifts.md) explains componentwise
+surjectivity, degree-one evaluation, the exact algebra-generation premise and
+direct/aggregate clients. These guides are not a new native documentation run
+or proof certificates for the expanded graph.
 
 [`API-initial-snapshot.md`](API-initial-snapshot.md) is byte-for-byte the native
 doc-gen4 output for the original nine production leaves: 104 exposed

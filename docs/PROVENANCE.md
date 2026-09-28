@@ -26,6 +26,9 @@ The mathematical ideas draw on Vakil's *The Rising Sea*, October 21, 2025 draft,
 especially the graded-ring exercises 4.5.F–H and the denominator-order application
 5.4.N. Section 7.4.4, Exercise 7.4.D motivates the selected-component Veronese
 ring; only its algebraic ring layer is provided here, not Proj invariance.
+Section 7.4.4, Exercise 7.4.E (printed page 215) motivates the separate
+old-degree homogeneous polynomial-lift prerequisite; its full positive-Veronese
+degree-one-generation conclusion is not established by that prerequisite.
 A later source adapter or explanatory exposition is not automatically an
 earlier source of the generic Lean proof. The project distributes its own formal
 expression and summaries, not the restricted-redistribution PDF or source prose.
@@ -139,8 +142,59 @@ new-graph checks, acceptance and publication belong in the owning work record,
 not in this non-self-referential shipping tree. The destination code has since
 received exact-revision independent promotion review, successful three-target
 build and private-inclusive standard-axiom checks, and owner code acceptance;
-final release review, acceptance and publication are still separate.
+the separate final release review, acceptance and verified private-GitHub
+publication of official revision `0a5c69da9b24beb5c33ddddbfe4d0067e53146ec`
+are finished. Those results precede and do not certify the later homogeneous-lifts
+destination graph.
 No source-coverage decision is claimed.
+
+## Homogeneous component surjectivity and polynomial lifts
+
+The byte-identical [producer](../GradedRings/HomogeneousLifts.lean) originates at
+the isolated-accepted incubator commit
+`99cfa62e8432c1ed0f5abe37adab68abf4d28835` (tree
+`e3082d096616cbeca867e3b953c8ad6e1ac2660c`), path
+`Incubator/RingTheory/GradedAlgebra/HomogeneousLifts.lean`, 4,712 bytes,
+SHA-256 `36b4241e288081ff1396e6f014701a702c42c24554e49edeefaabce93bd5df28`.
+Original producer and [direct client](../test/HomogeneousLifts.lean) were written
+by worker-b Hive Task `hive-request-5f3d8b70c36747cebf20677044967e35d889fc0d`
+(UID `c2ffb0a9-dadb-4457-ab90-47771a830889`). Its author evidence is at
+`4d3f78d8133ca1a91deb8cb0f093a7aa3b5bce2d`; the fresh independent
+worker-a review by Task `hive-request-a53de5e78ca5a57e03206ad90d69830cdc01cf57`
+(UID `30d90e6f-81de-4065-b6da-99f7134ac4dd`) is at
+`999447d64b3ce82c255749db90ee10b016eed4af`. Those records concern the
+isolated inputs, not this enlarged destination graph.
+
+Distinct worker-b transfer Task
+`hive-request-aeec4e05810ad9f84cf32825cd5c157540fda1ae`
+(UID `7178cf28-05be-443d-a28b-07a60810c215`) retained every producer
+byte, changed the direct client's import and namespace only, and added an
+aggregate-import regression witness, [guide](HomogeneousLifts.md), root
+wiring, and metadata. The source's author and Apache-2.0 notice remain
+authentic and unchanged; the new guide is project prose, not extracted book
+text. The license label and contributor credit alone do not establish rights
+clearance. No PDF, third-party code, images or substantive source prose is
+copied in the transfer; mathlib is imported as the pinned formal dependency.
+The original guide's dated *isolated candidate, not registered in roots*
+status describes its earlier incubator revision, not the destination: this
+library registers both the aggregate producer and direct client. The exact
+destination code at `99df5f2effcf2ebe52a91d94cbd15c3090401cca` (tree
+`3526962263e453708d3ce6f72f0c92a991ee8252`) received independent
+author-distinct review 4476 and the native run 712 three-target build and
+private/generated-inclusive standard-axiom audit. Atlas separately accepted
+the code and rights and protected-integrated it on 2026-09-28 at 09:12:13 UTC.
+These destination results are not conferred by the isolated review or preceding
+Veronese publication, and do not accept or publish a subsequent release.
+No positive Veronese-generation, Proj, source correspondence or coverage claim
+is made here.
+
+Documentary release preparation from that accepted code was authored by
+worker-b Hive Task `hive-request-4dea59bdf7ad709e15baf8946d40199f5c045cdd`
+(UID `cec968d7-34b9-4757-bf6e-1983a8515fa2`). Its work is confined to the
+README, API and homogeneous-lifts guides, this attribution, and release metadata;
+it does not claim original mathematical authorship, independent review, release
+acceptance or verified publication. The original producer, separate transfer,
+third-party dependency and prior project contributor notices remain credited.
 
 ## Dependencies and redistribution boundaries
 
