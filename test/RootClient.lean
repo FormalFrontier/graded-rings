@@ -136,6 +136,27 @@ private def selected_veronese_inclusion (n : ℕ) :
 
 end Veronese
 
+section CoherentTailVeronese
+
+variable {R : Type u} {S : Type v} {σ : Type w} {τ : Type x}
+variable [CommRing R] [CommRing S]
+  [SetLike σ R] [AddSubgroupClass σ R]
+  [SetLike τ S] [AddSubgroupClass τ S]
+  {𝒜 : ℕ → σ} {ℬ : ℕ → τ} [GradedRing 𝒜] [GradedRing ℬ]
+  {N : ℕ}
+
+private theorem coherent_tail_selected_zero_and_inverse
+    (E : GradedRing.Veronese.CoherentTail.TailEquiv 𝒜 ℬ N)
+    (n : ℕ) (hNn : N ≤ n) (hn : 0 < n) :
+    (GradedRing.Veronese.zeroRingEquiv ℬ n hn).toRingHom.comp
+        (GradedRingHom.gradedZeroRingHom (E.selectedGradedHom n hNn)) =
+      E.zero.toRingHom.comp (GradedRing.Veronese.zeroRingEquiv 𝒜 n hn).toRingHom ∧
+    (E.selectedGradedHomSymm n hNn).comp (E.selectedGradedHom n hNn) =
+      GradedRingHom.id (GradedRing.Veronese.component 𝒜 n) :=
+  ⟨E.selected_zero n hNn hn, E.selectedGradedHomSymm_comp n hNn⟩
+
+end CoherentTailVeronese
+
 section VeroneseDegreeOne
 
 variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]

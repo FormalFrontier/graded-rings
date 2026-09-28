@@ -8,6 +8,7 @@ clients, see the [mathematical overview](../README.md), the
 [degree-multiplying localization guide](degree-multiplying-homogeneous-localization.md),
 the [homogeneous-lifts guide](HomogeneousLifts.md), the
 [selected-component Veronese guide](Veronese.md), the
+[coherent-tail equivalence guide](CoherentTailVeronese.md), the
 [positive-Veronese generation guide](VeroneseDegreeOne.md), and the
 [documentation notes](README.md).
 
@@ -33,6 +34,7 @@ links are accurate in the original revision, not necessarily here.
 | [`GradedRings.HomogeneousPrimeMultiplicity`](../GradedRings/HomogeneousPrimeMultiplicity.lean) | `HomogeneousLocalization.awayPrimeMultiplicityValuation`. |
 | [`GradedRings.MvPolynomialAway`](../GradedRings/MvPolynomialAway.lean) | Homogeneous polynomial multiplicity bound, unit criterion and irreducibility application. |
 | [`GradedRings.Veronese`](../GradedRings/Veronese.lean) | `GradedRing.Veronese.VeroneseRing` and its whole selected-degree `component`; `inclusion`, `inclusion_injective` for positive index, `subring` as its exact range, and `zeroRingEquiv` for positive index. See the [guide](Veronese.md). |
+| [`GradedRings.CoherentTailVeronese`](../GradedRings/CoherentTailVeronese.lean) | `GradedRing.Veronese.CoherentTail.TailEquiv` packages compatible actual degree-zero and high-degree equivalences. `TailEquiv.selectedRingEquiv` identifies entire selected rings at `N ≤ n`, while `selectedGradedHom`, its graded inverse laws and `selected_zero` respect the native grading and actual zero-component rings. See the [guide](CoherentTailVeronese.md). |
 | [`GradedRings.VeroneseDegreeOne`](../GradedRings/VeroneseDegreeOne.lean) | `GradedRing.Veronese.adjoin_component_one_eq_top`: assuming `0 < n` and `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the entire selected ring is generated over `component 𝒮 n 0` by its whole `component 𝒮 n 1`. See the [guide](VeroneseDegreeOne.md). |
 
 The degree-multiplying map module does **not** replace the existing same-ring grading or
@@ -93,14 +95,34 @@ native three-target build and private/generated-inclusive standard-axiom run
 acceptance are separate, revision-specific decisions; the original incubator
 evidence is not the evidence for this new destination graph.
 
+## Coherent high tails
+
+`GradedRing.Veronese.CoherentTail.TailEquiv 𝒜 ℬ N` assumes `0 < N`, an actual
+degree-zero ring equivalence, additive equivalences of all components in degrees
+at least `N`, and coefficient and high-product compatibility in the original
+ambient graded rings. For `N ≤ n`, `selectedRingEquiv` maps the **whole**
+selected-component ring and its inverse using the component equivalences;
+`selectedGradedHom`, `selectedGradedHomSymm_comp` and
+`selectedGradedHom_comp_symm` give the native degree-preserving maps and inverse
+laws. With `0 < n`, `selected_zero` is equality of the exact coefficient and
+selected-degree-zero ring-hom composites. See the [full guide](CoherentTailVeronese.md),
+[direct ordinary-import client](../test/CoherentTailVeronese.lean) and
+[aggregate-import witness](../test/RootClient.lean). The direct client includes
+an inherited grading with no extension across missing degree one, a nontrivial
+coefficient swap and the degenerate `ZMod 1` case. This API does not give a
+low-degree extension, coefficient regrouping or any Proj/scheme conclusion.
+Its September 28, 2026 static transfer checkpoint carries no destination
+build/audit or independent acceptance; those are separate gates.
+
 ## Aggregate, clients and examples
 
-[`GradedRings`](../GradedRings.lean) publicly imports all thirteen production leaves.
-The default test target registers eighteen private regression clients, including
+[`GradedRings`](../GradedRings.lean) publicly imports all fourteen production leaves.
+The default test target registers nineteen private regression clients, including
 the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 [direct homogeneous-lifts client](../test/HomogeneousLifts.lean), the
 [direct Veronese client](../test/Veronese.lean), the
-[degree-one-generation client](../test/VeroneseDegreeOne.lean), and the
+[degree-one-generation client](../test/VeroneseDegreeOne.lean), the
+[coherent-tail client](../test/CoherentTailVeronese.lean), and the
 [aggregate-import witness](../test/RootClient.lean). Four standalone
 [examples](../examples/) remain registered. These clients and examples
 are not extra advertised public interfaces. For old native displayed types

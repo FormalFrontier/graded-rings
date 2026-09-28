@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** thirteen-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** fourteen-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -14,6 +14,16 @@ guide](VeroneseDegreeOne.md) gives the conditional theorem, exact coefficient
 ring, direct [client](../test/VeroneseDegreeOne.lean), root witness and
 separate destination checks. These guides are not a new native documentation run
 or proof certificates for the expanded graph.
+
+The [coherent-tail selected-ring guide](CoherentTailVeronese.md) gives the exact
+degree-zero, high-component, coefficient and product hypotheses, the whole-ring
+and graded inverse laws, the zero-component square, three client families,
+limitations and a cache-first destination recipe. Its [direct
+client](../test/CoherentTailVeronese.lean) and [aggregate-root
+witness](../test/RootClient.lean) are not part of the historical native snapshot.
+At the September 28, 2026 static transfer checkpoint, the destination build,
+complete standard-axiom audit and independent promotion review remain distinct
+gates; this manual guide is not computational or review evidence.
 
 [`API-initial-snapshot.md`](API-initial-snapshot.md) is byte-for-byte the native
 doc-gen4 output for the original nine production leaves: 104 exposed

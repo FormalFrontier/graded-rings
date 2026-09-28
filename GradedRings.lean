@@ -4,6 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
+public import GradedRings.CoherentTailVeronese
 public import GradedRings.FiniteType
 public import GradedRings.HomogeneousLifts
 public import GradedRings.HomogeneousLocalizationMap

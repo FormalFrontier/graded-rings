@@ -3,14 +3,60 @@
 Reusable Lean constructions for graded quotients and localizations,
 degree-multiplying homogeneous-localization maps, homogeneous polynomial lifts,
 finiteness, homogeneous prime ideals, symmetric algebras, selected-component
-Veronese rings, positive-Veronese degree-one generation and prime-multiplicity
-valuations.
+Veronese rings, coherent-tail equivalences of whole selected rings,
+positive-Veronese degree-one generation and prime-multiplicity valuations.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
 under [Apache-2.0](LICENSE). Atlas is the responsible maintainer on behalf of the
 shared source-maintainer team. AI agents authored the mathematics, Lean proofs,
 clients and documentation; exact contributions are listed in
 [provenance and credits](docs/PROVENANCE.md).
+
+## Headline results
+
+This September 28, 2026 promotion candidate presents reusable algebraic APIs;
+their presence on this branch is not an assertion of destination verification,
+release publication, source correspondence or book coverage.
+
+- **Quotients and localizations:** [Homogeneous-ideal quotients](GradedRings/Quotient.lean)
+  inherit a grading, while [localization](GradedRings/Localization.lean) at
+  homogeneous denominators has a full grading and a degree-zero homogeneous-
+  fraction equivalence. These constructions allow degenerate commutative rings;
+  the localization grading uses a group of degrees. The separate [degree-multiplying
+  map](docs/degree-multiplying-homogeneous-localization.md) works for natural
+  gradings under explicit degree compatibility of an ordinary ring homomorphism
+  and mapped denominators, without requiring a domain or positive factor.
+- **Finiteness and prime criteria:** In a naturally graded commutative ring,
+  [finite type over degree zero](GradedRings/FiniteType.lean) is equivalent to
+  finite generation of the irrelevant ideal; [Noetherianity](GradedRings/Noetherian.lean)
+  is equivalent to Noetherianity of degree zero together with that finite
+  generation. For an *integer*-graded commutative ring with a positive-degree
+  homogeneous unit, [homogeneous primes](GradedRings/HomogeneousPrime.lean)
+  correspond to primes of degree zero by contraction and **radical** extension.
+- **Symmetric algebras:** The [basis-free grading and graded maps](GradedRings/SymmetricAlgebra.lean)
+  are functorial for linear maps over a commutative semiring and arbitrary
+  modules; a basis is used only for polynomial-coordinate presentations.
+- **Prime multiplicity:** A [multiplicative valuation](GradedRings/PrimeMultiplicity.lean)
+  records prime-element multiplicity in a domain with well-founded divisibility.
+  Its localization extension requires non-zero-divisor denominators; the
+  [homogeneous localization](GradedRings/HomogeneousPrimeMultiplicity.lean) and
+  [polynomial irreducibility applications](GradedRings/MvPolynomialAway.lean)
+  carry their respective homogeneous-degree and field hypotheses.
+- **Selected-component rings:** The [Veronese ring](docs/Veronese.md) selects
+  **whole** original components in multiples of `n`; it has an internal
+  grading for every natural `n` and injective inclusion/degree-zero ring
+  equivalence when `0 < n`. Under the explicit old-ring hypothesis
+  `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, [positive-index degree-one
+  generation](docs/VeroneseDegreeOne.md) uses all of the new degree-one
+  component over the actual new degree-zero ring, without finite generation.
+- **Coherent high tails:** [The new algebra](docs/CoherentTailVeronese.md)
+  packages `TailEquiv 𝒜 ℬ N` with `0 < N`, a ring equivalence of the actual
+  degree-zero pieces, additive equivalences for every degree `d ≥ N`, and
+  compatibility with coefficient and high-degree products. When `N ≤ n`,
+  `selectedRingEquiv` identifies the **entire** selected rings and supplies
+  degree-preserving inverse maps; for `0 < n`, `selected_zero` gives the exact
+  degree-zero coefficient square. Neither maps on missing original low degrees
+  nor a Proj/scheme equivalence follow.
 
 ## Mathematical scope
 
@@ -28,6 +74,7 @@ clients and documentation; exact contributions are listed in
 | [HomogeneousPrimeMultiplicity](GradedRings/HomogeneousPrimeMultiplicity.lean) | Restricts that valuation to degree-zero homogeneous localization. On a nonzero homogeneous numerator over `p^n`, its value is `exp (n - multiplicity p x)`. Degrees form an additive commutative monoid. |
 | [MvPolynomialAway](GradedRings/MvPolynomialAway.lean) | Over a field and an arbitrary variable type, bounds multiplicity by homogeneous degree, characterizes units by valuation one, and proves irreducibility at denominator order one for a positive-degree homogeneous prime polynomial. |
 | [Veronese](GradedRings/Veronese.lean) | `GradedRing.Veronese.VeroneseRing 𝒮 n` selects the whole old components `𝒮 (n*j)` and has an internal grading for any `n`. The canonical inclusion is injective and identifies the whole degree-zero component when `0 < n`. No finiteness/domain assumption or scheme API. See the [selected-component guide](docs/Veronese.md). |
+| [CoherentTailVeronese](GradedRings/CoherentTailVeronese.lean) | `GradedRing.Veronese.CoherentTail.TailEquiv 𝒜 ℬ N` packages an actual degree-zero ring equivalence, additive equivalences in all degrees at least `N > 0`, and compatibility with coefficients and products. For `N ≤ n`, `selectedRingEquiv` identifies the **whole** selected rings; `selectedGradedHom` and its inverse preserve selected degrees, and `selected_zero` commutes with the degree-zero coefficient equivalence when `0 < n`. Arbitrary natural-graded commutative rings, including zero rings, are allowed; no low-degree map is implied. See the [coherent-tail guide](docs/CoherentTailVeronese.md). |
 | [VeroneseDegreeOne](GradedRings/VeroneseDegreeOne.lean) | `GradedRing.Veronese.adjoin_component_one_eq_top`: if `0 < n` and `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the whole selected ring is generated over its **actual new degree-zero component** by **all** of its new degree-one component. No finite-variable, finite-type, domain, field, reducedness or nontriviality assumption. See the [degree-one-generation guide](docs/VeroneseDegreeOne.md). |
 
 The full localized ring and its degree-zero subring are different objects.
@@ -38,11 +85,14 @@ a Proj or scheme map.
 The polynomial results do not identify a general graded ring with a polynomial
 ring, and the valuation results do not apply to arbitrary rings with zero divisors.
 The positive-Veronese result is algebraic generation, not a coefficient-
-regrouping theorem or a chart/scheme equivalence. No claim about complete
+regrouping theorem or a chart/scheme equivalence. Coherent high tails induce
+equivalent selected rings without extending the equivalence to missing low
+degrees or asserting a geometric equivalence. No claim about complete
 coverage of a mathematical book follows from this API.
 
 The [current hand-maintained API map](docs/API.md) links the original leaves and
-the localization, homogeneous-lifts and both Veronese guides. The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
+the localization, homogeneous-lifts and Veronese guides, including the
+[coherent-tail guide](docs/CoherentTailVeronese.md). The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
 applies only to the earlier 28-module tree; see [documentation reproduction](docs/README.md)
 for its exact inputs, limits and separately pinned generator.
 
@@ -60,7 +110,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all eighteen regression-test modules and
+build includes the aggregate library, all nineteen regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -68,10 +118,11 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 36 shipped Lean modules use Lean's native module system. A downstream native
+All 38 shipped Lean modules use Lean's native module system. A downstream native
 module can ordinary-import `GradedRings` for the full API, or a subject leaf
 such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
-`GradedRings.Veronese`, `GradedRings.VeroneseDegreeOne` or
+`GradedRings.Veronese`, `GradedRings.CoherentTailVeronese`,
+`GradedRings.VeroneseDegreeOne` or
 `GradedRings.SymmetricAlgebra`. Public imports
 re-export the intended interfaces. The selected-ring leaf also exports its
 named technical grading and reindexing helpers; clients do not need to rely on
@@ -178,3 +229,12 @@ three-target build and complete private/generated-inclusive standard-axiom
 run 727 on 2026-09-28 at 10:32 UTC. Independent promotion review, maintainer
 acceptance and release publication are recorded separately; neither this
 computational result nor the earlier isolated checks supplies those decisions.
+
+At the September 28, 2026 coherent-tail static transfer checkpoint, the original
+isolated producer and clients have separate focused evidence and source review,
+not a successful check or independent acceptance of this destination graph.
+The new module origin, direct and root clients require their own applicable
+native three-target build and full private/generated transitive standard-axiom
+audit; fresh independent promotion/rights review, protected integration and
+official publication are subsequent distinct gates. This algebra does not
+establish Vakil's §7.4.4 Exercise 7.4.F Proj conclusion or source coverage.

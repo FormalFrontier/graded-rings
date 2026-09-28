@@ -6,8 +6,9 @@ project:
     Graded quotients and localizations, degree-multiplying maps of homogeneous
     localizations, homogeneous component surjectivity and polynomial lifts,
     irrelevant-ideal finiteness, homogeneous prime correspondence,
-    symmetric algebras, selected-component Veronese rings and positive-index
-    degree-one generation under an old-ring generation hypothesis, and
+    symmetric algebras, selected-component Veronese rings, coherent-tail
+    equivalences of whole selected rings, positive-index degree-one generation
+    under an old-ring generation hypothesis, and
     prime-multiplicity valuations with homogeneous polynomial applications.
   authors:
     - Formal Frontier Agents
@@ -40,10 +41,21 @@ sources:
       Pinned formal dependency supplying graded-algebra, localization,
       symmetric-algebra, ideal, multiplicity and valuation infrastructure.
       Dependency sources are not bundled in the library source tree.
+  - title: "The Rising Sea: Foundations of Algebraic Geometry — §7.4.4, Exercise 7.4.F"
+    authors:
+      - Ravi Vakil
+    type: book
+    location: "October 21, 2025 draft, printed p. 215; coefficient conventions pp. 151–152"
+    relationship: background
+    note: >-
+      Motivates the independent coherent-tail algebra of whole selected rings
+      with actual degree-zero coefficients. This result neither proves a Proj
+      conclusion nor establishes exercise correspondence or source coverage.
+      No original source expression is redistributed here.
 
 status:
   scope: >-
-    Thirteen production leaves, an aggregate native module, eighteen private regression
+    Fourteen production leaves, an aggregate native module, nineteen private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
@@ -61,7 +73,12 @@ status:
     degree-zero component by all of its degree-one component when the old ring
     is generated over its actual degree-zero component by all of degree one.
     This needs no finite variables, finite type, domain, reducedness, field or
-    nontriviality hypothesis; nothing is claimed for n = 0. No coefficient
+    nontriviality hypothesis; nothing is claimed for n = 0. A coherent positive
+    tail with actual degree-zero ring equivalence and compatible high additive
+    equivalences, coefficient multiplication and high products gives an
+    equivalence of entire selected rings at N ≤ n, with two graded inverse
+    laws and, for 0 < n, the degree-zero ring-hom square; no map on missing
+    low degrees or extra domain/nontriviality hypothesis is required. No coefficient
     regrouping, chart/Proj or scheme equivalence is supplied here.
     No complete-source or release-acceptance claim follows from this metadata.
   main_results:
@@ -103,6 +120,18 @@ status:
       file: GradedRings/HomogeneousLifts.lean
     - declaration: GradedRing.Veronese.adjoin_component_one_eq_top
       file: GradedRings/VeroneseDegreeOne.lean
+    - declaration: GradedRing.Veronese.CoherentTail.TailEquiv
+      file: GradedRings/CoherentTailVeronese.lean
+    - declaration: GradedRing.Veronese.CoherentTail.TailEquiv.selectedRingEquiv
+      file: GradedRings/CoherentTailVeronese.lean
+    - declaration: GradedRing.Veronese.CoherentTail.TailEquiv.selectedGradedHom
+      file: GradedRings/CoherentTailVeronese.lean
+    - declaration: GradedRing.Veronese.CoherentTail.TailEquiv.selectedGradedHomSymm_comp
+      file: GradedRings/CoherentTailVeronese.lean
+    - declaration: GradedRing.Veronese.CoherentTail.TailEquiv.selectedGradedHom_comp_symm
+      file: GradedRings/CoherentTailVeronese.lean
+    - declaration: GradedRing.Veronese.CoherentTail.TailEquiv.selected_zero
+      file: GradedRings/CoherentTailVeronese.lean
 
 automation:
   methods:
@@ -135,6 +164,10 @@ review:
     transitive standard-axiom audit (run 727) on 2026-09-28 at 10:32 UTC.
     Independent promotion review, maintainer acceptance and release publication
     are separate revision-specific decisions, not consequences of that pass.
+    At the 2026-09-28 coherent-tail static transfer checkpoint, no destination
+    native build, complete private/generated transitive axiom audit, fresh
+    promotion/rights review, maintainer acceptance or release is asserted by
+    the earlier isolated checks or this metadata.
 
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
@@ -163,3 +196,9 @@ acknowledgements: >-
   Atlas adapted the native Markdown renderer from the earlier project recipes,
   including Anchor's original ideal-completion recipe; docs/README.md records
   that lineage. Prior artifact approval is not transferred.
+  A further Worker B Task authored the original coherent-tail proofs and clients
+  in an isolated incubator branch; a fresh Worker A Task independently reviewed
+  that algebra, and a distinct Worker B Task transferred the original bodies
+  and added root use, standalone guide, wiring and metadata here. Their exact
+  names, UIDs and frozen revisions are in docs/PROVENANCE.md. The original
+  source review is separate from destination review and source correspondence.

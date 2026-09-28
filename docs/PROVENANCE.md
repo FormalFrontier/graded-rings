@@ -254,6 +254,60 @@ Atlas and the independent promotion/release reviewers. Existing third-party
 notices and dependency attribution are untouched. No source PDF, images or
 internal service URLs enter the shipping tree.
 
+## Coherent-tail Veronese equivalences
+
+The original complete producer and direct client are the separately reviewed,
+*isolated* incubator commit `3856e87d4348b62c2e2cf56f121877504fbd08f0`
+(tree `7f46afaf3c8b7aa6b88e94a6fc5db30e2b74d291`), not an incubator-main
+registration. The producer `Incubator/RingTheory/GradedAlgebra/CoherentTailVeronese.lean`
+has SHA-256 `918999afc39620116e9d25de7fc64dc5e076765683753c18cbdee92ee93543d4`;
+the original ordinary-import client
+`IncubatorTest/RingTheory/GradedAlgebra/CoherentTailVeronese.lean` has SHA-256
+`e5cee97bc03283ce3d081bd492c678b0cd0284c830c9a31ea9afe2710b924cf7`.
+The original standalone guide was
+`Incubator/RingTheory/GradedAlgebra/CoherentTailVeronese/README.md`, SHA-256
+`ec715cd62fbca34a7c6d00c14602003ffd22c4ddfdcb2c0852fe65b51044ec99`.
+
+The mathematical producer, proofs and concrete clients were authored by
+worker-b Hive Task `hive-request-850bf931d8213b955070297ac6413e34cd384237`
+(UID `cd358354-3b4d-4c26-af0e-4f6988f9c02f`). The isolated algebra was
+independently reviewed by worker-a Task
+`hive-request-d2cf958b766059b15c0cd461612954dcacf8eddd`
+(UID `b75b902f-3a45-4757-9193-2147ad42e040`), revision
+`a2f470de97ed33191670c99dc1d5385a2b1e40c4`; original cache-first focused
+build and actual-origin standard-axiom evidence are at
+`3c7f9328888383c4e6298f6dc3ca4f867ed17b75`. Atlas accepted that
+*isolated* contribution; its review and checks do not transfer automatically.
+
+The distinct destination static transfer was assembled by worker-b Hive Task
+`hive-request-a577b764331b8c44444105f6f45d786486b0c612`
+(UID `dc93c339-8166-481b-bb86-5417fa5b6cca`), starting from accepted
+graded-rings `46df81940a09c6b2a9c72e4db02b1ac6486fa797`. Its exact final
+code-branch head and separate report are linked from the owning promotion
+record, graded-rings issue #46. The entire original producer body and proofs
+are unchanged after the added authentic Apache-2.0 author notice; only the
+direct client's import, opening/closing namespace and notice change. The
+[destination guide](CoherentTailVeronese.md), root witness, public wiring,
+manual API and metadata are new transfer work, not original proof authorship.
+No incubator ancestry is part of the destination release history.
+
+Motivation is Vakil, *The Rising Sea*, October 21, 2025 draft, §7.4.4,
+Exercise 7.4.F, printed p. 215, with coefficient conventions on pp. 151–152.
+The exact original-source locator, not a library usage prerequisite, was
+reviewed in source-vakil-foag at `a19f2899b25d97ab41506267294d822d5603630e`
+(review `8570bb82adadaac31066680bb19e2030883937e4`); the original PDF
+SHA-256 was `d07177aa0317c13490c170fc6ccc6a2ee07989a9120d9958ed3453eefe5b2784`.
+The project proof and guide do not reproduce book expression, diagrams, PDF,
+images, third-party formal code or substantial book prose. Verified original
+project expression falls under the adopted Apache-2.0 policy; identifiable
+authorship, isolated source review and non-copying support the rights assessment,
+not the file header alone. Mathlib and the old Graded Rings APIs are dependencies,
+not recopied source; existing license and contributor notices remain in place.
+At this September 28, 2026 static checkpoint, fresh destination rights/API
+review, native build and complete transitive standard-axiom audit, acceptance,
+publication and source correspondence remain separate future decisions.
+The result is algebraic: it does not establish the exercise's Proj conclusion.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at
