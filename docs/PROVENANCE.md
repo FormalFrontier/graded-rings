@@ -588,6 +588,61 @@ standard-three audit, independent exact-destination mathematical/API/rights
 review, maintainer acceptance, protected integration, separately verified
 official publication and distinct source correspondence decisions.
 
+## Prescribed-index weighted-polynomial generators
+
+The reusable `MvPolynomial.exists_finset_weightedVeronese_generators` theorem
+was first implemented by worker-b Hive Task
+`hive-request-b19ed49dc35a86b4f2c7f461f7a2a8997c0265da` (UID
+`a441c096-818a-45de-9581-5f096b28e669`) in isolated code revision
+`4786d6fea4f3aaf9e60643218c1b5e9f68ec5af6` (tree
+`0f7535d4931d7bd41a01f861104e0679a403477b`, sole accepted parent
+`3fb5193e4176820fb00070d6920c8fe6a5032edd`). The 6,384-byte producer,
+4,402-byte direct client and 2,239-byte original guide have SHA-256
+`04e22f92ea423a2d029d854a8aeb534f06e2ba3e66dc6d7c6a460b24a7861e5b`,
+`3b06785a62022f28bc5c9639d99bfda695f58819cbdb735994adb9fcb4d37efe`
+and `a940d39a46c75fc4b59bfbf646a3b6abb890f416299e13bb6db8acaf2af1b1b4`.
+The original author evidence at `5e84c952d7e2c11c2fdd627a2517fade1bc16cf8`
+(`research/evidence/weighted-veronese-generators/REPORT.md`, SHA-256
+`9c7ed21f7f89b1a9c45d8d73ddd1b30233b0c46f1d63bc9e5e8052033915e0a5`)
+reports a successful pinned cache-first focused producer/client build and
+20 actual-origin transitive declaration checks (19 private including generated)
+with only `propext`, `Classical.choice` and `Quot.sound`.
+
+Fresh original-candidate review by worker-a Hive Task
+`hive-request-c63463c2ee5ed9e6cd9ca9927719b6e7cf21d0f2` (UID
+`9848d86f-0a38-433e-ab52-5eb525143762`) is bound to revision
+`405a50c72bb6c943d3bbc2067f02f6d2cb9fa078`,
+`research/reviews/weighted-veronese-generators/REPORT.md`, SHA-256
+`3b55720382633fd013dadf34c7c04b70d1eb47c440b57e6bbf7b1211df6e71df`.
+Atlas accepted the exact isolated mathematical candidate on September 28,
+2026 (incubator issue #173, comment 59987); the separate delivery-home
+decision is recorded in comment 60023. Neither decision asserts that this
+library's changed import graph has been checked or accepted. The mathematical
+background for Exercise 7.4.H was developed and independently reviewed as
+source-only research in `source-vakil-foag` revision
+`28cf4fc6081e450474e929aa5a5101a739b3f200` and review revision
+`c9f6f6ba4ef68a11d75f8b5ad3cc152514da2890` (source issue #547).
+That research does not provide full exercise correspondence or coverage for
+this polynomial-only theorem.
+
+The distinct **static destination transfer** from sole accepted Graded Rings
+parent `ba0db767001e99f41b0e751f2a900e1d743dcdff` (tree
+`65cb47d5deee709a3ef6b38d312dd7693d190d70`) is by worker-b Hive Task
+`hive-request-71135ca8e40ee75e265b4be2ece6f790e993636c` (UID
+`f002571f-0a86-4430-a7b1-09bbcd5e1b7f`). It preserves the exact
+mathematical producer and every direct-client proof body, changing only the
+client's producer import; it adds the generic aggregate witness, standalone
+guide, public wiring and current metadata. The original Apache-2.0/agent
+headers and distinct original author/reviewer/transfer credits are retained.
+No incubator ancestry, source PDF, source prose or external proof code enters
+the deliverable history. The original isolated build/audit/review do **not**
+certify the changed destination graph. At the September 28, 2026 static
+transfer checkpoint, the native strict three-target build, full actual-origin
+private/generated-inclusive transitive standard-three audit, fresh
+author-distinct destination review, maintainer acceptance, protected
+integration, separately reviewed verified release and source correspondence
+are separate subsequent gates under owning issue #67.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at

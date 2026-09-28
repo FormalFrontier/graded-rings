@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** eighteen-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** nineteen-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -62,6 +62,15 @@ direct/aggregate clients and a cache-first destination recipe. Its initial
 September 28, 2026 transfer note distinguishes the accepted isolated source
 from checks and acceptance for the changed destination graph. Neither the
 guide nor the new client is part of the unchanged historical native snapshot.
+
+The [selected weighted-polynomial generator guide](WeightedVeroneseGenerators.md)
+states one finite family for every selected weighted degree at a prescribed
+positive index over arbitrary commutative semirings, with zero weights permitted.
+Its [ordinary direct client](../test/WeightedVeroneseGenerators.lean) and
+[aggregate-root witness](../test/RootClient.lean) are current material, not
+inputs to the historical native snapshot. At the September 28, 2026 static
+transfer checkpoint, the isolated accepted proof/checks do not certify the
+destination's three-target build, complete axiom audit or independent review.
 
 [`API-initial-snapshot.md`](API-initial-snapshot.md) is byte-for-byte the native
 doc-gen4 output for the original nine production leaves: 104 exposed

@@ -248,4 +248,19 @@ private theorem finiteVeronese_root (weights : ι → ℕ)
 
 end FiniteVeronese
 
+section WeightedVeroneseGenerators
+
+variable {ι : Type u} {R : Type v} [Fintype ι] [CommSemiring R]
+
+private theorem weightedVeroneseGenerators_root (weights : ι → ℕ)
+    (index : ℕ) (index_pos : 0 < index) :
+    ∃ T : Finset (MvPolynomial ι R),
+      (∀ p ∈ T, ∃ j : ℕ, p.IsWeightedHomogeneous weights (index * j)) ∧
+      ∀ j : ℕ, ∀ p : MvPolynomial ι R,
+        p.IsWeightedHomogeneous weights (index * j) →
+          p ∈ Algebra.adjoin R (T : Set (MvPolynomial ι R)) :=
+  MvPolynomial.exists_finset_weightedVeronese_generators weights index index_pos
+
+end WeightedVeroneseGenerators
+
 end GradedRingsTest.RootClient
