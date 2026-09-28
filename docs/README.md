@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** sixteen-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** seventeen-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -33,6 +33,15 @@ material, not inputs to the unchanged historical snapshot. At the September
 28, 2026 transfer checkpoint, isolated source evidence does not certify the
 adapted destination graph; destination build/axiom and fresh review gates
 remain open.
+
+The [weighted-polynomial adjoin guide](WeightedBlockAdjoin.md) explains the
+positive-weight block decomposition's polynomial consequence for arbitrary
+commutative semirings, with the [direct ordinary client](../test/WeightedBlockAdjoin.lean)
+and [aggregate-root witness](../test/RootClient.lean). Its initial September 28,
+2026 transfer checkpoint distinguishes original focused proofs/checks and
+rights review from the destination native three-target build, full standard-
+axiom audit and fresh promotion review. This hand-maintained guide does not
+modify or rerun the historical native snapshot.
 
 The [weighted-evaluation guide](WeightedEvaluation.md) records arbitrary
 natural weights (including zero), evaluation into actual graded components,

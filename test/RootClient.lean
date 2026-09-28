@@ -215,4 +215,18 @@ private theorem weighted_evaluation_root (n : ℕ) (p : MvPolynomial ι (𝒮 0)
 
 end WeightedEvaluation
 
+section WeightedBlockAdjoin
+
+variable {ι R : Type*} [Fintype ι] [CommSemiring R]
+
+private theorem weightedBlockAdjoin_root (w : ι → ℕ) (hw : ∀ i, 0 < w i)
+    (k : ℕ) {p : MvPolynomial ι R}
+    (hp : p.IsWeightedHomogeneous w (k * Finsupp.weightedBlockSize w)) :
+    p ∈ Algebra.adjoin R
+      ((fun d : ι →₀ ℕ => MvPolynomial.monomial d (1 : R)) ''
+        {d | Finsupp.weight w d = Finsupp.weightedBlockSize w}) :=
+  MvPolynomial.IsWeightedHomogeneous.mem_adjoin_weightedBlockSize w hw k hp
+
+end WeightedBlockAdjoin
+
 end GradedRingsTest.RootClient

@@ -358,6 +358,69 @@ standard-axiom audit, fresh independent promotion/rights review, Atlas's
 acceptance, protected integration, verified official release and any source
 correspondence remain distinct future decisions.
 
+## Weighted-polynomial monomial-adjoin membership
+
+The accepted isolated source is incubator commit
+`96035f49afe3af3e74dd285c80db3b18f9615ef8` (tree
+`2ed0d7b520252b603f1b671c4326e5477442600b`), owning issue #166,
+maintainer Atlas. Its original first-party producer
+`Incubator/RingTheory/MvPolynomial/WeightedBlockAdjoin.lean` has SHA-256
+`4d0f55793c4addec4e0120686c3994491d0647943be746508bb2b2475b6d1ade`;
+the direct client `IncubatorTest/RingTheory/MvPolynomial/WeightedBlockAdjoin.lean`
+has SHA-256 `862004413e8d36639364b6691ced2a4853c2d1bfd14406e099485c93507127c0`,
+and the initial isolated guide `docs/WeightedBlockAdjoin.md` has SHA-256
+`cecced58d9835375b1706f1a5f91afafe0f9bf7837c6f2e3f1903ecbdb098ea7`.
+Original proof, direct examples and guide: worker-b Hive Task
+`hive-request-02c54ccf8e5ec79a99c29100b383e58fbbf37d58`, UID
+`e461a433-ae28-4960-af44-a0f291127294`. The sole repair, removal of two
+unsupported copyright-owner header sentences with proofs and client unchanged,
+was by different worker-b Task `hive-request-0abf41ae4cc030259077e0ba697493aea02844cd`,
+UID `3191b46a-0f33-4201-9069-719451401037`. No such owner assertion is
+restored; the authentic Apache-2.0 and collective-author notices remain.
+
+The original focused evidence report `fba1f82224c395b383350ede70f839108aa1c0ab`
+(`research/evidence/weighted-block-adjoin/REPORT.md`) records matching mathlib
+cache, two focused builds and 2 producer plus 19 direct-client actual-origin
+private/generated-inclusive transitive standard-three rows on the original
+proof and import graph. Original reviewer worker-a Task
+`hive-request-f559692b73c50917c4cc436aed44bd8167b4feb9`, UID
+`5fd8eeb0-55e4-41db-8881-29ad068330d4`, reported REQUEST_CHANGES only
+for the unsupported header lines at
+`002399481ba7984d3bc25033d4b0b6abddaf653f`; this objection is not
+retroactively recast as approval. Fresh independent reviewer worker-a Task
+`hive-request-799c593fb89bc5735e637a2446886804e96741dd`, UID
+`14657e87-8583-409b-ab68-c56044592546`, approved the exact repaired
+*isolated* C2 at report `b4e82a905737aec09c38d65c00ab9437ef2f8892`
+(`research/reviews/weighted-block-adjoin-repaired/REPORT.md`). Atlas accepted
+only that isolated scope at #166/59028, not this destination graph.
+
+The separate static transfer from graded-rings parent
+`faf225f03254b0261cc6aa0530aded30e4e6e69a` preserves the original
+mathematical declarations, helper privacy, hypotheses, proofs and direct-client
+proofs. Its native envelope, project import, aggregate and root witness,
+standalone destination guide, metadata and wiring are by worker-b Hive Task
+`hive-request-1ea4bc1b3fbaba69e5e89127469d5bdb7d067cf7`, UID
+`4883019e-7df8-4c54-a531-c0e01c705167`, under owning graded-rings #59.
+Atlas separately chose this delivery home at incubator #166/59181. The earlier
+positive-weight arithmetic implementation/client and worker-a mathematical
+exposition have their distinct credited authors in the previous section;
+Atlas's source-independent interface design is distinct from this proof author.
+No incubator Git ancestry is brought into this deliverable history.
+
+Rights rest on the identified original first-party Lean contribution, original
+project exposition, independently reviewed exact source and adopted Apache-2.0
+terms, **not** on adding a header alone. The motivating Vakil *The Rising Sea*,
+October 21, 2025 draft, §7.4.4 Exercise 7.4.G (printed pp. 215–216) and
+grading conventions (pp. 151–152), has original asset SHA-256
+`d07177aa0317c13490c170fc6ccc6a2ee07989a9120d9958ed3453eefe5b2784`;
+no PDF, substantive textbook passage, figure or third-party proof code is
+included. Mathlib and the already delivered `GradedRings.WeightedBlocks` are
+dependencies, not copied third-party expression. At the initial September 28,
+2026 destination checkpoint, the applicable strict three-target build, full
+actual-origin private/generated-inclusive standard-axiom audit, fresh exact-
+candidate promotion/rights review, maintainer acceptance, protected integration,
+verified official release and any source correspondence remain separate gates.
+
 ## Weighted evaluation into naturally graded rings
 
 The exact accepted *isolated* implementation was incubator commit

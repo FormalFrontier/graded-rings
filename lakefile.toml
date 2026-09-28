@@ -13,7 +13,7 @@ name = "GradedRings"
 [[lean_lib]]
 name = "GradedRingsTests"
 srcDir = "test"
-roots = ["Axioms", "FiniteType", "HomogeneousLifts", "HomogeneousLocalizationMap", "HomogeneousPrime", "InterfaceClient", "Localization", "LocalizationInterface", "LocalizationRootInterface", "Noetherian", "PrimeInterface", "PrimeRootInterface", "Quotient", "QuotientInterface", "QuotientRootInterface", "RootClient", "Veronese", "VeroneseDegreeOne", "CoherentTailVeronese", "WeightedBlocks", "WeightedEvaluation"]
+roots = ["Axioms", "FiniteType", "HomogeneousLifts", "HomogeneousLocalizationMap", "HomogeneousPrime", "InterfaceClient", "Localization", "LocalizationInterface", "LocalizationRootInterface", "Noetherian", "PrimeInterface", "PrimeRootInterface", "Quotient", "QuotientInterface", "QuotientRootInterface", "RootClient", "Veronese", "VeroneseDegreeOne", "CoherentTailVeronese", "WeightedBlocks", "WeightedEvaluation", "WeightedBlockAdjoin"]
 
 [[lean_lib]]
 name = "GradedRingsExamples"
