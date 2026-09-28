@@ -263,4 +263,21 @@ private theorem weightedVeroneseGenerators_root (weights : ι → ℕ)
 
 end WeightedVeroneseGenerators
 
+section VeroneseFiniteType
+
+variable {S : Type u} {σ : Type v} {ι : Type w} [CommRing S] [Fintype ι]
+variable [SetLike σ S] [AddSubgroupClass σ S]
+variable (𝒮 : ℕ → σ) [GradedRing 𝒮]
+
+private theorem veroneseFiniteType_root (weights : ι → ℕ)
+    (generators : ∀ i : ι, 𝒮 (weights i))
+    (hgen : Algebra.adjoin (𝒮 0) (Set.range (fun i => (generators i : S))) = ⊤)
+    (index : ℕ) (index_pos : 0 < index) :
+    Algebra.FiniteType (GradedRing.Veronese.component 𝒮 index 0)
+      (GradedRing.Veronese.VeroneseRing 𝒮 index) :=
+  GradedRing.Veronese.finiteType_of_finite_homogeneous_generators
+    𝒮 weights generators hgen index index_pos
+
+end VeroneseFiniteType
+
 end GradedRingsTest.RootClient

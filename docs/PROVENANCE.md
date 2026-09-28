@@ -643,6 +643,61 @@ author-distinct destination review, maintainer acceptance, protected
 integration, separately reviewed verified release and source correspondence
 are separate subsequent gates under owning issue #67.
 
+## Finite type of prescribed positive whole Veronese rings
+
+The reusable `GradedRing.Veronese.finiteType_of_finite_homogeneous_generators`
+and `GradedRing.Veronese.finiteType_of_finiteType` were first implemented by
+worker-b Hive Task `hive-request-7409da348fa71e5989914571ccac1d18d9d8f63c`
+(UID `867d8cc9-ae78-4630-8884-8c1bf74e56c4`) in isolated accepted code
+`6e5555c9af60edd3c7c56b1ea94010f06c330d42` (tree
+`4cbcf309fb7d674965e821e32566e8ab511072c0`). Its original 5,509-byte
+producer, 6,900-byte ordinary client and 1,617-byte guide have SHA-256
+`07a031758d751fe9f93b2ab34b5e5b737e8258b2d75b4d8b9391ea0a059c7dcb`,
+`a8b6d36828eebd977cbda7cc6ec4cf74637e6418b2528b2f982002c223242ab0`
+and `5c2b3b478be0772825bd7ca6a345319dea5ea0cdfe233726225565608deb83b0`.
+Its complete corrected original evidence is `881ce237e940093862b6e4510b3b4dc5f0fc9b86`,
+`research/evidence/veronese-finite-type/REPORT.md` (SHA-256
+`e16d5bd51af357fdca644c2549af8ba925303a700819a2d485c5042b18af6919`):
+the pinned cache-first focused producer/client build succeeded, and 21
+actual-origin producer/client declarations including private and generated
+ones passed a full transitive check allowing only `propext`,
+`Classical.choice` and `Quot.sound`, without additional axioms, admissions,
+unsafe or partial declarations.
+
+Fresh independent worker-a review by Hive Task
+`hive-request-d3cf8445db2f67277d03e7f6cf646c173e68ae0c` (UID
+`a2791ce3-cf18-4cae-8ae3-201c13e79c86`) APPROVED that **isolated exact
+code** in report-only revision `27fbbfeb57f281a47ceaa674313e0bbd3d45b54a`,
+`research/reviews/veronese-finite-type/REPORT.md` (SHA-256
+`38d4496730ecd3132c4951561f587c94d51ca943e2a1567b2c6efc2a49e93fda`).
+Atlas accepted the isolated candidate in incubator issue #174, comment 60032,
+and selected this destination home in comment 60081. Neither is shared-main
+integration, destination review, official publication or source coverage.
+
+This distinct static transfer is by worker-b Hive Task
+`hive-request-8a815ecb69e41d2137adfe71bf53dcec5dbdab5d` (UID
+`2fbf4589-ad58-46bf-8055-45fd7dd1925e`) from accepted Graded Rings parent
+`d24ef447b3787bf47b54f9815868f8648a59f25d` (tree
+`65dd45272d4baa5bb044c37e5be6faedd82c9892`). It preserves the
+producer and ordinary-client mathematical expressions byte-for-byte apart
+from the exact import substitutions, and adds the generic aggregate witness,
+standalone guide, public wiring and metadata. The client retains attribution
+for the project-authored `test/FiniteVeronese.lean` mixed-weight fixture.
+Original Apache-2.0 and actual author Task/UID headers remain intact; no
+incubator ancestry, third-party proof code, source PDF or book expression
+enters the destination history. The polynomial-only background for Exercise
+7.4.H in the unchanged source metadata does not assert a whole-ring result;
+this separate result needs its own source-specific correspondence assessment.
+
+The original focused build/audit/review applies only to its original graph.
+At this September 28, 2026 static transfer checkpoint, the native strict
+three-target destination build, full actual-origin private/generated-inclusive
+transitive standard-three audit and fresh author-distinct exact-destination
+review remain open, as do Atlas's acceptance, protected integration,
+separately reviewed verified official publication and any source-coverage
+decision. Owning destination issue #69 records later exact-revision evidence;
+the preceding polynomial contribution has its own separate publication order.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at

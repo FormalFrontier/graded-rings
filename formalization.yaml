@@ -12,7 +12,10 @@ project:
     homogeneous elements over actual degree-zero coefficients, finite
     positive-weight blocks of finitely supported natural exponent vectors,
     positive-weight polynomial monomial-adjoin membership, prescribed-index
-    weighted-polynomial generation with arbitrary weights and coefficients, and
+    weighted-polynomial generation with arbitrary weights and coefficients,
+    finite type of every prescribed positive whole selected ring over its actual
+    new zero component from arbitrary-weight homogeneous generators or native
+    finite-type input, and
     prime-multiplicity valuations with homogeneous polynomial applications.
   authors:
     - Formal Frontier Agents
@@ -87,7 +90,7 @@ sources:
 
 status:
   scope: >-
-    Nineteen production leaves, an aggregate native module, twenty-four private regression
+    Twenty production leaves, an aggregate native module, twenty-five private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
@@ -140,7 +143,14 @@ status:
     produces such a family and some positive selected index. Neither result
     requires a field, domain, Nontrivial, Noetherianity or equal weights, nor
     gives an all-indices or Proj conclusion. No complete-source
-    or release-acceptance claim follows from this metadata.
+    or release-acceptance claim follows from this metadata. Separately, finite
+    homogeneous generators of arbitrary natural weights, including zero,
+    over the entire old degree-zero ring imply finite type of the whole
+    selected ring at every independently prescribed positive index over its
+    entire actual new zero component. Native finite type over the old degree-zero
+    component supplies such generators. No field, domain, Nontrivial,
+    Noetherianity, positive-weight or equal-weight assumption is needed;
+    neither index zero nor new degree-one generation at every index follows.
   main_results:
     - declaration: Ideal.Quotient.gradedRing
       file: GradedRings/Quotient.lean
@@ -214,6 +224,10 @@ status:
       file: GradedRings/FiniteVeronese.lean
     - declaration: MvPolynomial.exists_finset_weightedVeronese_generators
       file: GradedRings/WeightedVeroneseGenerators.lean
+    - declaration: GradedRing.Veronese.finiteType_of_finite_homogeneous_generators
+      file: GradedRings/VeroneseFiniteType.lean
+    - declaration: GradedRing.Veronese.finiteType_of_finiteType
+      file: GradedRings/VeroneseFiniteType.lean
 
 automation:
   methods:
@@ -283,6 +297,15 @@ review:
     standard-three audit, fresh destination and rights review, maintainer
     acceptance, protected integration, separately verified official release
     and source correspondence are distinct revision-specific gates.
+
+    At the 2026-09-28 prescribed-positive-index whole-ring finite-type static
+    transfer checkpoint, isolated accepted original mathematics has cache-first
+    focused build, full 21-origin private/generated-inclusive standard-three
+    evidence and independent original review. Those do not check this adapted
+    destination graph, root witness or full three-target build. Its full
+    actual-origin transitive standard-three audit, independent exact-destination
+    and rights review, owner acceptance, protected integration, separately
+    verified publication and source correspondence remain distinct decisions.
 
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
@@ -360,3 +383,12 @@ acknowledgements: >-
   Their exact identities, original evidence and review references are recorded
   in docs/PROVENANCE.md. Isolated acceptance is not changed-graph destination
   verification, release or whole-exercise source coverage.
+  A separate Worker B Task authored the isolated prescribed-positive-index
+  whole-ring finite-type producer, client and guide, using the separately
+  accepted weighted-polynomial prerequisite; a fresh Worker A Task reviewed
+  that original candidate. A distinct Worker B Task transferred the original
+  proofs by changing only their imports, and supplied destination public
+  wiring, generic root witness, standalone guide and metadata. Their actual
+  Task identities, UIDs, frozen code, corrected evidence and original review
+  references are recorded in docs/PROVENANCE.md. Original review is not
+  verification of the changed destination graph or source correspondence.
