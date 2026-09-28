@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** fourteen-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** fifteen-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -24,6 +24,15 @@ witness](../test/RootClient.lean) are not part of the historical native snapshot
 At the September 28, 2026 static transfer checkpoint, the destination build,
 complete standard-axiom audit and independent promotion review remain distinct
 gates; this manual guide is not computational or review evidence.
+
+The [positive-weight block guide](WeightedBlocks.md) states the explicit
+nonminimal bound, positivity hypothesis, whole-vector equality, exact block
+count and empty/zero-block limits. Its [ordinary direct client](../test/WeightedBlocks.lean)
+and [generic aggregate-root witness](../test/RootClient.lean) are new current
+material, not inputs to the unchanged historical snapshot. At the September
+28, 2026 transfer checkpoint, isolated source evidence does not certify the
+adapted destination graph; destination build/axiom and fresh review gates
+remain open.
 
 [`API-initial-snapshot.md`](API-initial-snapshot.md) is byte-for-byte the native
 doc-gen4 output for the original nine production leaves: 104 exposed

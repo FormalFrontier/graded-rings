@@ -8,7 +8,8 @@ project:
     irrelevant-ideal finiteness, homogeneous prime correspondence,
     symmetric algebras, selected-component Veronese rings, coherent-tail
     equivalences of whole selected rings, positive-index degree-one generation
-    under an old-ring generation hypothesis, and
+    under an old-ring generation hypothesis, finite positive-weight blocks of
+    finitely supported natural exponent vectors, and
     prime-multiplicity valuations with homogeneous polynomial applications.
   authors:
     - Formal Frontier Agents
@@ -52,10 +53,23 @@ sources:
       with actual degree-zero coefficients. This result neither proves a Proj
       conclusion nor establishes exercise correspondence or source coverage.
       No original source expression is redistributed here.
+  - title: "The Rising Sea: Foundations of Algebraic Geometry — §7.4.4, Exercise 7.4.G"
+    authors:
+      - Ravi Vakil
+    type: book
+    location: "October 21, 2025 draft, original printed/physical PDF p. 215; continuation p. 216; grading conventions pp. 151–152"
+    relationship: background
+    note: >-
+      Background for the independently reusable arithmetic decomposition of
+      finite positive-weight exponent vectors. The explicit block bound is
+      not generally minimal, and this API does not establish finite-Veronese
+      generation, polynomial factorization, Proj or source correspondence.
+      The mathematical exposition and original Lean proofs are project
+      contributions; no original source expression is redistributed here.
 
 status:
   scope: >-
-    Fourteen production leaves, an aggregate native module, nineteen private regression
+    Fifteen production leaves, an aggregate native module, twenty private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
@@ -80,7 +94,12 @@ status:
     laws and, for 0 < n, the degree-zero ring-hom square; no map on missing
     low degrees or extra domain/nontriviality hypothesis is required. No coefficient
     regrouping, chart/Proj or scheme equivalence is supplied here.
-    No complete-source or release-acceptance claim follows from this metadata.
+    Independently, for finite indices with strictly positive natural weights,
+    an explicit positive (not generally minimal) size D gives an exact
+    k-block decomposition of any finitely supported natural vector of weight
+    k * D, preserving the entire vector. This arithmetic API does not prove
+    finite-Veronese generation or polynomial factorization. No complete-source
+    or release-acceptance claim follows from this metadata.
   main_results:
     - declaration: Ideal.Quotient.gradedRing
       file: GradedRings/Quotient.lean
@@ -132,6 +151,12 @@ status:
       file: GradedRings/CoherentTailVeronese.lean
     - declaration: GradedRing.Veronese.CoherentTail.TailEquiv.selected_zero
       file: GradedRings/CoherentTailVeronese.lean
+    - declaration: Finsupp.weightedBlockSize
+      file: GradedRings/WeightedBlocks.lean
+    - declaration: Finsupp.weightedBlockSize_pos
+      file: GradedRings/WeightedBlocks.lean
+    - declaration: Finsupp.exists_weightedBlocks
+      file: GradedRings/WeightedBlocks.lean
 
 automation:
   methods:
@@ -168,6 +193,12 @@ review:
     native build, complete private/generated transitive axiom audit, fresh
     promotion/rights review, maintainer acceptance or release is asserted by
     the earlier isolated checks or this metadata.
+    At the 2026-09-28 weighted-block static transfer checkpoint, original
+    isolated focused-build, complete actual-origin private/generated-inclusive
+    transitive standard-three audit and independent review do not establish
+    applicable destination native-module/three-target checks, fresh promotion
+    or rights review, maintainer acceptance, protected integration, official
+    release or source correspondence.
 
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
@@ -202,3 +233,10 @@ acknowledgements: >-
   and added root use, standalone guide, wiring and metadata here. Their exact
   names, UIDs and frozen revisions are in docs/PROVENANCE.md. The original
   source review is separate from destination review and source correspondence.
+  A separate Worker A Task authored the positive-weight arithmetic exposition;
+  a Worker B Task independently authored the incubator producer and ordinary
+  client, and a fresh Worker A Task reviewed that isolated source. A distinct
+  Worker B Task transferred the original proof bodies and adapted native
+  imports, clients, documentation, root witness and metadata for this library.
+  Exact names, UIDs and revisions are in docs/PROVENANCE.md. Original source
+  review is not acceptance or verification of this destination graph.

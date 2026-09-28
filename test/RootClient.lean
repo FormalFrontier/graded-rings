@@ -185,4 +185,20 @@ private theorem homogeneous_polynomial_lift
 
 end HomogeneousLifts
 
+section WeightedBlocks
+
+variable {ι : Type*} [Fintype ι]
+
+private theorem weighted_blocks_root (w : ι → ℕ) (hw : ∀ i, 0 < w i)
+    (k : ℕ) (f : ι →₀ ℕ)
+    (hf : Finsupp.weight w f = k * Finsupp.weightedBlockSize w) :
+    0 < Finsupp.weightedBlockSize w ∧
+      ∃ blocks : Fin k → (ι →₀ ℕ),
+        (∑ j, blocks j) = f ∧
+          ∀ j, Finsupp.weight w (blocks j) = Finsupp.weightedBlockSize w :=
+  ⟨Finsupp.weightedBlockSize_pos w hw,
+    Finsupp.exists_weightedBlocks w hw k f hf⟩
+
+end WeightedBlocks
+
 end GradedRingsTest.RootClient

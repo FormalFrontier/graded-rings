@@ -4,7 +4,8 @@ Reusable Lean constructions for graded quotients and localizations,
 degree-multiplying homogeneous-localization maps, homogeneous polynomial lifts,
 finiteness, homogeneous prime ideals, symmetric algebras, selected-component
 Veronese rings, coherent-tail equivalences of whole selected rings,
-positive-Veronese degree-one generation and prime-multiplicity valuations.
+positive-Veronese degree-one generation, finite positive-weight exponent blocks,
+and prime-multiplicity valuations.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
 under [Apache-2.0](LICENSE). Atlas is the responsible maintainer on behalf of the
@@ -57,6 +58,13 @@ release publication, source correspondence or book coverage.
   degree-preserving inverse maps; for `0 < n`, `selected_zero` gives the exact
   degree-zero coefficient square. Neither maps on missing original low degrees
   nor a Proj/scheme equivalence follow.
+- **Positive-weight exponent blocks:** For any finite index type and strictly
+  positive natural weights, [weighted-block decomposition](docs/WeightedBlocks.md)
+  splits a finitely supported natural exponent vector of weight `k * D` into
+  exactly `k` vectors of weight `D`, whose sum is the **whole input vector**;
+  `D = max 1 (Fintype.card ι) * ∏ i, w i` is positive but need not be minimal.
+  No coefficient ring, finite-Veronese generation or polynomial factorization
+  follows from this combinatorial result alone.
 
 ## Mathematical scope
 
@@ -75,6 +83,7 @@ release publication, source correspondence or book coverage.
 | [MvPolynomialAway](GradedRings/MvPolynomialAway.lean) | Over a field and an arbitrary variable type, bounds multiplicity by homogeneous degree, characterizes units by valuation one, and proves irreducibility at denominator order one for a positive-degree homogeneous prime polynomial. |
 | [Veronese](GradedRings/Veronese.lean) | `GradedRing.Veronese.VeroneseRing 𝒮 n` selects the whole old components `𝒮 (n*j)` and has an internal grading for any `n`. The canonical inclusion is injective and identifies the whole degree-zero component when `0 < n`. No finiteness/domain assumption or scheme API. See the [selected-component guide](docs/Veronese.md). |
 | [CoherentTailVeronese](GradedRings/CoherentTailVeronese.lean) | `GradedRing.Veronese.CoherentTail.TailEquiv 𝒜 ℬ N` packages an actual degree-zero ring equivalence, additive equivalences in all degrees at least `N > 0`, and compatibility with coefficients and products. For `N ≤ n`, `selectedRingEquiv` identifies the **whole** selected rings; `selectedGradedHom` and its inverse preserve selected degrees, and `selected_zero` commutes with the degree-zero coefficient equivalence when `0 < n`. Arbitrary natural-graded commutative rings, including zero rings, are allowed; no low-degree map is implied. See the [coherent-tail guide](docs/CoherentTailVeronese.md). |
+| [WeightedBlocks](GradedRings/WeightedBlocks.lean) | `Finsupp.weightedBlockSize_pos` and `Finsupp.exists_weightedBlocks` give a positive explicit bound and an exact `Fin k` decomposition of whole finitely supported natural vectors for finite indices, positive natural weights and weight `k * weightedBlockSize w`. See the [weighted-block guide](docs/WeightedBlocks.md). |
 | [VeroneseDegreeOne](GradedRings/VeroneseDegreeOne.lean) | `GradedRing.Veronese.adjoin_component_one_eq_top`: if `0 < n` and `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the whole selected ring is generated over its **actual new degree-zero component** by **all** of its new degree-one component. No finite-variable, finite-type, domain, field, reducedness or nontriviality assumption. See the [degree-one-generation guide](docs/VeroneseDegreeOne.md). |
 
 The full localized ring and its degree-zero subring are different objects.
@@ -92,7 +101,8 @@ coverage of a mathematical book follows from this API.
 
 The [current hand-maintained API map](docs/API.md) links the original leaves and
 the localization, homogeneous-lifts and Veronese guides, including the
-[coherent-tail guide](docs/CoherentTailVeronese.md). The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
+[coherent-tail guide](docs/CoherentTailVeronese.md) and
+[weighted-block guide](docs/WeightedBlocks.md). The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
 applies only to the earlier 28-module tree; see [documentation reproduction](docs/README.md)
 for its exact inputs, limits and separately pinned generator.
 
@@ -110,7 +120,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all nineteen regression-test modules and
+build includes the aggregate library, all twenty regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -118,10 +128,11 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 38 shipped Lean modules use Lean's native module system. A downstream native
+All 40 shipped Lean modules use Lean's native module system. A downstream native
 module can ordinary-import `GradedRings` for the full API, or a subject leaf
 such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
 `GradedRings.Veronese`, `GradedRings.CoherentTailVeronese`,
+`GradedRings.WeightedBlocks`,
 `GradedRings.VeroneseDegreeOne` or
 `GradedRings.SymmetricAlgebra`. Public imports
 re-export the intended interfaces. The selected-ring leaf also exports its
@@ -238,3 +249,13 @@ native three-target build and full private/generated transitive standard-axiom
 audit; fresh independent promotion/rights review, protected integration and
 official publication are subsequent distinct gates. This algebra does not
 establish Vakil's §7.4.4 Exercise 7.4.F Proj conclusion or source coverage.
+
+At the September 28, 2026 weighted-block static transfer checkpoint, its
+original isolated focused-build and private/generated-inclusive axiom evidence
+and independent source review do not check this native destination module,
+ordinary client, aggregate root or expanded test graph. The applicable
+three-target build, full transitive standard-three audit, independent promotion
+and rights review, maintainer acceptance, protected integration and official
+publication remain separate gates. The background Exercise 7.4.G requires
+further graded-algebra mathematics; neither source correspondence nor finite
+Veronese generation follows from this arithmetic contribution.

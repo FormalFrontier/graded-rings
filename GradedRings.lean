@@ -18,3 +18,4 @@ public import GradedRings.Quotient
 public import GradedRings.SymmetricAlgebra
 public import GradedRings.Veronese
 public import GradedRings.VeroneseDegreeOne
+public import GradedRings.WeightedBlocks

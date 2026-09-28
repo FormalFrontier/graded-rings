@@ -9,7 +9,8 @@ clients, see the [mathematical overview](../README.md), the
 the [homogeneous-lifts guide](HomogeneousLifts.md), the
 [selected-component Veronese guide](Veronese.md), the
 [coherent-tail equivalence guide](CoherentTailVeronese.md), the
-[positive-Veronese generation guide](VeroneseDegreeOne.md), and the
+[positive-Veronese generation guide](VeroneseDegreeOne.md), the
+[weighted-block guide](WeightedBlocks.md), and the
 [documentation notes](README.md).
 
 The [initial native snapshot](API-initial-snapshot.md) displays 104 declarations
@@ -36,6 +37,7 @@ links are accurate in the original revision, not necessarily here.
 | [`GradedRings.Veronese`](../GradedRings/Veronese.lean) | `GradedRing.Veronese.VeroneseRing` and its whole selected-degree `component`; `inclusion`, `inclusion_injective` for positive index, `subring` as its exact range, and `zeroRingEquiv` for positive index. See the [guide](Veronese.md). |
 | [`GradedRings.CoherentTailVeronese`](../GradedRings/CoherentTailVeronese.lean) | `GradedRing.Veronese.CoherentTail.TailEquiv` packages compatible actual degree-zero and high-degree equivalences. `TailEquiv.selectedRingEquiv` identifies entire selected rings at `N ≤ n`, while `selectedGradedHom`, its graded inverse laws and `selected_zero` respect the native grading and actual zero-component rings. See the [guide](CoherentTailVeronese.md). |
 | [`GradedRings.VeroneseDegreeOne`](../GradedRings/VeroneseDegreeOne.lean) | `GradedRing.Veronese.adjoin_component_one_eq_top`: assuming `0 < n` and `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the entire selected ring is generated over `component 𝒮 n 0` by its whole `component 𝒮 n 1`. See the [guide](VeroneseDegreeOne.md). |
+| [`GradedRings.WeightedBlocks`](../GradedRings/WeightedBlocks.lean) | `Finsupp.weightedBlockSize`, `Finsupp.weightedBlockSize_pos`, `Finsupp.exists_weightedBlocks`: for finite indices and strictly positive natural weights, every exponent vector of weight `k * D` is the sum of exactly `k` weight-`D` blocks, where `D = max 1 (Fintype.card ι) * ∏ i, w i`. See the [guide](WeightedBlocks.md). |
 
 The degree-multiplying map module does **not** replace the existing same-ring grading or
 zero-component equivalence. For natural gradings `𝒜`, `ℬ` of arbitrary
@@ -114,15 +116,34 @@ low-degree extension, coefficient regrouping or any Proj/scheme conclusion.
 Its September 28, 2026 static transfer checkpoint carries no destination
 build/audit or independent acceptance; those are separate gates.
 
+## Positive-weight exponent blocks
+
+`Finsupp.weightedBlockSize w` requires only a finite index type and defines
+an explicit natural bound; positivity requires `∀ i, 0 < w i`. Given this
+same condition and `Finsupp.weight w f = k * weightedBlockSize w`, the
+exact-block theorem returns `blocks : Fin k → (ι →₀ ℕ)` with both
+`(∑ j, blocks j) = f` and the exact weight of every block. It includes
+empty index types and `k = 0`; no minimality, finite-Veronese generation or
+polynomial evaluation is claimed. The [direct ordinary-import client](../test/WeightedBlocks.lean)
+tests mixed, empty, singleton and unit weights; the [aggregate-root client](../test/RootClient.lean)
+checks generic access to positivity and exact decomposition.
+
+The original incubator focused builds and actual-origin transitive
+standard-three audit cover only the isolated original source, not this
+destination native module or changed graph. At the September 28, 2026 static
+transfer checkpoint, destination build, full private/generated-inclusive
+standard-axiom evidence and independent promotion review remain open gates.
+
 ## Aggregate, clients and examples
 
-[`GradedRings`](../GradedRings.lean) publicly imports all fourteen production leaves.
-The default test target registers nineteen private regression clients, including
+[`GradedRings`](../GradedRings.lean) publicly imports all fifteen production leaves.
+The default test target registers twenty private regression clients, including
 the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 [direct homogeneous-lifts client](../test/HomogeneousLifts.lean), the
 [direct Veronese client](../test/Veronese.lean), the
 [degree-one-generation client](../test/VeroneseDegreeOne.lean), the
-[coherent-tail client](../test/CoherentTailVeronese.lean), and the
+[coherent-tail client](../test/CoherentTailVeronese.lean), the
+[weighted-block client](../test/WeightedBlocks.lean), and the
 [aggregate-import witness](../test/RootClient.lean). Four standalone
 [examples](../examples/) remain registered. These clients and examples
 are not extra advertised public interfaces. For old native displayed types

@@ -308,6 +308,56 @@ review, native build and complete transitive standard-axiom audit, acceptance,
 publication and source correspondence remain separate future decisions.
 The result is algebraic: it does not establish the exercise's Proj conclusion.
 
+## Finite positive-weight exponent blocks
+
+Original mathematical quotient/remainder exposition: worker-a Hive Task
+`hive-request-2e65a2cb560898e12809071b7c1bf0802e8b912b`, UID
+`ff03eeba-64b1-4705-bdb3-645075b8cb24`, accepted research revision
+`99fc1f4c4db929bef77bf1ae36c9f83b8f67d75a` in source-vakil-foag.
+Original source-independent Lean proof, direct ordinary client and isolated
+guide: worker-b Hive Task
+`hive-request-39fb59e3f9cb9338a194533121cce60000ac40a3`, UID
+`8e5d9756-58bd-463c-9d7c-97e1c0bc4d55`. Accepted isolated code input:
+incubator `807f3e5fbc1b53333fe88347e7f00f40e22f188f`, tree
+`248c189889b8ec6152f50ab2cb7580b130ed3330`. Focused original-project
+build and complete actual-origin private/generated-inclusive standard-three
+evidence: incubator `d0ab13608f6f266c4e9c9fcb2303e05ab8a218a4`.
+Independent source-code/rights reviewer: worker-a Hive Task
+`hive-request-3fa179b40259c3df1a529f2c7e792e2176bbc858`, UID
+`2d045d36-4940-4fcc-ac6e-d9bf1315aec6`, review report revision
+`002d37807357f27aa986c2a260329b51fd06e415`. Atlas accepted this
+*isolated* candidate under incubator #162; this is not destination evidence.
+
+Static destination transfer, native-module envelope, generic root witness,
+standalone guide, wiring and metadata: separate worker-b Hive Task
+`hive-request-1c2f48ad1c945d52211972b3803cd12c0262749f`, UID
+`80f37f8e-4f3f-4641-9c2d-0e5fb6eabeb9`, starting at sole graded-rings
+parent `299e47add1772d9046d65306d7b084587d9935a1` (official published
+`db2a1d555639e2a381abbf755982ffdcf126621e` has the same tree). The
+producer definitions, statements, hypotheses, private helper and proofs are
+preserved; the direct client retains its proof bodies. The authentic project
+notice, native-module imports/visibility and client namespace are adapted.
+The weighted decomposition is a reusable `Finsupp` fact, not a theorem about
+graded ring generation. The destination promotion owner record is
+graded-rings #50.
+No incubator Git ancestry enters the destination branch.
+
+The exact original-source locator is Vakil, *The Rising Sea*, October 21,
+2025 draft, §7.4.4, Exercise 7.4.G, original printed/physical PDF p. 215,
+continuation p. 216; grading and degree-zero conventions on pp. 151–152.
+The independently verified original asset SHA-256 is
+`d07177aa0317c13490c170fc6ccc6a2ee07989a9120d9958ed3453eefe5b2784`;
+source research and source correspondence remain outside this library. The
+original implementation and project exposition are identified, original
+project expression is eligible under the adopted Apache-2.0 policy, and no
+book/PDF text, diagrams or external proof code were copied. A new license
+header alone would not establish this rights assessment; existing contributor
+and third-party dependency notices are preserved. At the September 28, 2026
+static checkpoint, applicable native destination build and actual-origin full
+standard-axiom audit, fresh independent promotion/rights review, Atlas's
+acceptance, protected integration, verified official release and any source
+correspondence remain distinct future decisions.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at
