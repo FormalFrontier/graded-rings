@@ -125,4 +125,15 @@ private def homogeneous_localization_degree_mul_map (f : A →+* B) (d : ℕ)
 
 end DegreeMultiplyingLocalization
 
+section Veronese
+
+variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]
+  [AddSubgroupClass σ S] (𝒮 : ℕ → σ) [GradedRing 𝒮]
+
+private def selected_veronese_inclusion (n : ℕ) :
+    GradedRing.Veronese.VeroneseRing 𝒮 n →+* S :=
+  GradedRing.Veronese.inclusion 𝒮 n
+
+end Veronese
+
 end GradedRingsTest.RootClient

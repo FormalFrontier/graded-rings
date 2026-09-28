@@ -5,8 +5,8 @@ project:
   description: >-
     Graded quotients and localizations, degree-multiplying maps of homogeneous
     localizations, irrelevant-ideal finiteness, homogeneous prime correspondence,
-    symmetric algebras, and prime-multiplicity valuations with homogeneous
-    polynomial applications.
+    symmetric algebras, selected-component Veronese rings, and
+    prime-multiplicity valuations with homogeneous polynomial applications.
   authors:
     - Formal Frontier Agents
   license: Apache-2.0
@@ -16,11 +16,13 @@ sources:
     authors:
       - Ravi Vakil
     type: book
-    location: "October 21, 2025 draft, graded-ring exercises 4.5.F–H and 5.4.N"
+    location: "October 21, 2025 draft, exercises 4.5.F–H, 5.4.N and §7.4.4/7.4.D"
     relationship: background
     note: >-
-      Mathematical motivation for reusable constructions; neither complete
-      source coverage nor redistribution of the source text is asserted.
+      Mathematical motivation for reusable constructions, including the
+      selected-component Veronese ring in §7.4.4, Exercise 7.4.D; this
+      library supplies only its algebraic ring layer, not Proj invariance.
+      Neither complete source coverage nor redistribution of the source text is asserted.
       The generic Lean expression was separately developed in this library.
   - title: "mathlib"
     authors:
@@ -35,12 +37,15 @@ sources:
 
 status:
   scope: >-
-    Ten production leaves, an aggregate native module, fifteen private regression
+    Eleven production leaves, an aggregate native module, sixteen private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
     denominators, not a domain or regularity assumption. Valuation applications
     use their stated domain, divisibility, field and degree hypotheses.
+    The selected-component Veronese ring and its internal grading exist for any
+    natural index; injective inclusion and the degree-zero equivalence require
+    a positive index. No chart or scheme equivalence is supplied here.
     No complete-source or release-acceptance claim follows from this metadata.
   main_results:
     - declaration: Ideal.Quotient.gradedRing
@@ -63,6 +68,14 @@ status:
       file: GradedRings/HomogeneousPrimeMultiplicity.lean
     - declaration: MvPolynomial.irreducible_of_awayPrimeMultiplicityValuation_eq_exp_one
       file: GradedRings/MvPolynomialAway.lean
+    - declaration: GradedRing.Veronese.VeroneseRing
+      file: GradedRings/Veronese.lean
+    - declaration: GradedRing.Veronese.inclusion
+      file: GradedRings/Veronese.lean
+    - declaration: GradedRing.Veronese.inclusion_injective
+      file: GradedRings/Veronese.lean
+    - declaration: GradedRing.Veronese.zeroRingEquiv
+      file: GradedRings/Veronese.lean
 
 automation:
   methods:
@@ -79,8 +92,11 @@ review:
   status: "Revision-specific independent review and release decisions are recorded externally"
   notes: >-
     This artifact description does not certify proof integrity, rights
-    clearance, publication or source completion. Full exact-candidate
-    review and acceptance remain separate from ordinary earlier reviews.
+    clearance, publication or source completion. The Veronese destination
+    code has exact-revision independent promotion review, owner code acceptance
+    and applicable successful three-target build and complete transitive
+    standard-axiom checks, including private and generated declarations.
+    Final release-candidate review, acceptance and publication remain separate.
 
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
@@ -92,6 +108,10 @@ acknowledgements: >-
   A separate Worker A Task supplied the degree-multiplying localization producer
   and client in the incubator; another Worker A Task adapted them for this
   library. Exact Task identities and revisions are in docs/PROVENANCE.md.
+  A separate Worker B Task wrote the selected-component Veronese ring and
+  algebra-only examples in the incubator; a later Worker B Task transferred
+  them into this library without changing the mathematical proof expressions.
+  Their distinct identities and exact source are in docs/PROVENANCE.md.
   Atlas adapted the native Markdown renderer from the earlier project recipes,
   including Anchor's original ideal-completion recipe; docs/README.md records
   that lineage. Prior artifact approval is not transferred.

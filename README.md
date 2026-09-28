@@ -2,7 +2,8 @@
 
 Reusable Lean constructions for graded quotients and localizations,
 degree-multiplying homogeneous-localization maps, finiteness, homogeneous prime
-ideals, symmetric algebras and prime-multiplicity valuations.
+ideals, symmetric algebras, selected-component Veronese rings and
+prime-multiplicity valuations.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
 under [Apache-2.0](LICENSE). Atlas is the responsible maintainer on behalf of the
@@ -24,6 +25,7 @@ clients and documentation; exact contributions are listed in
 | [PrimeMultiplicity](GradedRings/PrimeMultiplicity.lean) | For a prime element in a commutative domain with well-founded divisibility, `valuation` sends nonzero `r` to `exp (-multiplicity p r)`. Its extension to localization requires denominators to be non-zero-divisors. |
 | [HomogeneousPrimeMultiplicity](GradedRings/HomogeneousPrimeMultiplicity.lean) | Restricts that valuation to degree-zero homogeneous localization. On a nonzero homogeneous numerator over `p^n`, its value is `exp (n - multiplicity p x)`. Degrees form an additive commutative monoid. |
 | [MvPolynomialAway](GradedRings/MvPolynomialAway.lean) | Over a field and an arbitrary variable type, bounds multiplicity by homogeneous degree, characterizes units by valuation one, and proves irreducibility at denominator order one for a positive-degree homogeneous prime polynomial. |
+| [Veronese](GradedRings/Veronese.lean) | `GradedRing.Veronese.VeroneseRing 𝒮 n` selects the whole old components `𝒮 (n*j)` and has an internal grading for any `n`. The canonical inclusion is injective and identifies the whole degree-zero component when `0 < n`. No finiteness/domain assumption or scheme API. See the [selected-component guide](docs/Veronese.md). |
 
 The full localized ring and its degree-zero subring are different objects.
 The degree-multiplying map is distinct from this same-ring localization grading;
@@ -35,7 +37,7 @@ ring, and the valuation results do not apply to arbitrary rings with zero diviso
 No claim about complete coverage of a mathematical book follows from this API.
 
 The [current hand-maintained API map](docs/API.md) links the original leaves and
-the new guide. The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
+the localization and Veronese guides. The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
 applies only to the earlier 28-module tree; see [documentation reproduction](docs/README.md)
 for its exact inputs, limits and separately pinned generator.
 
@@ -53,7 +55,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all fifteen regression-test modules and
+build includes the aggregate library, all sixteen regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -61,11 +63,13 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 30 shipped Lean modules use Lean's native module system. A downstream native
+All 32 shipped Lean modules use Lean's native module system. A downstream native
 module can ordinary-import `GradedRings` for the full API, or a subject leaf
-such as `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient` or
-`GradedRings.SymmetricAlgebra`. Public imports re-export the intended
-interfaces; implementation helpers remain private.
+such as `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
+`GradedRings.Veronese` or `GradedRings.SymmetricAlgebra`. Public imports
+re-export the intended interfaces. The selected-ring leaf also exports its
+named technical grading and reindexing helpers; clients do not need to rely on
+them for the main API.
 Clients do not need `import all` or access to private names.
 
 The quotient, localization and prime-multiplicity tests compare full public
@@ -140,6 +144,8 @@ Additivity of denominator order then makes an order-one element irreducible.
 
 Ravi Vakil, *The Rising Sea: Foundations of Algebraic Geometry*, October 21, 2025
 draft, exercises around 4.5.F–H and 5.4.N motivate several constructions.
+Section 7.4.4, Exercise 7.4.D motivates the selected-component Veronese ring;
+this library supplies its algebraic ring layer, not the Proj isomorphism.
 The basis-free symmetric algebra also supports projective-space applications.
 These are mathematical references; no source PDF, figures or substantial source
 prose is distributed. Detailed source correspondence and gaps are maintained

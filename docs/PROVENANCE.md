@@ -24,7 +24,9 @@ contain the development commits themselves.
 
 The mathematical ideas draw on Vakil's *The Rising Sea*, October 21, 2025 draft,
 especially the graded-ring exercises 4.5.F–H and the denominator-order application
-5.4.N. A later source adapter or explanatory exposition is not automatically an
+5.4.N. Section 7.4.4, Exercise 7.4.D motivates the selected-component Veronese
+ring; only its algebraic ring layer is provided here, not Proj invariance.
+A later source adapter or explanatory exposition is not automatically an
 earlier source of the generic Lean proof. The project distributes its own formal
 expression and summaries, not the restricted-redistribution PDF or source prose.
 
@@ -97,6 +99,48 @@ Apache-2.0 notice and the native homogeneous-localization authors **Jujian Zhang
 and Eric Wieser**, alongside the original Task credit. Native quotient and
 same-index map constructions remain dependencies of the new algebraic proofs;
 the destination's collective author credit does not replace those notices.
+
+## Selected-component Veronese rings
+
+The original mathematical/code expression in
+[`GradedRings/Veronese.lean`](../GradedRings/Veronese.lean) and the algebra-only
+client examples in [`test/Veronese.lean`](../test/Veronese.lean) were written
+by worker-b Hive Task `hive-request-e97f548d3626371a173eb011840a7070b24d81bb`
+(UID `0e231558-4793-4185-8f55-2bad40d363bd`) in the incubator. The exact
+source commit is `c44fc718068e386312e657499b1be18042209d4b` (tree
+`e2a21550088d303b7994f640281b3c045a6af83e`); the 9,085-byte original
+ring file `Incubator/RingTheory/GradedAlgebra/Veronese.lean` has SHA-256
+`7d2a99aef90cfe6cabd74ae60dac0bf2f7f5d1969f4be7f2d3b485fa33583e0f`.
+Its accepted *isolated* mathematical candidate was independently reviewed by
+worker-a Task `hive-request-8b27bf143706fd619df99eb5ed82bc588ad80938`
+(UID `7323f9a9-149a-461e-98bf-282edc07b8ae`) in report-only revision
+`2cca84305bf0063eb6ef6e6da3c6d36afce98121`. The focused source-only
+verification is at `12c5e753c351170d6ee82d1f19fd51cc00235e81`.
+Neither historical review nor evidence checks this expanded destination graph.
+
+This destination transfer was prepared separately by worker-b Hive Task
+`hive-request-452e72b0249229e666237dac51cb3c6627c80ab7` (UID
+`9f4955d3-13a8-41a9-9f4a-e491538f56ee`) from the existing Graded Rings
+main snapshot. It retains all of the original ring's declarations,
+hypotheses and proof expressions, adds a truthful Apache-2.0 SPDX/collective
+author header, corrects the top-level summary to distinguish an arbitrary
+index from positive-index results, and splits five algebra-only examples into
+the direct client. The transfer also wires an aggregate import and a private
+root witness, and writes the [new guide](Veronese.md), API summaries and metadata.
+The guide is new project prose, not copied textbook text; the original
+incubator scheme guide was consulted for API meaning, not reproduced here.
+The original author and distinct transfer author receive separate credit;
+adding a license header or noting AI authorship does not itself clear rights.
+No new verbatim third-party code or assets were identified in the transferred
+ring/clients; mathlib APIs remain imported dependencies with their own
+attribution. Authentic earlier third-party notices and original contributions
+remain unchanged. Exact destination revision, independent promotion review,
+new-graph checks, acceptance and publication belong in the owning work record,
+not in this non-self-referential shipping tree. The destination code has since
+received exact-revision independent promotion review, successful three-target
+build and private-inclusive standard-axiom checks, and owner code acceptance;
+final release review, acceptance and publication are still separate.
+No source-coverage decision is claimed.
 
 ## Dependencies and redistribution boundaries
 

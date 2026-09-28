@@ -5,8 +5,9 @@ doc-gen4 run, a complete declaration listing or a proof certificate. Import
 `GradedRings` for the entire public interface, or import an individual
 `GradedRings.<Leaf>` module. For exact mathematical hypotheses and practical
 clients, see the [mathematical overview](../README.md), the
-[degree-multiplying localization guide](degree-multiplying-homogeneous-localization.md)
-and [documentation notes](README.md).
+[degree-multiplying localization guide](degree-multiplying-homogeneous-localization.md),
+the [selected-component Veronese guide](Veronese.md), and the
+[documentation notes](README.md).
 
 The [initial native snapshot](API-initial-snapshot.md) displays 104 declarations
 from the original nine production leaves and the then-current 28-module
@@ -28,8 +29,9 @@ links are accurate in the original revision, not necessarily here.
 | [`GradedRings.PrimeMultiplicity`](../GradedRings/PrimeMultiplicity.lean) | `PrimeMultiplicity.valuation` and `localizationValuation` under stated domain and denominator hypotheses. |
 | [`GradedRings.HomogeneousPrimeMultiplicity`](../GradedRings/HomogeneousPrimeMultiplicity.lean) | `HomogeneousLocalization.awayPrimeMultiplicityValuation`. |
 | [`GradedRings.MvPolynomialAway`](../GradedRings/MvPolynomialAway.lean) | Homogeneous polynomial multiplicity bound, unit criterion and irreducibility application. |
+| [`GradedRings.Veronese`](../GradedRings/Veronese.lean) | `GradedRing.Veronese.VeroneseRing` and its whole selected-degree `component`; `inclusion`, `inclusion_injective` for positive index, `subring` as its exact range, and `zeroRingEquiv` for positive index. See the [guide](Veronese.md). |
 
-The new map module does **not** replace the existing same-ring grading or
+The degree-multiplying map module does **not** replace the existing same-ring grading or
 zero-component equivalence. For natural gradings `𝒜`, `ℬ` of arbitrary
 commutative rings, its ordinary unital `f : A →+* B` must satisfy
 `hdeg : ∀ n a, a ∈ 𝒜 n → f a ∈ ℬ (d * n)` and the arbitrary submonoids must
@@ -50,9 +52,10 @@ The thirteen exposed names under `HomogeneousLocalization` are:
 
 ## Aggregate, clients and examples
 
-[`GradedRings`](../GradedRings.lean) publicly imports all ten production leaves.
-The default test target registers fifteen private regression clients, including
+[`GradedRings`](../GradedRings.lean) publicly imports all eleven production leaves.
+The default test target registers sixteen private regression clients, including
 the [direct map client](../test/HomogeneousLocalizationMap.lean) and
+[direct Veronese client](../test/Veronese.lean), and the
 [aggregate-import witness](../test/RootClient.lean). Four standalone
 [examples](../examples/) remain registered. These clients and examples
 are not extra advertised public interfaces. For old native displayed types
