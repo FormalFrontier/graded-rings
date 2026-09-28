@@ -485,6 +485,109 @@ standard-axiom check, fresh promotion and rights review, maintainer acceptance,
 protected integration, publication and source-specific correspondence remain
 separate revision-specific determinations.
 
+## Finite degree-one generation of a positive Veronese
+
+The source of the two mathematical theorem bodies, direct-client proofs and
+original standalone guide is the *isolated-accepted* incubator commit
+`3064bc3e9dfe13edc041bd384fd1eaa16a381367` (tree
+`f286e1fa970d2aa9884924c217a99e5aaed52ceb`), whose sole parent is
+accepted repaired adjoin C2 `96035f49afe3af3e74dd285c80db3b18f9615ef8`.
+The three original file SHA-256 digests respectively are
+`88c5c1cbe5de8017f8357d996d059bd30bcb60a3d519485b0c25828de96538d3`
+for `Incubator/RingTheory/GradedAlgebra/FiniteVeronese.lean`,
+`0016d4524e48b536b15eedf37cec10b94f5810b8b264efc8106aec4ee27134df`
+for `IncubatorTest/RingTheory/GradedAlgebra/FiniteVeronese.lean`, and
+`5ffd26aaa440d2b5ef5e5b96c107547c6c62ac77e575808044338c3357d1c984`
+for `docs/FiniteVeronese.md`. Original producer, proof, client and guide
+author: worker-b Hive Task
+`hive-request-65a1de5cb36d5c9acd4b1ec6c0e3e14b38c2ed29`, UID
+`442f82c5-c284-49b5-ad83-3cf383581925`. Its evidence-only child commit
+`f676de489fc1ca8b3c545c4910a1213ac86ae547` retains the original
+cache-first focused build and 3 producer / 19 client actual-kernel-origin
+complete transitive standard-three audit, report SHA-256
+`b360fd93347ea672cf129398af9c5281e3bbf0a2fd75d200d50f3b6262c663fb`.
+These original checks do not verify the changed destination dependency graph.
+
+Fresh worker-a Hive Task
+`hive-request-594f2fd401010bf2b8e1e5ce884b8fedd3611385`, UID
+`8635540c-8ec0-4db0-8319-b2aec2ffdd70`, independently reviewed the
+isolated code, proof integrity, mathematical statement, clients, rights and
+source context at report commit `213d9e8eaef89fcd47f043a3b2efdd57e2d8d3ad`
+(report SHA-256
+`f08e9da7ad79527154eecfd93a072dbfbf0b6eb5c5d4045a842b539d7b959587`).
+Atlas accepted that **isolated** contribution under incubator issue #168/59202;
+neither that acceptance nor review registers it in shared incubator main,
+approves this native destination transfer or certifies source coverage.
+
+The original prerequisite evaluation author was worker-b Task
+`hive-request-9e2f7251baf9a994027c283a681eff56d5e08ad9` (UID
+`17076cc9-eac1-4b4b-b67e-20dd4276dadc`), reviewed by worker-a Task
+`hive-request-857bcba53c78a3d3d0afe825b94d14ee7d3d8b4a` (UID
+`f7a50013-c77c-4bfe-9225-cee3c8786432`) and isolated-accepted at
+`b12ac06b2c916c286c07aa81d09962b402fc510c` (#164/58771).
+The positive-weight arithmetic came from worker-b Task
+`hive-request-39fb59e3f9cb9338a194533121cce60000ac40a3` (UID
+`8e5d9756-58bd-463c-9d7c-97e1c0bc4d55`), reviewed by worker-a Task
+`hive-request-3fa179b40259c3df1a529f2c7e792e2176bbc858` (UID
+`2d045d36-4940-4fcc-ac6e-d9bf1315aec6`) and accepted under #162/58631.
+Original weighted-polynomial adjoin author worker-b Task
+`hive-request-02c54ccf8e5ec79a99c29100b383e58fbbf37d58` (UID
+`e461a433-ae28-4960-af44-a0f291127294`) received a C1
+**REQUEST_CHANGES** from worker-a Task
+`hive-request-f559692b73c50917c4cc436aed44bd8167b4feb9` (UID
+`5fd8eeb0-55e4-41db-8881-29ad068330d4`) on review
+`002399481ba7984d3bc25033d4b0b6abddaf653f` because its guide asserted
+two unsupported copyright-owner claims. Worker-b repair Task
+`hive-request-0abf41ae4cc030259077e0ba697493aea02844cd` (UID
+`3191b46a-0f33-4201-9069-719451401037`) removed only those lines;
+fresh worker-a Task `hive-request-799c593fb89bc5735e637a2446886804e96741dd`
+(UID `14657e87-8583-409b-ab68-c56044592546`) approved repaired C2
+at `b4e82a905737aec09c38d65c00ab9437ef2f8892` (#166/59028).
+The C1 verdict is not reassigned as C2 approval. Previously delivered
+arithmetic, evaluation, adjoin and Veronese libraries are reused here; their
+proofs are not copied or claimed anew by this transfer.
+
+The motivating original quotient/remainder proof exposition was written by
+worker-a Task `hive-request-2e65a2cb560898e12809071b7c1bf0802e8b912b`
+(UID `ff03eeba-64b1-4705-bdb3-645075b8cb24`) and independently reviewed
+by worker-b Task `hive-request-0bbd1f01f09af516add223eb4e58069ac58e55b0`
+(UID `169259a2-25d3-4e6e-a5d2-505d25e94bb0`); Atlas accepted it **as
+research**, source-vakil-foag revision
+`99fc1f4c4db929bef77bf1ae36c9f83b8f67d75a` (#545/58160).
+Atlas authored separate uncompiled interface/design notes at source revisions
+`5ef63d95b626d09f55991ce12e51eba4228e3dc4` and
+`f51df60ff6a7e7917ffc281f737cdc70ee1140e9`. Research and design
+contributors are not thereby authors of the accepted Lean proof bodies.
+
+The distinct *static destination transfer* from sole accepted Graded Rings
+parent `8c2d25f00d1fae03a61374e08d997a050f6942d7` (tree
+`a2cf6b20f4cb05ea6322f0672a2a0f593972b3b5`) was authored by
+worker-b Hive Task `hive-request-b14b274dc65cf6ab1c2988e3ec6f688a5fb15268`
+(UID `03efe142-3e26-4c7c-84b8-4db2b93cc34d`). The candidate code, guide,
+native import adaptation, aggregate witness and metadata belong to destination
+issue #63; its separately retained report binds the exact transfer head and
+provider-readback digests. The producer and direct client preserve original
+mathematical statements and proofs under the authentic Apache/agent header,
+with native `module`/public import and exposure changes only. No incubator
+development ancestry or private/research artifact is imported into this
+deliverable's history. The existing parent's separately owned adjoin release
+must precede this contribution's independently reviewed publication; no
+unpublished release or incubator commit is a destination dependency.
+
+Rights: original project Lean and explanatory prose use the repository's
+Apache-2.0 terms; the source Vakil, *The Rising Sea*, October 21, 2025 draft,
+§7.4.4 Exercise 7.4.G (printed pp. 215–216, conventions pp. 151–152), is
+mathematical background only. The independently reviewed original PDF
+asset SHA-256 is
+`d07177aa0317c13490c170fc6ccc6a2ee07989a9120d9958ed3453eefe5b2784`;
+no PDF, source prose or external formal code is bundled. Contributor credit
+does not imply unsupported legal ownership. At the September 28, 2026
+transfer checkpoint, the new 46-module native graph still requires its own
+strict three-target build and full private/generated-inclusive transitive
+standard-three audit, independent exact-destination mathematical/API/rights
+review, maintainer acceptance, protected integration, separately verified
+official publication and distinct source correspondence decisions.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at

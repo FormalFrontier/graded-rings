@@ -71,7 +71,7 @@ sources:
 
 status:
   scope: >-
-    Seventeen production leaves, an aggregate native module, twenty-two private regression
+    Eighteen production leaves, an aggregate native module, twenty-three private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
@@ -112,7 +112,13 @@ status:
     actual degree-zero ring. Only the weighted homogeneous-lift theorem assumes
     that this chosen family generates the ring over degree zero; the first
     three declarations need no generation, finite-variable, domain, field or
-    nontriviality assumption. No complete-source
+    nontriviality assumption. For a finite positive-weight homogeneous
+    generating family over the actual old degree-zero component, a positive
+    selected ring is generated over its own degree zero by a finite subset
+    of its entire new degree one. Native finite type over the old degree zero
+    produces such a family and some positive selected index. Neither result
+    requires a field, domain, Nontrivial, Noetherianity or equal weights, nor
+    gives an all-indices or Proj conclusion. No complete-source
     or release-acceptance claim follows from this metadata.
   main_results:
     - declaration: Ideal.Quotient.gradedRing
@@ -181,6 +187,10 @@ status:
       file: GradedRings/WeightedEvaluation.lean
     - declaration: MvPolynomial.IsWeightedHomogeneous.mem_adjoin_weightedBlockSize
       file: GradedRings/WeightedBlockAdjoin.lean
+    - declaration: GradedRing.Veronese.exists_finite_degree_one_generators
+      file: GradedRings/FiniteVeronese.lean
+    - declaration: GradedRing.Veronese.exists_positive_finite_degree_one_generators
+      file: GradedRings/FiniteVeronese.lean
 
 automation:
   methods:
@@ -242,6 +252,15 @@ review:
     verified official publication and source correspondence are distinct
     revision-specific determinations.
 
+    At the 2026-09-28 finite-Veronese static transfer checkpoint, accepted
+    isolated source mathematics, its focused builds, complete 3-producer and
+    19-client actual-kernel-origin standard-three rows and independent source
+    review do not certify the adapted native destination graph. Its strict
+    three-target build, full actual-origin private/generated transitive
+    standard-three audit, fresh destination and rights review, maintainer
+    acceptance, protected integration, separately verified official release
+    and source correspondence are distinct revision-specific gates.
+
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
   remaining native assembly and reader examples. Three Worker A Tasks
@@ -300,3 +319,13 @@ acknowledgements: >-
   metadata here. The original objection and repaired exact-review histories,
   all contributor Task names/UIDs and frozen inputs remain in docs/PROVENANCE.md;
   isolated acceptance does not certify the changed destination graph.
+  A further Worker B Task wrote the original finite-Veronese generation
+  proof and direct client in an isolated incubator candidate using accepted
+  evaluation and repaired weighted-adjoin prerequisites. A fresh Worker A
+  Task independently reviewed that exact mathematical, client, rights and
+  original evidence candidate; a distinct Worker B Task transferred the
+  unchanged mathematical proofs into native destination imports and supplied
+  an ordinary client, aggregate witness, guide, wiring and metadata here.
+  Original, prerequisite, repair, exposition, reviewer and transfer Task
+  identities and exact donor/review references are in docs/PROVENANCE.md.
+  Accepted isolated research is not destination verification or source coverage.

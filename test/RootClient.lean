@@ -229,4 +229,23 @@ private theorem weightedBlockAdjoin_root (w : ι → ℕ) (hw : ∀ i, 0 < w i)
 
 end WeightedBlockAdjoin
 
+section FiniteVeronese
+
+variable {ι S σ : Type*} [Fintype ι] [CommRing S]
+variable [SetLike σ S] [AddSubgroupClass σ S]
+variable (𝒮 : ℕ → σ) [GradedRing 𝒮]
+
+private theorem finiteVeronese_root (weights : ι → ℕ)
+    (weights_pos : ∀ i, 0 < weights i) (generators : ∀ i, 𝒮 (weights i))
+    (hgen : Algebra.adjoin (𝒮 0) (Set.range (fun i => (generators i : S))) = ⊤) :
+    ∃ T : Set (GradedRing.Veronese.VeroneseRing 𝒮 (Finsupp.weightedBlockSize weights)),
+      T.Finite ∧
+      T ⊆ (GradedRing.Veronese.component 𝒮 (Finsupp.weightedBlockSize weights) 1 : Set _) ∧
+      Algebra.adjoin
+        (GradedRing.Veronese.component 𝒮 (Finsupp.weightedBlockSize weights) 0) T = ⊤ :=
+  GradedRing.Veronese.exists_finite_degree_one_generators
+    𝒮 weights weights_pos generators hgen
+
+end FiniteVeronese
+
 end GradedRingsTest.RootClient

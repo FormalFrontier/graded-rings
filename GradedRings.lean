@@ -21,3 +21,4 @@ public import GradedRings.VeroneseDegreeOne
 public import GradedRings.WeightedBlocks
 public import GradedRings.WeightedEvaluation
 public import GradedRings.WeightedBlockAdjoin
+public import GradedRings.FiniteVeronese

@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** seventeen-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** eighteen-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -14,6 +14,18 @@ guide](VeroneseDegreeOne.md) gives the conditional theorem, exact coefficient
 ring, direct [client](../test/VeroneseDegreeOne.lean), root witness and
 separate destination checks. These guides are not a new native documentation run
 or proof certificates for the expanded graph.
+
+The [finite-Veronese generation guide](FiniteVeronese.md) explains finite
+whole-selected-ring degree-one generation from positive-weight homogeneous
+generators over the actual degree-zero ring, and its native finite-type
+consequence. The [ordinary direct client](../test/FiniteVeronese.lean) checks
+genuine mixed `0,2,3` generation, nonconstant degree-zero coefficients, the
+scalar triangle, empty index, zero ring and nilpotents; the
+[aggregate-root witness](../test/RootClient.lean) checks public export.
+At the September 28, 2026 static transfer checkpoint, isolated original
+review and checks do not establish the changed destination graph's build,
+complete standard-three audit, promotion review or acceptance. The guide
+is hand-maintained, not an update of the historical native snapshot.
 
 The [coherent-tail selected-ring guide](CoherentTailVeronese.md) gives the exact
 degree-zero, high-component, coefficient and product hypotheses, the whole-ring
