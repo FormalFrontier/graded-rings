@@ -8,7 +8,9 @@ project:
     irrelevant-ideal finiteness, homogeneous prime correspondence,
     symmetric algebras, selected-component Veronese rings, coherent-tail
     equivalences of whole selected rings, positive-index degree-one generation
-    under an old-ring generation hypothesis, finite positive-weight blocks of
+    under an old-ring generation hypothesis, weighted evaluation at arbitrary
+    homogeneous elements over actual degree-zero coefficients, finite
+    positive-weight blocks of
     finitely supported natural exponent vectors, and
     prime-multiplicity valuations with homogeneous polynomial applications.
   authors:
@@ -69,7 +71,7 @@ sources:
 
 status:
   scope: >-
-    Fifteen production leaves, an aggregate native module, twenty private regression
+    Sixteen production leaves, an aggregate native module, twenty-one private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
@@ -98,7 +100,14 @@ status:
     an explicit positive (not generally minimal) size D gives an exact
     k-block decomposition of any finitely supported natural vector of weight
     k * D, preserving the entire vector. This arithmetic API does not prove
-    finite-Veronese generation or polynomial factorization. No complete-source
+    finite-Veronese generation or polynomial factorization. Separately, ordinary
+    polynomial evaluation at an arbitrary chosen homogeneous family of natural
+    weights (including zero) preserves weighted degree and commutes with the
+    target's actual graded-component decomposition, with coefficients in the
+    actual degree-zero ring. Only the weighted homogeneous-lift theorem assumes
+    that this chosen family generates the ring over degree zero; the first
+    three declarations need no generation, finite-variable, domain, field or
+    nontriviality assumption. No complete-source
     or release-acceptance claim follows from this metadata.
   main_results:
     - declaration: Ideal.Quotient.gradedRing
@@ -157,6 +166,14 @@ status:
       file: GradedRings/WeightedBlocks.lean
     - declaration: Finsupp.exists_weightedBlocks
       file: GradedRings/WeightedBlocks.lean
+    - declaration: MvPolynomial.IsWeightedHomogeneous.aeval_mem
+      file: GradedRings/WeightedEvaluation.lean
+    - declaration: MvPolynomial.weightedAevalGradedHom
+      file: GradedRings/WeightedEvaluation.lean
+    - declaration: MvPolynomial.aeval_weightedHomogeneousComponent
+      file: GradedRings/WeightedEvaluation.lean
+    - declaration: MvPolynomial.exists_isWeightedHomogeneous_aeval
+      file: GradedRings/WeightedEvaluation.lean
 
 automation:
   methods:
@@ -200,6 +217,15 @@ review:
     or rights review, maintainer acceptance, protected integration, official
     release or source correspondence.
 
+    At the initial 2026-09-28 weighted-evaluation static transfer checkpoint,
+    isolated source focused-build, 27 actual-origin private/generated-inclusive
+    transitive standard-three rows and independent original review do not
+    certify this adapted destination graph. The applicable strict three-target
+    build and complete actual-origin standard-axiom audit, fresh author-distinct
+    destination promotion/rights review, maintainer acceptance, protected
+    integration, official publication and source correspondence are separate
+    exact-revision determinations.
+
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
   remaining native assembly and reader examples. Three Worker A Tasks
@@ -240,3 +266,13 @@ acknowledgements: >-
   imports, clients, documentation, root witness and metadata for this library.
   Exact names, UIDs and revisions are in docs/PROVENANCE.md. Original source
   review is not acceptance or verification of this destination graph.
+  An earlier Worker A Task authored the source Exercise 7.4.G exposition,
+  Atlas designed the weighted-evaluation interface in uncompiled source notes,
+  and a separate Worker B Task authored the complete isolated producer and
+  direct client proofs. A Worker A Task independently reviewed the isolated
+  mathematical, API, evidence and rights candidate; another Worker B Task
+  transferred the unchanged producer bodies, adapted direct import and added
+  destination root witness, standalone guide, wiring and metadata. Exact
+  author, reviewer, designer and transfer Task names, UIDs and revisions are
+  recorded in docs/PROVENANCE.md. Original source review and checks are not
+  changed-destination acceptance, release or source correspondence.

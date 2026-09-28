@@ -4,7 +4,8 @@ Reusable Lean constructions for graded quotients and localizations,
 degree-multiplying homogeneous-localization maps, homogeneous polynomial lifts,
 finiteness, homogeneous prime ideals, symmetric algebras, selected-component
 Veronese rings, coherent-tail equivalences of whole selected rings,
-positive-Veronese degree-one generation, finite positive-weight exponent blocks,
+positive-Veronese degree-one generation, weighted polynomial evaluation,
+finite positive-weight exponent blocks,
 and prime-multiplicity valuations.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
@@ -65,6 +66,14 @@ release publication, source correspondence or book coverage.
   `D = max 1 (Fintype.card ι) * ∏ i, w i` is positive but need not be minimal.
   No coefficient ring, finite-Veronese generation or polynomial factorization
   follows from this combinatorial result alone.
+- **Weighted evaluation and lifts:** For any naturally graded commutative ring
+  and chosen homogeneous elements of arbitrary natural weights (including zero),
+  [ordinary polynomial evaluation](docs/WeightedEvaluation.md) preserves weighted
+  degrees and commutes with the target's actual homogeneous components. Using
+  the actual degree-zero ring as coefficients, it gives a native graded map;
+  *only when* the chosen family generates the ring over degree zero does it
+  also lift every homogeneous target element. No finite-variable, domain,
+  field or nontriviality assumption is needed.
 
 ## Mathematical scope
 
@@ -74,6 +83,7 @@ release publication, source correspondence or book coverage.
 | [Localization](GradedRings/Localization.lean) | `GradedLocalization.gradedRing` grades ordinary localization at a submonoid of homogeneous elements, with an additive commutative **group** of degrees. `homogeneousLocalizationEquivZeroComponent` identifies equal-degree homogeneous fractions with the zero component. No domain or non-zero-divisor hypothesis is imposed on this construction. |
 | [HomogeneousLocalizationMap](GradedRings/HomogeneousLocalizationMap.lean) | `HomogeneousLocalization.mapDegreeMul` sends naturally graded homogeneous localizations across an **ordinary** unital ring homomorphism multiplying natural degrees by `d`, given explicit degree compatibility and mapped denominators. It supports arbitrary source charts and restriction along a homogeneous factor, factor-one recovery, identity and composition. No domain, denominator-regularity or positive-`d` assumption. See the [thirteen-name guide](docs/degree-multiplying-homogeneous-localization.md). |
 | [HomogeneousLifts](GradedRings/HomogeneousLifts.lean) | `GradedRingHom.surjective_gradedAddHom` sends ambient surjectivity to every whole graded-semiring component. For any nonnegative grading of a commutative ring `S`, `MvPolynomial.exists_isHomogeneous_aeval` lifts `s ∈ 𝒮 m` through evaluation of degree-`m` polynomials with coefficients in the actual `𝒮 0` and all of `𝒮 1` as variables, given exactly `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`. Degree zero is included; no finite-generation, domain or field assumption. See the [homogeneous-lifts guide](docs/HomogeneousLifts.md). |
+| [WeightedEvaluation](GradedRings/WeightedEvaluation.lean) | `MvPolynomial.IsWeightedHomogeneous.aeval_mem`, `weightedAevalGradedHom` and `aeval_weightedHomogeneousComponent` use arbitrary chosen homogeneous elements `x i : 𝒮 (w i)`, arbitrary natural weights and actual degree-zero coefficients without a generation hypothesis; `exists_isWeightedHomogeneous_aeval` additionally requires `Algebra.adjoin (𝒮 0) (Set.range (fun i => (x i : S))) = ⊤`. See the [weighted-evaluation guide](docs/WeightedEvaluation.md). |
 | [FiniteType](GradedRings/FiniteType.lean) | `GradedAlgebra.irrelevant_fg_iff_finiteType`: for a naturally graded commutative ring, the irrelevant ideal is finitely generated exactly when the ring is finite type over degree zero. Includes extraction of finite homogeneous ideal generators. |
 | [Noetherian](GradedRings/Noetherian.lean) | `isNoetherianRing_iff_gradeZero_and_irrelevant_fg`: Noetherianity is equivalent to Noetherianity of degree zero plus finite generation of the irrelevant ideal. No domain or nontriviality assumption. |
 | [HomogeneousPrime](GradedRings/HomogeneousPrime.lean) | In an integer-graded commutative ring with a positive-degree homogeneous unit, `homogeneousPrimeEquivDegreeZeroPrime` identifies homogeneous prime ideals with primes of degree zero. The inverse is **radical extension**, not plain extension. |
@@ -102,7 +112,8 @@ coverage of a mathematical book follows from this API.
 The [current hand-maintained API map](docs/API.md) links the original leaves and
 the localization, homogeneous-lifts and Veronese guides, including the
 [coherent-tail guide](docs/CoherentTailVeronese.md) and
-[weighted-block guide](docs/WeightedBlocks.md). The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
+[weighted-block guide](docs/WeightedBlocks.md) and
+[weighted-evaluation guide](docs/WeightedEvaluation.md). The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
 applies only to the earlier 28-module tree; see [documentation reproduction](docs/README.md)
 for its exact inputs, limits and separately pinned generator.
 
@@ -120,7 +131,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all twenty regression-test modules and
+build includes the aggregate library, all twenty-one regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -128,11 +139,11 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 40 shipped Lean modules use Lean's native module system. A downstream native
+All 42 shipped Lean modules use Lean's native module system. A downstream native
 module can ordinary-import `GradedRings` for the full API, or a subject leaf
 such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
 `GradedRings.Veronese`, `GradedRings.CoherentTailVeronese`,
-`GradedRings.WeightedBlocks`,
+`GradedRings.WeightedBlocks`, `GradedRings.WeightedEvaluation`,
 `GradedRings.VeroneseDegreeOne` or
 `GradedRings.SymmetricAlgebra`. Public imports
 re-export the intended interfaces. The selected-ring leaf also exports its
@@ -259,3 +270,11 @@ and rights review, maintainer acceptance, protected integration and official
 publication remain separate gates. The background Exercise 7.4.G requires
 further graded-algebra mathematics; neither source correspondence nor finite
 Veronese generation follows from this arithmetic contribution.
+
+At the initial September 28, 2026 weighted-evaluation static transfer checkpoint,
+the isolated original implementation had its own focused evidence and independent
+review; those do not check this adapted destination graph. The changed
+three-target native build, complete actual-origin private/generated transitive
+standard-three audit, independent destination promotion and rights review,
+maintainer acceptance, protected integration, verified official publication
+and any source-specific correspondence are distinct revision-specific decisions.

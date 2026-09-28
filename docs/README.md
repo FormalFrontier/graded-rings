@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** fifteen-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** sixteen-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -33,6 +33,14 @@ material, not inputs to the unchanged historical snapshot. At the September
 28, 2026 transfer checkpoint, isolated source evidence does not certify the
 adapted destination graph; destination build/axiom and fresh review gates
 remain open.
+
+The [weighted-evaluation guide](WeightedEvaluation.md) records arbitrary
+natural weights (including zero), evaluation into actual graded components,
+the precise additional adjoin-generation condition for homogeneous lifts,
+direct/aggregate clients and a cache-first destination recipe. Its initial
+September 28, 2026 transfer note distinguishes the accepted isolated source
+from checks and acceptance for the changed destination graph. Neither the
+guide nor the new client is part of the unchanged historical native snapshot.
 
 [`API-initial-snapshot.md`](API-initial-snapshot.md) is byte-for-byte the native
 doc-gen4 output for the original nine production leaves: 104 exposed

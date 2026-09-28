@@ -358,6 +358,70 @@ standard-axiom audit, fresh independent promotion/rights review, Atlas's
 acceptance, protected integration, verified official release and any source
 correspondence remain distinct future decisions.
 
+## Weighted evaluation into naturally graded rings
+
+The exact accepted *isolated* implementation was incubator commit
+`b12ac06b2c916c286c07aa81d09962b402fc510c` (tree
+`3489e19dd154852698907020e0835827bd066fb9`). Its producer
+`Incubator/RingTheory/GradedAlgebra/WeightedEvaluation.lean` has SHA-256
+`b73c2c7ca3112788648933eab26c8fe2254ce78c416cea6fecfef30a334a5655`;
+the original ordinary-import client
+`IncubatorTest/RingTheory/GradedAlgebra/WeightedEvaluation.lean` has SHA-256
+`d470afe3bb629c40230f57b62f4a710ca7d3d5a9ef4ff501b7653ca52e28e842`;
+its isolated guide `docs/WeightedEvaluation.md` has SHA-256
+`e0b78a9f77d2e24b78d7f643e0ec83d7d0fa9001a406ee1df0c8cab25bfa7436`.
+The original complete mathematical implementation, private helper and direct
+client proofs were authored by worker-b Hive Task
+`hive-request-9e2f7251baf9a994027c283a681eff56d5e08ad9` (UID
+`17076cc9-eac1-4b4b-b67e-20dd4276dadc`), not by the destination-transfer
+Task. An independent worker-a Hive Task
+`hive-request-857bcba53c78a3d3d0afe825b94d14ee7d3d8b4a` (UID
+`f7a50013-c77c-4bfe-9225-cee3c8786432`) reviewed the original source,
+API, clients, rights and focused evidence at report commit
+`7b4f272b7e9c3b7c776f8e87c73416c2822ff76d`. Atlas accepted only that
+*isolated* source artifact; acceptance was not incubator-main registration,
+changed-destination review, release or source-coverage correspondence.
+
+The earlier mathematical quotient/remainder exposition for Exercise 7.4.G
+was authored by worker-a Task
+`hive-request-2e65a2cb560898e12809071b7c1bf0802e8b912b` (UID
+`ff03eeba-64b1-4705-bdb3-645075b8cb24`), accepted as source research at
+source-vakil-foag commit `99fc1f4c4db929bef77bf1ae36c9f83b8f67d75a`.
+Atlas authored the separate *uncompiled* weighted-evaluation interface design
+at source-vakil-foag commit `6ccf37c9213f630bc338c1a160025ad8497caef5`.
+Neither source-research author is miscredited as author of these Lean proofs;
+source correspondence and milestone status stay in the source repository.
+
+The distinct destination static transfer, authentic first-party Apache/author
+notices, adapted direct import, ordinary-root witness, standalone guide, manual
+metadata and wiring were authored by worker-b Hive Task
+`hive-request-8cb3d5978e343cced72cbbc92dfe4a1e2a38e369` (UID
+`08d25a25-e613-4627-9614-159cd553f5fb`), from sole accepted Graded Rings
+parent `8b28ec75fd2bb2bf70c816c033593cc9b45d7fb6`. The destination
+producer body is identical to the accepted isolated source after its new
+header; the direct client changes only its header and import path. This
+destination guide and aggregate witness are transfer additions, not original
+proof authorship. Exact candidate/review/evidence revisions are tracked in
+the owning graded-rings contribution record, issue #55; no incubator history
+is imported into destination Git ancestry.
+
+Rights: the original Lean proof/client and project exposition are identifiable
+first-party project expression under the adopted Apache-2.0 policy, **not**
+copied textbook argument, other external formal code, or redistributed book
+text. Vakil, *The Rising Sea*, October 21, 2025 draft, §7.4.4 Exercise 7.4.G
+(printed pp. 215–216; grading conventions pp. 151–152) is mathematical
+background only. The original source asset SHA-256 recorded with its reviewed
+source locator is
+`d07177aa0317c13490c170fc6ccc6a2ee07989a9120d9958ed3453eefe5b2784`;
+no PDF, substantive passage, diagram, or source image is bundled here. The
+existing `GradedRings.HomogeneousLifts` API and pinned mathlib are imports,
+not pasted proofs; their own authors' and dependency notices remain intact.
+An SPDX header alone does not establish rights. At this initial September 28,
+2026 static destination checkpoint, applicable new-graph build, complete
+standard-axiom check, fresh promotion and rights review, maintainer acceptance,
+protected integration, publication and source-specific correspondence remain
+separate revision-specific determinations.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at

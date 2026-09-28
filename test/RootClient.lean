@@ -201,4 +201,18 @@ private theorem weighted_blocks_root (w : ι → ℕ) (hw : ∀ i, 0 < w i)
 
 end WeightedBlocks
 
+section WeightedEvaluation
+
+variable {ι S σ : Type*} [CommRing S] [SetLike σ S] [AddSubgroupClass σ S]
+  (𝒮 : ℕ → σ) [GradedRing 𝒮] (w : ι → ℕ) (x : ∀ i : ι, 𝒮 (w i))
+
+private theorem weighted_evaluation_root (n : ℕ) (p : MvPolynomial ι (𝒮 0)) :
+    MvPolynomial.aeval (fun i => (x i : S))
+      (MvPolynomial.weightedHomogeneousComponent w n p) =
+      (DirectSum.decompose 𝒮
+        (MvPolynomial.aeval (fun i => (x i : S)) p) n : S) :=
+  MvPolynomial.aeval_weightedHomogeneousComponent 𝒮 w x n p
+
+end WeightedEvaluation
+
 end GradedRingsTest.RootClient
