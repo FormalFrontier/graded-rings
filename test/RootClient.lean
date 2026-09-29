@@ -307,6 +307,19 @@ private theorem residueProjection_range_finite_root [Algebra.FiniteType (𝒮 0)
 
 end VeroneseResidue
 
+section VeroneseResidueModule
+
+variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]
+  [AddSubgroupClass σ S] (𝒮 : ℕ → σ) [GradedRing 𝒮]
+
+private theorem residueModule_finite_root [Algebra.FiniteType (𝒮 0) S]
+    (n r : ℕ) (hn : 0 < n) (hr : r < n) :
+    Module.Finite (GradedRing.Veronese.VeroneseRing 𝒮 n)
+      (GradedRing.Veronese.ResidueModule 𝒮 n r) :=
+  GradedRing.Veronese.residueModule_finite_of_finiteType 𝒮 n r hn hr
+
+end VeroneseResidueModule
+
 section VeroneseZero
 
 variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]

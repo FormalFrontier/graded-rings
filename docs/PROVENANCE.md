@@ -882,6 +882,67 @@ Atlas subsequently removed the four optional internal issue hyperlinks from
 this provenance entry and the residue guide before exact destination review;
 the issue identifiers, contributor credit and mathematical content are retained.
 
+## September 29, 2026: shifted external residue-module transfer
+
+The [producer](../GradedRings/VeroneseResidueModule.lean), [ordinary direct
+client](../test/VeroneseResidueModule.lean) and [guide](VeroneseResidueModule.md)
+come from accepted isolated incubator commit
+`0986bcaf621df4379e75c7a639591f83120c2718` (tree
+`999394ba25e2ce3154e1baf53747ce67eef3d765`), itself based on the
+separately accepted projection prerequisite. Complete original
+`Incubator/Algebra/GradedRing/VeroneseResidueModule.lean`: 10,514 bytes,
+SHA-256 `3e664590bb5edadf4cc5e565abdf5b0db96af2c713c26abc3f316ed0c84b7f80`;
+`IncubatorTest/Algebra/GradedRing/VeroneseResidueModule.lean`: 4,529 bytes,
+SHA-256 `ac32c0d46f959b6e9343d072d5c7ff74010a9a6b4c95e384c5ac07885d769687`;
+`Incubator/Algebra/GradedRing/VeroneseResidueModule/README.md`: 2,961 bytes,
+SHA-256 `abde596d9c629e2751cb97bc54fe7bd825751817191a0aaa7a29d62f9277fcc0`.
+The Lean producer and ten private direct-client theorems retain all proofs,
+headers and statements: their *only* changes are the public project-import
+substitutions to `GradedRings.VeroneseResidue` and
+`GradedRings.VeroneseResidueModule`. The guide adapts the import, links,
+reproduction commands and dated verification boundary. The project-native
+root witness, public import, target, navigation and metadata are distinct
+destination work; this contribution has no incubator ancestry in the
+deliverable's eventual public-release lineage.
+
+Original code and guide author: Formal Frontier Agents, worker-b Hive Task
+`hive-request-539a2511a0bca4739462d02431a6ec346c5da7cd` (UID
+`e2df94a3-48e1-48bf-bafd-edd6b9e26b8f`). Its original evidence is direct
+donor child `6f06abbeb00185811f3919d4e655d3a390530541`,
+`research/evidence/veronese-residue-module/REPORT.md`, 20,678 bytes,
+SHA-256 `706b6b96d24d6b7b69722657aed4f82fcaa335d8b1c2013163b854e7dbfad3ff`.
+Independent original reviewer: worker-a Hive Task
+`hive-request-9ef93ac5c57ff1a133ea796c0ba9bb66c0db6d9c` (UID
+`04976027-c3cd-413a-96f0-40eb1b037e64`), direct donor review child
+`8a31fda7f58ed67321170dba032c448b1bd64dde`,
+`research/reviews/veronese-residue-module/REPORT.md`, 11,098 bytes,
+SHA-256 `18cd336fbd2aa961cf76619180870589d8f7cf61a6ebbccf288b13687f880efb`.
+The original transitive standard-three inventory covered 33 actual kernel
+origins (23 producer, ten private client). Eight further `_boxed`/`_redArg`
+compiler-origin variants lacked individual negative `env.find?` output; the
+original report's negative claim for each of those eight is **not** itself
+established by those output lines. The serialized/private kernel inventory
+and independent review found no concrete omitted kernel root. This evidence
+is original-donor evidence only, not a changed-origin destination audit.
+
+This static destination transfer is by worker-b Hive Task
+`hive-request-2ef3a15beb11b4464a1cefb5ccabc924598a7976` (UID
+`87e25bcb-68f4-44a4-9c46-dfdf33c005da`) from accepted Graded Rings parent
+`f0227fb5911b843497b5f9da967046b31622f0df` (tree
+`87c8246586cdd1714a6f8bd979a6f72a528613d8`). Both new Lean files
+preserve Apache-2.0 SPDX and `Authors: Formal Frontier Agents`; exact
+individual Task credit is not a legal ownership claim. This project distributes
+original Lean expression and its own explanatory prose, not source PDF/text,
+mathlib sources or other third-party assets. The original projection producer
+and finite-inclusion prerequisite are separately credited above; no original
+source expression is recopied here. At this initial September 29, 2026
+static-transfer checkpoint, neither original focused builds and origin audit
+nor original independent review certifies the new destination module and
+aggregate graph. Applicable destination build and complete private/generated
+transitive standard-three audit, independent fresh mathematical/API/rights
+review, maintainer acceptance, protected integration, separately verified
+official release and source correspondence remain separate decisions.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at

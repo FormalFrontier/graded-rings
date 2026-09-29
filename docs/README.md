@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** twenty-three-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** twenty-four-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -108,6 +108,19 @@ revision subsequently passed its own native build/audit and fresh independent
 review and received maintainer acceptance, as recorded in the
 [guide](VeroneseResidue.md). Release and verified publication are separately
 recorded in the owning Graded Rings issue #87.
+
+The [shifted-residue guide](VeroneseResidueModule.md) covers the **external
+sum of whole old components**, the entire selected-ring convolution action,
+canonical linear coefficient evaluation, positive/reduced-index equivalence
+with the separate projection's range and finite-module transport from the
+full old-zero ring. Its [direct ordinary client](../test/VeroneseResidueModule.lean)
+and [generic aggregate-root witness](../test/RootClient.lean) are current
+material outside the historical snapshot. At the September 29, 2026 initial
+static-transfer checkpoint, the original isolated proof evidence and review
+did not verify this destination's changed module origins/import graph, build,
+complete private/generated standard-axiom audit or independent review.
+Owner acceptance and a distinct verified release remain separate decisions,
+not outcomes of this dated checkpoint.
 
 The [zero-index guide](VeroneseZero.md) explains the all-index actual degree-zero
 equivalence and finite type of the external zero-index selected ring over its

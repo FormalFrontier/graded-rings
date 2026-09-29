@@ -20,7 +20,10 @@ project:
     actual new degree-zero ring, finiteness of the canonical inclusion from
     every positive selected-component ring when the original ring is finite
     type over its whole degree-zero ring, positive-index residue projections
-    linear over the whole external selected ring and their exact finite images, and
+    linear over the whole external selected ring and their exact finite images,
+    whole-Veronese convolution on shifted sums of entire old components,
+    canonical coefficient evaluation, positive reduced-index projection-range
+    equivalence and finite-module transport from the full old zero ring, and
     prime-multiplicity valuations with homogeneous polynomial applications.
   authors:
     - Formal Frontier Agents
@@ -95,7 +98,7 @@ sources:
 
 status:
   scope: >-
-    Twenty-three production leaves, an aggregate native module, twenty-eight private regression
+    Twenty-four production leaves, an aggregate native module, twenty-nine private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
@@ -174,8 +177,16 @@ status:
     consists exactly of elements whose other residue components vanish.
     Its image is finite if the old ring is finite over the selected ring,
     especially under native finite type over the entire old zero component
-    by the finite-inclusion result. No shifted external residue-sum
-    equivalence or index-zero convention is claimed.
+    by the finite-inclusion result. Separately, the shifted external sum of
+    complete old-degree components carries convolution by the whole external
+    selected ring, and coefficient evaluation into the old ring is linear for
+    that same inclusion.toAlgebra action. Evaluation is injective for positive
+    n; when also r < n it identifies the projection range by a linear
+    equivalence. The shifted module is finite if the old ring is finite as a
+    module for that action, in particular under finite type over the full old
+    degree-zero ring. No whole-ring action on an individual old component,
+    n = 0 evaluation bijection, unrestricted r >= n image equality or
+    arbitrary-submodule finite-generation claim is made.
   main_results:
     - declaration: Ideal.Quotient.gradedRing
       file: GradedRings/Quotient.lean
@@ -275,6 +286,22 @@ status:
       file: GradedRings/VeroneseResidue.lean
     - declaration: GradedRing.Veronese.residueProjection_range_finite_of_finiteType
       file: GradedRings/VeroneseResidue.lean
+    - declaration: GradedRing.Veronese.ResidueModule
+      file: GradedRings/VeroneseResidueModule.lean
+    - declaration: GradedRing.Veronese.instResidueModule
+      file: GradedRings/VeroneseResidueModule.lean
+    - declaration: GradedRing.Veronese.residueEvaluation
+      file: GradedRings/VeroneseResidueModule.lean
+    - declaration: GradedRing.Veronese.residueEvaluation_injective
+      file: GradedRings/VeroneseResidueModule.lean
+    - declaration: GradedRing.Veronese.residueEvaluation_range_eq
+      file: GradedRings/VeroneseResidueModule.lean
+    - declaration: GradedRing.Veronese.residueEvaluationEquiv
+      file: GradedRings/VeroneseResidueModule.lean
+    - declaration: GradedRing.Veronese.residueModule_finite
+      file: GradedRings/VeroneseResidueModule.lean
+    - declaration: GradedRing.Veronese.residueModule_finite_of_finiteType
+      file: GradedRings/VeroneseResidueModule.lean
 
 automation:
   methods:
@@ -388,6 +415,14 @@ review:
     and rights review, Atlas's acceptance and protected integration, separate
     verified official publication and source correspondence remain pending
     exact-revision decisions under Graded Rings issue #87.
+
+    At the initial 2026-09-29 shifted-residue static-transfer checkpoint,
+    accepted isolated producer/client mathematics and their original 33-origin
+    audit and independent review do not certify changed destination origins,
+    the new root graph, applicable three-target build, complete private/generated
+    transitive standard-three audit or fresh destination review. Those checks,
+    Atlas's acceptance and protected integration, a distinct verified official
+    release and source correspondence require separate exact-revision decisions.
 
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
@@ -503,3 +538,14 @@ acknowledgements: >-
   imports and supplied the destination guide, root witness, documentation
   and metadata. Exact donor evidence and contributor credit are recorded in
   docs/PROVENANCE.md; original acceptance is not destination acceptance.
+  Worker-b Task hive-request-539a2511a0bca4739462d02431a6ec346c5da7cd
+  (UID e2df94a3-48e1-48bf-bafd-edd6b9e26b8f) authored the isolated shifted
+  external residue-module producer, client and guide; independent worker-a
+  Task hive-request-9ef93ac5c57ff1a133ea796c0ba9bb66c0db6d9c
+  (UID 04976027-c3cd-413a-96f0-40eb1b037e64) reviewed that donor.
+  Worker-b Task hive-request-2ef3a15beb11b4464a1cefb5ccabc924598a7976
+  (UID 87e25bcb-68f4-44a4-9c46-dfdf33c005da) changed only the project
+  imports in the Lean files and supplied this destination's root witness,
+  guide, public wiring, navigation, provenance and metadata. The complete
+  donor and evidence references and rights boundary are in docs/PROVENANCE.md;
+  isolated acceptance is not changed-destination verification.

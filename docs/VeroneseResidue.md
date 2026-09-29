@@ -44,8 +44,11 @@ client](../test/VeroneseResidue.lean) checks `n = 1, r = 0` (the projection is
 the identity), a subsingleton/zero-ring boundary, homogeneous and range laws,
 linearity and the finite-type consequence. The [aggregate-root
 client](../test/RootClient.lean) checks public import and the finite-type
-consequence. This module does not construct shifted external residue sums,
-their evaluation equivalence, or a convention for `n = 0`.
+consequence. This projection module itself does not construct shifted external
+residue sums or their evaluation equivalence: the separate
+[shifted-residue module](../GradedRings/VeroneseResidueModule.lean) and
+[guide](VeroneseResidueModule.md) construct those for positive reduced indices.
+Neither supplies a convention for evaluation injectivity at `n = 0`.
 
 ## Reproduction and provenance
 
