@@ -39,8 +39,10 @@ one. The power-lifting step applies to **homogeneous generators**, not
 inhomogeneous elements: an arbitrary inhomogeneous `x` need not have `x ^ n`
 in the selected image. The theorem requires `0 < n`; the degree-zero
 selection need not give a finite inclusion (consider `ℤ[X]` over `ℤ`).
-No residue-class module projection, index-zero result or geometric Proj
-application is supplied.
+This finite-inclusion module itself supplies no residue-class projection;
+the separate [whole-Veronese residue guide](VeroneseResidue.md) describes
+that projection and its finite image. This module supplies no index-zero
+result or geometric Proj application.
 
 ## Build and provenance
 
@@ -76,9 +78,12 @@ assessment, separately reviewed by worker-a Hive Task
 new destination guide adaptation were performed by worker-b Hive Task
 `hive-request-317b2951f3df69e9b7cead656f7122e079339ee6`
 (UID `4ec3208e-f254-416a-9f8b-a1b70169a447`).
-Original focused checks and review concern only the isolated donor: this
-changed destination module origin, ordinary and aggregate clients, and full
-three-target graph require their own native build, complete transitive
+At the initial September 29, 2026 static transfer checkpoint, original
+focused checks and review concerned only the isolated donor: the changed
+destination module origin, ordinary and aggregate clients, and full
+three-target graph required their own native build, complete transitive
 standard-axiom audit (including private/generated declarations) and fresh
-independent destination review. Neither source correspondence nor release
-publication follows from the source assessment or this transfer.
+independent destination review. The prerequisite subsequently completed
+acceptance and verified official publication (Graded Rings issue #83,
+comment #61324); that does not certify the separate residue-projection graph
+or any source correspondence.

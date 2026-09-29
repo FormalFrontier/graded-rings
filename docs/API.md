@@ -15,6 +15,7 @@ the [homogeneous-lifts guide](HomogeneousLifts.md), the
 [selected weighted-polynomial generator guide](WeightedVeroneseGenerators.md), the
 [prescribed positive whole-ring finite-type guide](VeroneseFiniteType.md), the
 [finite positive-inclusion guide](VeroneseFinite.md), the
+[whole-Veronese residue guide](VeroneseResidue.md), the
 [all-index degree-zero and zero-index finite-type guide](VeroneseZero.md), the
 [weighted-evaluation guide](WeightedEvaluation.md), the
 [finite-Veronese generation guide](FiniteVeronese.md), and the
@@ -52,6 +53,7 @@ links are accurate in the original revision, not necessarily here.
 | [`GradedRings.WeightedVeroneseGenerators`](../GradedRings/WeightedVeroneseGenerators.lean) | `MvPolynomial.exists_finset_weightedVeronese_generators`: for `[Fintype ι]`, `[CommSemiring R]`, arbitrary `w : ι → ℕ` including zero and `0 < n`, produces one finite family `T` of `IsWeightedHomogeneous w (n * j)` polynomials such that every homogeneous polynomial at every degree `n * j` belongs to `Algebra.adjoin R (T : Set _)`. See the [guide](WeightedVeroneseGenerators.md). |
 | [`GradedRings.VeroneseFiniteType`](../GradedRings/VeroneseFiniteType.lean) | `GradedRing.Veronese.finiteType_of_finite_homogeneous_generators`: a finite family `x : ∀ i : ι, 𝒮 (w i)` of arbitrary natural weights with `Algebra.adjoin (𝒮 0) (Set.range (fun i => (x i : S))) = ⊤` gives `Algebra.FiniteType (component 𝒮 n 0) (VeroneseRing 𝒮 n)` for every prescribed `0 < n`. `GradedRing.Veronese.finiteType_of_finiteType`: native `[Algebra.FiniteType (𝒮 0) S]` gives the same whole-ring conclusion at every prescribed positive index. Both use the entire actual new zero ring; no degree-one or index-zero result is asserted. See the [guide](VeroneseFiniteType.md). |
 | [`GradedRings.VeroneseFinite`](../GradedRings/VeroneseFinite.lean) | `GradedRing.Veronese.inclusion_finite 𝒮 n hn` for `hn : 0 < n` and `[Algebra.FiniteType (𝒮 0) S]`: the **original ring** is a finite module via the actual selected-ring `inclusion.toAlgebra`. Not a finite-type statement for the selected ring over its own zero ring, an `n = 0` theorem or a residue-module construction. See the [guide](VeroneseFinite.md). |
+| [`GradedRings.VeroneseResidue`](../GradedRings/VeroneseResidue.lean) | `GradedRing.Veronese.residueProjection 𝒮 n r hn hr` is a linear projection over the whole external selected ring using the actual `inclusion.toAlgebra`, for `0 < n` and `r < n`. The homogeneous law, exact componentwise range and `Module.Finite` image follow without field/domain/Noetherian assumptions; old-zero finite type implies the needed ambient finiteness via `inclusion_finite`. See the [guide](VeroneseResidue.md). |
 
 The degree-multiplying map module does **not** replace the existing same-ring grading or
 zero-component equivalence. For natural gradings `𝒜`, `ℬ` of arbitrary
@@ -195,10 +197,37 @@ whole external selected ring. The [standalone guide](VeroneseFinite.md),
 [direct ordinary-import client](../test/VeroneseFinite.lean) and
 [generic aggregate-root witness](../test/RootClient.lean) describe this
 separately from finite type of the selected ring over its new zero ring,
-some-index degree-one generation, `n = 0` and residue finiteness. Accepted
-isolated original checks and review do not verify the changed destination
-origin/root/three-target graph; complete native build, private-inclusive
-transitive standard-axiom audit and fresh review remain separate gates.
+some-index degree-one generation, `n = 0` and the separate
+[residue projection](VeroneseResidue.md). At the September 29, 2026 original
+static-transfer checkpoint, isolated checks and review did not verify the
+changed finite-inclusion destination graph; the prerequisite subsequently
+received its own acceptance and verified official publication before this
+residue transfer. This does not check the new residue graph.
+
+## Whole-Veronese residue projections
+
+For a naturally graded commutative ring and `0 < n`, `r < n`, the additive
+`residueProjectionAdd 𝒮 n r` filters the old homogeneous decomposition by
+degree remainder. `residueProjection 𝒮 n r hn hr` is linear over the **whole
+external selected ring**, acting on the original ring through the actual
+`(inclusion 𝒮 n).toAlgebra`, not a scalar action on individual old fibers.
+`residueProjection_of_mem` decides the image of a homogeneous element and
+`residueProjection_idempotent` proves the projection law. The exact range law
+`mem_residueProjection_range_iff` identifies precisely the elements with
+zero components outside residue `r`. `residueProjection_range_finite` proves
+finiteness of this linear image from ambient `Module.Finite`, while
+`residueProjection_range_finite_of_finiteType` uses
+`[Algebra.FiniteType (𝒮 0) S]` and `inclusion_finite` to obtain the same conclusion. The
+[standalone guide](VeroneseResidue.md) maps all supporting additive,
+componentwise and scalar-compatibility declarations. Its [direct ordinary
+client](../test/VeroneseResidue.lean) and [aggregate-root
+witness](../test/RootClient.lean) check usable public interfaces. At the initial
+September 29, 2026 static-transfer checkpoint, the new graph required its own
+build/audit and independent destination review. These subsequently passed for
+the exact destination revision recorded in the [guide](VeroneseResidue.md),
+which also records maintainer acceptance; release and verified publication are
+separate decisions. This API does not supply a shifted external-sum equivalence
+or `n = 0` rule.
 
 ## All-index zero components and zero-index finite type
 
@@ -221,8 +250,8 @@ and independent exact-revision review remain separate gates.
 
 ## Aggregate, clients and examples
 
-[`GradedRings`](../GradedRings.lean) publicly imports all twenty-two production leaves.
-The default test target registers twenty-seven private regression clients, including
+[`GradedRings`](../GradedRings.lean) publicly imports all twenty-three production leaves.
+The default test target registers twenty-eight private regression clients, including
 the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 [direct homogeneous-lifts client](../test/HomogeneousLifts.lean), the
 [direct Veronese client](../test/Veronese.lean), the
@@ -235,6 +264,7 @@ the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 [selected weighted-polynomial client](../test/WeightedVeroneseGenerators.lean), the
 [prescribed whole-ring finite-type client](../test/VeroneseFiniteType.lean), the
 [finite-inclusion client](../test/VeroneseFinite.lean), the
+[residue-projection client](../test/VeroneseResidue.lean), the
 [zero-index selected-ring client](../test/VeroneseZero.lean), and the
 [aggregate-import witness](../test/RootClient.lean). Four standalone
 [examples](../examples/) remain registered. These clients and examples

@@ -15,6 +15,8 @@ generators or native finite-type input, all-index degree-zero equivalence and
 finite type of the actual zero-index Veronese over its own degree zero,
 finiteness of the canonical inclusion from every positive selected-component
 Veronese ring when the original ring is finite type over its whole degree zero,
+whole-Veronese-linear projections onto fixed old-degree residue classes with
+exact finite images under that same finite-type hypothesis,
 and prime-multiplicity valuations.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
@@ -25,10 +27,10 @@ clients and documentation; exact contributions are listed in
 
 ## Headline results
 
-This library presents reusable algebraic APIs. The September 29, 2026
-finite-inclusion transfer's presence on this branch is not an assertion of
-new-graph destination verification, release publication, source correspondence
-or book coverage.
+This library presents reusable algebraic APIs. The finite-inclusion prerequisite
+was officially published before this September 29, 2026 residue-transfer
+checkpoint. The new residue module's presence is not an assertion of its
+destination verification, release publication, source correspondence or book coverage.
 
 - **Quotients and localizations:** [Homogeneous-ideal quotients](GradedRings/Quotient.lean)
   inherit a grading, while [localization](GradedRings/Localization.lean) at
@@ -120,7 +122,14 @@ or book coverage.
   at every `n > 0` is finite: the **old ring** is a finite module via that
   inclusion's actual algebra structure. This is not finite type of the
   selected ring over its new zero component, some-index degree-one generation,
-  an index-zero statement or a residue-module result.
+  an index-zero statement or, by itself, a residue-module result.
+- **Whole-Veronese residue projections:** For `0 < n` and `r < n`, the
+  [residue projection](docs/VeroneseResidue.md) is linear over the **entire
+  external** selected ring acting on `S` by `inclusion.toAlgebra`. Its range
+  consists exactly of elements whose old-degree components outside residue
+  `r` vanish; it is a finite module if `S` is finite over that action, in
+  particular if `[Algebra.FiniteType (𝒮 0) S]`. No shifted external-sum
+  equivalence or `n = 0` convention is supplied.
 - **Weighted evaluation and lifts:** For any naturally graded commutative ring
   and chosen homogeneous elements of arbitrary natural weights (including zero),
   [ordinary polynomial evaluation](docs/WeightedEvaluation.md) preserves weighted
@@ -153,6 +162,7 @@ or book coverage.
 | [WeightedVeroneseGenerators](GradedRings/WeightedVeroneseGenerators.lean) | `MvPolynomial.exists_finset_weightedVeronese_generators`: one finite weighted-homogeneous family over any commutative semiring generates every selected polynomial degree `n * j` for prescribed `0 < n`, finite variables and arbitrary natural weights including zero. See the [standalone guide](docs/WeightedVeroneseGenerators.md). |
 | [VeroneseFiniteType](GradedRings/VeroneseFiniteType.lean) | `GradedRing.Veronese.finiteType_of_finite_homogeneous_generators` gives finite type of the whole selected ring for **every prescribed** `n > 0` over its actual new zero component, from finite arbitrary-weight homogeneous generators over the entire old zero component. `GradedRing.Veronese.finiteType_of_finiteType` starts from native `Algebra.FiniteType (𝒮 0) S`. See the [standalone guide](docs/VeroneseFiniteType.md). |
 | [VeroneseFinite](GradedRings/VeroneseFinite.lean) | `GradedRing.Veronese.inclusion_finite 𝒮 n hn` says the canonical inclusion from the external positive selected ring to `S` is finite for `[Algebra.FiniteType (𝒮 0) S]` and `hn : 0 < n`: the old ring is finite over the selected ring via the actual `inclusion.toAlgebra`. Distinct from finite type of the selected ring over its new zero ring. See the [standalone guide](docs/VeroneseFinite.md). |
+| [VeroneseResidue](GradedRings/VeroneseResidue.lean) | `GradedRing.Veronese.residueProjection 𝒮 n r hn hr` projects the old ring onto its degree-`r` residue part, linearly over the whole selected ring through `inclusion.toAlgebra`. `mem_residueProjection_range_iff` characterizes the exact image and `residueProjection_range_finite_of_finiteType` proves its finiteness from old-zero finite type and `inclusion_finite`. See the [standalone guide](docs/VeroneseResidue.md). |
 | [VeroneseZero](GradedRings/VeroneseZero.lean) | `GradedRing.Veronese.zeroRingEquivAll` identifies the actual new zero ring with `𝒮 0` for every index. At index zero, `of_zero_eq_algebraMap_mul_pow`, `aeval_zeroVariable_surjective` and `finiteType_zero` prove finite type of the external sum over its entire actual new zero ring, without an old-ring finite-type or nontriviality assumption. Whole-ring inclusion is not asserted injective at zero. See the [standalone guide](docs/VeroneseZero.md). |
 | [VeroneseDegreeOne](GradedRings/VeroneseDegreeOne.lean) | `GradedRing.Veronese.adjoin_component_one_eq_top`: if `0 < n` and `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the whole selected ring is generated over its **actual new degree-zero component** by **all** of its new degree-one component. No finite-variable, finite-type, domain, field, reducedness or nontriviality assumption. See the [degree-one-generation guide](docs/VeroneseDegreeOne.md). |
 | [FiniteVeronese](GradedRings/FiniteVeronese.lean) | `GradedRing.Veronese.exists_finite_degree_one_generators` gives finite whole-ring generation over the actual new zero component from a finite positive-weight homogeneous generating family over the old zero component; `exists_positive_finite_degree_one_generators` instead starts from native `Algebra.FiniteType (𝒮 0) S` and obtains some positive index. See the [finite-generation guide](docs/FiniteVeronese.md). |
@@ -179,7 +189,8 @@ the localization, homogeneous-lifts and Veronese guides, including the
 [finite-Veronese guide](docs/FiniteVeronese.md) and
 [selected weighted-polynomial guide](docs/WeightedVeroneseGenerators.md) and
 [prescribed-index whole-ring finite-type guide](docs/VeroneseFiniteType.md),
-[finite-inclusion guide](docs/VeroneseFinite.md)
+[finite-inclusion guide](docs/VeroneseFinite.md),
+[residue-projection guide](docs/VeroneseResidue.md)
 and [zero-index guide](docs/VeroneseZero.md). The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
 applies only to the earlier 28-module tree; see [documentation reproduction](docs/README.md)
 for its exact inputs, limits and separately pinned generator.
@@ -198,7 +209,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all twenty-seven regression-test modules and
+build includes the aggregate library, all twenty-eight regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -206,7 +217,7 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 54 shipped Lean modules use Lean's native module system. A downstream native
+All 56 shipped Lean modules use Lean's native module system. A downstream native
 module can ordinary-import `GradedRings` for the full API, or a subject leaf
 such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
 `GradedRings.Veronese`, `GradedRings.CoherentTailVeronese`,
@@ -214,7 +225,8 @@ such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`
 `GradedRings.WeightedEvaluation`,
 `GradedRings.FiniteVeronese`,
 `GradedRings.WeightedVeroneseGenerators`,
-`GradedRings.VeroneseFiniteType`, `GradedRings.VeroneseFinite`, `GradedRings.VeroneseZero`,
+`GradedRings.VeroneseFiniteType`, `GradedRings.VeroneseFinite`,
+`GradedRings.VeroneseResidue`, `GradedRings.VeroneseZero`,
 `GradedRings.VeroneseDegreeOne` or
 `GradedRings.SymmetricAlgebra`. Public imports
 re-export the intended interfaces. The selected-ring leaf also exports its

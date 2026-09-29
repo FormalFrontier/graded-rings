@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** twenty-two-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** twenty-three-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -89,9 +89,25 @@ over the **whole old zero ring**. This is not the selected-ring finite-type
 result over its new zero ring. The [direct ordinary-import
 client](../test/VeroneseFinite.lean) and [generic aggregate-root
 witness](../test/RootClient.lean) are new current material, not inputs to the
-historical snapshot. Original isolated checks/review do not certify this
-changed destination graph; native three-target build, complete private/generated
-transitive standard-axiom audit and fresh destination review remain separate.
+historical snapshot. At the initial September 29, 2026 transfer checkpoint,
+original isolated checks/review did not certify the changed finite-inclusion
+destination graph; its native build, complete private/generated transitive
+standard-axiom audit and fresh destination review were separate gates. The
+prerequisite was subsequently accepted and verified published before the
+new residue transfer, as recorded in Graded Rings issue #83.
+
+The [whole-Veronese residue guide](VeroneseResidue.md) describes the linear
+old-degree residue projection under the actual full selected-ring inclusion,
+its exact range and finite-image consequences. Its [ordinary direct
+client](../test/VeroneseResidue.lean) and [generic aggregate-root
+witness](../test/RootClient.lean) are current material outside the historical
+native snapshot. The finite-inclusion prerequisite was already officially
+published before this September 29, 2026 transfer. Original residue-donor
+checks/review did not certify the new destination graph. The exact destination
+revision subsequently passed its own native build/audit and fresh independent
+review and received maintainer acceptance, as recorded in the
+[guide](VeroneseResidue.md). Release and verified publication are separately
+recorded in the owning Graded Rings issue #87.
 
 The [zero-index guide](VeroneseZero.md) explains the all-index actual degree-zero
 equivalence and finite type of the external zero-index selected ring over its

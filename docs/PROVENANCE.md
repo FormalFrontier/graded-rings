@@ -829,6 +829,59 @@ owner acceptance, protected integration, official release or source coverage.
 The maintainer records those later decisions against the exact destination
 revision in owning issue #83, not as assumed facts in this shipping source tree.
 
+## September 29, 2026: whole-Veronese residue projection transfer
+
+The original [producer](../GradedRings/VeroneseResidue.lean), [ordinary
+client](../test/VeroneseResidue.lean) and standalone
+[guide](VeroneseResidue.md) come from accepted isolated incubator commit
+`905e7c2df24767f8cee4d7eafc757cb5c343cb3e` (tree
+`375a7c5dac3650246261767e826073a1f0a829ce`). The original producer
+`Incubator/Algebra/GradedRing/VeroneseResidue.lean` is 7,853 bytes,
+SHA-256 `91fc9f4a2ba1cf3e7cadac4f4c68f6e92fbb06f4f1681a9449c837c75cd3484c`;
+the original client `IncubatorTest/Algebra/GradedRing/VeroneseResidue.lean`
+is 3,350 bytes, SHA-256
+`4b376747aba551c70a35e073881553d323736be4b5828c729029ef001b86bbab`;
+the original `Incubator/Algebra/GradedRing/VeroneseResidue/README.md` is
+3,380 bytes, SHA-256
+`5976048fb651bd1ca8c28a0810e21ae6a5a72c037782b4a8aa23c44bad362467`.
+The producer and client mathematical bodies and their Apache-2.0 SPDX and
+collective author headers are unchanged: their only edits replace the
+incubator public imports by `GradedRings.VeroneseFinite` and
+`GradedRings.VeroneseResidue`, respectively. The guide is adapted for the
+destination imports, commands, links and evidence boundaries. No source
+assets, dependency sources or third-party expression are redistributed.
+
+Original author worker-b Hive Task
+`hive-request-1cc04ea025d989648e050829da560f5070fe022d` (UID
+`7768c775-4401-4d05-b7d9-88b2fd34ca29`) supplied the isolated producer,
+client and guide with evidence child `0f73822b7b0dc4a902b2ea874c1bd617ab7ff7c9`.
+Independent original reviewer worker-a Hive Task
+`hive-request-d997f6f869ad5770abe62ccc1b3edc053fd17153` (UID
+`0d110738-9176-47d3-a76d-04eaf3717c87`) recorded exact-code review in
+`93da786719aa4687ea7059d951a0ac3b642e9a3a`. Atlas accepted the
+isolated original evidence in incubator issue #186, comment #61341.
+The already-delivered finite-inclusion producer is byte-identical to the
+donor's prerequisite; its acceptance and verified official publication are
+separately recorded in Graded Rings issue #83, comment #61324.
+
+This bounded destination transfer, including the new root witness and library
+navigation/metadata, is by worker-b Hive Task
+`hive-request-8e46b5299287b35b65f34038800f1c3b7482b0f5` (UID
+`ee21c7e8-3256-4684-8236-81517fa63480`), from accepted Graded main
+`31f2290a0f7004f6dcec576b31e1c554093a2143`. The exact shipping commit
+and static preservation report are recorded in owning Graded Rings issue #87
+after publication, not guessed in this commit. The original focused checks
+and review do not certify the changed origin, direct-import and root graph;
+applicable destination build and transitive standard-three audit, fresh
+independent destination and rights review, maintainer acceptance, protected
+integration, separately verified official release, and source correspondence
+each remain independent exact-revision decisions. The shifted external-sum
+and source index-zero convention remain outside this transfer.
+
+Atlas subsequently removed the four optional internal issue hyperlinks from
+this provenance entry and the residue guide before exact destination review;
+the issue identifiers, contributor credit and mathematical content are retained.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at
