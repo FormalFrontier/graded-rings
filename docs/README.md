@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** twenty-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** twenty-one-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -81,6 +81,17 @@ Its [ordinary direct client](../test/VeroneseFiniteType.lean) and
 material, not historical native-snapshot inputs. Original accepted isolated
 proof checks and review do not establish this changed destination graph's
 three-target build, full standard-axiom audit or fresh promotion review.
+
+The [zero-index guide](VeroneseZero.md) explains the all-index actual degree-zero
+equivalence and finite type of the external zero-index selected ring over its
+entire actual new degree zero. Its [ordinary direct client](../test/VeroneseZero.lean)
+preserves mixed weights, nonconstant old-degree-zero coefficients, nilpotents
+and the zero ring; the [generic aggregate-root witness](../test/RootClient.lean)
+uses no old-ring finiteness or nontriviality assumption. Original producer and
+client checks and independent original review apply to the unchanged donor,
+not this new graph; destination build, complete axiom audit and fresh review
+remain separate. This hand-maintained guide does not alter the archived native
+snapshot.
 
 [`API-initial-snapshot.md`](API-initial-snapshot.md) is byte-for-byte the native
 doc-gen4 output for the original nine production leaves: 104 exposed

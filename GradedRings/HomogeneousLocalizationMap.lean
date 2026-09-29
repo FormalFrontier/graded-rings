@@ -1,7 +1,7 @@
 /-
 SPDX-License-Identifier: Apache-2.0
 Copyright (c) 2022 Jujian Zhang. All rights reserved.
-Authors: Formal Frontier Hive Task hive-request-b0b74cdb7e102204e305196597835a728b60ad9a
+Authors: Formal Frontier Agents; Hive Task hive-request-b0b74cdb7e102204e305196597835a728b60ad9a
   (UID 02a35b9d-d5a4-4ab9-bebc-4d467cf904c6, worker-a)
   Jujian Zhang and Eric Wieser (homogeneous-localization construction and native maps in mathlib)
 Adapted material released under Apache 2.0, as in mathlib's LICENSE.

@@ -280,4 +280,20 @@ private theorem veroneseFiniteType_root (weights : ι → ℕ)
 
 end VeroneseFiniteType
 
+section VeroneseZero
+
+variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]
+  [AddSubgroupClass σ S] (𝒮 : ℕ → σ) [GradedRing 𝒮]
+
+private def zeroRingEquivAll_root (n : ℕ) :
+    GradedRing.Veronese.component 𝒮 n 0 ≃+* 𝒮 0 :=
+  GradedRing.Veronese.zeroRingEquivAll 𝒮 n
+
+private theorem finiteType_zero_root :
+    Algebra.FiniteType (GradedRing.Veronese.component 𝒮 0 0)
+      (GradedRing.Veronese.VeroneseRing 𝒮 0) :=
+  GradedRing.Veronese.finiteType_zero 𝒮
+
+end VeroneseZero
+
 end GradedRingsTest.RootClient

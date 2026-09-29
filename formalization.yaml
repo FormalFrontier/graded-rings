@@ -15,7 +15,9 @@ project:
     weighted-polynomial generation with arbitrary weights and coefficients,
     finite type of every prescribed positive whole selected ring over its actual
     new zero component from arbitrary-weight homogeneous generators or native
-    finite-type input, and
+    finite-type input, all-index equivalence of actual selected degree-zero
+    rings and finite type of the zero-index external selected ring over its
+    actual new degree-zero ring, and
     prime-multiplicity valuations with homogeneous polynomial applications.
   authors:
     - Formal Frontier Agents
@@ -90,15 +92,23 @@ sources:
 
 status:
   scope: >-
-    Twenty production leaves, an aggregate native module, twenty-five private regression
+    Twenty-one production leaves, an aggregate native module, twenty-six private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
     denominators, not a domain or regularity assumption. Valuation applications
     use their stated domain, divisibility, field and degree hypotheses.
     The selected-component Veronese ring and its internal grading exist for any
-    natural index; injective inclusion and the degree-zero equivalence require
-    a positive index. Ambient-surjective graded semiring maps are surjective
+    natural index; whole-ring injective inclusion and the original zeroRingEquiv
+    API require a positive index. The full actual new degree-zero component is
+    equivalent to the old degree-zero ring at every index. At index zero the
+    external summands remain distinct new degrees; monomial factorization over
+    the entire actual new zero ring gives surjective polynomial evaluation and
+    finite type of the whole external ring without old-ring finiteness, domain,
+    field, Noetherianity or Nontrivial assumptions. Only the distinct-copy
+    lemma assumes Nontrivial; no full polynomial equivalence or injectivity
+    of whole-ring inclusion at zero is asserted. Ambient-surjective graded
+    semiring maps are surjective
     on each whole component; homogeneous polynomial lifts in arbitrary
     nonnegative graded commutative rings use actual degree-zero coefficients,
     every degree-one element as a variable, and exactly the degree-one
@@ -228,6 +238,14 @@ status:
       file: GradedRings/VeroneseFiniteType.lean
     - declaration: GradedRing.Veronese.finiteType_of_finiteType
       file: GradedRings/VeroneseFiniteType.lean
+    - declaration: GradedRing.Veronese.zeroRingEquivAll
+      file: GradedRings/VeroneseZero.lean
+    - declaration: GradedRing.Veronese.of_zero_eq_algebraMap_mul_pow
+      file: GradedRings/VeroneseZero.lean
+    - declaration: GradedRing.Veronese.aeval_zeroVariable_surjective
+      file: GradedRings/VeroneseZero.lean
+    - declaration: GradedRing.Veronese.finiteType_zero
+      file: GradedRings/VeroneseZero.lean
 
 automation:
   methods:
@@ -306,6 +324,17 @@ review:
     actual-origin transitive standard-three audit, independent exact-destination
     and rights review, owner acceptance, protected integration, separately
     verified publication and source correspondence remain distinct decisions.
+
+    At the 2026-09-28 zero-index selected-ring static transfer checkpoint,
+    accepted isolated original mathematics has a cache-first focused producer
+    build, 32 producer-origin private/generated-inclusive transitive
+    standard-three rows, eight client-origin rows in a separate supplement,
+    and independent original review. These do not certify this destination's
+    new module origins, import-adapted client or aggregate graph. Applicable
+    native strict three-target build, complete actual-origin transitive
+    standard-three audit, fresh independent destination/rights review, owner
+    acceptance, protected integration, separate verified publication and any
+    source correspondence remain distinct decisions under owning issue #75.
 
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
@@ -392,3 +421,13 @@ acknowledgements: >-
   Task identities, UIDs, frozen code, corrected evidence and original review
   references are recorded in docs/PROVENANCE.md. Original review is not
   verification of the changed destination graph or source correspondence.
+  A further Worker B Task authored the original zero-index selected-ring
+  producer, client and guide; Atlas supplied prior uncompiled API design.
+  A fresh Worker A Task reviewed the original candidate, and a distinct
+  Worker B Task separately audited the original client's kernel origins.
+  Another Worker B Task transferred the producer byte-for-byte, changed only
+  the direct-client producer import, and supplied public wiring, generic root
+  witnesses, guide and current metadata. Full identities, immutable references,
+  rights and separate evidence boundaries are recorded in docs/PROVENANCE.md.
+  Accepted isolated mathematics is not acceptance of the changed destination
+  graph or any source-coverage decision.

@@ -698,6 +698,78 @@ separately reviewed verified official publication and any source-coverage
 decision. Owning destination issue #69 records later exact-revision evidence;
 the preceding polynomial contribution has its own separate publication order.
 
+## All-index zero components and the zero-index selected ring
+
+The reusable `GradedRing.Veronese.zeroRingEquivAll` identifies the *entire*
+actual new degree-zero component with old `𝒮 0` at every natural index. At
+index zero, external new-degree copies remain distinct; `zeroCoefficient`
+carries an arbitrary unchanged old-zero coefficient into the whole actual
+new zero ring, `zeroVariable` maps to `1` under old-ring inclusion, and
+`of_zero_eq_algebraMap_mul_pow` factors each external summand. Surjective
+polynomial evaluation yields `finiteType_zero` over that actual new zero ring
+without finite type of the original ring. Only `zeroVariable_ne_zeroCopy`
+requires `[Nontrivial S]`. Neither whole-ring inclusion injectivity at zero,
+a full polynomial equivalence nor a source index-zero convention follows.
+
+The original Apache-2.0 mathematical producer, ordinary-import client and
+standalone guide were written by worker-b Hive Task
+`hive-request-a4527f02af952e11c47d91c4884c7d869bc58acc` (UID
+`9b1f25a8-52cd-4da9-86eb-6f477a7e85b0`) at isolated accepted incubator
+code `5667bf12976edfd9938ba0b887e10cea173dbe2a` (tree
+`0c7c04ff279968fccabf054bc70ac5fd44d5a3ab`, sole parent
+`6e5555c9af60edd3c7c56b1ea94010f06c330d42`). Original whole-file
+SHA-256 values are `409cfb5024ce5986ccf658b3706be5c3595f870833d0a4d585d1ac21be31ab40`
+for producer, `f603988f475d7b897163e3b719e38fc848e55e306ef11774ccc88eef92c3538c`
+for client and `fc0b628386cb904cc585e4eb0a8638ec7ebfab96c517e4de6f746678dd55e58a`
+for guide. The client retains attribution for project-authored mixed-weight
+fixtures in `test/FiniteVeronese.lean` and
+`IncubatorTest/Algebra/GradedRing/VeroneseFiniteType.lean`. Atlas supplied
+the prior uncompiled zero-index API design, not these proofs. Native
+`GradedRings.Veronese` definitions and positive-index proofs are reused.
+
+Original author evidence `e9ef930c1365e8733f727cdff320fad085011faf`
+(`research/evidence/veronese-zero/REPORT.md`, SHA-256
+`284184e0f9209e8de1ae603f1aadced124ac9af2e92eceb2b1528314d3b3d6ac`)
+records a pinned cache-first focused build and 32 complete producer-origin
+transitive standard-three roots, **not** the client. Fresh independent
+worker-a mathematical/API/rights reviewer Hive Task
+`hive-request-5dff87db89a56c80cee863d7bb748a77058aa902` (UID
+`e57cf205-d345-4586-b1ce-bddead009c44`) approved unchanged original
+code at `661f30c9ed4049cc6e54556a88d6e0947a43b1df`
+(`research/reviews/veronese-zero/REPORT.md`, SHA-256
+`940a999dc34859fc65e38894c2627a8e785c47621a30da61a895c088703573f5`).
+Separate worker-b supplement Task
+`hive-request-67a7f37538b1ea871f41281f3e38b27d42e79f95` (UID
+`a0cb2e65-6b7d-499c-be21-2bc194c3bebd`) at
+`e79f71a544a218b2faf7893b844dad7fd5034fb4`
+(`research/evidence/veronese-zero-client-supplement/REPORT.md`, SHA-256
+`56c53953246127703018288327f97043ed702c4f57875cd1377ec097fe49b2ea`)
+checks all eight actual client-origin kernel roots including private/generated
+ones; nine additional codegen-only names were verified absent from the
+kernel, not excluded kernel declarations. All original roots use only
+`propext`, `Classical.choice` and `Quot.sound`. Atlas's isolated acceptance is
+incubator issue #177 comment 60315; it is not shared-main integration,
+promotion, release or source correspondence.
+
+This distinct static transfer is by worker-b Hive Task
+`hive-request-5517abb569ec075495c56e99d05aec2d59249feb` (UID
+`786f2edf-f384-4f75-be53-ca741454535b`) from accepted Graded Rings parent
+`88ff68e101c378a306ea053c1413e3b321042be7` (tree
+`09a54269e0f722e871808f6f9d4198132a2601e0`) under owning issue #75.
+It retains the entire original producer byte-for-byte, changes only the
+direct client's producer import, adds generic aggregate witnesses and adapts
+the original standalone guide to this library. Original credit and licensing
+remain intact; no incubator ancestry, textbook text, source PDF or third-party
+proof code enters the destination history. The original 32+8 origin checks,
+donor review and the accepted predecessor's checks do **not** certify this
+changed destination graph. Applicable strict three-target native build,
+complete private/generated-inclusive transitive standard-axiom audit, fresh
+author-distinct exact-destination review, Atlas's acceptance and protected
+integration, a separate reviewed and verified official release and any source
+correspondence remain independently determined. The existing historical
+Exercise 7.4.H metadata describes polynomial-only background, not a claim
+of coverage by this zero-index theorem.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at
@@ -717,3 +789,18 @@ third-party expression must retain applicable source, modification and license
 notices; original project licensing does not relicense third-party material.
 No source PDF, dependency website, font, JavaScript asset or raw agent transcript
 is part of this library's source payload.
+
+## September 29, 2026: collective author-header correction
+
+Worker-b Hive Task `hive-request-38db915b21067749e12433ea9f59824f533550ce`
+(UID `c8d59383-e1a7-4571-8db5-fd81202333d5`) corrects the original-project
+author-header prefixes in thirteen files to `Authors: Formal Frontier Agents`,
+as required by section 10 of the deliverable release requirements. All detailed
+Hive Task/UID contributor credit remains, as do Jujian Zhang's authentic 2022
+copyright notice, Jujian Zhang and Eric Wieser's mathlib attribution, the
+adaptation and Apache-2.0/SPDX notices, and fixture/design/clarification/transfer
+credits. Predecessor main is `82fff548f2fbcb861c44120707e8deca2a1e3771`
+(tree `d64850e405a839d3eb08fe54b7f73121480d48c9`). All older whole-file
+donor-byte-identity claims remain evidence at their recorded frozen revisions;
+this successor changes only these headers, not the Lean code following their
+initial header terminators.

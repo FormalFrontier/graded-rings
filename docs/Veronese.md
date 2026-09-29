@@ -37,8 +37,11 @@ The supporting `selectedGradedMonoid`, `instCommRing`, `instGradedRing`,
 `reindex_injective` declarations remain available for advanced clients.
 There is no domain, field, reducedness, regularity, finite-generation or
 degree-one-generation requirement on the graded ring. **The selected ring
-exists for any index; its canonical embedding, degree-zero equivalence,
-and the separate degree-one-generation theorem require a positive index.**
+exists for any index; its canonical embedding, the original `zeroRingEquiv`
+API, and the separate degree-one-generation theorem require a positive
+index.** The separate [all-index zero-component companion](VeroneseZero.md)
+provides `zeroRingEquivAll` even at index zero, without asserting whole-ring
+inclusion injectivity there.
 The unconditional ring construction makes no generation claim. Under the
 additional *old-ring* premise
 `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the

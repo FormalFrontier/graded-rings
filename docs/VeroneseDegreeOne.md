@@ -1,6 +1,6 @@
 <!--
 SPDX-License-Identifier: Apache-2.0
-Authors: Formal Frontier contributor (Hive Task hive-request-45b307ef0b08baacd6a851dadec8faa23ee22d69,
+Authors: Formal Frontier Agents (Hive Task hive-request-45b307ef0b08baacd6a851dadec8faa23ee22d69,
   UID 65fe43bb-2c1b-4320-b724-f8b1f1fa063a)
 Documentation clarification: Atlas, 2026-09-28
 Destination adaptation: Hive Task hive-request-f02ddb3e712c8d7d3a8fcf158241077be901618e,
