@@ -17,7 +17,9 @@ project:
     new zero component from arbitrary-weight homogeneous generators or native
     finite-type input, all-index equivalence of actual selected degree-zero
     rings and finite type of the zero-index external selected ring over its
-    actual new degree-zero ring, and
+    actual new degree-zero ring, finiteness of the canonical inclusion from
+    every positive selected-component ring when the original ring is finite
+    type over its whole degree-zero ring, and
     prime-multiplicity valuations with homogeneous polynomial applications.
   authors:
     - Formal Frontier Agents
@@ -92,7 +94,7 @@ sources:
 
 status:
   scope: >-
-    Twenty-one production leaves, an aggregate native module, twenty-six private regression
+    Twenty-two production leaves, an aggregate native module, twenty-seven private regression
     clients and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
@@ -161,6 +163,11 @@ status:
     component supplies such generators. No field, domain, Nontrivial,
     Noetherianity, positive-weight or equal-weight assumption is needed;
     neither index zero nor new degree-one generation at every index follows.
+    Separately, for each positive index the canonical selected-ring inclusion
+    is finite when the original commutative ring is finite type over its entire
+    old degree-zero ring. This is module finiteness of the old ring through
+    the actual inclusion, not finite type of the selected ring over its new
+    zero ring, a residue-module assertion or an index-zero result.
   main_results:
     - declaration: Ideal.Quotient.gradedRing
       file: GradedRings/Quotient.lean
@@ -246,6 +253,8 @@ status:
       file: GradedRings/VeroneseZero.lean
     - declaration: GradedRing.Veronese.finiteType_zero
       file: GradedRings/VeroneseZero.lean
+    - declaration: GradedRing.Veronese.inclusion_finite
+      file: GradedRings/VeroneseFinite.lean
 
 automation:
   methods:
@@ -335,6 +344,16 @@ review:
     standard-three audit, fresh independent destination/rights review, owner
     acceptance, protected integration, separate verified publication and any
     source correspondence remain distinct decisions under owning issue #75.
+
+    At the 2026-09-29 finite-positive-inclusion static transfer checkpoint,
+    the accepted isolated original proof has successful cache-first focused
+    builds, an actual-origin private/generated-inclusive standard-three audit
+    and independent original review. Those do not certify this new module
+    origin, client-import adaptation, aggregate root or three-target graph.
+    Applicable native strict three-target build and complete transitive
+    standard-three audit, fresh independent destination and rights review,
+    maintainer acceptance, protected integration, separately verified official
+    publication and any source correspondence remain separate decisions.
 
 acknowledgements: >-
   Atlas authored the original mathematical units, quotient repair,
@@ -431,3 +450,12 @@ acknowledgements: >-
   rights and separate evidence boundaries are recorded in docs/PROVENANCE.md.
   Accepted isolated mathematics is not acceptance of the changed destination
   graph or any source-coverage decision.
+  Atlas designed an uncompiled finite-inclusion applicability assessment,
+  independently reviewed by a Worker A Task. A separate Worker B Task wrote
+  the isolated finite-inclusion proof and ordinary client, independently
+  reviewed by another Worker A Task. A distinct Worker B Task transferred
+  that proof byte-for-byte, changed only the direct-client producer import,
+  and supplied the root witness, destination guide, wiring and metadata.
+  Actual identities, UIDs and exact source, donor and review references are
+  recorded in docs/PROVENANCE.md. Original checks and reviews do not certify
+  the changed destination graph, official publication or source coverage.

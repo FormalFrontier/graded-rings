@@ -280,6 +280,18 @@ private theorem veroneseFiniteType_root (weights : ι → ℕ)
 
 end VeroneseFiniteType
 
+section VeroneseFinite
+
+variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]
+  [AddSubgroupClass σ S] (𝒮 : ℕ → σ) [GradedRing 𝒮]
+
+private theorem veroneseFinite_root [Algebra.FiniteType (𝒮 0) S]
+    (n : ℕ) (hn : 0 < n) :
+    (GradedRing.Veronese.inclusion 𝒮 n).Finite :=
+  GradedRing.Veronese.inclusion_finite 𝒮 n hn
+
+end VeroneseFinite
+
 section VeroneseZero
 
 variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]

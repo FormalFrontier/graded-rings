@@ -1,6 +1,6 @@
 # API documentation and historical native snapshot
 
-[`API.md`](API.md) is the **hand-maintained current** twenty-one-leaf module/API map,
+[`API.md`](API.md) is the **hand-maintained current** twenty-two-leaf module/API map,
 not a fresh native display or a complete declaration census. The
 [degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
 explains all thirteen new entry points, precise hypotheses and clients.
@@ -81,6 +81,17 @@ Its [ordinary direct client](../test/VeroneseFiniteType.lean) and
 material, not historical native-snapshot inputs. Original accepted isolated
 proof checks and review do not establish this changed destination graph's
 three-target build, full standard-axiom audit or fresh promotion review.
+
+The [finite positive-inclusion guide](VeroneseFinite.md) states finiteness of
+the **original ring as a module** over each positive external selected ring
+through its actual inclusion, assuming native finite type of the original ring
+over the **whole old zero ring**. This is not the selected-ring finite-type
+result over its new zero ring. The [direct ordinary-import
+client](../test/VeroneseFinite.lean) and [generic aggregate-root
+witness](../test/RootClient.lean) are new current material, not inputs to the
+historical snapshot. Original isolated checks/review do not certify this
+changed destination graph; native three-target build, complete private/generated
+transitive standard-axiom audit and fresh destination review remain separate.
 
 The [zero-index guide](VeroneseZero.md) explains the all-index actual degree-zero
 equivalence and finite type of the external zero-index selected ring over its

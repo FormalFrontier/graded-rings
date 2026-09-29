@@ -770,6 +770,65 @@ correspondence remain independently determined. The existing historical
 Exercise 7.4.H metadata describes polynomial-only background, not a claim
 of coverage by this zero-index theorem.
 
+## Finite positive-Veronese inclusions
+
+Atlas designed the earlier **uncompiled applicability assessment** at source
+revision `2405a46d338acf34cb4afddf51e85628975f7b28`, path
+`research/exercise-7-4-h-finite-module-reuse-assessment.md` (13,185 bytes,
+SHA-256 `bae23b31c6692958c816b07fdefc15bb320576b4e1eb2df9e66072e77c9ebbfb`).
+Fresh independent static reviewer worker-a Hive Task
+`hive-request-e74bdffc168ced7e3a75ed6f0ec04d315a6886d2`, UID
+`401976e8-6ad8-4d61-9f11-14b78a26c012`, approved only that assessment
+at source revision `450cbd9ca0b1af747878a068f4df70f626c3f63d`, path
+`research/reviews/exercise-7-4-h-finite-module-reuse/REPORT.md` (10,479 bytes,
+SHA-256 `37864d5be54690fa8e3ba97f9992982e0b3019df916fbf09132754fa08b8aed1`).
+These research records propose a useful reusable endpoint; they are not a
+compiled proof or additional source correspondence.
+
+The [producer](../GradedRings/VeroneseFinite.lean) is byte-for-byte the
+3,107-byte isolated incubator module
+`Incubator/Algebra/GradedRing/VeroneseFinite.lean` at accepted commit
+`aea59d39e8b3c198ddea987fd23aedc1a7d313c6`, tree
+`0c6164a6c52da6deea153e495544e9fee3ee039c`, sole parent
+`5f493b0606b9961f052a89569f08c5962ae7c0ae`, SHA-256
+`1e72d49e10fdc3f1d6603677dbf33c73349ad35ddab2289c032033c88b0bcfb4`.
+The [direct client](../test/VeroneseFinite.lean) changes only its producer
+import from the original 2,530-byte
+`IncubatorTest/Algebra/GradedRing/VeroneseFinite.lean` (SHA-256
+`c36414f8e40a5bec9a0af9b7a6503a79af20505736d08e14c5315b7c5c766ffb`).
+The [destination guide](VeroneseFinite.md) adapts the 3,110-byte isolated
+`Incubator/Algebra/GradedRing/VeroneseFinite/README.md` (SHA-256
+`994074089debf5c15c3d33ca1c67a776ba9ec337efb136986939969cca5726cb`)
+for this repository, and the root witness and metadata are new transfer work.
+
+The original producer, client and guide were authored by worker-b Hive Task
+`hive-request-a6d9833e213de37036a9964c1059dcdaf5959701`, UID
+`6555ed03-40cb-463b-9632-266fb9bd7c44`; its evidence-only direct child
+is `b6c7ebb53bfd67bada643a2779e2b8c84c45dcbc`, path
+`research/evidence/veronese-finite/REPORT.md` (10,969 bytes, SHA-256
+`f7523fd896040e583233e402e4615cda2514192ee58ab77a5c770d170c30c853`).
+Independent original reviewer worker-a Hive Task
+`hive-request-b100b6af01e9101041244a4af0cd5f4b657d3297`, UID
+`31c33065-aa56-4c95-8dbc-e5643d740aaa`, approved the exact isolated code
+in report-only direct child `fd1fd5a650917304b8df5a346594473574fd4a99`, path
+`research/reviews/veronese-finite/REPORT.md` (10,838 bytes, SHA-256
+`9f4b11a044c12d2a40b48d345f80b1456f1b9d9a5afec8fd823e53031c05b4a8`).
+Atlas's isolated acceptance is in incubator issue #183, comment #61053.
+Separate static transfer and destination documentation were done by worker-b
+Hive Task `hive-request-317b2951f3df69e9b7cead656f7122e079339ee6`, UID
+`4ec3208e-f254-416a-9f8b-a1b70169a447`, from Graded Rings accepted
+parent `4687a1118f172dfe78f8612091f1482ee80e4e3b` under owning issue #83.
+
+Collective Formal Frontier Agents authorship and the original producer/client
+Apache-2.0 SPDX notices remain intact. No source PDF, source expression,
+third-party code or raw transcript is reproduced here. Source applicability,
+original focused build and private/generated transitive standard-axiom evidence,
+and original review do **not** establish the new destination origin, adapted
+client, aggregate/root graph, required native three-target checks, new review,
+owner acceptance, protected integration, official release or source coverage.
+The maintainer records those later decisions against the exact destination
+revision in owning issue #83, not as assumed facts in this shipping source tree.
+
 ## Dependencies and redistribution boundaries
 
 The library imports mathlib at

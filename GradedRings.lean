@@ -24,4 +24,5 @@ public import GradedRings.WeightedBlockAdjoin
 public import GradedRings.FiniteVeronese
 public import GradedRings.WeightedVeroneseGenerators
 public import GradedRings.VeroneseFiniteType
+public import GradedRings.VeroneseFinite
 public import GradedRings.VeroneseZero
