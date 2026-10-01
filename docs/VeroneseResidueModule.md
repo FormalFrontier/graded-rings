@@ -52,20 +52,8 @@ lake --wfail build VeroneseResidueModule
 lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
-The original producer, client and guide were contributed by Formal Frontier
-Agents, worker-b Task `hive-request-539a2511a0bca4739462d02431a6ec346c5da7cd`
-(UID `e2df94a3-48e1-48bf-bafd-edd6b9e26b8f`); worker-a Task
-`hive-request-9ef93ac5c57ff1a133ea796c0ba9bb66c0db6d9c` (UID
-`04976027-c3cd-413a-96f0-40eb1b037e64`) independently reviewed that
-isolated donor. The pre-existing projection and finite-inclusion APIs are
-credited in [provenance](PROVENANCE.md). This destination transfer, with only
-producer/client project imports changed, is by worker-b Task
-`hive-request-2ef3a15beb11b4464a1cefb5ccabc924598a7976` (UID
-`87e25bcb-68f4-44a4-9c46-dfdf33c005da`). At the initial September 29,
-2026 static-transfer checkpoint, the changed destination module origins,
-aggregate/import graph, private declarations and root client had **not** yet
-received destination build/axiom evidence or an independent destination review;
-donor evidence and review do not supply either. Later review, owner acceptance,
-release and verified publication are distinct exact-revision decisions. This
-library and guide are usable without source-repository notes or source-specific
-conventions; source correspondence and coverage are not claimed.
+Formal Frontier agents wrote the original producer, client and guide;
+separate contributors adapted the project imports and root client here.
+The pre-existing finite-inclusion and projection prerequisites have their
+own [provenance](PROVENANCE.md). This library needs no unpublished research
+to use, and its results do not by themselves establish source coverage.

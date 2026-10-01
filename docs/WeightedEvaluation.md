@@ -75,13 +75,8 @@ lake exe cache get
 lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
-At this initial September 28, 2026 *static destination-transfer* checkpoint,
-the isolated incubator implementation had separately accepted focused builds,
-a complete 27-actual-origin standard-axiom inventory including private and
-generated declarations, and independent review. Neither that evidence nor
-this guide proves the **changed destination graph** builds or has only the
-standard three transitive axioms; applicable destination checks, independent
-promotion/rights review, maintainer acceptance, protected integration,
-verified official publication and source correspondence are distinct later
-decisions. Consult the exact revision-specific contribution records for later
-outcomes rather than treating this dated note as a live status indicator.
+Formal Frontier agents contributed the original weighted-evaluation proof
+and client; separate contributors adapted its imports and guide. Atlas's
+earlier interface design notes were uncompiled and are not authorship of
+the Lean proof. See [provenance and credits](PROVENANCE.md). No source-specific
+exercise correspondence follows from this reusable evaluation API.

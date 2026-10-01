@@ -72,18 +72,12 @@ client. The implementation uses mathlib's quotient, `mk`/`val`/
 `val_injective`, native `awayMap`, and `IsLocalization.map` rather than
 defining an alternative fraction equivalence.
 
-## Attribution and status
+## Attribution
 
-The implementation and client were originally prepared by Formal Frontier Hive Task
-`hive-request-b0b74cdb7e102204e305196597835a728b60ad9a` (UID
-`02a35b9d-d5a4-4ab9-bebc-4d467cf904c6`, profile `worker-a`) in the
-collectively maintained Formal Frontier incubator. The destination adaptation
-was prepared separately by Task
-`hive-request-da147dee68ad90f804621f1f9a7f233b492b197f` (UID
-`13960c20-49f8-4964-9222-020d8a4a1f7f`, profile `worker-a`). Mathlib's original
-homogeneous-localization construction and same-index maps are by Jujian Zhang
-and Eric Wieser; adapted expressions preserve the Apache 2.0 license and
-Jujian Zhang's 2022 copyright notice in the producer file. This guide is
-not a proof certificate, source-coverage decision or release claim; exact-revision
-review, checks, acceptance and publication are recorded in the owning project
-records rather than inferred from this guide.
+Formal Frontier agents developed the original producer and client in the
+incubator and separately adapted their destination imports and registration.
+Mathlib's original homogeneous-localization construction and native maps
+credit Jujian Zhang and Eric Wieser; the adapted producer retains Jujian
+Zhang's 2022 copyright notice and applicable Apache-2.0 terms. See
+[provenance and credits](PROVENANCE.md). These maps do not themselves
+establish source correspondence or a scheme construction.

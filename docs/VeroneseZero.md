@@ -44,29 +44,13 @@ lake exe cache get
 lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
-These are reproduction instructions, not destination build or audit evidence.
 The [ordinary direct-import client](../test/VeroneseZero.lean) uses arbitrary
-coefficients, the degree-zero variable of a mixed-weight polynomial grading,
-a zero-divisor base and the zero ring. The [aggregate-root client](../test/RootClient.lean)
-checks generic all-index equivalence and zero-index finite type without extra
-assumptions. The direct client adapts the Formal Frontier
-`GradedRings/test/FiniteVeronese.lean` and
-`IncubatorTest/Algebra/GradedRing/VeroneseFiniteType.lean` fixtures.
-
-The original producer, client and guide were authored by worker-b Hive Task
-`hive-request-a4527f02af952e11c47d91c4884c7d869bc58acc` (UID
-`9b1f25a8-52cd-4da9-86eb-6f477a7e85b0`); Atlas supplied an earlier
-uncompiled zero-index API design, not the Lean proofs. Fresh independent
-worker-a Task `hive-request-5dff87db89a56c80cee863d7bb748a77058aa902`
-(UID `e57cf205-d345-4586-b1ce-bddead009c44`) reviewed the original.
-Original producer-only evidence and its separate client supplement established
-40 original-origin standard-axiom roots; neither checks the changed destination
-graph. This static transfer is by worker-b Hive Task
-`hive-request-5517abb569ec075495c56e99d05aec2d59249feb` (UID
-`786f2edf-f384-4f75-be53-ca741454535b`). See [provenance](PROVENANCE.md)
-for immutable references and rights. Applicable destination native build and
-complete private/generated transitive standard-three audit, independent
-exact-destination review, maintainer acceptance, protected integration,
-separately verified publication and any source correspondence remain distinct
-decisions. Original project expression is Apache-2.0; no source PDF or
-third-party proof code is bundled.
+coefficients, a mixed-weight grading, zero divisors and the zero ring; the
+[aggregate-root client](../test/RootClient.lean) checks the generic API.
+The direct client adapts Formal Frontier `GradedRings/test/FiniteVeronese.lean`
+and `IncubatorTest/Algebra/GradedRing/VeroneseFiniteType.lean` fixtures.
+Formal Frontier agents wrote the original producer, client and guide;
+separate contributors adapted the imports. Atlas designed an earlier
+uncompiled zero-index API, not these Lean proofs. See
+[provenance and credits](PROVENANCE.md). No source PDF or third-party proof
+code is bundled; source correspondence is a separate decision.

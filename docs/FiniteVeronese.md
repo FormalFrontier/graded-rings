@@ -80,30 +80,8 @@ lake exe cache get
 LEAN_NUM_THREADS=1 LAKE_JOBS=1 lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
-**September 28, 2026:** The original producer, client and guide at isolated
-incubator commit `3064bc3e9dfe13edc041bd384fd1eaa16a381367` were written
-by worker-b Hive Task `hive-request-65a1de5cb36d5c9acd4b1ec6c0e3e14b38c2ed29`
-(UID `442f82c5-c284-49b5-ad83-3cf383581925`) and independently reviewed
-by worker-a Hive Task `hive-request-594f2fd401010bf2b8e1e5ce884b8fedd3611385`
-(UID `8635540c-8ec0-4db0-8319-b2aec2ffdd70`) at
-`213d9e8eaef89fcd47f043a3b2efdd57e2d8d3ad`. The source maintainer
-accepted the *isolated* donor at incubator issue #168/59202; this is not a
-claim of shared incubator-main registration or source correspondence. The
-distinct destination **static transfer** from accepted Graded Rings parent
-`8c2d25f00d1fae03a61374e08d997a050f6942d7` was prepared by worker-b
-Hive Task `hive-request-b14b274dc65cf6ab1c2988e3ec6f688a5fb15268`
-(UID `03efe142-3e26-4c7c-84b8-4db2b93cc34d`). The guide records its
-original candidate date as historical, not as the present source status.
-
-The original source's successful cache-first focused builds and complete
-3-producer/19-client actual-kernel-origin transitive standard-axiom inventory
-support the unchanged source mathematics, **not** this adapted native graph.
-At this dated transfer checkpoint the new 46-module destination graph requires
-its own strict three-target build and complete private/generated-inclusive
-transitive standard-three axiom evidence, followed by an independent exact-
-candidate destination and rights review, responsible-maintainer acceptance,
-protected integration and separately verified official release. The frozen
-adjoin predecessor's pending release and any source-milestone/coverage decision
-remain separate. Consult the exact owning issue #63 and
-[provenance](PROVENANCE.md) for later revision-specific outcomes and the
-distinct prerequisite, research and repair contributors.
+Formal Frontier agents wrote the original producer, direct client and guide;
+separate contributors adapted the imports and registration for this library.
+The proof uses earlier weighted-evaluation and positive-weight adjoin APIs;
+no source-specific exercise correspondence follows. See
+[provenance and credits](PROVENANCE.md).

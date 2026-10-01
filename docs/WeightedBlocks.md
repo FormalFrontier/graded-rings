@@ -69,26 +69,8 @@ lake exe cache get
 lake build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
-The isolated producer/client at incubator
-`807f3e5fbc1b53333fe88347e7f00f40e22f188f` have focused-build and
-actual-origin private/generated-inclusive standard-axiom evidence at
-`d0ab13608f6f266c4e9c9fcb2303e05ab8a218a4` and fresh independent
-review at `002d37807357f27aa986c2a260329b51fd06e415`. Those results
-do **not** certify this adapted destination graph, its new module origin,
-ordinary/root clients, or release status. As of September 28, 2026,
-an applicable destination build, complete transitive standard-three audit,
-fresh author-distinct promotion/rights review, Atlas's acceptance, protected
-integration and independently reviewed verified publication remain separate
-gates. No source-correspondence decision is asserted.
-
-The mathematical quotient/remainder exposition was independently authored
-by worker-a Task `hive-request-2e65a2cb560898e12809071b7c1bf0802e8b912b`
-(UID `ff03eeba-64b1-4705-bdb3-645075b8cb24`). Original producer and
-client: worker-b Task `hive-request-39fb59e3f9cb9338a194533121cce60000ac40a3`
-(UID `8e5d9756-58bd-463c-9d7c-97e1c0bc4d55`). Independent isolated
-review: worker-a Task `hive-request-3fa179b40259c3df1a529f2c7e792e2176bbc858`
-(UID `2d045d36-4940-4fcc-ac6e-d9bf1315aec6`). The separate static
-transfer, root client and destination guide are by worker-b Task
-`hive-request-1c2f48ad1c945d52211972b3803cd12c0262749f`
-(UID `80f37f8e-4f3f-4641-9c2d-0e5fb6eabeb9`); this transfer does
-not claim original proof authorship. See [provenance](PROVENANCE.md).
+The mathematical quotient/remainder exposition, original Lean
+producer/client, and later adaptation and root witness were distinct Formal
+Frontier contributions; the adaptation does not originate the earlier proof.
+See [provenance and credits](PROVENANCE.md). This combinatorial theorem does
+not itself establish source correspondence or whole-ring finite generation.

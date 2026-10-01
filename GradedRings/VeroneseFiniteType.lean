@@ -1,7 +1,6 @@
 /-
 SPDX-License-Identifier: Apache-2.0
-Authors: Formal Frontier Agents (Hive Task hive-request-7409da348fa71e5989914571ccac1d18d9d8f63c,
-  UID 867d8cc9-ae78-4630-8884-8c1bf74e56c4)
+Authors: Formal Frontier Agents
 -/
 module
 

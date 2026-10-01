@@ -67,13 +67,7 @@ lake exe cache get
 lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
-The exact destination code at `99df5f2effcf2ebe52a91d94cbd15c3090401cca`
-passed native run 712 (all three targets and a complete private/generated-
-inclusive standard-axiom audit), received independent code approval 4476,
-and was accepted and protected-integrated by the maintainer on 2026-09-28 at
-09:12:13 UTC. Those code results are not review, acceptance or verified
-publication of the subsequent documentary release candidate. This lift
-**alone** does not prove positive-Veronese degree-one generation; the separate
+This lift **alone** does not prove positive-Veronese degree-one generation; the separate
 [positive-Veronese module](VeroneseDegreeOne.md) combines it with the
 [selected-component ring](Veronese.md) and a power argument under `0 < n` and
 the original `hgen`. None of these modules proves coefficient regrouping,

@@ -43,24 +43,9 @@ lake exe cache get
 lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
-These are reproduction instructions, not an assertion that this transfer
-ran a build. At the September 28, 2026 static transfer checkpoint, the
-original isolated implementation had a successful cache-first focused build,
-a complete actual-origin private/generated-inclusive transitive standard-three
-axiom audit and independent review; Atlas accepted that *isolated* candidate
-on September 28, 2026. Those checks and review do **not** establish the
-changed destination graph's three-target build, full private-inclusive audit
-or fresh destination review. Maintainer acceptance, protected integration,
-verified release and source-specific correspondence remain separate. The
-owning issue #67 records later revision-specific decisions.
-
-Original mathematical producer, direct client and guide: worker-b Hive Task
-`hive-request-b19ed49dc35a86b4f2c7f461f7a2a8997c0265da`, UID
-`a441c096-818a-45de-9581-5f096b28e669`. Original fresh independent
-review: worker-a Hive Task `hive-request-c63463c2ee5ed9e6cd9ca9927719b6e7cf21d0f2`,
-UID `9848d86f-0a38-433e-ab52-5eb525143762`. This distinct static
-destination transfer, aggregate witness, guide and metadata: worker-b Hive
-Task `hive-request-71135ca8e40ee75e265b4be2ece6f790e993636c`, UID
-`f002571f-0a86-4430-a7b1-09bbcd5e1b7f`. See [provenance](PROVENANCE.md).
-Original project expression follows the repository's Apache-2.0 terms;
-no textbook prose, PDF or third-party proof code is redistributed here.
+Formal Frontier agents authored the original selected-polynomial producer,
+client and guide; different contributors adapted the native import, aggregate
+witness and guide. The theorem concerns selected polynomial components, not
+finite type or degree-one generation of every whole selected ring. See
+[provenance and credits](PROVENANCE.md). No book text, PDF or third-party
+proof code is bundled; source correspondence is a separate decision.

@@ -1,26 +1,10 @@
 # Graded rings
 
-Reusable Lean constructions for graded quotients and localizations,
-degree-multiplying homogeneous-localization maps, homogeneous polynomial lifts,
-finiteness, homogeneous prime ideals, symmetric algebras, selected-component
-Veronese rings, coherent-tail equivalences of whole selected rings,
-positive-Veronese degree-one generation, weighted polynomial evaluation,
-finite positive-weight exponent blocks, weighted-polynomial monomial-adjoin
-membership, finite degree-one generation of a whole positive Veronese over its
-actual degree-zero ring, one finite homogeneous polynomial family generating
-every degree selected at an arbitrary prescribed positive index (including
-zero weights), finite type of every prescribed positive whole selected ring
-over its actual new degree-zero ring from arbitrary-weight homogeneous
-generators or native finite-type input, all-index degree-zero equivalence and
-finite type of the actual zero-index Veronese over its own degree zero,
-finiteness of the canonical inclusion from every positive selected-component
-Veronese ring when the original ring is finite type over its whole degree zero,
-whole-Veronese-linear projections onto fixed old-degree residue classes with
-exact finite images under that same finite-type hypothesis,
-whole-Veronese convolution on shifted external residue sums, coefficient
-evaluation and their positive-index equivalence with projection ranges,
-including finite-module transport from the full old degree-zero ring,
-and prime-multiplicity valuations.
+Reusable Lean constructions for graded rings, their quotients, localizations,
+finiteness and prime criteria, symmetric algebras, prime multiplicity, and
+selected-component Veronese rings. The headlines below distinguish the
+different weighted, finite-type and residue interfaces and their hypotheses;
+the [API map and subject guides](docs/README.md) provide detailed navigation.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
 under [Apache-2.0](LICENSE). Atlas is the responsible maintainer on behalf of the
@@ -30,10 +14,9 @@ clients and documentation; exact contributions are listed in
 
 ## Headline results
 
-This library presents reusable algebraic APIs. The finite-inclusion prerequisite
-was officially published before this September 29, 2026 residue-transfer
-checkpoint. The new shifted-residue module's presence is not an assertion of its
-destination verification, release publication, source correspondence or book coverage.
+This library presents reusable algebraic APIs. The statements and limitations
+below describe the library in this checkout; source-specific correspondence
+and book coverage require separate assessment.
 
 - **Quotients and localizations:** [Homogeneous-ideal quotients](GradedRings/Quotient.lean)
   inherit a grading, while [localization](GradedRings/Localization.lean) at
@@ -191,21 +174,10 @@ equivalent selected rings without extending the equivalence to missing low
 degrees or asserting a geometric equivalence. No claim about complete
 coverage of a mathematical book follows from this API.
 
-The [current hand-maintained API map](docs/API.md) links the original leaves and
-the localization, homogeneous-lifts and Veronese guides, including the
-[coherent-tail guide](docs/CoherentTailVeronese.md) and
-[weighted-block guide](docs/WeightedBlocks.md) and
-[weighted-polynomial adjoin guide](docs/WeightedBlockAdjoin.md) and
-[weighted-evaluation guide](docs/WeightedEvaluation.md) and
-[finite-Veronese guide](docs/FiniteVeronese.md) and
-[selected weighted-polynomial guide](docs/WeightedVeroneseGenerators.md) and
-[prescribed-index whole-ring finite-type guide](docs/VeroneseFiniteType.md),
-[finite-inclusion guide](docs/VeroneseFinite.md),
-[residue-projection guide](docs/VeroneseResidue.md),
-[shifted-residue guide](docs/VeroneseResidueModule.md)
-and [zero-index guide](docs/VeroneseZero.md). The [initial native 104-declaration snapshot](docs/API-initial-snapshot.md)
-applies only to the earlier 28-module tree; see [documentation reproduction](docs/README.md)
-for its exact inputs, limits and separately pinned generator.
+The [current manual API map](docs/API.md) and [subject-guide index](docs/README.md)
+cover these production leaves. The [historical 104-declaration native snapshot](docs/API-initial-snapshot.md)
+applies only to an earlier 28-module tree; see the documentation index for its
+exact original public checkout, limits and separately pinned reproduction recipe.
 
 ## Build and use
 
@@ -248,10 +220,12 @@ them for the main API.
 Clients do not need `import all` or access to private names.
 
 The quotient, localization and prime-multiplicity tests compare full public
-constructions with their original constructions by private ordinary-import
+constructions with their original constructions by Lean-private ordinary-import
 `rfl` equalities. This checks computation as well as availability of theorem
-names. Named axiom prints in tests/examples complement, but do not replace,
-the release's separate complete private/stored-body proof audit.
+names. Ordinary builds check proofs; named axiom prints in tests/examples
+complement, but do not replace, the complete transitive standard-axiom audit
+including private and generated declarations. No separate stored-proof replay
+is required.
 
 ## Historical observed build resources
 
@@ -331,73 +305,13 @@ These are mathematical references; no source PDF, figures or substantial source
 prose is distributed. Detailed source correspondence and gaps are maintained
 outside this reusable library.
 
-Lean and mathlib supply the underlying formal language and foundational APIs.
-See [provenance](docs/PROVENANCE.md) for the original project expression and
-subsequent interface work. Revision-specific mathematical, proof, rights and
-release decisions are recorded separately. The homogeneous-lifts code at
-`99df5f2effcf2ebe52a91d94cbd15c3090401cca` passed native three-target,
-private-inclusive standard-axiom run 712, received independent code approval
-4476, and was accepted and integrated by the maintainer on 2026-09-28 at
-09:12:13 UTC. These are code checks and acceptance, not acceptance or
-publication of this subsequent documentary release candidate or a source-
-coverage decision. The positive-Veronese transfer was initially prepared
-without destination computation. Its exact code at
-`d14e0ae469b2b13d004bb9ef192ec452a5465760` subsequently passed native
-three-target build and complete private/generated-inclusive standard-axiom
-run 727 on 2026-09-28 at 10:32 UTC. Independent promotion review, maintainer
-acceptance and release publication are recorded separately; neither this
-computational result nor the earlier isolated checks supplies those decisions.
-
-At the September 28, 2026 coherent-tail static transfer checkpoint, the original
-isolated producer and clients have separate focused evidence and source review,
-not a successful check or independent acceptance of this destination graph.
-The new module origin, direct and root clients require their own applicable
-native three-target build and full private/generated transitive standard-axiom
-audit; fresh independent promotion/rights review, protected integration and
-official publication are subsequent distinct gates. This algebra does not
-establish Vakil's §7.4.4 Exercise 7.4.F Proj conclusion or source coverage.
-
-At the September 28, 2026 weighted-block static transfer checkpoint, its
-original isolated focused-build and private/generated-inclusive axiom evidence
-and independent source review do not check this native destination module,
-ordinary client, aggregate root or expanded test graph. The applicable
-three-target build, full transitive standard-three audit, independent promotion
-and rights review, maintainer acceptance, protected integration and official
-publication remain separate gates. The background Exercise 7.4.G requires
-further graded-algebra mathematics; neither source correspondence nor finite
-Veronese generation follows from this arithmetic contribution.
-
-At the initial September 28, 2026 weighted-evaluation static transfer checkpoint,
-the isolated original implementation had its own focused evidence and independent
-review; those do not check this adapted destination graph. The changed
-three-target native build, complete actual-origin private/generated transitive
-standard-three audit, independent destination promotion and rights review,
-maintainer acceptance, protected integration, verified official publication
-and any source-specific correspondence are distinct revision-specific decisions.
-
-At the initial September 28, 2026 weighted-polynomial adjoin transfer checkpoint,
-the accepted isolated producer and client retain their focused build, complete
-actual-origin private/generated-inclusive standard-three evidence and corrected
-rights review; these do not certify the changed destination graph. Applicable
-strict three-target native build and full actual-origin standard-axiom audit,
-fresh destination promotion and rights review, maintainer acceptance, protected
-integration, official publication and source correspondence remain distinct
-exact-revision decisions, recorded in the owning issue #59.
-
-At the September 28, 2026 weighted-polynomial selected-generator static transfer
-checkpoint, the independently accepted isolated implementation has a successful
-focused cache-first build and full actual-origin private/generated-inclusive
-standard-three audit. Those checks do not certify the changed native producer,
-ordinary client, aggregate witness or three-target destination graph. A fresh
-exact-destination build/audit and independent review, followed by maintainer
-acceptance, protected integration, verified publication and any source-specific
-correspondence, remain separate decisions in owning issue #67.
-
-At the September 28, 2026 prescribed-positive-index whole-ring finite-type
-transfer checkpoint, the separate accepted isolated implementation retains its
-focused cache-first build, complete 21-origin private/generated-inclusive
-standard-three audit and fresh original review. Its import-only adaptation and
-new aggregate graph still require their own native three-target build, complete
-actual-origin transitive standard-three audit and fresh independent destination
-review. Atlas retains acceptance, protected integration, separately verified
-publication and distinct source-correspondence decisions in owning issue #69.
+Lean and mathlib supply the foundational APIs; original expression, authentic
+notices and distinct contributor/adaptation roles are summarized in
+[provenance](docs/PROVENANCE.md). This checkout contains the original project
+contributions and the subsequently accepted and officially published
+Veronese-related modules, including whole-ring residue projections and
+shifted external sums. Mathematical claims are limited by the hypotheses
+above: in particular, neither coherent-tail equivalence nor exponent blocks
+establish a Proj/scheme result or source-specific exercise completion.
+Revision-specific proof, rights, review and official-release decisions are
+recorded in the project's owning records, separately from source coverage.

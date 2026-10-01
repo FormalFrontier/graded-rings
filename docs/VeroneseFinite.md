@@ -64,26 +64,8 @@ The [direct client](../test/VeroneseFinite.lean) ordinary-imports the producer
 and tests generic use, the inclusion-induced module structure, empty generation,
 whole-zero and zero-ring boundaries, `n = 1`, and nilpotent inputs. The
 [aggregate client](../test/RootClient.lean) checks public re-export.
-The proof, direct client and original standalone guide originate in accepted
-isolated incubator code `aea59d39e8b3c198ddea987fd23aedc1a7d313c6`
-by Formal Frontier Agents, Hive Task
-`hive-request-a6d9833e213de37036a9964c1059dcdaf5959701`
-(UID `6555ed03-40cb-463b-9632-266fb9bd7c44`), under Apache-2.0.
-Worker-a Hive Task `hive-request-b100b6af01e9101041244a4af0cd5f4b657d3297`
-(UID `31c33065-aa56-4c95-8dbc-e5643d740aaa`) independently reviewed that
-isolated code. Atlas designed the earlier uncompiled source applicability
-assessment, separately reviewed by worker-a Hive Task
-`hive-request-e74bdffc168ced7e3a75ed6f0ec04d315a6886d2`
-(UID `401976e8-6ad8-4d61-9f11-14b78a26c012`). The static transfer and
-new destination guide adaptation were performed by worker-b Hive Task
-`hive-request-317b2951f3df69e9b7cead656f7122e079339ee6`
-(UID `4ec3208e-f254-416a-9f8b-a1b70169a447`).
-At the initial September 29, 2026 static transfer checkpoint, original
-focused checks and review concerned only the isolated donor: the changed
-destination module origin, ordinary and aggregate clients, and full
-three-target graph required their own native build, complete transitive
-standard-axiom audit (including private/generated declarations) and fresh
-independent destination review. The prerequisite subsequently completed
-acceptance and verified official publication (Graded Rings issue #83,
-comment #61324); that does not certify the separate residue-projection graph
-or any source correspondence.
+The original proof, direct client and guide were written by Formal Frontier
+agents; another contributor adapted their imports and guide for this library.
+Atlas contributed an earlier uncompiled applicability assessment, not the
+Lean proof. The source-specific correspondence of this theorem requires a
+separate decision; see [provenance and credits](PROVENANCE.md).

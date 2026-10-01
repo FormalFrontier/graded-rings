@@ -57,23 +57,14 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
 Successfully fetch the matching mathlib cache **before** building. The
-aggregate publicly imports this leaf, and the flat test target registers its
-direct client; the existing examples remain unchanged. At this 2026-09-28
-static transfer checkpoint, the isolated producer's checks do not certify the
-new destination module origin, root client or entire destination graph. An
-applicable destination build, complete transitive standard-axiom audit,
-independent promotion review, maintainer acceptance and official release are
-separate revision-specific gates, not claimed by this guide.
+aggregate publicly imports this leaf, and the test target registers its
+direct client.
 
 This algebra supplies neither maps on missing low degrees nor coefficient
 regrouping, Proj, chart or scheme equivalences. The mathematical motivation is
 Ravi Vakil, *The Rising Sea: Foundations of Algebraic Geometry*, October 21,
 2025 draft, §7.4.4, Exercise 7.4.F, printed p. 215 (coefficient conventions
 pp. 151–152); no book expression is copied and no source correspondence or
-coverage is asserted. Source research is not needed to use this API. The
-original proof and client were authored by worker-b Hive Task
-`hive-request-850bf931d8213b955070297ac6413e34cd384237`
-(UID `cd358354-3b4d-4c26-af0e-4f6988f9c02f`), with separately reviewed
-isolated code at `3856e87d4348b62c2e2cf56f121877504fbd08f0`. Distinct
-transfer credit and the bounded rights assessment are in
-[provenance](PROVENANCE.md); Atlas owns destination review, acceptance and release.
+coverage is asserted. Source research is not needed to use this API.
+Formal Frontier agents contributed the original proof/client and a separate
+destination adaptation; see [provenance and credits](PROVENANCE.md).

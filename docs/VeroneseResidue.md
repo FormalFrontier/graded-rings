@@ -62,33 +62,8 @@ lake --wfail build VeroneseResidue
 lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
-The original producer, ordinary client and guide were written by Formal
-Frontier Agents, worker-b Task
-`hive-request-1cc04ea025d989648e050829da560f5070fe022d` (UID
-`7768c775-4401-4d05-b7d9-88b2fd34ca29`), under Apache-2.0; the original
-independent reviewer was worker-a Task
-`hive-request-d997f6f869ad5770abe62ccc1b3edc053fd17153` (UID
-`0d110738-9176-47d3-a76d-04eaf3717c87`). The pre-existing
-`VeroneseFinite` inclusion/finiteness proof is credited to Task
-`hive-request-a6d9833e213de37036a9964c1059dcdaf5959701` (UID
-`6555ed03-40cb-463b-9632-266fb9bd7c44`); its independent reviewer was
-Task `hive-request-b100b6af01e9101041244a4af0cd5f4b657d3297` (UID
-`31c33065-aa56-4c95-8dbc-e5643d740aaa`). The original residue donor is
-incubator commit `905e7c2df24767f8cee4d7eafc757cb5c343cb3e`; its
-original review and focused checks apply only there. The September 29, 2026
-static destination transfer is by worker-b Task
-`hive-request-8e46b5299287b35b65f34038800f1c3b7482b0f5` (UID
-`ee21c7e8-3256-4684-8236-81517fa63480`); donor hashes are recorded in
-[provenance](PROVENANCE.md), and the exact shipping revision in the
-owning Graded Rings issue #87.
-At that initial static-transfer checkpoint, the new import/root graph still
-required its own checks, independent review and acceptance. Destination revision
-`0b6938c383e40a402187a1dee67784666f897eb5` subsequently passed native run #962
-(build and complete transitive standard-axiom audit, including private/generated
-declarations) and independent destination review #4808, and received maintainer
-acceptance in issue #87, comment #61553. Release review, protected release
-integration and verified official publication are separate decisions recorded
-in that owning issue; this checkpoint does not assert their completion. Neither
-this guide nor the code implies source correspondence or coverage. The
-mathematical library and guide need neither source assets nor unpublished
-research to be used.
+The original project producer, client and guide were authored by Formal
+Frontier agents; a separate contributor adapted the imports and guide for
+this library. Its finite-inclusion prerequisite is independently supplied by
+`GradedRings.VeroneseFinite`. The mathematics and examples above do not imply
+source correspondence or book coverage. See [provenance and credits](PROVENANCE.md).

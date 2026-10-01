@@ -1,187 +1,88 @@
-# API documentation and historical native snapshot
+# Documentation and API references
 
-[`API.md`](API.md) is the **hand-maintained current** twenty-four-leaf module/API map,
-not a fresh native display or a complete declaration census. The
-[degree-multiplying map guide](degree-multiplying-homogeneous-localization.md)
-explains all thirteen new entry points, precise hypotheses and clients.
-The [selected-component Veronese guide](Veronese.md) explains the whole-component
-direct sum, its internal grading, its positive-index embedding and degree-zero
-equivalence, and the five direct-import examples. The
-[homogeneous-lifts guide](HomogeneousLifts.md) explains componentwise
-surjectivity, degree-one evaluation, the exact algebra-generation premise and
-direct/aggregate clients. The [positive-Veronese generation
-guide](VeroneseDegreeOne.md) gives the conditional theorem, exact coefficient
-ring, direct [client](../test/VeroneseDegreeOne.lean), root witness and
-separate destination checks. These guides are not a new native documentation run
-or proof certificates for the expanded graph.
+[`API.md`](API.md) is the **current, hand-maintained 24-production-leaf map**:
+it links the available modules and selected interfaces. It is not a native
+declaration census or a proof certificate. Import `GradedRings` for the full
+public API, or ordinary-import a subject leaf. The [root README](../README.md)
+provides the headline mathematics, limitations and cache-first build commands.
 
-The [finite-Veronese generation guide](FiniteVeronese.md) explains finite
-whole-selected-ring degree-one generation from positive-weight homogeneous
-generators over the actual degree-zero ring, and its native finite-type
-consequence. The [ordinary direct client](../test/FiniteVeronese.lean) checks
-genuine mixed `0,2,3` generation, nonconstant degree-zero coefficients, the
-scalar triangle, empty index, zero ring and nilpotents; the
-[aggregate-root witness](../test/RootClient.lean) checks public export.
-At the September 28, 2026 static transfer checkpoint, isolated original
-review and checks do not establish the changed destination graph's build,
-complete standard-three audit, promotion review or acceptance. The guide
-is hand-maintained, not an update of the historical native snapshot.
+## Subject guides
 
-The [coherent-tail selected-ring guide](CoherentTailVeronese.md) gives the exact
-degree-zero, high-component, coefficient and product hypotheses, the whole-ring
-and graded inverse laws, the zero-component square, three client families,
-limitations and a cache-first destination recipe. Its [direct
-client](../test/CoherentTailVeronese.lean) and [aggregate-root
-witness](../test/RootClient.lean) are not part of the historical native snapshot.
-At the September 28, 2026 static transfer checkpoint, the destination build,
-complete standard-axiom audit and independent promotion review remain distinct
-gates; this manual guide is not computational or review evidence.
+- **Quotients and localization:** [degree-multiplying homogeneous-localization
+  maps](degree-multiplying-homogeneous-localization.md) complement the
+  [quotient](../GradedRings/Quotient.lean) and
+  [same-ring localization](../GradedRings/Localization.lean) modules.
+- **Polynomial constructions:** [homogeneous lifts](HomogeneousLifts.md) and
+  [weighted evaluation](WeightedEvaluation.md) distinguish grading preservation
+  from the extra algebra-generation premise needed to lift every component.
+- **Selected rings:** [Veronese construction](Veronese.md), [all-index degree
+  zero](VeroneseZero.md), [positive degree-one generation](VeroneseDegreeOne.md),
+  [finite degree-one generation](FiniteVeronese.md), [finite type at each
+  prescribed positive index](VeroneseFiniteType.md), and
+  [coherent high tails](CoherentTailVeronese.md) state separate hypotheses.
+- **Weighted polynomials:** [positive-weight exponent blocks](WeightedBlocks.md),
+  [monomial-adjoin membership](WeightedBlockAdjoin.md) and
+  [selected weighted-polynomial generators](WeightedVeroneseGenerators.md)
+  describe different combinatorial and polynomial results.
+- **Finiteness and residues:** [finite positive-index inclusion](VeroneseFinite.md),
+  [whole-ring linear residue projection](VeroneseResidue.md) and
+  [external shifted residue sums](VeroneseResidueModule.md) distinguish
+  finiteness of the old ring, a particular projection range and the shifted sum.
 
-The [positive-weight block guide](WeightedBlocks.md) states the explicit
-nonminimal bound, positivity hypothesis, whole-vector equality, exact block
-count and empty/zero-block limits. Its [ordinary direct client](../test/WeightedBlocks.lean)
-and [generic aggregate-root witness](../test/RootClient.lean) are new current
-material, not inputs to the unchanged historical snapshot. At the September
-28, 2026 transfer checkpoint, isolated source evidence does not certify the
-adapted destination graph; destination build/axiom and fresh review gates
-remain open.
+The guides document the current mathematical API, clients, code hypotheses,
+and limits. An isolated origin or an earlier static-transfer checkpoint is
+not a current release-status verdict; revision-specific evidence is kept in
+the project's owning records. The guides do not assert source completeness.
 
-The [weighted-polynomial adjoin guide](WeightedBlockAdjoin.md) explains the
-positive-weight block decomposition's polynomial consequence for arbitrary
-commutative semirings, with the [direct ordinary client](../test/WeightedBlockAdjoin.lean)
-and [aggregate-root witness](../test/RootClient.lean). Its initial September 28,
-2026 transfer checkpoint distinguishes original focused proofs/checks and
-rights review from the destination native three-target build, full standard-
-axiom audit and fresh promotion review. This hand-maintained guide does not
-modify or rerun the historical native snapshot.
+## Historical native snapshot
 
-The [weighted-evaluation guide](WeightedEvaluation.md) records arbitrary
-natural weights (including zero), evaluation into actual graded components,
-the precise additional adjoin-generation condition for homogeneous lifts,
-direct/aggregate clients and a cache-first destination recipe. Its initial
-September 28, 2026 transfer note distinguishes the accepted isolated source
-from checks and acceptance for the changed destination graph. Neither the
-guide nor the new client is part of the unchanged historical native snapshot.
+[`API-initial-snapshot.md`](API-initial-snapshot.md) is the byte-exact original
+native doc-gen4 Markdown for **104 public declarations in nine original
+production leaves**, from an earlier **28-module** tree (one aggregate,
+fourteen tests and four examples). The original inventory records 39 missing
+docstrings and `proof_certification: false`. Its relative source links and
+source line ranges refer to that historical tree, **not necessarily the
+current checkout**. To follow an old link accurately, open the [exact
+historical public checkout](https://github.com/FormalFrontier/graded-rings/tree/acbdc8381a0d50b37791a40c71c09d4b5d213559)
+and its [original public API document](https://github.com/FormalFrontier/graded-rings/blob/acbdc8381a0d50b37791a40c71c09d4b5d213559/docs/API.md).
+The Markdown here has the same bytes as that original `docs/API.md`; neither
+the snapshot nor its old line ranges describe newly added modules. The native
+analyzed revision `497babfcb2a4d0a016722416ebaeb50a234c51a0` is a
+**technical verification binding**, not a promised public GitHub object or
+a separate release-acceptance decision.
 
-The [selected weighted-polynomial generator guide](WeightedVeroneseGenerators.md)
-states one finite family for every selected weighted degree at a prescribed
-positive index over arbitrary commutative semirings, with zero weights permitted.
-Its [ordinary direct client](../test/WeightedVeroneseGenerators.lean) and
-[aggregate-root witness](../test/RootClient.lean) are current material, not
-inputs to the historical native snapshot. At the September 28, 2026 static
-transfer checkpoint, the isolated accepted proof/checks do not certify the
-destination's three-target build, complete axiom audit or independent review.
+## Reproducing the original snapshot
 
-The [prescribed positive whole-ring finite-type guide](VeroneseFiniteType.md)
-explains both exact theorems over the **entire actual new zero component**,
-arbitrary homogeneous generator weights, zero-coefficient transport, and the
-difference from selected polynomial-only generation or degree-one generation.
-Its [ordinary direct client](../test/VeroneseFiniteType.lean) and
-[generic aggregate-root witness](../test/RootClient.lean) are new current
-material, not historical native-snapshot inputs. Original accepted isolated
-proof checks and review do not establish this changed destination graph's
-three-target build, full standard-axiom audit or fresh promotion review.
-
-The [finite positive-inclusion guide](VeroneseFinite.md) states finiteness of
-the **original ring as a module** over each positive external selected ring
-through its actual inclusion, assuming native finite type of the original ring
-over the **whole old zero ring**. This is not the selected-ring finite-type
-result over its new zero ring. The [direct ordinary-import
-client](../test/VeroneseFinite.lean) and [generic aggregate-root
-witness](../test/RootClient.lean) are new current material, not inputs to the
-historical snapshot. At the initial September 29, 2026 transfer checkpoint,
-original isolated checks/review did not certify the changed finite-inclusion
-destination graph; its native build, complete private/generated transitive
-standard-axiom audit and fresh destination review were separate gates. The
-prerequisite was subsequently accepted and verified published before the
-new residue transfer, as recorded in Graded Rings issue #83.
-
-The [whole-Veronese residue guide](VeroneseResidue.md) describes the linear
-old-degree residue projection under the actual full selected-ring inclusion,
-its exact range and finite-image consequences. Its [ordinary direct
-client](../test/VeroneseResidue.lean) and [generic aggregate-root
-witness](../test/RootClient.lean) are current material outside the historical
-native snapshot. The finite-inclusion prerequisite was already officially
-published before this September 29, 2026 transfer. Original residue-donor
-checks/review did not certify the new destination graph. The exact destination
-revision subsequently passed its own native build/audit and fresh independent
-review and received maintainer acceptance, as recorded in the
-[guide](VeroneseResidue.md). Release and verified publication are separately
-recorded in the owning Graded Rings issue #87.
-
-The [shifted-residue guide](VeroneseResidueModule.md) covers the **external
-sum of whole old components**, the entire selected-ring convolution action,
-canonical linear coefficient evaluation, positive/reduced-index equivalence
-with the separate projection's range and finite-module transport from the
-full old-zero ring. Its [direct ordinary client](../test/VeroneseResidueModule.lean)
-and [generic aggregate-root witness](../test/RootClient.lean) are current
-material outside the historical snapshot. At the September 29, 2026 initial
-static-transfer checkpoint, the original isolated proof evidence and review
-did not verify this destination's changed module origins/import graph, build,
-complete private/generated standard-axiom audit or independent review.
-Owner acceptance and a distinct verified release remain separate decisions,
-not outcomes of this dated checkpoint.
-
-The [zero-index guide](VeroneseZero.md) explains the all-index actual degree-zero
-equivalence and finite type of the external zero-index selected ring over its
-entire actual new degree zero. Its [ordinary direct client](../test/VeroneseZero.lean)
-preserves mixed weights, nonconstant old-degree-zero coefficients, nilpotents
-and the zero ring; the [generic aggregate-root witness](../test/RootClient.lean)
-uses no old-ring finiteness or nontriviality assumption. Original producer and
-client checks and independent original review apply to the unchanged donor,
-not this new graph; destination build, complete axiom audit and fresh review
-remain separate. This hand-maintained guide does not alter the archived native
-snapshot.
-
-[`API-initial-snapshot.md`](API-initial-snapshot.md) is byte-for-byte the native
-doc-gen4 output for the original nine production leaves: 104 exposed
-declarations across the former 28-module checkout (nine leaves, one aggregate,
-fourteen tests and four examples). This historical display retains every
-native header token, including implicit hypotheses; it is neither proof bodies
-nor standalone declarations. Existing module comments and docstrings were
-preserved; the 39 absent declaration docstrings were identified rather than
-fabricated. Its source links and line positions reflect the original checkout,
-not necessarily the expanded current source files.
-
-## Reproduction
-
-The unchanged [manifest](api-manifest.json) binds the original 28 Lean inputs,
-Lake configuration, toolchain, dependency manifest, native records and archived
-Markdown. Its `api_sha256` is
+The unchanged [manifest](api-manifest.json) binds 31 original source/config
+input hashes (28 Lean modules plus Lake configuration/toolchain/manifest),
+native records and the archived Markdown. Its `api_sha256` is
 `ac5651103124211c0274f9068b4367af2d0860aea482456a17ba5692f3b1e70d`,
-the digest of **`API-initial-snapshot.md`**, not of current `API.md`.
-The unchanged [inventory](../scripts/api-inventory.json) freezes the old
-module-to-source mappings, declaration names/kinds/origins, display kinds and
-docstring availability. The old generator and controls
-([`generate_api.py`](../scripts/generate_api.py),
-[`test_generate_api.py`](../scripts/test_generate_api.py)) apply only to this
-original inventory. In particular, their old source/root/Lakefile hashes
-cannot check the enlarged current tree; passing old synthetic controls does
-not check its API or proofs.
-Test and example module names are flat: `Axioms` comes from `test/Axioms.lean`,
-not `Axioms.lean`; `Symmetric` comes from `examples/Symmetric.lean`.
+the SHA-256 of **`API-initial-snapshot.md`**, not current `API.md`. The
+unchanged [inventory](../scripts/api-inventory.json) freezes the old
+module-to-source mapping, declaration names/kinds/origins and docstring
+availability. The [old adapter](../scripts/generate_api.py) and
+[synthetic controls](../scripts/test_generate_api.py) apply only there.
 
-For historical reproduction use a **separate checkout** at exact initial
-official revision `acbdc8381a0d50b37791a40c71c09d4b5d213559` (same tree
-as original accepted internal `1ccc70792c15889b031f2d3c7566d15732354ef3`),
+Use a **separate Git checkout at official public revision**
+`acbdc8381a0d50b37791a40c71c09d4b5d213559` (the same tree as the
+original accepted internal `1ccc70792c15889b031f2d3c7566d15732354ef3`),
 or the exact analyzed-input revision
-`497babfcb2a4d0a016722416ebaeb50a234c51a0`. Do not run the historical
-adapter's `--check` or output mode on the expanded current checkout; its
-original inventory and changed `GradedRings.lean`, `test/RootClient.lean` and
-`lakefile.toml` inputs no longer match. The archive's input hashes and links
-refer to that original 2026-09-27 official release and analyzed revision.
+`497babfcb2a4d0a016722416ebaeb50a234c51a0` if locally available.
+Do not run this historical adapter's output mode or `--check` on the
+expanded current checkout: `GradedRings.lean`, `test/RootClient.lean` and
+`lakefile.toml` no longer match the original inputs, and the current
+`docs/API.md` is a different manual map. Only the separate **original**
+checkout has `docs/API.md` containing the archived output that `--check`
+compares. Flat module names include `Axioms` from `test/Axioms.lean` and
+`Symmetric` from `examples/Symmetric.lean`.
 
-Build the separate core-only doc-gen4 tool at
-`97d4ecdfc8e09e7f511724c25e303d448de6a3db`, using its committed manifest and
-Lean `v4.34.0-rc2`, with `lake build doc-gen4`. Do not change this library's
-dependencies. In that **historical** library checkout, fetch matching mathlib
-artifacts before building all default targets, as described in the
-[root README](../README.md). The procedure below records original reproduction
-instructions only; no new native documentation run is asserted here.
-
-The following Python recipe invokes native doc-gen4 for the explicit inventory.
-Replace the tool and output-directory placeholders. Choose fresh output paths; existing directories
-are refused. Run from the library root in the pinned Lake environment.
+In the original checkout, use its pinned Lean `v4.34.0-rc2` and committed
+manifest; **successfully fetch the matching mathlib cache before building**
+its default targets. Build the separate core-only doc-gen4 tool at
+`97d4ecdfc8e09e7f511724c25e303d448de6a3db` under its own pinned
+manifest with `lake build doc-gen4` (cache-first if it depends on mathlib).
+Do not change this library's dependencies. This historical reproduction
+recipe is guidance, not a claim that a new native documentation run occurred:
 
 ```python
 import json
@@ -206,37 +107,26 @@ subprocess.run(["python3", "-B", "scripts/generate_api.py", "--native-data",
                 str(render / "doc-data"), "--source-revision", revision, "--check"], check=True)
 ```
 
-The original checkout has `docs/API.md` with exactly the archived bytes, so
-its `--check` mode can compare the historical rendered output. Run
-`python3 -B scripts/test_generate_api.py` for the old synthetic data controls.
-This recipe does not regenerate or certify the expanded API map.
+The `revision` in this recipe reproduces the original manifest's **technical
+binding** and native data, not a navigable public source URL. Use the
+separate official public checkout/API links above for public navigation.
+`python3 -B scripts/test_generate_api.py` runs the old synthetic controls
+but does not check the expanded current API or proofs.
 
-When the analyzed commit is present, the adapter compares every source/config
-byte with that Git object. When development history is intentionally absent from
-a parentless release, the reproduced manifest must instead equal the committed
-release manifest, and every source/config input must equal its committed file.
-A present but incorrect object, drifted input, or changed/uncommitted manifest is
-refused. Use a Git checkout; a plain file export is not this verification mode.
-The development identifier in native records need not resolve on a public host.
-Archived source links are relative to the historical checkout and their old
-line numbers may be stale in this version.
+If the analyzed Git commit exists locally, the adapter checks every recorded
+source/config byte against that Git object. If its development history is
+intentionally absent from a parentless official release, the reproduced
+manifest must equal the committed release manifest and every source/config
+input must equal its committed file. A present incorrect object, drifted
+input, or changed/uncommitted manifest is **rejected**; a plain file export
+does not provide the required Git checkout. The old native display's relative
+source ranges are historical. The adapter also refuses wrong module/name/kind
+inventories, malformed markup, partial/unsafe substitutions, stale links,
+invalid ranges and mismatched bindings. Its simple module-comment handling
+is not a general Lean parser.
 
-## Limits and provenance
-
-The purpose-specific adapter refuses wrong module/name/kind inventories, malformed
-header markup, unsafe/partial kind substitutions, stale links, invalid source
-ranges and mismatched source bindings. It handles the simple module-comment
-envelopes used here, not arbitrary Lean syntax. Data controls and hash equality
-do not authenticate the native execution, verify mathematical proofs, clear
-rights, or grant release acceptance. Those require separate exact-artifact review.
-
-Only Markdown, the input manifest and the small adapter/controls are shipped.
-Intermediate HTML, SQLite, dependency websites, fonts and JavaScript are excluded.
-Lean, mathlib and doc-gen4 retain their own authorship and licensing.
-
-Atlas adapted the renderer and controls from multivariate-polynomials
-`6b72818d5fe42923852c7be99e9377007ae037ed`, continuing the toric-ideals,
-minimal-primes and integral-closure recipes and Anchor's original ideal-completion
-recipe `f0c8c34386109116e4912fb425a8ad15d9dc42a4`. Formal Frontier collective
-credit and Apache-2.0 terms are retained; prior approval does not transfer.
-The mathematical inputs retain their [own provenance](PROVENANCE.md).
+The snapshot and checks do not authenticate native execution, certify proofs,
+clear rights or grant release acceptance. Only Markdown, the input manifest
+and small adapter/controls are shipped, not HTML/SQLite/dependency sites or
+assets. Lean, mathlib and doc-gen4 retain their own authorship and terms;
+see [project provenance and credits](PROVENANCE.md).

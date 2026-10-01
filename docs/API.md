@@ -91,12 +91,7 @@ ring, a field, or by itself a conclusion about positive Veronese degree-one gene
 The [standalone guide](HomogeneousLifts.md) includes a direct free-polynomial
 client that **proves** this algebra-generation premise rather than assuming it.
 
-For the exact destination code at `99df5f2effcf2ebe52a91d94cbd15c3090401cca`,
-native three-target, private-inclusive standard-axiom run 712 succeeded;
-author-distinct review 4476 approved its code, and the maintainer accepted and
-protected-integrated it on 2026-09-28 at 09:12:13 UTC. Subsequent documentary
-release preparation has its own review and publication record; these lifts
-code results alone do not establish positive-Veronese generation or source coverage.
+The lift alone does not establish positive-Veronese generation or source coverage.
 
 ## Positive Veronese generation
 
@@ -108,12 +103,6 @@ see the [standalone guide](VeroneseDegreeOne.md), its
 [direct client](../test/VeroneseDegreeOne.lean) and the
 [aggregate-import witness](../test/RootClient.lean). It does not address
 `n = 0`, coefficient regrouping, Proj or source-specific correspondence.
-This destination addition was initially prepared without destination computation.
-Exact code `d14e0ae469b2b13d004bb9ef192ec452a5465760` subsequently passed
-native three-target build and private/generated-inclusive standard-axiom run
-727 on 2026-09-28 at 10:32 UTC. Independent promotion review and maintainer
-acceptance are separate, revision-specific decisions; the original incubator
-evidence is not the evidence for this new destination graph.
 
 ## Weighted polynomial evaluation
 
@@ -132,8 +121,7 @@ weighted-homogeneous lift. The [direct client](../test/WeightedEvaluation.lean)
 includes an actual generating family and a nonsurjective empty-family
 counterexample; [aggregate-root use](../test/RootClient.lean) checks the
 component API. Neither finite-Veronese generation nor source correspondence
-follows. Original incubator checks and review do not certify the adapted
-destination graph; see the [standalone guide](WeightedEvaluation.md).
+follows. See the [standalone guide](WeightedEvaluation.md).
 
 ## Coherent high tails
 
@@ -151,8 +139,6 @@ selected-degree-zero ring-hom composites. See the [full guide](CoherentTailVeron
 an inherited grading with no extension across missing degree one, a nontrivial
 coefficient swap and the degenerate `ZMod 1` case. This API does not give a
 low-degree extension, coefficient regrouping or any Proj/scheme conclusion.
-Its September 28, 2026 static transfer checkpoint carries no destination
-build/audit or independent acceptance; those are separate gates.
 
 ## Positive-weight exponent blocks
 
@@ -166,11 +152,6 @@ polynomial evaluation is claimed. The [direct ordinary-import client](../test/We
 tests mixed, empty, singleton and unit weights; the [aggregate-root client](../test/RootClient.lean)
 checks generic access to positivity and exact decomposition.
 
-The original incubator focused builds and actual-origin transitive
-standard-three audit cover only the isolated original source, not this
-destination native module or changed graph. At the September 28, 2026 static
-transfer checkpoint, destination build, full private/generated-inclusive
-standard-axiom evidence and independent promotion review remain open gates.
 
 ## Weighted-polynomial monomial adjoin
 
@@ -185,9 +166,7 @@ the decomposition, limits and reproduction; the [direct client](../test/Weighted
 exercises mixed weights, zero and nilpotent semirings and a finite generator
 image, while [ordinary aggregate-root use](../test/RootClient.lean) checks
 the public import. No zero-weight, polynomial-factorization, graded-evaluation,
-whole-Veronese-generation or Proj claim follows. At the initial September 28,
-2026 static transfer checkpoint, the old isolated focused checks and review
-do not provide changed-graph build/audit or fresh destination review evidence.
+whole-Veronese-generation or Proj claim follows.
 
 ## Finite positive-Veronese inclusions
 
@@ -200,11 +179,7 @@ whole external selected ring. The [standalone guide](VeroneseFinite.md),
 [generic aggregate-root witness](../test/RootClient.lean) describe this
 separately from finite type of the selected ring over its new zero ring,
 some-index degree-one generation, `n = 0` and the separate
-[residue projection](VeroneseResidue.md). At the September 29, 2026 original
-static-transfer checkpoint, isolated checks and review did not verify the
-changed finite-inclusion destination graph; the prerequisite subsequently
-received its own acceptance and verified official publication before this
-residue transfer. This does not check the new residue graph.
+[residue projection](VeroneseResidue.md).
 
 ## Whole-Veronese residue projections
 
@@ -223,12 +198,8 @@ finiteness of this linear image from ambient `Module.Finite`, while
 [standalone guide](VeroneseResidue.md) maps all supporting additive,
 componentwise and scalar-compatibility declarations. Its [direct ordinary
 client](../test/VeroneseResidue.lean) and [aggregate-root
-witness](../test/RootClient.lean) check usable public interfaces. At the initial
-September 29, 2026 static-transfer checkpoint, the new graph required its own
-build/audit and independent destination review. These subsequently passed for
-the exact destination revision recorded in the [guide](VeroneseResidue.md),
-which also records maintainer acceptance; release and verified publication are
-separate decisions. This projection module alone does not supply a shifted
+witness](../test/RootClient.lean) check usable public interfaces.
+This projection module alone does not supply a shifted
 external-sum equivalence; the [sibling module](VeroneseResidueModule.md) does
 under positive reduced-index hypotheses. Neither supplies an `n = 0` bijection.
 
@@ -251,10 +222,7 @@ the [ordinary direct client](../test/VeroneseResidueModule.lean) checks
 boundary cases and the [aggregate-root witness](../test/RootClient.lean)
 uses the public finite-type theorem. Neither a whole-ring action on an
 individual old fiber, an `n = 0` injectivity result, an unrestricted `r ≥ n`
-image equality nor arbitrary-submodule finiteness is asserted. At the initial
-September 29, 2026 static-transfer checkpoint, original donor checks/review
-did not certify this changed destination graph or independent destination
-review; those decisions and the separate publication are revision-specific.
+image equality nor arbitrary-submodule finiteness is asserted.
 
 ## All-index zero components and zero-index finite type
 
@@ -270,15 +238,11 @@ domain, field or nontriviality hypothesis. Distinctness of the two copies of
 `1` separately assumes `[Nontrivial S]`. The [ordinary direct-import client](../test/VeroneseZero.lean)
 checks mixed weights, nonconstant coefficients, `ZMod 4` and `ZMod 1`;
 the [aggregate witness](../test/RootClient.lean) checks the generic export.
-Original donor evidence and review do not certify this destination's changed
-module origins, aggregate/root graph or native three-target build; fresh
-destination build, complete transitive private/generated standard-three audit
-and independent exact-revision review remain separate gates.
 
 ## Aggregate, clients and examples
 
 [`GradedRings`](../GradedRings.lean) publicly imports all twenty-four production leaves.
-The default test target registers twenty-nine private regression clients, including
+The default test target registers twenty-nine regression-test modules, including
 the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 [direct homogeneous-lifts client](../test/HomogeneousLifts.lean), the
 [direct Veronese client](../test/Veronese.lean), the

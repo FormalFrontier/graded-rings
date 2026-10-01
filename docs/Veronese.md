@@ -76,21 +76,11 @@ example : component 𝒮 1 0 ≃+* 𝒮 0 :=
   zeroRingEquiv 𝒮 1 (by decide)
 ```
 
-## Origin and validation state
+## Motivation and credit
 
-Formal Frontier's isolated incubator author Task
-`hive-request-e97f548d3626371a173eb011840a7070b24d81bb` (UID
-`0e231558-4793-4185-8f55-2bad40d363bd`) wrote the original ring and
-client. The separate destination transfer Task
-`hive-request-452e72b0249229e666237dac51cb3c6627c80ab7` (UID
-`9f4955d3-13a8-41a9-9f4a-e491538f56ee`) retains the ring's mathematical
-statements and proofs and splits out its five algebra-only clients. See
-[provenance and rights](PROVENANCE.md) for immutable origin references. The
-isolated source underwent its own review and focused checks; the destination
-graph has since received successful three-target builds and complete transitive
-standard-axiom checks, exact-revision independent promotion review and owner
-code acceptance. Final release-artifact review, acceptance and verified
-publication remain separate and are not asserted by this guide. Vakil,
-*The Rising Sea*, October 21, 2025 draft, §7.4.4, Exercise 7.4.D motivates
-the selected-component ring; the associated Proj statement is outside this
-library. No source-completion decision follows from this API.
+Ravi Vakil, *The Rising Sea*, October 21, 2025 draft, §7.4.4, Exercise
+7.4.D motivates the selected-component ring; its Proj statement is outside
+this library. No source-completion decision follows from this API. Formal
+Frontier agents authored the original ring and client; distinct contributors
+adapted the imports, aggregate API and guide for this library. See
+[provenance and credits](PROVENANCE.md).

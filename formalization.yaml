@@ -98,8 +98,8 @@ sources:
 
 status:
   scope: >-
-    Twenty-four production leaves, an aggregate native module, twenty-nine private regression
-    clients and four standalone example modules. Quotient and localization
+    Twenty-four production leaves, an aggregate native module, twenty-nine registered
+    regression-test modules and four standalone example modules. Quotient and localization
     constructions include degenerate commutative rings; degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
     denominators, not a domain or regularity assumption. Valuation applications
@@ -315,237 +315,24 @@ automation:
     not inferred from Git authorship.
 
 review:
-  status: "Revision-specific independent review and release decisions are recorded externally"
+  status: "Independently reviewed mathematical library"
   notes: >-
-    This metadata does not independently certify proof integrity, rights,
-    release publication or source completion. The Veronese-only official
-    release completed final review, acceptance and verified publication.
-    Separately, homogeneous-lifts destination code at commit
-    99df5f2effcf2ebe52a91d94cbd15c3090401cca passed exact-input native
-    three-target build and complete transitive standard-axiom audit including
-    private and generated declarations (run 712); author-distinct code review
-    4476 approved it, and the maintainer accepted and protected-integrated it
-    on 2026-09-28 at 09:12:13 UTC. Neither the earlier Veronese release nor
-    this code acceptance certifies a subsequent documentary release candidate,
-    its final review, acceptance, publication or source correspondence. The
-    positive-Veronese transfer was initially prepared without destination
-    computation. Its exact code at d14e0ae469b2b13d004bb9ef192ec452a5465760
-    subsequently passed native three-target build and complete private/generated
-    transitive standard-axiom audit (run 727) on 2026-09-28 at 10:32 UTC.
-    Independent promotion review, maintainer acceptance and release publication
-    are separate revision-specific decisions, not consequences of that pass.
-    At the 2026-09-28 coherent-tail static transfer checkpoint, no destination
-    native build, complete private/generated transitive axiom audit, fresh
-    promotion/rights review, maintainer acceptance or release is asserted by
-    the earlier isolated checks or this metadata.
-    At the 2026-09-28 weighted-block static transfer checkpoint, original
-    isolated focused-build, complete actual-origin private/generated-inclusive
-    transitive standard-three audit and independent review do not establish
-    applicable destination native-module/three-target checks, fresh promotion
-    or rights review, maintainer acceptance, protected integration, official
-    release or source correspondence.
-
-    At the initial 2026-09-28 weighted-evaluation static transfer checkpoint,
-    isolated source focused-build, 27 actual-origin private/generated-inclusive
-    transitive standard-three rows and independent original review do not
-    certify this adapted destination graph. The applicable strict three-target
-    build and complete actual-origin standard-axiom audit, fresh author-distinct
-    destination promotion/rights review, maintainer acceptance, protected
-    integration, official publication and source correspondence are separate
-    exact-revision determinations.
-
-    At the initial 2026-09-28 weighted-polynomial adjoin static transfer
-    checkpoint, accepted isolated producer and client focused checks and
-    repaired-rights review do not certify this adapted native destination
-    graph. Applicable strict three-target build, complete actual-origin
-    private/generated transitive standard-axiom audit, fresh author-distinct
-    promotion and rights review, maintainer acceptance, protected integration,
-    verified official publication and source correspondence are distinct
-    revision-specific determinations.
-
-    At the 2026-09-28 finite-Veronese static transfer checkpoint, accepted
-    isolated source mathematics, its focused builds, complete 3-producer and
-    19-client actual-kernel-origin standard-three rows and independent source
-    review do not certify the adapted native destination graph. Its strict
-    three-target build, full actual-origin private/generated transitive
-    standard-three audit, fresh destination and rights review, maintainer
-    acceptance, protected integration, separately verified official release
-    and source correspondence are distinct revision-specific gates.
-
-    At the 2026-09-28 prescribed-positive-index whole-ring finite-type static
-    transfer checkpoint, isolated accepted original mathematics has cache-first
-    focused build, full 21-origin private/generated-inclusive standard-three
-    evidence and independent original review. Those do not check this adapted
-    destination graph, root witness or full three-target build. Its full
-    actual-origin transitive standard-three audit, independent exact-destination
-    and rights review, owner acceptance, protected integration, separately
-    verified publication and source correspondence remain distinct decisions.
-
-    At the 2026-09-28 zero-index selected-ring static transfer checkpoint,
-    accepted isolated original mathematics has a cache-first focused producer
-    build, 32 producer-origin private/generated-inclusive transitive
-    standard-three rows, eight client-origin rows in a separate supplement,
-    and independent original review. These do not certify this destination's
-    new module origins, import-adapted client or aggregate graph. Applicable
-    native strict three-target build, complete actual-origin transitive
-    standard-three audit, fresh independent destination/rights review, owner
-    acceptance, protected integration, separate verified publication and any
-    source correspondence remain distinct decisions under owning issue #75.
-
-    At the 2026-09-29 finite-positive-inclusion static transfer checkpoint,
-    the accepted isolated original proof has successful cache-first focused
-    builds, an actual-origin private/generated-inclusive standard-three audit
-    and independent original review. Those do not certify this new module
-    origin, client-import adaptation, aggregate root or three-target graph.
-    Applicable native strict three-target build and complete transitive
-    standard-three audit, fresh independent destination and rights review,
-    maintainer acceptance, protected integration, separately verified official
-    publication and any source correspondence remain separate decisions.
-
-    On September 29, 2026 the finite-inclusion prerequisite had separately
-    completed maintainer acceptance and verified official publication as
-    Graded Rings public-release ecddf7afc97e102afaedbc39854ed3c76bab5b56
-    (owning issue #83, comment #61324). The isolated residue donor
-    905e7c2df24767f8cee4d7eafc757cb5c343cb3e has original focused
-    build, complete private/generated-inclusive standard-three evidence and
-    independent review accepted for that donor only (incubator issue #186,
-    comment #61341). This residue transfer changes module origin, ordinary
-    import, aggregate root and target graph; its applicable native build and
-    complete transitive standard-three audit, fresh independent destination
-    and rights review, Atlas's acceptance and protected integration, separate
-    verified official publication and source correspondence remain pending
-    exact-revision decisions under Graded Rings issue #87.
-
-    At the initial 2026-09-29 shifted-residue static-transfer checkpoint,
-    accepted isolated producer/client mathematics and their original 33-origin
-    audit and independent review do not certify changed destination origins,
-    the new root graph, applicable three-target build, complete private/generated
-    transitive standard-three audit or fresh destination review. Those checks,
-    Atlas's acceptance and protected integration, a distinct verified official
-    release and source correspondence require separate exact-revision decisions.
+    The completed mathematical contributions have their revision-specific
+    independent reviews, applicable build and complete transitive standard-axiom
+    evidence and official publication recorded in the owning project records.
+    The current hand-maintained API map is not a declaration census, and the
+    historical native snapshot is not a proof certificate for this expanded
+    library. Metadata does not itself certify a later candidate, copyright
+    clearance or any source-specific exercise correspondence and coverage.
 
 acknowledgements: >-
-  Atlas authored the original mathematical units, quotient repair,
-  remaining native assembly and reader examples. Three Worker A Tasks
-  contributed compatibility, native interfaces and localization repair;
-  Worker B supplied a bounded origin inventory. Exact revisions and Task
-  identities are preserved in docs/PROVENANCE.md. Lean and the mathlib
-  contributors supplied the formal foundations and reusable APIs.
-  A separate Worker A Task supplied the degree-multiplying localization producer
-  and client in the incubator; another Worker A Task adapted them for this
-  library. Exact Task identities and revisions are in docs/PROVENANCE.md.
-  A separate Worker B Task wrote the selected-component Veronese ring and
-  algebra-only examples in the incubator; a later Worker B Task transferred
-  them into this library without changing the mathematical proof expressions.
-  Their distinct identities and exact source are in docs/PROVENANCE.md.
-  Another Worker B Task wrote the homogeneous-lifts producer and client in the
-  incubator; a distinct Worker B Task transferred its producer byte-for-byte,
-  adapted the direct client, and added destination wiring, prose and metadata.
-  Both actual Task identities and the isolated review are in docs/PROVENANCE.md.
-  A later Worker B Task independently wrote the positive-Veronese degree-one
-  generation proof and clients in an isolated incubator branch. Atlas corrected
-  its guide, and a distinct Worker B Task transferred the producer byte-for-byte,
-  adapted its client and wrote destination wiring, guide and metadata. The
-  source-plan, original review, guide review and distinct Task identities are
-  recorded in docs/PROVENANCE.md; destination acceptance is a separate recorded decision.
-  Atlas adapted the native Markdown renderer from the earlier project recipes,
-  including Anchor's original ideal-completion recipe; docs/README.md records
-  that lineage. Prior artifact approval is not transferred.
-  A further Worker B Task authored the original coherent-tail proofs and clients
-  in an isolated incubator branch; a fresh Worker A Task independently reviewed
-  that algebra, and a distinct Worker B Task transferred the original bodies
-  and added root use, standalone guide, wiring and metadata here. Their exact
-  names, UIDs and frozen revisions are in docs/PROVENANCE.md. The original
-  source review is separate from destination review and source correspondence.
-  A separate Worker A Task authored the positive-weight arithmetic exposition;
-  a Worker B Task independently authored the incubator producer and ordinary
-  client, and a fresh Worker A Task reviewed that isolated source. A distinct
-  Worker B Task transferred the original proof bodies and adapted native
-  imports, clients, documentation, root witness and metadata for this library.
-  Exact names, UIDs and revisions are in docs/PROVENANCE.md. Original source
-  review is not acceptance or verification of this destination graph.
-  An earlier Worker A Task authored the source Exercise 7.4.G exposition,
-  Atlas designed the weighted-evaluation interface in uncompiled source notes,
-  and a separate Worker B Task authored the complete isolated producer and
-  direct client proofs. A Worker A Task independently reviewed the isolated
-  mathematical, API, evidence and rights candidate; another Worker B Task
-  transferred the unchanged producer bodies, adapted direct import and added
-  destination root witness, standalone guide, wiring and metadata. Exact
-  author, reviewer, designer and transfer Task names, UIDs and revisions are
-  recorded in docs/PROVENANCE.md. Original source review and checks are not
-  changed-destination acceptance, release or source correspondence.
-  A separate Worker B Task authored the original weighted-polynomial adjoin
-  producer, client and guide in the incubator; another Worker B Task removed
-  unsupported ownership labels without changing proofs, and a fresh Worker A
-  Task reviewed the correction. A distinct Worker B Task transferred those
-  proofs, adapted native imports, clients, documentation, root witness and
-  metadata here. The original objection and repaired exact-review histories,
-  all contributor Task names/UIDs and frozen inputs remain in docs/PROVENANCE.md;
-  isolated acceptance does not certify the changed destination graph.
-  A further Worker B Task wrote the original finite-Veronese generation
-  proof and direct client in an isolated incubator candidate using accepted
-  evaluation and repaired weighted-adjoin prerequisites. A fresh Worker A
-  Task independently reviewed that exact mathematical, client, rights and
-  original evidence candidate; a distinct Worker B Task transferred the
-  unchanged mathematical proofs into native destination imports and supplied
-  an ordinary client, aggregate witness, guide, wiring and metadata here.
-  Original, prerequisite, repair, exposition, reviewer and transfer Task
-  identities and exact donor/review references are in docs/PROVENANCE.md.
-  Accepted isolated research is not destination verification or source coverage.
-  A separate Worker B Task authored the prescribed-index finite weighted-polynomial
-  generator theorem and its ordinary client in an isolated incubator candidate;
-  a fresh Worker A Task reviewed that exact candidate. A distinct Worker B Task
-  transferred the unchanged mathematical producer, adapted the direct client
-  import, and supplied a generic aggregate witness, guide, wiring and metadata.
-  Their exact identities, original evidence and review references are recorded
-  in docs/PROVENANCE.md. Isolated acceptance is not changed-graph destination
-  verification, release or whole-exercise source coverage.
-  A separate Worker B Task authored the isolated prescribed-positive-index
-  whole-ring finite-type producer, client and guide, using the separately
-  accepted weighted-polynomial prerequisite; a fresh Worker A Task reviewed
-  that original candidate. A distinct Worker B Task transferred the original
-  proofs by changing only their imports, and supplied destination public
-  wiring, generic root witness, standalone guide and metadata. Their actual
-  Task identities, UIDs, frozen code, corrected evidence and original review
-  references are recorded in docs/PROVENANCE.md. Original review is not
-  verification of the changed destination graph or source correspondence.
-  A further Worker B Task authored the original zero-index selected-ring
-  producer, client and guide; Atlas supplied prior uncompiled API design.
-  A fresh Worker A Task reviewed the original candidate, and a distinct
-  Worker B Task separately audited the original client's kernel origins.
-  Another Worker B Task transferred the producer byte-for-byte, changed only
-  the direct-client producer import, and supplied public wiring, generic root
-  witnesses, guide and current metadata. Full identities, immutable references,
-  rights and separate evidence boundaries are recorded in docs/PROVENANCE.md.
-  Accepted isolated mathematics is not acceptance of the changed destination
-  graph or any source-coverage decision.
-  Atlas designed an uncompiled finite-inclusion applicability assessment,
-  independently reviewed by a Worker A Task. A separate Worker B Task wrote
-  the isolated finite-inclusion proof and ordinary client, independently
-  reviewed by another Worker A Task. A distinct Worker B Task transferred
-  that proof byte-for-byte, changed only the direct-client producer import,
-  and supplied the root witness, destination guide, wiring and metadata.
-  Actual identities, UIDs and exact source, donor and review references are
-  recorded in docs/PROVENANCE.md. Original checks and reviews do not certify
-  the changed destination graph, official publication or source coverage.
-  Worker-b Hive Task hive-request-1cc04ea025d989648e050829da560f5070fe022d
-  (UID 7768c775-4401-4d05-b7d9-88b2fd34ca29) authored the original
-  isolated whole-Veronese residue producer, ordinary client and guide; fresh
-  independent worker-a Task hive-request-d997f6f869ad5770abe62ccc1b3edc053fd17153
-  (UID 0d110738-9176-47d3-a76d-04eaf3717c87) reviewed the original.
-  Worker-b Task hive-request-8e46b5299287b35b65f34038800f1c3b7482b0f5
-  (UID ee21c7e8-3256-4684-8236-81517fa63480) adapted only the Lean
-  imports and supplied the destination guide, root witness, documentation
-  and metadata. Exact donor evidence and contributor credit are recorded in
-  docs/PROVENANCE.md; original acceptance is not destination acceptance.
-  Worker-b Task hive-request-539a2511a0bca4739462d02431a6ec346c5da7cd
-  (UID e2df94a3-48e1-48bf-bafd-edd6b9e26b8f) authored the isolated shifted
-  external residue-module producer, client and guide; independent worker-a
-  Task hive-request-9ef93ac5c57ff1a133ea796c0ba9bb66c0db6d9c
-  (UID 04976027-c3cd-413a-96f0-40eb1b037e64) reviewed that donor.
-  Worker-b Task hive-request-2ef3a15beb11b4464a1cefb5ccabc924598a7976
-  (UID 87e25bcb-68f4-44a4-9c46-dfdf33c005da) changed only the project
-  imports in the Lean files and supplied this destination's root witness,
-  guide, public wiring, navigation, provenance and metadata. The complete
-  donor and evidence references and rights boundary are in docs/PROVENANCE.md;
-  isolated acceptance is not changed-destination verification.
+  Atlas contributed the original mathematical units, assembly and several
+  design assessments; other Formal Frontier agents contributed original Lean
+  mathematics, direct clients, adaptations, repair, review, guides and examples.
+  Atlas's zero-index and weighted-evaluation designs did not originate the later
+  Lean proof bodies. The original formalization authors and separate adaptation
+  contributors are credited as Formal Frontier Agents; Anchor contributed the
+  earlier API-rendering recipe. Jujian Zhang and Eric Wieser's authentic mathlib
+  localization notices are preserved in the adapted producer; Lean and mathlib
+  contributors retain credit for foundational dependencies. Further contributor,
+  adaptation and mathematical-source context is in docs/PROVENANCE.md.

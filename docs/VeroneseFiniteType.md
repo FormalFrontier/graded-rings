@@ -49,23 +49,10 @@ lake exe cache get
 lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 ```
 
-These are reproduction instructions, not a claim of a destination build. The
-accepted isolated implementation has a successful cache-first focused build,
-complete 21-origin private/generated-inclusive transitive standard-three
-axiom evidence and an independent exact-donor review. Import adaptation and
-the new aggregate graph require their own applicable native three-target
-build, complete actual-origin private/generated-inclusive standard-three
-audit and fresh independent exact-destination review. Maintainer acceptance,
-protected integration, separately verified release and any source-specific
-correspondence remain distinct decisions; the owning Graded Rings issue #69
-records their subsequent disposition.
-
-Original mathematical producer, direct client and guide: worker-b Hive Task
-`hive-request-7409da348fa71e5989914571ccac1d18d9d8f63c`, UID
-`867d8cc9-ae78-4630-8884-8c1bf74e56c4`. Fresh independent original
-review: worker-a Hive Task `hive-request-d3cf8445db2f67277d03e7f6cf646c173e68ae0c`,
-UID `a2791ce3-cf18-4cae-8ae3-201c13e79c86`. This distinct static transfer:
-worker-b Hive Task `hive-request-8a815ecb69e41d2137adfe71bf53dcec5dbdab5d`,
-UID `2fbf4589-ad58-46bf-8055-45fd7dd1925e`. See
-[provenance](PROVENANCE.md). Original project expression is Apache-2.0; no
-textbook text, PDF, private-host link or third-party proof code is shipped.
+The original project producer, direct client and guide were contributed by
+Formal Frontier agents; separate contributors adapted the native imports,
+client fixture and registration. The mixed-weight fixture credits its source
+in the client header. This whole-ring theorem has stronger scope than the
+polynomial-only selected-generator lemma; neither alone establishes a
+source-specific exercise correspondence. No textbook expression, PDF or
+third-party proof code is bundled. See [provenance and credits](PROVENANCE.md).

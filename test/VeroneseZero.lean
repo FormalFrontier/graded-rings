@@ -1,7 +1,6 @@
 /-
 SPDX-License-Identifier: Apache-2.0
-Authors: Formal Frontier Agents (Hive Task hive-request-a4527f02af952e11c47d91c4884c7d869bc58acc,
-  UID 9b1f25a8-52cd-4da9-86eb-6f477a7e85b0)
+Authors: Formal Frontier Agents
 Mixed-weight fixture adapted from GradedRings/test/FiniteVeronese.lean and
 IncubatorTest/Algebra/GradedRing/VeroneseFiniteType.lean (Formal Frontier contributors).
 -/
