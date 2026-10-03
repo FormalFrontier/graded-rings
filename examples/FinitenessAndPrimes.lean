@@ -4,8 +4,8 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.Noetherian
-import GradedRings.HomogeneousPrime
+public import GradedRings.Noetherian
+public import GradedRings.HomogeneousPrime
 
 /-! # Finite generation and contraction of homogeneous primes
 
@@ -25,7 +25,8 @@ variable {A : Type u} [CommRing A]
 variable {σ : Type v} [SetLike σ A] [AddSubgroupClass σ A]
 variable (𝒜 : ℕ → σ) [GradedRing 𝒜]
 
-private theorem noetherian_and_finite_type [IsNoetherianRing (𝒜 0)]
+/-- Finite generation of the irrelevant ideal transfers Noetherianity and finite type. -/
+public theorem noetherian_and_finite_type [IsNoetherianRing (𝒜 0)]
     (h : (HomogeneousIdeal.irrelevant 𝒜).toIdeal.FG) :
     IsNoetherianRing A ∧ Algebra.FiniteType (𝒜 0) A :=
   ⟨GradedAlgebra.isNoetherianRing_of_gradeZero_of_irrelevant_fg 𝒜 h,

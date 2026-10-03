@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.Quotient
+public import GradedRings.Quotient
 
 /-! # Ordinary direct-import reduction checks for the quotient grading -/
 
@@ -26,7 +26,8 @@ private theorem componentMembership (i : ι) (q : A ⧸ I) :
   Iff.rfl
 
 omit [DecidableEq ι] [AddMonoid ι] [GradedRing 𝒜] in
-private theorem homReduction :
+/-- The underlying ring homomorphism of the graded quotient is the quotient map. -/
+public theorem homReduction :
     (Ideal.Quotient.gradedRingHom 𝒜 I).toRingHom = Ideal.Quotient.mk I :=
   rfl
 

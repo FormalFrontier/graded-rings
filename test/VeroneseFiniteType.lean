@@ -5,8 +5,8 @@ Fixture adapted from GradedRings/test/FiniteVeronese.lean (Formal Frontier contr
 -/
 module
 
-import GradedRings.VeroneseFiniteType
-import Mathlib.Data.ZMod.Basic
+public import GradedRings.VeroneseFiniteType
+public import Mathlib.Data.ZMod.Basic
 
 set_option warningAsError true
 
@@ -136,7 +136,9 @@ example : (2 : ZMod 4) * 2 = 0 ∧
     (Grading (ZMod 4)) weights (generators (ZMod 4))
     (generators_generate (ZMod 4)) 4 (by decide)⟩
 
-example : Subsingleton (Target (ZMod 1)) := inferInstance
+/-- The polynomial algebra over the trivial ring is subsingleton. -/
+public theorem zero_ring_target_subsingleton :
+    Subsingleton (MvPolynomial (Fin 3) (ZMod 1)) := inferInstance
 
 example : Algebra.FiniteType (GradedRing.Veronese.component (Grading (ZMod 1)) 4 0)
     (GradedRing.Veronese.VeroneseRing (Grading (ZMod 1)) 4) :=

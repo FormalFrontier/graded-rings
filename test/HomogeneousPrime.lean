@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.HomogeneousPrime
+public import GradedRings.HomogeneousPrime
 
 namespace GradedRing
 
@@ -19,7 +19,8 @@ private def degree_zero_prime_equiv {d : ℤ} (u : Aˣ) (hu : (u : A) ∈ 𝒜 d
       {q : Ideal (𝒜 0) // q.IsPrime} :=
   homogeneousPrimeEquivDegreeZeroPrime 𝒜 u hu hd
 
-private theorem radical_extension_prime {d : ℤ} (u : Aˣ) (hu : (u : A) ∈ 𝒜 d) (hd : 0 < d)
+/-- Extension and radical carry a prime ideal of degree zero to a prime ideal. -/
+public theorem radical_extension_prime {d : ℤ} (u : Aˣ) (hu : (u : A) ∈ 𝒜 d) (hd : 0 < d)
     (q : Ideal (𝒜 0)) (hq : q.IsPrime) :
     (q.map (algebraMap (𝒜 0) A)).radical.IsPrime :=
   radical_map_degreeZero_isPrime 𝒜 u hu hd q hq

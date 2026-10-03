@@ -4,8 +4,8 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.Quotient
-import GradedRings.Localization
+public import GradedRings.Quotient
+public import GradedRings.Localization
 
 /-! # Quotient and degree-zero localization examples
 
@@ -52,7 +52,8 @@ private theorem degree_zero_roundtrip (x : HomogeneousLocalization 𝒜 M) :
       (GradedLocalization.homogeneousLocalizationEquivZeroComponent 𝒜 M x) = x :=
   (GradedLocalization.homogeneousLocalizationEquivZeroComponent 𝒜 M).symm_apply_apply x
 
-private theorem fraction_has_declared_degree {i j : ι}
+/-- A fraction of homogeneous numerator and denominator has the declared degree. -/
+public theorem fraction_has_declared_degree {i j : ι}
     (a : 𝒜 (i + j)) (b : 𝒜 j) (hb : (b : A) ∈ M) :
     Localization.mk (a : A) ⟨(b : A), hb⟩ ∈
       GradedLocalization.component (𝒜 := 𝒜) M i :=

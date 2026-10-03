@@ -32,9 +32,10 @@ universe u v
 variable {S : Type u} [CommRing S] {σ : Type v} [SetLike σ S]
   [AddSubgroupClass σ S] (𝒮 : ℕ → σ) [GradedRing 𝒮]
 
+attribute [local instance] Fintype.ofFinite in
 /-- A finite homogeneous algebra generating family gives finite type for each
 prescribed positive Veronese over its whole degree-zero ring. -/
-theorem finiteType_of_finite_homogeneous_generators {ι : Type*} [Fintype ι]
+theorem finiteType_of_finite_homogeneous_generators {ι : Type*} [Finite ι]
     (w : ι → ℕ) (x : ∀ i : ι, 𝒮 (w i))
     (hgen : Algebra.adjoin (𝒮 0) (Set.range (fun i => (x i : S))) = ⊤)
     (n : ℕ) (hn : 0 < n) :

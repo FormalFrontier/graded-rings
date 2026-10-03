@@ -143,12 +143,12 @@ theorem Away.mapDegreeMul_awayMap (f : A →+* B) (d : ℕ)
       (Away.mapDegreeMul 𝒜 ℬ f d hdeg a) := by
   let mapA : Localization.Away a →+* Localization.Away (f a) :=
     IsLocalization.map _ f (by
-      show Submonoid.powers a ≤ (Submonoid.powers (f a)).comap f
+      change Submonoid.powers a ≤ (Submonoid.powers (f a)).comap f
       rintro c ⟨n, rfl⟩
       exact ⟨n, by simp⟩)
   let mapAB : Localization.Away (a * b) →+* Localization.Away (f (a * b)) :=
     IsLocalization.map _ f (by
-      show Submonoid.powers (a * b) ≤ (Submonoid.powers (f (a * b))).comap f
+      change Submonoid.powers (a * b) ≤ (Submonoid.powers (f (a * b))).comap f
       rintro c ⟨n, rfl⟩
       exact ⟨n, by simp⟩)
   have unitA : IsUnit (algebraMap A (Localization.Away (a * b)) a) :=

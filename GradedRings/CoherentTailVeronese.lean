@@ -49,6 +49,7 @@ structure TailEquiv (𝒜 : ℕ → σ) (ℬ : ℕ → τ) (N : ℕ)
 
 namespace TailEquiv
 
+variable {N : ℕ}
 variable (E : TailEquiv 𝒜 ℬ N) (n : ℕ) (hNn : N ≤ n)
 
 /-- Identification of each component retained by the `n`th Veronese. -/

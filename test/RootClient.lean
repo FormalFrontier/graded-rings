@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings
+public import GradedRings
 
 set_option warningAsError true
 
@@ -54,7 +54,8 @@ open Multiplicative WithZero
 variable {A : Type u} [CommRing A] [IsDomain A] [WfDvdMonoid A]
 variable {p : A}
 
-private theorem prime_power_valuation (hp : Prime p) (n : ℕ) :
+/-- The valuation of a power of a prime is its negative exponent. -/
+public theorem prime_power_valuation (hp : Prime p) (n : ℕ) :
     PrimeMultiplicity.valuation hp (p ^ n) = exp (-(n : ℤ)) :=
   PrimeMultiplicity.valuation_apply_pow hp n
 
@@ -250,7 +251,7 @@ end FiniteVeronese
 
 section WeightedVeroneseGenerators
 
-variable {ι : Type u} {R : Type v} [Fintype ι] [CommSemiring R]
+variable {ι : Type u} {R : Type v} [Finite ι] [CommSemiring R]
 
 private theorem weightedVeroneseGenerators_root (weights : ι → ℕ)
     (index : ℕ) (index_pos : 0 < index) :
@@ -265,7 +266,7 @@ end WeightedVeroneseGenerators
 
 section VeroneseFiniteType
 
-variable {S : Type u} {σ : Type v} {ι : Type w} [CommRing S] [Fintype ι]
+variable {S : Type u} {σ : Type v} {ι : Type w} [CommRing S] [Finite ι]
 variable [SetLike σ S] [AddSubgroupClass σ S]
 variable (𝒮 : ℕ → σ) [GradedRing 𝒮]
 

@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.WeightedBlocks
+public import GradedRings.WeightedBlocks
 
 set_option warningAsError true
 
@@ -51,7 +51,8 @@ private theorem zero_blocks :
           Finsupp.weightedBlockSize mixedWeights := by
   exact Finsupp.exists_weightedBlocks mixedWeights mixedWeights_pos 0 0 (by simp)
 
-private theorem empty_indices :
+/-- Zero exponent vectors on an empty index type admit an empty block decomposition. -/
+public theorem empty_indices :
     ∃ blocks : Fin 0 → (PEmpty →₀ ℕ),
       (∑ j, blocks j) = 0 ∧
         ∀ j, Finsupp.weight (fun i : PEmpty => isEmptyElim i) (blocks j) =

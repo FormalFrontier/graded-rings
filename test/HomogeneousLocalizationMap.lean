@@ -28,7 +28,8 @@ variable (f : A →+* B) (d : ℕ)
 example : HomogeneousLocalization 𝒜 P →+* HomogeneousLocalization ℬ Q :=
   mapDegreeMul 𝒜 ℬ f d hdeg hPQ
 
-private theorem client_fraction_formula (c : NumDenSameDeg 𝒜 P) :
+/-- Degree-multiplying maps carry a homogeneous fraction to its mapped fraction. -/
+public theorem client_fraction_formula (c : NumDenSameDeg 𝒜 P) :
     mapDegreeMul 𝒜 ℬ f d hdeg hPQ (mk c) =
       mk (c.mapDegreeMul 𝒜 ℬ f d hdeg hPQ) :=
   mapDegreeMul_mk 𝒜 ℬ f d hdeg hPQ c

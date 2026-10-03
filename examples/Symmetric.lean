@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.SymmetricAlgebra
+public import GradedRings.SymmetricAlgebra
 
 /-! # Basis-free functoriality and polynomial coordinates
 
@@ -22,7 +22,8 @@ variable {R : Type u} [CommSemiring R]
 variable {M : Type v} [AddCommMonoid M] [Module R M]
 variable {N : Type w} [AddCommMonoid N] [Module R N]
 
-private theorem map_product_of_generators (f : M →ₗ[R] N) (m₁ m₂ : M) :
+/-- A symmetric-algebra map preserves products of degree-one generators. -/
+public theorem map_product_of_generators (f : M →ₗ[R] N) (m₁ m₂ : M) :
     SymmetricAlgebra.gradedMap f
       (SymmetricAlgebra.ι R M m₁ * SymmetricAlgebra.ι R M m₂) =
     SymmetricAlgebra.ι R N (f m₁) * SymmetricAlgebra.ι R N (f m₂) := by

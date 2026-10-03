@@ -25,7 +25,11 @@ namespace MvPolynomial
 
 universe u v
 
-variable {ι : Type u} {R : Type v} [Fintype ι] [CommSemiring R]
+variable {ι : Type u} {R : Type v} [CommSemiring R]
+
+section
+
+variable [Fintype ι]
 
 private noncomputable def weightedResidues (w : ι → ℕ) (n : ℕ) : Finset (ι →₀ ℕ) := by
   classical
@@ -119,9 +123,13 @@ private theorem monomial_mem_adjoin (w : ι → ℕ) (n : ℕ) (hn : 0 < n)
   rw [hfactor]
   exact mul_mem (prod_mem (fun i _ => pow_mem (hpure i) _)) hr
 
+end
+
+attribute [local instance] Fintype.ofFinite in
 /-- A finite family of homogeneous polynomials generates every weighted component whose
 degree is divisible by a prescribed positive index, over the entire coefficient semiring. -/
-theorem exists_finset_weightedVeronese_generators (w : ι → ℕ) (n : ℕ) (hn : 0 < n) :
+theorem exists_finset_weightedVeronese_generators [Finite ι]
+    (w : ι → ℕ) (n : ℕ) (hn : 0 < n) :
     ∃ T : Finset (MvPolynomial ι R),
       (∀ p ∈ T, ∃ j : ℕ, p.IsWeightedHomogeneous w (n * j)) ∧
       ∀ j : ℕ, ∀ p : MvPolynomial ι R,

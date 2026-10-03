@@ -4,8 +4,8 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.Localization
-import Mathlib.Algebra.MonoidAlgebra.Grading
+public import GradedRings.Localization
+public import Mathlib.Algebra.MonoidAlgebra.Grading
 
 set_option warningAsError true
 
@@ -24,10 +24,12 @@ variable (𝒜 : ι → σ) [GradedRing 𝒜]
 variable (M : Submonoid A)
 variable (hM : M ≤ SetLike.homogeneousSubmonoid 𝒜)
 
-private theorem component_graded_monoid : SetLike.GradedMonoid (GradedLocalization.component (𝒜 := 𝒜) M) :=
+private theorem component_graded_monoid :
+    SetLike.GradedMonoid (GradedLocalization.component (𝒜 := 𝒜) M) :=
   inferInstance
 
-@[instance_reducible] private def component_graded_ring : GradedRing (GradedLocalization.component (𝒜 := 𝒜) M) :=
+@[instance_reducible] private def component_graded_ring :
+    GradedRing (GradedLocalization.component (𝒜 := 𝒜) M) :=
   GradedLocalization.gradedRing 𝒜 M hM
 
 private def zero_component_equiv : HomogeneousLocalization 𝒜 M ≃+*
@@ -75,7 +77,8 @@ private theorem negative_degree_monomial : Localization.mk (1 : B) ⟨t, Submono
   norm_num
   exact SetLike.one_mem_graded (𝓑 : ℤ → Submodule R B)
 
-private theorem negative_degree_monomial_nonzero : Localization.mk (1 : AddMonoidAlgebra ℤ ℕ)
+/-- Inverting the degree-one monomial gives a nonzero negative-degree fraction. -/
+public theorem negative_degree_monomial_nonzero : Localization.mk (1 : AddMonoidAlgebra ℤ ℕ)
     ⟨AddMonoidAlgebra.single (1 : ℕ) (1 : ℤ),
       Submonoid.mem_powers _⟩ ≠ 0 := by
   intro h
@@ -101,9 +104,10 @@ private theorem zero_in_powers : 0 ∈ W₀ := by
   convert Submonoid.mem_powers (t₀ : B₀) using 1
   exact Subsingleton.elim _ _
 
-@[instance_reducible] private def trivial_component_graded_ring : GradedRing (GradedLocalization.component
-    (𝒜 := (AddMonoidAlgebra.gradeBy (ZMod 1) (Nat.castAddMonoidHom ℤ) :
-      ℤ → Submodule (ZMod 1) B₀)) W₀) :=
+@[instance_reducible] private def trivial_component_graded_ring :
+    GradedRing (GradedLocalization.component
+      (𝒜 := (AddMonoidAlgebra.gradeBy (ZMod 1) (Nat.castAddMonoidHom ℤ) :
+        ℤ → Submodule (ZMod 1) B₀)) W₀) :=
   GradedLocalization.gradedRing _ _ (powers_le_homogeneous (ZMod 1))
 
 end TrivialLocalization

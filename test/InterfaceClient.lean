@@ -7,7 +7,7 @@ module
 import GradedRings.FiniteType
 import GradedRings.HomogeneousPrime
 import GradedRings.Noetherian
-import GradedRings.SymmetricAlgebra
+public import GradedRings.SymmetricAlgebra
 
 set_option warningAsError true
 
@@ -37,7 +37,8 @@ private theorem symmetric_graded_map_reduces (f : M →ₗ[R] N)
     SymmetricAlgebra.gradedMap f s = SymmetricAlgebra.map f s :=
   rfl
 
-private theorem symmetric_map_reduces (f : M →ₗ[R] N) :
+/-- The symmetric-algebra map agrees with its universal-property lift. -/
+public theorem symmetric_map_reduces (f : M →ₗ[R] N) :
     SymmetricAlgebra.map f = SymmetricAlgebra.lift (SymmetricAlgebra.ι R N ∘ₗ f) :=
   rfl
 

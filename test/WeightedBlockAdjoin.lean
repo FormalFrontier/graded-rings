@@ -4,8 +4,8 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.WeightedBlockAdjoin
-import Mathlib.Data.ZMod.Basic
+public import GradedRings.WeightedBlockAdjoin
+public import Mathlib.Data.ZMod.Basic
 
 set_option warningAsError true
 
@@ -62,7 +62,8 @@ private theorem empty_indices_constant {R : Type*} [CommSemiring R] (a : R) :
           Finsupp.weightedBlockSize (fun _ : PEmpty => 1)}) := by
   exact zero_blocks_arbitrary_coefficients (fun _ : PEmpty => 1) (by intro i; exact i.elim) a
 
-private theorem empty_indices_zero {R : Type*} [CommSemiring R] (k : ℕ) :
+/-- The zero polynomial belongs to the block-generated algebra for empty indices. -/
+public theorem empty_indices_zero {R : Type*} [CommSemiring R] (k : ℕ) :
     (0 : MvPolynomial PEmpty R) ∈ Algebra.adjoin R
       ((fun d : PEmpty →₀ ℕ => monomial d (1 : R)) ''
         {d | Finsupp.weight (fun _ : PEmpty => 1) d =

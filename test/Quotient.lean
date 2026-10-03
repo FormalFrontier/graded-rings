@@ -4,8 +4,8 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.Quotient
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import GradedRings.Quotient
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
 /-! # Private generic and zero-ring checks of the quotient grading -/
 
@@ -25,7 +25,8 @@ variable {σ : Type w} [SetLike σ A] [AddSubgroupClass σ A]
 variable (𝒜 : ι → σ) [GradedRing 𝒜]
 variable (I : Ideal A)
 
-private theorem quotient_component_graded_monoid : SetLike.GradedMonoid (Ideal.Quotient.gradedComponent 𝒜 I) := inferInstance
+private theorem quotient_component_graded_monoid :
+    SetLike.GradedMonoid (Ideal.Quotient.gradedComponent 𝒜 I) := inferInstance
 
 omit [DecidableEq ι] [AddMonoid ι] [GradedRing 𝒜] in
 private theorem quotient_hom_underlying :
@@ -62,13 +63,15 @@ local instance :
     GradedRing (MvPolynomial.homogeneousSubmodule (Fin 1) (ZMod 1)) :=
   MvPolynomial.gradedAlgebra
 
-@[instance_reducible] private def zero_ring_quotient_grading : GradedRing (Ideal.Quotient.gradedComponent
-    (MvPolynomial.homogeneousSubmodule (Fin 1) (ZMod 1))
-    (⊥ : Ideal (MvPolynomial (Fin 1) (ZMod 1)))) :=
+@[instance_reducible] private def zero_ring_quotient_grading :
+    GradedRing (Ideal.Quotient.gradedComponent
+      (MvPolynomial.homogeneousSubmodule (Fin 1) (ZMod 1))
+      (⊥ : Ideal (MvPolynomial (Fin 1) (ZMod 1)))) :=
   Ideal.Quotient.gradedRing _ _ (Ideal.IsHomogeneous.bot _)
 
 omit [CommRing A] in
-private theorem zero_ring_quotient_surjective : Function.Surjective (Ideal.Quotient.gradedRingHom
+/-- The graded quotient map is surjective also over the trivial ring. -/
+public theorem zero_ring_quotient_surjective : Function.Surjective (Ideal.Quotient.gradedRingHom
     (MvPolynomial.homogeneousSubmodule (Fin 1) (ZMod 1))
     (⊥ : Ideal (MvPolynomial (Fin 1) (ZMod 1)))) :=
   Ideal.Quotient.gradedRingHom_surjective _ _

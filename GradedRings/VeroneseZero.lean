@@ -113,8 +113,7 @@ theorem zeroVariable_pow (j : ℕ) :
       change (1 : S) * 1 = 1
       simp
 
-set_option linter.style.haveILetI false in
-  /-- Every selected zero-index summand is a monomial in the new degree-one element,
+/-- Every selected zero-index summand is a monomial in the new degree-one element,
   whose coefficient is the *same* old-zero element in the whole actual new zero ring. -/
 theorem of_zero_eq_algebraMap_mul_pow (j : ℕ) (a : 𝒮 (0 * j)) :
     DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) j a =
@@ -128,26 +127,28 @@ theorem of_zero_eq_algebraMap_mul_pow (j : ℕ) (a : 𝒮 (0 * j)) :
       (⟨(a : S), by simpa only [zero_mul] using a.property⟩ : 𝒮 (0 * 0)) *
       DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) j (zeroUnit 𝒮 j)
   let b : 𝒮 (0 * 0) := ⟨(a : S), by simpa only [zero_mul] using a.property⟩
-  letI selectedSmul : SMul (𝒮 (0 * 0)) (𝒮 (0 * j)) :=
-    GradedMonoid.GradeZero.smul (A := fun k : ℕ => 𝒮 (0 * k)) j
-  have hsmul : (b • zeroUnit 𝒮 j : 𝒮 (0 * j)) = a := by
-    apply Subtype.ext
-    dsimp only [HSMul.hSMul, instHSMul, SMul.smul, selectedSmul,
-      GradedMonoid.GradeZero.smul]
-    have hcast {i k : ℕ} (hik : i = k) (c : 𝒮 (0 * i)) :
-        ((hik ▸ c : 𝒮 (0 * k)) : S) = c := by
-      cases hik
-      rfl
-    rw [hcast]
-    change (a : S) * 1 = (a : S)
-    simp
-  calc
-    DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) j a =
-        DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) j
-          (b • zeroUnit 𝒮 j : 𝒮 (0 * j)) := by rw [hsmul]
-    _ = DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) 0 b *
-          DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) j (zeroUnit 𝒮 j) :=
-      DirectSum.of_zero_smul (fun k : ℕ => 𝒮 (0 * k)) b (zeroUnit 𝒮 j)
+  exact
+    letI selectedSmul : SMul (𝒮 (0 * 0)) (𝒮 (0 * j)) :=
+      GradedMonoid.GradeZero.smul (A := fun k : ℕ => 𝒮 (0 * k)) j
+    show _ from by
+      have hsmul : (b • zeroUnit 𝒮 j : 𝒮 (0 * j)) = a := by
+        apply Subtype.ext
+        dsimp only [HSMul.hSMul, instHSMul, SMul.smul, selectedSmul,
+          GradedMonoid.GradeZero.smul]
+        have hcast {i k : ℕ} (hik : i = k) (c : 𝒮 (0 * i)) :
+            ((hik ▸ c : 𝒮 (0 * k)) : S) = c := by
+          cases hik
+          rfl
+        rw [hcast]
+        change (a : S) * 1 = (a : S)
+        simp
+      calc
+        DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) j a =
+            DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) j
+              (b • zeroUnit 𝒮 j : 𝒮 (0 * j)) := by rw [hsmul]
+        _ = DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) 0 b *
+              DirectSum.of (fun k : ℕ => 𝒮 (0 * k)) j (zeroUnit 𝒮 j) :=
+          DirectSum.of_zero_smul (fun k : ℕ => 𝒮 (0 * k)) b (zeroUnit 𝒮 j)
 
 /-- Evaluating a polynomial at the degree-one element reaches every summand of
 the external zero-index Veronese ring. -/

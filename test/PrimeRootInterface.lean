@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings
+public import GradedRings
 
 /-! # Ordinary native aggregate-import prime-multiplicity construction checks -/
 
@@ -23,7 +23,8 @@ section Prime
 variable {R : Type u} [CommRing R] [IsDomain R] [WfDvdMonoid R]
 variable {p : R}
 
-private theorem valuation_computation (hp : Prime p) (r : R) :
+/-- The prime valuation agrees with its defining multiplicity valuation. -/
+public theorem valuation_computation (hp : Prime p) (r : R) :
     PrimeMultiplicity.valuation hp r = PrimeMultiplicity.valuationDef p r := rfl
 
 omit [WfDvdMonoid R] in

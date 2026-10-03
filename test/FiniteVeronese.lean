@@ -4,8 +4,8 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.FiniteVeronese
-import Mathlib.Data.ZMod.Basic
+public import GradedRings.FiniteVeronese
+public import Mathlib.Data.ZMod.Basic
 
 set_option warningAsError true
 
@@ -126,7 +126,9 @@ private theorem empty_generators_generate :
   simpa only [SetLike.GradeZero.algebraMap_apply] using
     U.algebraMap_mem (⟨p, hp⟩ : EmptyGrading 0)
 
-example : Finsupp.weightedBlockSize (fun _ : Empty => 1) = 1 := by
+/-- The weighted block size for an empty variable type is one. -/
+public theorem empty_weightedBlockSize :
+    Finsupp.weightedBlockSize (fun _ : Empty => 1) = 1 := by
   simp [Finsupp.weightedBlockSize]
 
 example : ∃ T : Set (GradedRing.Veronese.VeroneseRing EmptyGrading

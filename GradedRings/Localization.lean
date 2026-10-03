@@ -220,8 +220,8 @@ theorem projectionFun_mk (i : ι) {a : A} {s : M} {j : ι}
       projectionFun_mk 𝒜 M hM i
         (SetLike.GradedMul.mul_mem hcj hdk), Localization.add_mk]
     congr 1
-    simp [DirectSum.decompose_of_mem _ hcj,
-      DirectSum.decompose_of_mem _ hdk]
+    simp only [decompose_add, decompose_mul, DirectSum.add_apply, AddMemClass.coe_add,
+      DirectSum.decompose_of_mem _ hcj, DirectSum.decompose_of_mem _ hdk]
     rw [show i + (j + k) = j + (i + k) by ac_rfl,
       DirectSum.coe_of_mul_apply_add]
     rw [show j + (i + k) = k + (i + j) by ac_rfl,

@@ -75,7 +75,8 @@ private theorem clientFiniteType [Algebra.FiniteType (𝒮 0) S]
       (GradedRing.Veronese.ResidueModule 𝒮 n r) :=
   GradedRing.Veronese.residueModule_finite_of_finiteType 𝒮 n r hn hr
 
-private theorem clientIndexOne :
+/-- The residue evaluation at index one is a bijection. -/
+public theorem clientIndexOne :
     Function.Bijective (GradedRing.Veronese.residueEvaluation 𝒮 1 0) := by
   letI : Algebra (GradedRing.Veronese.VeroneseRing 𝒮 1) S :=
     (GradedRing.Veronese.inclusion 𝒮 1).toAlgebra

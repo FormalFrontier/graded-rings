@@ -4,8 +4,8 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.Noetherian
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import GradedRings.Noetherian
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
 set_option warningAsError true
 
@@ -40,7 +40,8 @@ local instance :
     GradedRing (MvPolynomial.homogeneousSubmodule (Fin 1) (ZMod 1)) :=
   MvPolynomial.gradedAlgebra
 
-private theorem zero_ring_noetherian : IsNoetherianRing (MvPolynomial (Fin 1) (ZMod 1)) :=
+/-- A polynomial algebra over the trivial ring is Noetherian. -/
+public theorem zero_ring_noetherian : IsNoetherianRing (MvPolynomial (Fin 1) (ZMod 1)) :=
   (GradedAlgebra.isNoetherianRing_iff_gradeZero_and_irrelevant_fg
     (MvPolynomial.homogeneousSubmodule (Fin 1) (ZMod 1))).mpr
     ⟨inferInstance, ⟨∅, by

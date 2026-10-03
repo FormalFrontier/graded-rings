@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 public import GradedRings.WeightedEvaluation
+public import Mathlib.Data.ZMod.Basic
 
 @[expose] public section
 
@@ -133,7 +134,9 @@ private abbrev ZeroGrading :=
 private noncomputable instance : GradedAlgebra ZeroGrading :=
   MvPolynomial.weightedGradedAlgebra (ZMod 1) (fun _ : Fin 1 => 2)
 
-example : Subsingleton ZeroTarget := inferInstance
+/-- A polynomial ring over the trivial ring has only one element. -/
+public theorem zero_ring_target_subsingleton :
+    Subsingleton (MvPolynomial (Fin 1) (ZMod 1)) := inferInstance
 
 private noncomputable def zeroGenerators (i : Fin 1) : ZeroGrading 2 :=
   ⟨MvPolynomial.X i, MvPolynomial.isWeightedHomogeneous_X

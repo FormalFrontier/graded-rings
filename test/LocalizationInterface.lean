@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.Localization
+public import GradedRings.Localization
 
 /-! # Ordinary direct-import reduction checks for graded localization -/
 
@@ -21,7 +21,8 @@ variable {ι : Type v} [DecidableEq ι] [AddCommGroup ι]
 variable {σ : Type w} [SetLike σ A] [AddSubgroupClass σ A]
 variable (𝒜 : ι → σ) [GradedRing 𝒜] (M : Submonoid A)
 
-private theorem componentCarrier (i : ι) (z : Localization M) :
+/-- Homogeneous localization components consist of fractions of matching shifted degree. -/
+public theorem componentCarrier (i : ι) (z : Localization M) :
     z ∈ GradedLocalization.component (𝒜 := 𝒜) M i ↔
       ∃ (j : ι) (a : 𝒜 (i + j)) (b : 𝒜 j) (hb : (b : A) ∈ M),
         z = Localization.mk (a : A) ⟨(b : A), hb⟩ :=

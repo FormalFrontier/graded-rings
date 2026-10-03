@@ -4,8 +4,8 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.FiniteType
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import GradedRings.FiniteType
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
 set_option warningAsError true
 
@@ -48,7 +48,8 @@ local instance :
     GradedRing (MvPolynomial.homogeneousSubmodule (Fin 1) (ZMod 1)) :=
   MvPolynomial.gradedAlgebra
 
-private theorem zero_ring_finite_type : Algebra.FiniteType
+/-- The polynomial algebra over the trivial ring is finite type over its degree-zero part. -/
+public theorem zero_ring_finite_type : Algebra.FiniteType
     ((MvPolynomial.homogeneousSubmodule (Fin 1) (ZMod 1)) 0)
     (MvPolynomial (Fin 1) (ZMod 1)) :=
   GradedAlgebra.finiteType_of_irrelevant_fg _ ⟨∅, by

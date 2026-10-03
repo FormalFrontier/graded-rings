@@ -108,17 +108,17 @@ private theorem exists_le_weightedBlockSize
     exact Nat.add_le_add_left (Nat.mul_le_mul_right _ (hc i)) _
   refine ⟨g, hgf, ?_⟩
   rw [hD, show weight w g = weight w t + P * c.degree from ?_, hR, hdegree]
-  have : m + (r - m) = r := Nat.add_sub_of_le (Nat.le_of_lt hm)
-  nlinarith
-  change weight w (t + equivFunOnFinite.symm (fun i => c i * (P / w i))) =
-    weight w t + P * c.degree
-  rw [map_add, weight_eq_sum w (equivFunOnFinite.symm (fun i => c i * (P / w i))),
-    degree_eq_sum, Finset.mul_sum]
-  congr 1
-  apply Finset.sum_congr rfl
-  intro i _
-  simp only [nsmul_eq_mul, coe_equivFunOnFinite_symm]
-  nlinarith [hb i]
+  · have : m + (r - m) = r := Nat.add_sub_of_le (Nat.le_of_lt hm)
+    nlinarith
+  · change weight w (t + equivFunOnFinite.symm (fun i => c i * (P / w i))) =
+      weight w t + P * c.degree
+    rw [map_add, weight_eq_sum w (equivFunOnFinite.symm (fun i => c i * (P / w i))),
+      degree_eq_sum, Finset.mul_sum]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro i _
+    simp only [nsmul_eq_mul, coe_equivFunOnFinite_symm]
+    nlinarith [hb i]
 
 /-- Every exponent vector of weight `k * weightedBlockSize w` is a sum of exactly
 `k` exponent vectors of weight `weightedBlockSize w`. This includes empty index

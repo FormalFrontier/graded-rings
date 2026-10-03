@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings
+public import GradedRings
 
 /-! # Prime powers and denominator order
 
@@ -24,7 +24,8 @@ section Domain
 variable {R : Type*} [CommRing R] [IsDomain R] [WfDvdMonoid R]
 variable {p : R}
 
-private theorem value_of_two_prime_powers (hp : Prime p) (m n : ℕ) :
+/-- A prime valuation is multiplicative on two powers of its prime. -/
+public theorem value_of_two_prime_powers (hp : Prime p) (m n : ℕ) :
     PrimeMultiplicity.valuation hp (p ^ m * p ^ n) =
       exp (-(m : ℤ)) * exp (-(n : ℤ)) := by
   rw [map_mul, PrimeMultiplicity.valuation_apply_pow,

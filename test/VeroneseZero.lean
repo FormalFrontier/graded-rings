@@ -6,7 +6,7 @@ IncubatorTest/Algebra/GradedRing/VeroneseFiniteType.lean (Formal Frontier contri
 -/
 module
 
-import GradedRings.VeroneseZero
+public import GradedRings.VeroneseZero
 import Mathlib.RingTheory.MvPolynomial.WeightedHomogeneous
 import Mathlib.Data.ZMod.Basic
 
@@ -45,7 +45,9 @@ example (j : ℕ) (a : 𝒮 (0 * j)) :
           GradedRing.Veronese.zeroVariable 𝒮 ^ j :=
   GradedRing.Veronese.of_zero_eq_algebraMap_mul_pow 𝒮 j a
 
-example : Algebra.FiniteType (GradedRing.Veronese.component 𝒮 0 0)
+/-- The zero-index Veronese has finite type over its degree-zero component. -/
+public theorem zero_index_finite_type :
+    Algebra.FiniteType (GradedRing.Veronese.component 𝒮 0 0)
     (GradedRing.Veronese.VeroneseRing 𝒮 0) :=
   GradedRing.Veronese.finiteType_zero 𝒮
 

@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GradedRings.WeightedVeroneseGenerators
+public import GradedRings.WeightedVeroneseGenerators
 import Mathlib.Data.ZMod.Basic
 
 set_option warningAsError true
@@ -62,7 +62,8 @@ private theorem zeroWeight :
   convert (isWeightedHomogeneous_X (R := ℕ) (fun _ : Fin 1 => 0) (0 : Fin 1)).pow 7
     using 1
 
-private theorem emptyVariables {R : Type*} [CommSemiring R] :
+/-- For no variables, constant polynomials are generated at every selected degree. -/
+public theorem emptyVariables {R : Type*} [CommSemiring R] :
     ∃ T : Finset (MvPolynomial Empty R),
       (∀ p ∈ T, ∃ j, p.IsWeightedHomogeneous (fun i => Empty.elim i) (4 * j)) ∧
       ∀ p : MvPolynomial Empty R, p ∈ Algebra.adjoin R (T : Set _) := by

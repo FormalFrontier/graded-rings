@@ -39,7 +39,8 @@ section FreePolynomial
 
 variable {R I : Type*} [CommRing R]
 
-private theorem free_polynomial_generated :
+/-- The degree-one part of a freely graded polynomial algebra generates the algebra. -/
+public theorem free_polynomial_generated :
     letI : GradedAlgebra (MvPolynomial.homogeneousSubmodule I R) :=
       MvPolynomial.gradedAlgebra
     Algebra.adjoin (MvPolynomial.homogeneousSubmodule I R 0)
