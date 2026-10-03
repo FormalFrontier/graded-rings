@@ -6,7 +6,10 @@ project:
     Graded quotients and localizations, degree-multiplying maps of homogeneous
     localizations, homogeneous component surjectivity and polynomial lifts,
     irrelevant-ideal finiteness, homogeneous prime correspondence,
-    symmetric algebras, selected-component Veronese rings, coherent-tail
+    symmetric algebras, their first-order quotients by the square of the
+    augmentation ideal over arbitrary commutative rings and modules,
+    natural square-zero algebra and conormal linear equivalences,
+    selected-component Veronese rings, coherent-tail
     equivalences of whole selected rings, positive-index degree-one generation
     under an old-ring generation hypothesis, weighted evaluation at arbitrary
     homogeneous elements over actual degree-zero coefficients, finite
@@ -98,9 +101,15 @@ sources:
 
 status:
   scope: >-
-    Twenty-four production leaves, an aggregate native module, twenty-nine registered
-    regression-test modules and four standalone example modules. Quotient and localization
-    constructions include degenerate commutative rings; degree-multiplying maps
+    Twenty-five production leaves, an aggregate native module, thirty registered
+    regression-test modules and four standalone example modules. For arbitrary
+    commutative rings and modules, the first-order symmetric-algebra quotient
+    by the square of its augmentation ideal is algebra-equivalent to the trivial
+    square-zero extension; the augmentation conormal is linearly equivalent to
+    the original module. Both equivalences are natural under linear module maps.
+    These are algebraic comparisons only, with no Spec, scheme or sheaf conclusion.
+    Quotient and localization constructions include degenerate commutative rings;
+    degree-multiplying maps
     require an explicit natural-degree compatibility witness and mapped
     denominators, not a domain or regularity assumption. Valuation applications
     use their stated domain, divisibility, field and degree hypotheses.

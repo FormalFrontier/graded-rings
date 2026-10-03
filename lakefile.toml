@@ -13,13 +13,18 @@ name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4.git"
 rev = "83abb3e776bdefcbc447a1e44d0debe4010039e5"
 
+[[require]]
+name = "coherent-modules"
+git = "https://github.com/FormalFrontier/coherent-modules.git"
+rev = "408a52bd54df17ccc928ce970942f1313ff10d5c"
+
 [[lean_lib]]
 name = "GradedRings"
 
 [[lean_lib]]
 name = "GradedRingsTests"
 srcDir = "test"
-roots = ["Axioms", "FiniteType", "HomogeneousLifts", "HomogeneousLocalizationMap", "HomogeneousPrime", "InterfaceClient", "Localization", "LocalizationInterface", "LocalizationRootInterface", "Noetherian", "PrimeInterface", "PrimeRootInterface", "Quotient", "QuotientInterface", "QuotientRootInterface", "RootClient", "Veronese", "VeroneseDegreeOne", "CoherentTailVeronese", "WeightedBlocks", "WeightedEvaluation", "WeightedBlockAdjoin", "FiniteVeronese", "WeightedVeroneseGenerators", "VeroneseFiniteType", "VeroneseFinite", "VeroneseResidue", "VeroneseResidueModule", "VeroneseZero"]
+roots = ["Axioms", "FiniteType", "HomogeneousLifts", "HomogeneousLocalizationMap", "HomogeneousPrime", "InterfaceClient", "Localization", "LocalizationInterface", "LocalizationRootInterface", "Noetherian", "PrimeInterface", "PrimeRootInterface", "Quotient", "QuotientInterface", "QuotientRootInterface", "RootClient", "Veronese", "VeroneseDegreeOne", "CoherentTailVeronese", "WeightedBlocks", "WeightedEvaluation", "WeightedBlockAdjoin", "FiniteVeronese", "WeightedVeroneseGenerators", "GradedRingsTests.SymmetricAlgebraSquareZero", "VeroneseFiniteType", "VeroneseFinite", "VeroneseResidue", "VeroneseResidueModule", "VeroneseZero"]
 
 [[lean_lib]]
 name = "GradedRingsExamples"

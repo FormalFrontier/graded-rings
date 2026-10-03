@@ -1,6 +1,6 @@
 # Documentation and API references
 
-[`API.md`](API.md) is the **current, hand-maintained 24-production-leaf map**:
+[`API.md`](API.md) is the **current, hand-maintained 25-production-leaf map**:
 it links the available modules and selected interfaces. It is not a native
 declaration census or a proof certificate. Import `GradedRings` for the full
 public API, or ordinary-import a subject leaf. The [root README](../README.md)
@@ -29,10 +29,8 @@ provides the headline mathematics, limitations and cache-first build commands.
   [external shifted residue sums](VeroneseResidueModule.md) distinguish
   finiteness of the old ring, a particular projection range and the shifted sum.
 
-The guides document the current mathematical API, clients, code hypotheses,
-and limits. An isolated origin or an earlier static-transfer checkpoint is
-not a current release-status verdict; revision-specific evidence is kept in
-the project's owning records. The guides do not assert source completeness.
+The guides document the current mathematical API, clients, code hypotheses
+and limits; they do not assert source completeness.
 
 ## Historical native snapshot
 

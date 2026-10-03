@@ -43,6 +43,7 @@ links are accurate in the original revision, not necessarily here.
 | [`GradedRings.Noetherian`](../GradedRings/Noetherian.lean) | `GradedAlgebra.isNoetherianRing_iff_gradeZero_and_irrelevant_fg`. |
 | [`GradedRings.HomogeneousPrime`](../GradedRings/HomogeneousPrime.lean) | `GradedRing.homogeneousPrimeEquivDegreeZeroPrime` by contraction and radical extension. |
 | [`GradedRings.SymmetricAlgebra`](../GradedRings/SymmetricAlgebra.lean) | `SymmetricAlgebra.gradedAlgebra`, `gradedMap` and polynomial-coordinate maps. |
+| [`GradedRings.SymmetricAlgebraSquareZero`](../GradedRings/SymmetricAlgebraSquareZero.lean) | For `[CommRing R] [AddCommGroup M] [Module R M]`, with independent universes and no basis/finite hypothesis: `augmentationIdeal_eq_span_ι`, `squareZeroQuotientEquiv : SymmetricAlgebra R M ⧸ augmentationIdeal² ≃ₐ[R] TrivSqZeroExt R M`, `cotangentIdealEquivKerIdeal`, `augmentationCotangentEquiv : augmentationIdeal.Cotangent ≃ₗ[R] M`, `squareZeroQuotientMap` and both whole-map naturalities. The conormal map restricts Mathlib's `Ideal.cotangentEquivIdeal`, uses `Ideal.mapCotangent` for naturality and the released coherent-modules `TrivSqZeroExt.kerIdealLinearEquiv`; consumers use `open scoped TrivSqZeroExt`. The image cotangent ideal belongs to the quotient, not to the source symmetric algebra. No geometric sheaf result. |
 | [`GradedRings.PrimeMultiplicity`](../GradedRings/PrimeMultiplicity.lean) | `PrimeMultiplicity.valuation` and `localizationValuation` under stated domain and denominator hypotheses. |
 | [`GradedRings.HomogeneousPrimeMultiplicity`](../GradedRings/HomogeneousPrimeMultiplicity.lean) | `HomogeneousLocalization.awayPrimeMultiplicityValuation`. |
 | [`GradedRings.MvPolynomialAway`](../GradedRings/MvPolynomialAway.lean) | Homogeneous polynomial multiplicity bound, unit criterion and irreducibility application. |
@@ -241,8 +242,9 @@ the [aggregate witness](../test/RootClient.lean) checks the generic export.
 
 ## Aggregate, clients and examples
 
-[`GradedRings`](../GradedRings.lean) publicly imports all twenty-four production leaves.
-The default test target registers twenty-nine regression-test modules, including
+[`GradedRings`](../GradedRings.lean) publicly imports all twenty-five production leaves.
+The default test target registers thirty regression-test modules, including
+the [first-order symmetric-algebra client](../test/GradedRingsTests/SymmetricAlgebraSquareZero.lean),
 the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 [direct homogeneous-lifts client](../test/HomogeneousLifts.lean), the
 [direct Veronese client](../test/Veronese.lean), the

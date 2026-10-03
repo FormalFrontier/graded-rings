@@ -36,6 +36,13 @@ and book coverage require separate assessment.
 - **Symmetric algebras:** The [basis-free grading and graded maps](GradedRings/SymmetricAlgebra.lean)
   are functorial for linear maps over a commutative semiring and arbitrary
   modules; a basis is used only for polynomial-coordinate presentations.
+- **First-order symmetric algebras:** For any commutative ring `R` and `R`-module
+  `M`, with no finiteness or freeness condition, the [augmentation ideal and its
+  conormal](GradedRings/SymmetricAlgebraSquareZero.lean) identify
+  `SymmetricAlgebra R M ⧸ augmentationIdeal² ≃ₐ[R] TrivSqZeroExt R M`
+  and `augmentationIdeal.Cotangent ≃ₗ[R] M`. Generator formulas, ideal transport
+  and naturality for linear maps use `open scoped TrivSqZeroExt`; no scheme or
+  sheaf comparison is asserted.
 - **Prime multiplicity:** A [multiplicative valuation](GradedRings/PrimeMultiplicity.lean)
   records prime-element multiplicity in a domain with well-founded divisibility.
   Its localization extension requires non-zero-divisor denominators; the
@@ -145,6 +152,7 @@ and book coverage require separate assessment.
 | [Noetherian](GradedRings/Noetherian.lean) | `isNoetherianRing_iff_gradeZero_and_irrelevant_fg`: Noetherianity is equivalent to Noetherianity of degree zero plus finite generation of the irrelevant ideal. No domain or nontriviality assumption. |
 | [HomogeneousPrime](GradedRings/HomogeneousPrime.lean) | In an integer-graded commutative ring with a positive-degree homogeneous unit, `homogeneousPrimeEquivDegreeZeroPrime` identifies homogeneous prime ideals with primes of degree zero. The inverse is **radical extension**, not plain extension. |
 | [SymmetricAlgebra](GradedRings/SymmetricAlgebra.lean) | Basis-free grading, `gradedMap` and linear-equivalence functoriality over a commutative **semiring** and arbitrary modules. A basis is needed only for the degree-preserving polynomial-coordinate presentation. |
+| [SymmetricAlgebraSquareZero](GradedRings/SymmetricAlgebraSquareZero.lean) | For any commutative ring and arbitrary module, `augmentationIdeal_eq_span_ι`, `squareZeroQuotientEquiv`, `augmentationCotangentEquiv` and both whole-map naturalities. The quotient's image cotangent ideal is identified with `TrivSqZeroExt.kerIdeal`, not with the original augmentation ideal. Importing this leaf provides the canonical released `coherent-modules` kernel equivalence and scoped actions. |
 | [PrimeMultiplicity](GradedRings/PrimeMultiplicity.lean) | For a prime element in a commutative domain with well-founded divisibility, `valuation` sends nonzero `r` to `exp (-multiplicity p r)`. Its extension to localization requires denominators to be non-zero-divisors. |
 | [HomogeneousPrimeMultiplicity](GradedRings/HomogeneousPrimeMultiplicity.lean) | Restricts that valuation to degree-zero homogeneous localization. On a nonzero homogeneous numerator over `p^n`, its value is `exp (n - multiplicity p x)`. Degrees form an additive commutative monoid. |
 | [MvPolynomialAway](GradedRings/MvPolynomialAway.lean) | Over a field and an arbitrary variable type, bounds multiplicity by homogeneous degree, characterizes units by valuation one, and proves irreducibility at denominator order one for a positive-degree homogeneous prime polynomial. |
@@ -182,9 +190,10 @@ exact original public checkout, limits and separately pinned reproduction recipe
 ## Build and use
 
 Install the exact toolchain in `lean-toolchain`: Lean `v4.34.0-rc2`.
-The sole direct dependency is mathlib at
-`83abb3e776bdefcbc447a1e44d0debe4010039e5`; `lake-manifest.json` freezes
-all nine resolved Git dependencies. From a checkout, obtain matching compiled
+The direct dependencies are mathlib at
+`83abb3e776bdefcbc447a1e44d0debe4010039e5` and the released
+`coherent-modules` at `408a52bd54df17ccc928ce970942f1313ff10d5c`;
+`lake-manifest.json` freezes all ten resolved Git dependencies. From a checkout, obtain matching compiled
 mathlib artifacts **before** building:
 
 ```sh
@@ -193,7 +202,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all twenty-nine regression-test modules and
+build includes the aggregate library, all thirty regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -201,7 +210,7 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 58 shipped Lean modules use Lean's native module system. A downstream native
+All 60 shipped Lean modules use Lean's native module system. A downstream native
 module can ordinary-import `GradedRings` for the full API, or a subject leaf
 such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
 `GradedRings.Veronese`, `GradedRings.CoherentTailVeronese`,
@@ -213,7 +222,7 @@ such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`
 `GradedRings.VeroneseResidue`, `GradedRings.VeroneseResidueModule`,
 `GradedRings.VeroneseZero`,
 `GradedRings.VeroneseDegreeOne` or
-`GradedRings.SymmetricAlgebra`. Public imports
+`GradedRings.SymmetricAlgebra` or `GradedRings.SymmetricAlgebraSquareZero`. Public imports
 re-export the intended interfaces. The selected-ring leaf also exports its
 named technical grading and reindexing helpers; clients do not need to rely on
 them for the main API.
