@@ -58,6 +58,23 @@ links are accurate in the original revision, not necessarily here.
 | [`GradedRings.VeroneseResidue`](../GradedRings/VeroneseResidue.lean) | `GradedRing.Veronese.residueProjection 𝒮 n r hn hr` is a linear projection over the whole external selected ring using the actual `inclusion.toAlgebra`, for `0 < n` and `r < n`. The homogeneous law, exact componentwise range and `Module.Finite` image follow without field/domain/Noetherian assumptions; old-zero finite type implies the needed ambient finiteness via `inclusion_finite`. See the [guide](VeroneseResidue.md). |
 | [`GradedRings.VeroneseResidueModule`](../GradedRings/VeroneseResidueModule.lean) | `GradedRing.Veronese.ResidueModule 𝒮 n r` carries the whole external selected-ring action on the shifted sum of entire old components. Canonical coefficient evaluation is injective for `0 < n`; when also `r < n`, its linear equivalence with the projection range transports ambient and full old-zero finite-type finiteness. See the [shifted-sum guide](VeroneseResidueModule.md). |
 
+## Scope distinctions
+
+The full localized ring and its degree-zero subring are different objects.
+The degree-multiplying map is distinct from this same-ring localization grading;
+`d = 0` still requires an explicit degree-compatibility witness, and the chart
+element need not be homogeneous for the restriction square. It does not construct
+a Proj or scheme map.
+The polynomial results do not identify a general graded ring with a polynomial
+ring, and the valuation results do not apply to arbitrary rings with zero divisors.
+The positive-Veronese result is algebraic generation, not a coefficient-
+regrouping theorem or a chart/scheme equivalence. Coherent high tails induce
+equivalent selected rings without extending the equivalence to missing low
+degrees or asserting a geometric equivalence. No claim about complete
+coverage of a mathematical book follows from this API.
+
+## Degree-multiplying localization maps
+
 The degree-multiplying map module does **not** replace the existing same-ring grading or
 zero-component equivalence. For natural gradings `𝒜`, `ℬ` of arbitrary
 commutative rings, its ordinary unital `f : A →+* B` must satisfy
@@ -265,3 +282,26 @@ the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 are not extra advertised public interfaces. For old native displayed types
 and docstrings, consult the separately labeled initial snapshot; its 104
 names are not a count of the current public API.
+
+## Proof ideas
+
+A homogeneous quotient decomposes by projecting the original components:
+homogeneity makes the decomposition vanish on the ideal, so it descends.
+For localization, project a numerator into the degree shifted by its denominator;
+the localization relation makes the result independent of representatives, even
+when denominators are zero divisors.
+
+Finite generation of the irrelevant ideal yields positive-degree homogeneous
+generators. Strong induction on degree turns ideal generation into algebra
+generation over degree zero. The Noetherian criterion then combines this with
+the degree-zero Noetherian and finite-type results in mathlib.
+
+For integer-graded prime correspondence, powers of a positive-degree homogeneous
+unit move suitable powers of homogeneous elements to degree zero. This explains
+why radical extension, rather than unmodified extension, is the inverse.
+
+The symmetric algebra's universal property sends degree-one generators into
+their direct sum, giving the basis-free grading and its functorial maps.
+In a homogeneous polynomial localization, total degree bounds prime multiplicity;
+order zero forces the remaining numerator to be a nonzero scalar, hence a unit.
+Additivity of denominator order then makes an order-one element irreducible.

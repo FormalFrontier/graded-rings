@@ -64,9 +64,10 @@ the [homogeneous-lifts guide](HomogeneousLifts.md) explains the lifting input.
 ## Reproduction and status
 
 This destination checkout pins Lean `leanprover/lean4:v4.34.0-rc2` and mathlib
-`83abb3e776bdefcbc447a1e44d0debe4010039e5`; its sole direct Lake
-requirement is mathlib, and `lake-manifest.json` fixes nine resolved packages.
-In a checkout of this candidate, retain all checked-in pins. Run from the
+`83abb3e776bdefcbc447a1e44d0debe4010039e5`; its direct Lake
+requirements are mathlib and coherent-modules. Their exact dependency revisions
+are recorded in `lake-manifest.json`.
+In a checkout of this library, retain all checked-in pins. Run from the
 project root:
 
 ```sh

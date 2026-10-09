@@ -69,8 +69,8 @@ clients are not extra public interfaces.
 
 The checked-in `lean-toolchain`, `lakefile.toml` and `lake-manifest.json` pin
 Lean `v4.34.0-rc2` and mathlib
-`83abb3e776bdefcbc447a1e44d0debe4010039e5` with the destination's
-nine exact resolved packages. In a checkout of **this** library, fetch the
+`83abb3e776bdefcbc447a1e44d0debe4010039e5`; the exact dependency
+revisions are recorded in `lake-manifest.json`. In a checkout of **this** library, fetch the
 matching precompiled mathlib cache first, then check all three native targets
 with warnings treated as errors, including both the direct and aggregate clients:
 

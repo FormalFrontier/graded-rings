@@ -169,23 +169,11 @@ and book coverage require separate assessment.
 | [VeroneseDegreeOne](GradedRings/VeroneseDegreeOne.lean) | `GradedRing.Veronese.adjoin_component_one_eq_top`: if `0 < n` and `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the whole selected ring is generated over its **actual new degree-zero component** by **all** of its new degree-one component. No finite-variable, finite-type, domain, field, reducedness or nontriviality assumption. See the [degree-one-generation guide](docs/VeroneseDegreeOne.md). |
 | [FiniteVeronese](GradedRings/FiniteVeronese.lean) | `GradedRing.Veronese.exists_finite_degree_one_generators` gives finite whole-ring generation over the actual new zero component from a finite positive-weight homogeneous generating family over the old zero component; `exists_positive_finite_degree_one_generators` instead starts from native `Algebra.FiniteType (𝒮 0) S` and obtains some positive index. See the [finite-generation guide](docs/FiniteVeronese.md). |
 
-The full localized ring and its degree-zero subring are different objects.
-The degree-multiplying map is distinct from this same-ring localization grading;
-`d = 0` still requires an explicit degree-compatibility witness, and the chart
-element need not be homogeneous for the restriction square. It does not construct
-a Proj or scheme map.
-The polynomial results do not identify a general graded ring with a polynomial
-ring, and the valuation results do not apply to arbitrary rings with zero divisors.
-The positive-Veronese result is algebraic generation, not a coefficient-
-regrouping theorem or a chart/scheme equivalence. Coherent high tails induce
-equivalent selected rings without extending the equivalence to missing low
-degrees or asserting a geometric equivalence. No claim about complete
-coverage of a mathematical book follows from this API.
-
-The [current manual API map](docs/API.md) and [subject-guide index](docs/README.md)
-cover these production leaves. The [historical 104-declaration native snapshot](docs/API-initial-snapshot.md)
-applies only to an earlier 28-module tree; see the documentation index for its
-exact original public checkout, limits and separately pinned reproduction recipe.
+For the distinctions between whole localizations and degree-zero pieces,
+polynomial presentations, selected-ring generation and geometric claims, see
+[scope distinctions](docs/API.md#scope-distinctions). The
+[current API map](docs/API.md) and [subject guides](docs/README.md) give focused
+imports, declarations and clients.
 
 ## Build and use
 
@@ -210,23 +198,12 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 60 shipped Lean modules use Lean's native module system. A downstream native
-module can ordinary-import `GradedRings` for the full API, or a subject leaf
-such as `GradedRings.HomogeneousLifts`, `GradedRings.HomogeneousLocalizationMap`, `GradedRings.Quotient`,
-`GradedRings.Veronese`, `GradedRings.CoherentTailVeronese`,
-`GradedRings.WeightedBlocks`, `GradedRings.WeightedBlockAdjoin`,
-`GradedRings.WeightedEvaluation`,
-`GradedRings.FiniteVeronese`,
-`GradedRings.WeightedVeroneseGenerators`,
-`GradedRings.VeroneseFiniteType`, `GradedRings.VeroneseFinite`,
-`GradedRings.VeroneseResidue`, `GradedRings.VeroneseResidueModule`,
-`GradedRings.VeroneseZero`,
-`GradedRings.VeroneseDegreeOne` or
-`GradedRings.SymmetricAlgebra` or `GradedRings.SymmetricAlgebraSquareZero`. Public imports
-re-export the intended interfaces. The selected-ring leaf also exports its
-named technical grading and reindexing helpers; clients do not need to rely on
-them for the main API.
-Clients do not need `import all` or access to private names.
+All 60 shipped Lean modules use Lean's module system. Ordinary-import
+`GradedRings` for the full API, or a `GradedRings.<Leaf>` module from the
+[API map](docs/API.md#production-modules). Public imports re-export the intended
+interfaces; clients need neither `import all` nor private names. The selected-ring
+leaf also exports its named technical grading and reindexing helpers, but the main
+API does not require clients to use them.
 
 The quotient, localization and prime-multiplicity tests compare full public
 constructions with their original constructions by Lean-private ordinary-import
@@ -236,25 +213,13 @@ complement, but do not replace, the complete transitive standard-axiom audit
 including private and generated declarations. No separate stored-proof replay
 is required.
 
-## Historical observed build resources
+### Build resources
 
-A Linux preparation run configured with `LAKE_JOBS=1` and `LEAN_NUM_THREADS=1`
-fetched the matching mathlib cache in about 95 seconds. With that cache present,
-rebuilding the library and clients after attribution-header changes, and checking
-all default targets, took about 30 seconds; the largest child-process RSS was
-approximately 1.16 GiB. The
-1811-job Lake summary includes reused dependencies and replayed messages, not
-1811 freshly compiled modules. Four examples had already been compiled before
-that changed-header run. These are observations, not a cold-build benchmark or
-hardware-independent promise. Network/cache availability affects elapsed time.
-
-The run had a 23 GiB aggregate runtime limit. Actual concurrent process and
-thread counts were not measured; the configured environment variables are not
-evidence of an enforced one-job or one-thread cap.
-Child RSS is not the process group's or container's total peak; the lifetime
-cgroup peak includes earlier work. Leave headroom for Lake, dependencies and
-documentation generation. Do not infer a minimum-memory guarantee from these
-measurements. Exact raw receipts belong to the revision-specific evidence packet.
+Build time and memory depend on the targets, cache state, network and hardware.
+These instructions specify neither a cold-build time nor a minimum-memory
+guarantee. Leave headroom for Lake, dependencies and documentation generation;
+`LAKE_JOBS` and `LEAN_NUM_THREADS` settings alone should not be treated as enforced
+aggregate process, thread or memory bounds.
 
 ## Complete examples
 
@@ -277,28 +242,10 @@ Examples are usage demonstrations, not additional public API.
 
 ## Proof ideas
 
-A homogeneous quotient decomposes by projecting the original components:
-homogeneity makes the decomposition vanish on the ideal, so it descends.
-For localization, project a numerator into the degree shifted by its denominator;
-the localization relation makes the result independent of representatives, even
-when denominators are zero divisors.
+The [API guide](docs/API.md#proof-ideas) outlines the quotient/localization,
+finite-generation, Noetherian, prime-correspondence and symmetric-algebra arguments.
 
-Finite generation of the irrelevant ideal yields positive-degree homogeneous
-generators. Strong induction on degree turns ideal generation into algebra
-generation over degree zero. The Noetherian criterion then combines this with
-the degree-zero Noetherian and finite-type results in mathlib.
-
-For integer-graded prime correspondence, powers of a positive-degree homogeneous
-unit move suitable powers of homogeneous elements to degree zero. This explains
-why radical extension, rather than unmodified extension, is the inverse.
-
-The symmetric algebra's universal property sends degree-one generators into
-their direct sum, giving the basis-free grading and its functorial maps.
-In a homogeneous polynomial localization, total degree bounds prime multiplicity;
-order zero forces the remaining numerator to be a nonzero scalar, hence a unit.
-Additivity of denominator order then makes an order-one element irreducible.
-
-## References and artifact status
+## References and credit
 
 Ravi Vakil, *The Rising Sea: Foundations of Algebraic Geometry*, October 21, 2025
 draft, exercises around 4.5.F–H and 5.4.N motivate several constructions.
@@ -314,13 +261,6 @@ These are mathematical references; no source PDF, figures or substantial source
 prose is distributed. Detailed source correspondence and gaps are maintained
 outside this reusable library.
 
-Lean and mathlib supply the foundational APIs; original expression, authentic
-notices and distinct contributor/adaptation roles are summarized in
-[provenance](docs/PROVENANCE.md). This checkout contains the original project
-contributions and the subsequently accepted and officially published
-Veronese-related modules, including whole-ring residue projections and
-shifted external sums. Mathematical claims are limited by the hypotheses
-above: in particular, neither coherent-tail equivalence nor exponent blocks
-establish a Proj/scheme result or source-specific exercise completion.
-Revision-specific proof, rights, review and official-release decisions are
-recorded in the project's owning records, separately from source coverage.
+Lean and mathlib supply the foundational APIs. Authentic notices and distinct
+contributor/adaptation roles are summarized in
+[provenance and credits](docs/PROVENANCE.md).
