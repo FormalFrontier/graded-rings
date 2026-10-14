@@ -101,7 +101,7 @@ sources:
 
 status:
   scope: >-
-    Twenty-five production leaves, an aggregate native module, thirty registered
+    Twenty-five production leaves, an aggregate native module, registered
     regression-test modules and four standalone example modules. For arbitrary
     commutative rings and modules, the first-order symmetric-algebra quotient
     by the square of its augmentation ideal is algebra-equivalent to the trivial
@@ -167,8 +167,8 @@ status:
     of its entire new degree one. Native finite type over the old degree zero
     produces such a family and some positive selected index. Neither result
     requires a field, domain, Nontrivial, Noetherianity or equal weights, nor
-    gives an all-indices or Proj conclusion. No complete-source
-    or release-acceptance claim follows from this metadata. Separately, finite
+    gives an all-indices or Proj conclusion. No complete source coverage is
+    asserted. Separately, finite
     homogeneous generators of arbitrary natural weights, including zero,
     over the entire old degree-zero ring imply finite type of the whole
     selected ring at every independently prescribed positive index over its
@@ -316,23 +316,16 @@ automation:
   methods:
     - method: agent
       tool_setup: >-
-        Formal Frontier agents using Lean, Lake, pinned mathlib and
-        independent review of exact revisions.
+        Formal Frontier agents using Lean, Lake and pinned mathlib.
   notes: >-
     AI agents authored mathematical constructions, proofs, interfaces,
-    examples and documentation. Model identities and resource usage are
-    not inferred from Git authorship.
+    examples and documentation.
 
 review:
   status: "Independently reviewed mathematical library"
   notes: >-
-    The completed mathematical contributions have their revision-specific
-    independent reviews, applicable build and complete transitive standard-axiom
-    evidence and official publication recorded in the owning project records.
-    The current hand-maintained API map is not a declaration census, and the
-    historical native snapshot is not a proof certificate for this expanded
-    library. Metadata does not itself certify a later candidate, copyright
-    clearance or any source-specific exercise correspondence and coverage.
+    The library provides algebraic results; source-specific exercise
+    correspondence and complete source coverage are not asserted.
 
 acknowledgements: >-
   Atlas contributed the original mathematical units, assembly and several

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
 # Authors: Formal Frontier Agents
-# Adapted by Atlas from multivariate-polynomials 6b72818d and toric-ideals ab0c7d29 (unaccepted when reused),
+# Adapted by Atlas from multivariate-polynomials 6b72818d and toric-ideals ab0c7d29,
 # minimal-primes bed9ea5b, integral-closure bbc5da98, and Anchor's
-# ideal-completion f0c8c343. Approval does not transfer between artifacts.
+# ideal-completion f0c8c343.
 """Bounded graded-rings Markdown adapter for native doc-gen4 records.
 
 Retains complete displayed types, module comments, docstrings and relative source

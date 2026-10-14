@@ -1,7 +1,6 @@
 # Public API map
 
-This is a **hand-maintained map** of the current library, not a new native
-doc-gen4 run, a complete declaration listing or a proof certificate. Import
+This map highlights selected public interfaces of the current library. Import
 `GradedRings` for the entire public interface, or import an individual
 `GradedRings.<Leaf>` module. For exact mathematical hypotheses and practical
 clients, see the [mathematical overview](../README.md), the
@@ -22,11 +21,10 @@ the [homogeneous-lifts guide](HomogeneousLifts.md), the
 [finite-Veronese generation guide](FiniteVeronese.md), and the
 [documentation notes](README.md).
 
-The [initial native snapshot](API-initial-snapshot.md) displays 104 declarations
-from the original nine production leaves and the then-current 28-module
-checkout. Its [unchanged manifest](api-manifest.json) authenticates **that
-archived file**, not this map or the expanded library; historical source-line
-links are accurate in the original revision, not necessarily here.
+The [initial API snapshot](API-initial-snapshot.md) covers 104 declarations
+from nine production modules in an earlier library version. Its displayed types,
+docstrings and source-line links describe that version; use the module map below
+and the subject guides for the current interfaces.
 
 ## Production modules
 
@@ -260,7 +258,7 @@ the [aggregate witness](../test/RootClient.lean) checks the generic export.
 ## Aggregate, clients and examples
 
 [`GradedRings`](../GradedRings.lean) publicly imports all twenty-five production leaves.
-The default test target registers thirty regression-test modules, including
+The default test target registers regression-test modules, including
 the [first-order symmetric-algebra client](../test/GradedRingsTests/SymmetricAlgebraSquareZero.lean),
 the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 [direct homogeneous-lifts client](../test/HomogeneousLifts.lean), the
@@ -279,9 +277,7 @@ the [direct map client](../test/HomogeneousLocalizationMap.lean) and
 [zero-index selected-ring client](../test/VeroneseZero.lean), and the
 [aggregate-import witness](../test/RootClient.lean). Four standalone
 [examples](../examples/) remain registered. These clients and examples
-are not extra advertised public interfaces. For old native displayed types
-and docstrings, consult the separately labeled initial snapshot; its 104
-names are not a count of the current public API.
+are not extra advertised public interfaces.
 
 ## Proof ideas
 

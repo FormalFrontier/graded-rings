@@ -190,7 +190,7 @@ lake --wfail build
 ```
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
-build includes the aggregate library, all thirty regression-test modules and
+build includes the aggregate library, all regression-test modules and
 the four stored examples. Named targets are also available:
 
 ```sh
@@ -198,7 +198,7 @@ lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
 lake --wfail build QuotientLocalization FinitenessAndPrimes Symmetric Multiplicity
 ```
 
-All 60 shipped Lean modules use Lean's module system. Ordinary-import
+All shipped Lean modules use Lean's module system. Ordinary-import
 `GradedRings` for the full API, or a `GradedRings.<Leaf>` module from the
 [API map](docs/API.md#production-modules). Public imports re-export the intended
 interfaces; clients need neither `import all` nor private names. The selected-ring
@@ -210,8 +210,7 @@ constructions with their original constructions by Lean-private ordinary-import
 `rfl` equalities. This checks computation as well as availability of theorem
 names. Ordinary builds check proofs; named axiom prints in tests/examples
 complement, but do not replace, the complete transitive standard-axiom audit
-including private and generated declarations. No separate stored-proof replay
-is required.
+including private and generated declarations.
 
 ### Build resources
 

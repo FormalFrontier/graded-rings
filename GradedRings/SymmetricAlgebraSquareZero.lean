@@ -84,6 +84,41 @@ theorem ι_mem_augmentationIdeal (m : M) :
     ι R M m ∈ augmentationIdeal (R := R) (M := M) := by
   exact (mem_augmentationIdeal_iff (R := R) (M := M) _).2 (algebraMapInv_ι m)
 
+/-- Evaluation at zero descended to the first-order symmetric-algebra quotient. -/
+noncomputable def squareZeroQuotientAugmentation :
+    (SymmetricAlgebra R M ⧸ (augmentationIdeal (R := R) (M := M)) ^ 2) →ₐ[R] R :=
+  Ideal.Quotient.liftₐ _ (algebraMapInv (R := R) (M := M)) fun x hx =>
+    (mem_augmentationIdeal_iff (R := R) (M := M) x).mp
+      ((Ideal.pow_le_self (I := augmentationIdeal (R := R) (M := M))
+        (by decide : (2 : ℕ) ≠ 0)) hx)
+
+/-- The quotient augmentation factors evaluation at zero through the quotient map. -/
+theorem squareZeroQuotientAugmentation_comp_mkₐ :
+    (squareZeroQuotientAugmentation (R := R) (M := M)).comp
+      (Ideal.Quotient.mkₐ R _) = algebraMapInv (R := R) (M := M) :=
+  Ideal.Quotient.liftₐ_comp _ _ _
+
+/-- The quotient augmentation evaluates a representative at zero. -/
+@[simp] theorem squareZeroQuotientAugmentation_mk (x : SymmetricAlgebra R M) :
+    squareZeroQuotientAugmentation (R := R) (M := M) (Ideal.Quotient.mk _ x) =
+      algebraMapInv (R := R) (M := M) x := by
+  unfold squareZeroQuotientAugmentation
+  rw [Ideal.Quotient.liftₐ_apply]
+  exact Ideal.Quotient.lift_mk _ _ _
+
+/-- The quotient augmentation vanishes on degree-one generators. -/
+@[simp] theorem squareZeroQuotientAugmentation_mk_ι (m : M) :
+    squareZeroQuotientAugmentation (R := R) (M := M)
+      (Ideal.Quotient.mk _ (ι R M m)) = 0 := by
+  rw [squareZeroQuotientAugmentation_mk, algebraMapInv_ι]
+
+/-- The quotient augmentation fixes scalar classes. -/
+@[simp] theorem squareZeroQuotientAugmentation_mk_algebraMap (r : R) :
+    squareZeroQuotientAugmentation (R := R) (M := M)
+      (Ideal.Quotient.mk _ (algebraMap R (SymmetricAlgebra R M) r)) = r := by
+  rw [squareZeroQuotientAugmentation_mk]
+  exact (algebraMapInv (R := R) (M := M)).commutes r
+
 /-- The first-order symmetric-algebra quotient as a trivial square-zero extension,
 for arbitrary modules over an arbitrary commutative ring. -/
 noncomputable def squareZeroQuotientEquiv :
@@ -198,6 +233,20 @@ noncomputable def squareZeroQuotientEquiv :
     ext m
     simp [algebraMapInv_ι]
   exact congrArg (fun f : SymmetricAlgebra R M →ₐ[R] R => f x) compatible
+
+/-- Projection after the quotient equivalence is the independently descended augmentation. -/
+theorem fstHom_comp_squareZeroQuotientEquiv :
+    (TrivSqZeroExt.fstHom R R M).comp
+      (squareZeroQuotientEquiv (R := R) (M := M)).toAlgHom =
+        squareZeroQuotientAugmentation (R := R) (M := M) := by
+  apply Ideal.Quotient.algHom_ext
+  apply AlgHom.ext
+  intro x
+  change TrivSqZeroExt.fstHom R R M
+    (squareZeroQuotientEquiv (R := R) (M := M) (Ideal.Quotient.mk _ x)) =
+      squareZeroQuotientAugmentation (R := R) (M := M) (Ideal.Quotient.mk _ x)
+  rw [squareZeroQuotientAugmentation_mk]
+  exact squareZeroQuotientEquiv_fst x
 
 /-- The image of the quotient's cotangent ideal is the square-zero extension's
 projection kernel; neither of these ideals is the original augmentation ideal. -/
