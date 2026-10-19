@@ -101,7 +101,7 @@ sources:
 
 status:
   scope: >-
-    Twenty-five production leaves, an aggregate native module, registered
+    Production leaves, an aggregate native module, registered
     regression-test modules and four standalone example modules. For arbitrary
     commutative rings and modules, the first-order symmetric-algebra quotient
     by the square of its augmentation ideal is algebra-equivalent to the trivial
