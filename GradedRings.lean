@@ -8,6 +8,7 @@ public import GradedRings.CoherentTailVeronese
 public import GradedRings.FiniteType
 public import GradedRings.HomogeneousLifts
 public import GradedRings.HomogeneousLocalizationMap
+public import GradedRings.HomogeneousLocalizationReduced
 public import GradedRings.HomogeneousPrime
 public import GradedRings.HomogeneousPrimeMultiplicity
 public import GradedRings.Localization
