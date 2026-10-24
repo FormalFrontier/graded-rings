@@ -107,13 +107,13 @@ theorem squareZeroQuotientAugmentation_comp_mkₐ :
   exact Ideal.Quotient.lift_mk _ _ _
 
 /-- The quotient augmentation vanishes on degree-one generators. -/
-@[simp] theorem squareZeroQuotientAugmentation_mk_ι (m : M) :
+theorem squareZeroQuotientAugmentation_mk_ι (m : M) :
     squareZeroQuotientAugmentation (R := R) (M := M)
       (Ideal.Quotient.mk _ (ι R M m)) = 0 := by
   rw [squareZeroQuotientAugmentation_mk, algebraMapInv_ι]
 
 /-- The quotient augmentation fixes scalar classes. -/
-@[simp] theorem squareZeroQuotientAugmentation_mk_algebraMap (r : R) :
+theorem squareZeroQuotientAugmentation_mk_algebraMap (r : R) :
     squareZeroQuotientAugmentation (R := R) (M := M)
       (Ideal.Quotient.mk _ (algebraMap R (SymmetricAlgebra R M) r)) = r := by
   rw [squareZeroQuotientAugmentation_mk]
@@ -198,7 +198,7 @@ noncomputable def squareZeroQuotientEquiv :
   simp
 
 /-- The quotient equivalence preserves the scalar summand. -/
-@[simp] theorem squareZeroQuotientEquiv_mk_algebraMap (r : R) :
+theorem squareZeroQuotientEquiv_mk_algebraMap (r : R) :
     squareZeroQuotientEquiv (R := R) (M := M)
       (Ideal.Quotient.mk _ (algebraMap R (SymmetricAlgebra R M) r)) =
         TrivSqZeroExt.inl r := by
@@ -221,7 +221,7 @@ noncomputable def squareZeroQuotientEquiv :
   simp
 
 /-- Projection after the quotient equivalence is evaluation at zero. -/
-@[simp] theorem squareZeroQuotientEquiv_fst (x : SymmetricAlgebra R M) :
+theorem squareZeroQuotientEquiv_fst (x : SymmetricAlgebra R M) :
     TrivSqZeroExt.fstHom R R M
       (squareZeroQuotientEquiv (R := R) (M := M) (Ideal.Quotient.mk _ x)) =
         algebraMapInv (R := R) (M := M) x := by
@@ -247,6 +247,13 @@ theorem fstHom_comp_squareZeroQuotientEquiv :
       squareZeroQuotientAugmentation (R := R) (M := M) (Ideal.Quotient.mk _ x)
   rw [squareZeroQuotientAugmentation_mk]
   exact squareZeroQuotientEquiv_fst x
+
+/-- The scalar coordinate of the quotient equivalence is the quotient augmentation. -/
+@[simp] theorem squareZeroQuotientEquiv_apply_fst
+    (q : SymmetricAlgebra R M ⧸ (augmentationIdeal (R := R) (M := M)) ^ 2) :
+    (squareZeroQuotientEquiv (R := R) (M := M) q).fst =
+      squareZeroQuotientAugmentation (R := R) (M := M) q :=
+  DFunLike.congr_fun (fstHom_comp_squareZeroQuotientEquiv (R := R) (M := M)) q
 
 /-- The image of the quotient's cotangent ideal is the square-zero extension's
 projection kernel; neither of these ideals is the original augmentation ideal. -/

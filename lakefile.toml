@@ -1,5 +1,6 @@
 name = "graded-rings"
 version = "0.1.0"
+lintDriver = "batteries/runLinter"
 defaultTargets = ["GradedRings", "GradedRingsTests", "GradedRingsExamples"]
 
 [leanOptions]
@@ -25,6 +26,9 @@ name = "GradedRings"
 name = "GradedRingsTests"
 srcDir = "test"
 roots = ["Axioms", "FiniteType", "HomogeneousLifts", "HomogeneousLocalizationMap", "HomogeneousPrime", "InterfaceClient", "Localization", "LocalizationInterface", "LocalizationRootInterface", "Noetherian", "PrimeInterface", "PrimeRootInterface", "Quotient", "QuotientInterface", "QuotientRootInterface", "RootClient", "Veronese", "VeroneseDegreeOne", "CoherentTailVeronese", "WeightedBlocks", "WeightedEvaluation", "WeightedBlockAdjoin", "FiniteVeronese", "WeightedVeroneseGenerators", "GradedRingsTests.SymmetricAlgebraSquareZero", "VeroneseFiniteType", "VeroneseFinite", "VeroneseResidue", "VeroneseResidueModule", "VeroneseZero", "GradedRingsTests.SymmetricAlgebraSquareZeroAugmentation", "GradedRingsTests.SymmetricAlgebraSquareZeroSpec", "GradedRingsTests.SymmetricAlgebraModules", "GradedRingsTests.HomogeneousLocalizationReduced"]
+
+[lean_lib.leanOptions]
+weak.linter.privateModule = false
 
 [[lean_lib]]
 name = "GradedRingsExamples"

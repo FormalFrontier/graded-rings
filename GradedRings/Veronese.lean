@@ -75,12 +75,14 @@ theorem exists_component (n j : ℕ) (a : 𝒮 (n * j)) :
   refine ⟨DirectSum.of (fun k : ℕ => 𝒮 (n * k)) j a, ?_, inclusion_of 𝒮 n j a⟩
   exact (mem_component_iff 𝒮 n j _).mpr ⟨a, rfl⟩
 
+/-- The additive map from `𝒮 (n * j)` to the `j`th internal Veronese component. -/
 def toComponent (n j : ℕ) : 𝒮 (n * j) →+ component 𝒮 n j where
   toFun a := ⟨DirectSum.of (fun k : ℕ => 𝒮 (n * k)) j a,
     (mem_component_iff 𝒮 n j _).mpr ⟨a, rfl⟩⟩
   map_zero' := Subtype.ext (map_zero (DirectSum.of (fun k : ℕ => 𝒮 (n * k)) j))
   map_add' a b := Subtype.ext (map_add (DirectSum.of (fun k : ℕ => 𝒮 (n * k)) j) a b)
 
+/-- The additive map decomposing a Veronese element into its internal homogeneous components. -/
 def toComponents (n : ℕ) :
     VeroneseRing 𝒮 n →+ ⨁ (j : ℕ), component 𝒮 n j :=
   DirectSum.map (toComponent 𝒮 n)
@@ -143,6 +145,8 @@ instance instGradedRing (n : ℕ) : GradedRing (component 𝒮 n) where
   left_inv := toComponents_left 𝒮 n
   right_inv := toComponents_right 𝒮 n
 
+/-- The additive map sending the `j`th Veronese summand to degree `n * j` in the original grading.
+-/
 def reindex (n : ℕ) : VeroneseRing 𝒮 n →+ ⨁ (i : ℕ), 𝒮 i :=
   DirectSum.toAddMonoid fun j => DirectSum.of (fun i : ℕ => 𝒮 i) (n * j)
 

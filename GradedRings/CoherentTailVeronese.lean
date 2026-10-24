@@ -34,7 +34,9 @@ The products are the products of the original graded rings. -/
 structure TailEquiv (𝒜 : ℕ → σ) (ℬ : ℕ → τ) (N : ℕ)
     [GradedRing 𝒜] [GradedRing ℬ] where
   positive : 0 < N
+  /-- The ring equivalence between the degree-zero components. -/
   zero : 𝒜 0 ≃+* ℬ 0
+  /-- The additive equivalences between components in each degree at least `N`. -/
   high : ∀ d, N ≤ d → 𝒜 d ≃+ ℬ d
   coeff : ∀ d (hd : N ≤ d) (a : 𝒜 0) (x : 𝒜 d),
     ((high d hd ⟨(a : R) * x, by
@@ -57,6 +59,8 @@ def pieceEquiv : (j : ℕ) → 𝒜 (n * j) ≃+ ℬ (n * j)
   | 0 => E.zero.toAddEquiv
   | j + 1 => E.high _ (by rw [mul_add, mul_one]; omega)
 
+/-- The additive map from `𝒜 (n * j)` to the `j`th summand of the target Veronese ring,
+induced by the component equivalence. -/
 def pieceHom (j : ℕ) : 𝒜 (n * j) →+ VeroneseRing ℬ n :=
   (DirectSum.of (fun k : ℕ => ℬ (n * k)) j).comp (E.pieceEquiv n hNn j).toAddMonoidHom
 
@@ -171,6 +175,8 @@ theorem piece_mul_symm (i j : ℕ) (x : ℬ (n * i)) (y : ℬ (n * j)) :
     (E.piece_mul n hNn i j ((E.pieceEquiv n hNn i).symm x)
       ((E.pieceEquiv n hNn j).symm y)).symm
 
+/-- The additive map from `ℬ (n * j)` to the `j`th summand of the source Veronese ring,
+induced by the inverse component equivalence. -/
 def pieceHomSymm (j : ℕ) : ℬ (n * j) →+ VeroneseRing 𝒜 n :=
   (DirectSum.of (fun k : ℕ => 𝒜 (n * k)) j).comp
     (E.pieceEquiv n hNn j).symm.toAddMonoidHom
