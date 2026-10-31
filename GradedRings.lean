@@ -17,6 +17,7 @@ public import GradedRings.Noetherian
 public import GradedRings.PrimeMultiplicity
 public import GradedRings.Quotient
 public import GradedRings.ReesAlgebra
+public import GradedRings.ReesModule
 public import GradedRings.SymmetricAlgebra
 public import GradedRings.SymmetricAlgebraSquareZero
 public import GradedRings.Veronese

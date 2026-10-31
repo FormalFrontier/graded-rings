@@ -41,6 +41,13 @@ chosen coefficient ring.
   For an **integer**-graded commutative ring with a positive-degree homogeneous
   unit, [homogeneous primes](GradedRings/HomogeneousPrime.lean) correspond to
   degree-zero primes by contraction and **radical** extension.
+- **Associated graded modules from the first quotient.** For any ideal `I` in a
+  commutative ring `R` and any `R`-module `M`, with independent universes,
+  [the Rees-quotient associated graded module](GradedRings/ReesModule.lean) `G`
+  is finite over `C = B / IB`, where `B = reesAlgebra I`, whenever
+  `Q = M / IM` is finite over `R / I`. The canonical map `C ⊗[R/I] Q → G` is
+  surjective, **not generally an isomorphism**. No finiteness of the original
+  `M`, Noetherianity of `R`, or finite generation of `I` is required.
 - **Symmetric algebras and first order.** [Basis-free grading and graded maps](GradedRings/SymmetricAlgebra.lean)
   are functorial for arbitrary modules over a commutative **semiring**; only
   polynomial coordinates need a basis. Over a commutative **ring**, for any
