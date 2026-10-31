@@ -46,8 +46,13 @@ chosen coefficient ring.
   [the Rees-quotient associated graded module](GradedRings/ReesModule.lean) `G`
   is finite over `C = B / IB`, where `B = reesAlgebra I`, whenever
   `Q = M / IM` is finite over `R / I`. The canonical map `C ⊗[R/I] Q → G` is
-  surjective, **not generally an isomorphism**. No finiteness of the original
-  `M`, Noetherianity of `R`, or finite generation of `I` is required.
+  surjective, **not generally an isomorphism**. More generally, for a subideal
+  `K ≤ I` with `IⁿM = KⁿM + Iⁿ⁺¹M` for **every** natural `n`, the canonical
+  `reesAlgebra K ⊗[R] Q → G` is surjective without a finiteness hypothesis,
+  and `Q` finite over `R / I` makes `G` finite over `reesAlgebra K`, with **no
+  finite-generation assumption on K**. If `Q` is Noetherian over `R` and `K` is finitely
+  generated, then `G` is Noetherian over `C`. None of these results requires
+  finiteness of the original `M`, Noetherianity of `R`, or finite generation of `I`.
 - **Symmetric algebras and first order.** [Basis-free grading and graded maps](GradedRings/SymmetricAlgebra.lean)
   are functorial for arbitrary modules over a commutative **semiring**; only
   polynomial coordinates need a basis. Over a commutative **ring**, for any
@@ -144,7 +149,7 @@ provide focused explanations and clients.
 Install the exact toolchain in `lean-toolchain`: Lean `v4.34.0-rc2`.
 The direct dependencies are mathlib at
 `83abb3e776bdefcbc447a1e44d0debe4010039e5` and the released
-`coherent-modules` at `408a52bd54df17ccc928ce970942f1313ff10d5c`;
+`coherent-modules` at `1dfe73a0d8d506a7871d5393e274582d36161265`;
 `lake-manifest.json` freezes all ten resolved Git dependencies. From a checkout, obtain matching compiled
 mathlib artifacts **before** building:
 

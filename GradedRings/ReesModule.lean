@@ -4,6 +4,8 @@ Authors: Formal Frontier Agents
 -/
 module
 
+public import GradedRings.ReesAlgebra
+public import CoherentModules.LinearAlgebra.TensorProduct.Noetherian
 public import Mathlib.RingTheory.Filtration
 public import Mathlib.RingTheory.Ideal.Over
 public import Mathlib.RingTheory.Ideal.Maps
@@ -18,14 +20,20 @@ public import Mathlib.RingTheory.TensorProduct.Finite
 # Associated graded modules of ideal-adic filtrations
 
 The Rees module modulo the extended ideal carries a canonical surjection from the
-scalar extension of the first quotient of the module. Consequently, finiteness of
-the first quotient implies finiteness of this associated graded module.
+scalar extension of the first quotient of the module. More generally, for a subideal
+`K ≤ I` satisfying `IⁿM = KⁿM + Iⁿ⁺¹M` in every degree, scalar extension over `R` to
+`reesAlgebra K` surjects onto the same associated graded module. Finiteness of the
+first quotient implies finiteness over this smaller Rees algebra, without finite
+generation of `K`. If the first quotient is Noetherian over `R` and `K` is finitely
+generated, the associated graded module is Noetherian over the quotient Rees algebra.
 
 ## References
 
 For background, see K. Fujiwara and F. Kato, *Foundations of Rigid Geometry I*,
 [arXiv:1308.4734v5](https://arxiv.org/abs/1308.4734v5). The precise formulation
-of the first-quotient finiteness criterion in this file is proved here.
+of the first-quotient finiteness criterion and its relative version in this file
+is proved here. The Noetherian corollary uses essentially finite-type scalar extension
+from [Coherent Modules](https://github.com/FormalFrontier/coherent-modules/blob/1dfe73a0d8d506a7871d5393e274582d36161265/CoherentModules/LinearAlgebra/TensorProduct/Noetherian.lean).
 -/
 
 @[expose] public section
@@ -231,6 +239,56 @@ instance scalarTowerReesQuotient : IsScalarTower B C G :=
 instance scalarTowerCoefficients : IsScalarTower R C G :=
   (Module.isTorsionBySet_quotient_ideal_smul N J).isScalarTower (S := R)
 
+section RelativeAction
+
+variable (K : Ideal R) (hKI : K ≤ I)
+
+/-- The action of a subideal Rees algebra, through the quotient Rees algebra. -/
+@[reducible]
+noncomputable def moduleReesOfLE : Module (reesAlgebra K) G :=
+  Module.compHom G (reesAlgebra.quotientMapOfLE I K hKI).toRingHom
+
+/-- Subideal Rees scalars act through their canonical quotient images. -/
+theorem moduleReesOfLE_smul (a : reesAlgebra K) (g : G) :
+    @SMul.smul (reesAlgebra K) G (moduleReesOfLE I M K hKI).toSMul a g =
+      reesAlgebra.quotientMapOfLE I K hKI a • g := rfl
+
+/-- Subideal Rees scalars act on representatives by inclusion into the Rees algebra. -/
+theorem moduleReesOfLE_smul_mk (a : reesAlgebra K) (p : N) :
+    @SMul.smul (reesAlgebra K) G (moduleReesOfLE I M K hKI).toSMul a (mk I M p) =
+      mk I M ((Subalgebra.inclusion (S := reesAlgebra K) (T := B)
+        (fun _ hp n => pow_le_pow_left' hKI n (hp n)) a) • p) := by
+  rw [moduleReesOfLE_smul, reesAlgebra.quotientMapOfLE_apply, quotient_smul_mk]
+
+/-- Compatibility of the coefficient and subideal Rees actions. -/
+theorem scalarTowerReesOfLE :
+    @IsScalarTower R (reesAlgebra K) G _ (moduleReesOfLE I M K hKI).toSMul _ := by
+  let : Module (reesAlgebra K) G := moduleReesOfLE I M K hKI
+  refine ⟨fun r a g => ?_⟩
+  change reesAlgebra.quotientMapOfLE I K hKI (r • a) • g =
+    r • (reesAlgebra.quotientMapOfLE I K hKI a • g)
+  rw [map_smul, smul_assoc]
+
+/-- Compatibility of the subideal Rees and quotient Rees actions. -/
+theorem scalarTowerReesQuotientOfLE :
+    @IsScalarTower (reesAlgebra K) C G
+      (reesAlgebra.quotientMapOfLE I K hKI).toRingHom.toModule.toSMul
+      _ (moduleReesOfLE I M K hKI).toSMul := by
+  let : Module (reesAlgebra K) C := (reesAlgebra.quotientMapOfLE I K hKI).toRingHom.toModule
+  let : Module (reesAlgebra K) G := moduleReesOfLE I M K hKI
+  refine ⟨fun a c g => ?_⟩
+  change ((reesAlgebra.quotientMapOfLE I K hKI a) * c) • g =
+    reesAlgebra.quotientMapOfLE I K hKI a • (c • g)
+  exact mul_smul _ _ _
+
+end RelativeAction
+
+/-- Restriction through the quotient recovers the original Rees action for the same ideal. -/
+theorem moduleReesOfLE_refl_smul (a : B) (g : G) :
+    @SMul.smul B G (moduleReesOfLE I M I le_rfl).toSMul a g = a • g := by
+  rw [moduleReesOfLE_smul, reesAlgebra.quotientMapOfLE_refl]
+  exact IsScalarTower.algebraMap_smul C a g
+
 @[reducible]
 noncomputable instance moduleQuotient : Module A G :=
   Module.compHom G (algebraMap A C)
@@ -415,76 +473,6 @@ theorem characteristic_unique (f : C ⊗[A] Q →ₗ[C] G)
     f (c ⊗ₜ[A] q) = c • f ((1 : C) ⊗ₜ[A] q) := by rw [ht, f.map_smul]
     _ = c • degreeZero I M q := by rw [h]
     _ = characteristic I M (c ⊗ₜ[A] q) := (characteristic_tmul I M c q).symm
-
-private theorem span_constants : Submodule.span B (Set.range (constant I M)) = ⊤ := by
-  have hgen : N = Submodule.span B
-      (PolynomialModule.single R 0 '' (Set.univ : Set M)) := by
-    have h := ((I.stableFiltration (⊤ : Submodule R M)).submodule_eq_span_le_iff_stable_ge 0).2
-      (fun n _ => by
-        simp only [Ideal.stableFiltration_N]
-        rw [← mul_smul, pow_succ'])
-    simpa using h
-  have himage : (Submodule.subtype N) '' Set.range (constant I M) =
-      PolynomialModule.single R 0 '' (Set.univ : Set M) := by
-    ext f
-    constructor
-    · rintro ⟨n, ⟨m, rfl⟩, rfl⟩
-      exact ⟨m, Set.mem_univ _, rfl⟩
-    · rintro ⟨m, _, rfl⟩
-      exact ⟨constant I M m, ⟨m, rfl⟩, rfl⟩
-  have hmap : (Submodule.span B (Set.range (constant I M))).map (Submodule.subtype N) = N := by
-    rw [Submodule.map_span, himage, ← hgen]
-  apply top_unique
-  intro n _
-  have hn : (n : PolynomialModule R M) ∈
-      (Submodule.span B (Set.range (constant I M))).map (Submodule.subtype N) := by
-    rw [hmap]
-    exact n.property
-  rcases Submodule.mem_map.mp hn with ⟨n', hn', he⟩
-  have : n' = n := Subtype.ext he
-  simpa only [this] using hn'
-
-/-- Every associated graded class is a sum of scalar multiples of constant classes. -/
-theorem characteristic_surjective : Function.Surjective (characteristic I M) := by
-  intro g
-  induction g using Submodule.Quotient.induction_on with
-  | H n =>
-    have hn : n ∈ Submodule.span B (Set.range (constant I M)) := by
-      rw [span_constants]
-      exact Submodule.mem_top
-    induction hn using Submodule.span_induction with
-    | mem n hn =>
-      rcases hn with ⟨m, rfl⟩
-      refine ⟨(1 : C) ⊗ₜ[A] Submodule.Quotient.mk m, ?_⟩
-      calc
-        characteristic I M ((1 : C) ⊗ₜ[A] Submodule.Quotient.mk m) =
-            (1 : C) • degreeZero I M (Submodule.Quotient.mk m) :=
-          characteristic_tmul I M 1 (Submodule.Quotient.mk m)
-        _ = degreeZero I M (Submodule.Quotient.mk m) := _root_.one_smul C _
-        _ = mk I M (constant I M m) := degreeZero_mk I M m
-    | zero =>
-      exact ⟨0, by
-        rw [map_zero]
-        exact (mk I M).map_zero.symm⟩
-    | add n n' _ _ hn hn' =>
-      rcases hn with ⟨t, ht⟩
-      rcases hn' with ⟨t', ht'⟩
-      exact ⟨t + t', by
-        rw [map_add, ht, ht']
-        exact ((mk I M).map_add n n').symm⟩
-    | smul b n _ hn =>
-      rcases hn with ⟨t, ht⟩
-      exact ⟨Ideal.Quotient.mk J b • t, by
-        rw [map_smul, ht]
-        exact quotient_smul_mk I M b n⟩
-
-/-- Finiteness of the first quotient implies finiteness of the associated graded module.
-
-For background, see K. Fujiwara and F. Kato, *Foundations of Rigid Geometry I*,
-[arXiv:1308.4734v5](https://arxiv.org/abs/1308.4734v5). The precise formulation
-of this first-quotient criterion is proved here. -/
-theorem finite_of_finite_quotient [Module.Finite A Q] : Module.Finite C G :=
-  Module.Finite.of_surjective (characteristic I M) (characteristic_surjective I M)
 
 /-- The extended ideal multiple consists exactly of polynomials whose coefficients lie
 in the next ideal powers. -/
@@ -950,6 +938,169 @@ theorem coefficient_characteristic_monomial (n : ℕ) (a : R) (ha : a ∈ I ^ n)
   change Submodule.Quotient.mk
     ((Polynomial.monomial n a • PolynomialModule.single R 0 m).coeff n) = _
   simp
+
+private theorem span_degreeZero_of_pow_smul_sup (K : Ideal R) (hKI : K ≤ I)
+    (hcover : ∀ n : ℕ, I ^ n • (⊤ : Submodule R M) =
+      K ^ n • (⊤ : Submodule R M) ⊔ I ^ (n + 1) • (⊤ : Submodule R M)) :
+    @Submodule.span (reesAlgebra K) G _ _ (moduleReesOfLE I M K hKI)
+      (Set.range (degreeZero I M)) = ⊤ := by
+  classical
+  let : Module (reesAlgebra K) G := moduleReesOfLE I M K hKI
+  let S : Submodule (reesAlgebra K) G :=
+    Submodule.span (reesAlgebra K) (Set.range (degreeZero I M))
+  let σ (n : ℕ) (m : M) (hm : m ∈ I ^ n • (⊤ : Submodule R M)) : N :=
+    ⟨PolynomialModule.single R n m, single_mem I M n m hm⟩
+  have hKI' (n : ℕ) :
+      K ^ n • (⊤ : Submodule R M) ≤ I ^ n • (⊤ : Submodule R M) :=
+    Submodule.smul_mono_left (pow_le_pow_left' hKI n)
+  have hnext (n : ℕ) :
+      I ^ (n + 1) • (⊤ : Submodule R M) ≤ I ^ n • (⊤ : Submodule R M) :=
+    Submodule.smul_mono_left (Ideal.pow_le_pow_right n.le_succ)
+  have hσadd (n : ℕ) (x y : M)
+      (hx : x ∈ I ^ n • (⊤ : Submodule R M))
+      (hy : y ∈ I ^ n • (⊤ : Submodule R M)) :
+      σ n (x + y) (Submodule.add_mem _ hx hy) = σ n x hx + σ n y hy := by
+    apply Subtype.ext
+    exact PolynomialModule.single_add _ _ _
+  -- A K^n multiple is generated by the degree-n monomials of Rees(K).
+  have hKsingle (n : ℕ) (m : M) (hm : m ∈ K ^ n • (⊤ : Submodule R M)) :
+      mk I M (σ n m (hKI' n hm)) ∈ S := by
+    refine Submodule.smul_induction_on' hm (fun a ha m _ => ?_)
+      (fun x hx y hy ihx ihy => ?_)
+    · let aK : reesAlgebra K :=
+        ⟨Polynomial.monomial n a, reesAlgebra.monomial_mem.mpr ha⟩
+      have he : aK • degreeZero I M (Submodule.Quotient.mk m) =
+          mk I M (σ n (a • m)
+            (hKI' n (Submodule.smul_mem_smul ha (Submodule.mem_top)))) := by
+        rw [degreeZero_mk]
+        change aK • mk I M (constant I M m) = _
+        refine (moduleReesOfLE_smul_mk I M K hKI aK (constant I M m)).trans ?_
+        apply congrArg (mk I M)
+        apply Subtype.ext
+        change Polynomial.monomial n a • PolynomialModule.single R 0 m =
+          PolynomialModule.single R n (a • m)
+        simpa only [add_zero] using PolynomialModule.monomial_smul_single n a 0 m
+      rw [← he]
+      exact S.smul_mem aK (Submodule.subset_span ⟨Submodule.Quotient.mk m, rfl⟩)
+    · rw [hσadd n x y (hKI' n hx) (hKI' n hy), map_add]
+      exact S.add_mem ihx ihy
+  -- The other summand in the cover is killed only after passing to G.
+  have hsingle (n : ℕ) (m : M) (hm : m ∈ I ^ n • (⊤ : Submodule R M)) :
+      mk I M (σ n m hm) ∈ S := by
+    have hmem : m ∈ K ^ n • (⊤ : Submodule R M) ⊔
+        I ^ (n + 1) • (⊤ : Submodule R M) := by
+      rwa [← hcover n]
+    rcases Submodule.mem_sup.mp hmem with ⟨x, hx, y, hy, hxy⟩
+    have he : σ n m hm = σ n x (hKI' n hx) + σ n y (hnext n hy) := by
+      apply Subtype.ext
+      change PolynomialModule.single R n m =
+        PolynomialModule.single R n x + PolynomialModule.single R n y
+      rw [← PolynomialModule.single_add, hxy]
+    have hz : mk I M (σ n y (hnext n hy)) = 0 := by
+      change (Submodule.Quotient.mk (σ n y (hnext n hy)) : G) = 0
+      exact (Submodule.Quotient.mk_eq_zero _).mpr
+        ((single_mem_ideal_smul_iff I M n y (hnext n hy)).mpr hy)
+    rw [he, map_add, hz, add_zero]
+    exact hKsingle n x hx
+  -- Decompose a polynomial representative over its finite coefficient support.
+  apply top_unique
+  intro g _
+  induction g using Submodule.Quotient.induction_on with
+  | H p =>
+    change mk I M p ∈ S
+    have hp : p = ∑ n ∈ (p : PolynomialModule R M).coeff.support,
+        σ n ((p : PolynomialModule R M).coeff n) (p.property n) := by
+      apply Subtype.ext
+      rw [Submodule.coe_sum]
+      change (p : PolynomialModule R M) =
+        ∑ n ∈ (p : PolynomialModule R M).coeff.support,
+          PolynomialModule.single R n ((p : PolynomialModule R M).coeff n)
+      calc
+        (p : PolynomialModule R M) = PolynomialModule.ofCoeff R
+            ((p : PolynomialModule R M).coeff.sum Finsupp.single) := by
+          rw [Finsupp.sum_single, PolynomialModule.ofCoeff_coeff]
+        _ = _ := PolynomialModule.ofCoeff_finsuppSum _ _
+    rw [hp, map_sum]
+    exact S.sum_mem (fun n _ => hsingle n _ (p.property n))
+
+/-- Under all-degree covers by a subideal, scalar extension of the first quotient
+surjects onto the associated graded module. No finiteness of either ideal or quotient
+is required. -/
+theorem liftBaseChange_surjective_of_pow_smul_sup (K : Ideal R) (hKI : K ≤ I)
+    (hcover : ∀ n : ℕ, I ^ n • (⊤ : Submodule R M) =
+      K ^ n • (⊤ : Submodule R M) ⊔ I ^ (n + 1) • (⊤ : Submodule R M)) :
+    Function.Surjective
+      (@LinearMap.liftBaseChange R Q G (reesAlgebra K) _ _ _ _ _ _ _
+        (moduleReesOfLE I M K hKI) (scalarTowerReesOfLE I M K hKI)
+        ((degreeZero I M).restrictScalars R)) := by
+  let : Module (reesAlgebra K) G := moduleReesOfLE I M K hKI
+  let : IsScalarTower R (reesAlgebra K) G := scalarTowerReesOfLE I M K hKI
+  apply LinearMap.range_eq_top.mp
+  rw [LinearMap.range_liftBaseChange, LinearMap.coe_range]
+  exact span_degreeZero_of_pow_smul_sup I M K hKI hcover
+
+/-- Under all-degree covers by a subideal, finiteness of the first quotient over
+`R ⧸ I` implies finiteness of the associated graded module over the subideal Rees algebra.
+The subideal need not be finitely generated. -/
+theorem finite_rees_of_finite_quotient (K : Ideal R) (hKI : K ≤ I)
+    (hcover : ∀ n : ℕ, I ^ n • (⊤ : Submodule R M) =
+      K ^ n • (⊤ : Submodule R M) ⊔ I ^ (n + 1) • (⊤ : Submodule R M))
+    [Module.Finite A Q] :
+    @Module.Finite (reesAlgebra K) G _ _ (moduleReesOfLE I M K hKI) := by
+  let : Module (reesAlgebra K) G := moduleReesOfLE I M K hKI
+  let : IsScalarTower R (reesAlgebra K) G := scalarTowerReesOfLE I M K hKI
+  let : IsScalarTower R A Q :=
+    (Module.isTorsionBySet_quotient_ideal_smul M I).isScalarTower (S := R)
+  have : Module.Finite R Q := Module.Finite.trans A Q
+  exact Module.Finite.of_surjective
+    (LinearMap.liftBaseChange (reesAlgebra K) ((degreeZero I M).restrictScalars R))
+    (liftBaseChange_surjective_of_pow_smul_sup I M K hKI hcover)
+
+/-- A Noetherian first quotient and all-degree covers by a finitely generated subideal
+make the associated graded module Noetherian over the quotient Rees algebra.
+Neither the coefficient ring nor the original module is assumed Noetherian. -/
+theorem isNoetherian_of_fg_of_pow_smul_sup (K : Ideal R) (hKI : K ≤ I) (hKfg : K.FG)
+    (hcover : ∀ n : ℕ, I ^ n • (⊤ : Submodule R M) =
+      K ^ n • (⊤ : Submodule R M) ⊔ I ^ (n + 1) • (⊤ : Submodule R M))
+    [IsNoetherian R Q] : IsNoetherian C G := by
+  let : Module (reesAlgebra K) G := moduleReesOfLE I M K hKI
+  let : IsScalarTower R (reesAlgebra K) G := scalarTowerReesOfLE I M K hKI
+  let : Algebra.FiniteType R (reesAlgebra K) :=
+    ⟨(reesAlgebra K).fg_top.mpr (reesAlgebra.fg hKfg)⟩
+  have : IsNoetherian (reesAlgebra K) ((reesAlgebra K) ⊗[R] Q) :=
+    Algebra.EssFiniteType.isNoetherian_tensorProduct R (reesAlgebra K) Q
+  have hG : IsNoetherian (reesAlgebra K) G :=
+    isNoetherian_of_surjective
+      (LinearMap.liftBaseChange (reesAlgebra K) ((degreeZero I M).restrictScalars R))
+      (LinearMap.range_eq_top.mpr
+        (liftBaseChange_surjective_of_pow_smul_sup I M K hKI hcover))
+  let : Module (reesAlgebra K) C := (reesAlgebra.quotientMapOfLE I K hKI).toRingHom.toModule
+  let : IsScalarTower (reesAlgebra K) C G := scalarTowerReesQuotientOfLE I M K hKI
+  exact isNoetherian_of_tower (reesAlgebra K) hG
+
+/-- Every associated graded class is a sum of scalar multiples of constant classes. -/
+theorem characteristic_surjective : Function.Surjective (characteristic I M) := by
+  let : Module B G := moduleReesOfLE I M I le_rfl
+  let : Module B C := (reesAlgebra.quotientMapOfLE I I le_rfl).toRingHom.toModule
+  let : IsScalarTower B C G := scalarTowerReesQuotientOfLE I M I le_rfl
+  have hspan := span_degreeZero_of_pow_smul_sup I M I le_rfl (fun n =>
+    (sup_of_le_left (Submodule.smul_mono_left (Ideal.pow_le_pow_right n.le_succ))).symm)
+  apply LinearMap.range_eq_top.mp
+  apply (Submodule.restrictScalars_eq_top_iff B C G).mp
+  apply top_unique
+  rw [← hspan]
+  apply Submodule.span_le.mpr
+  rintro _ ⟨q, rfl⟩
+  refine ⟨(1 : C) ⊗ₜ[A] q, ?_⟩
+  simpa only [one_smul] using characteristic_tmul I M (1 : C) q
+
+/-- Finiteness of the first quotient implies finiteness of the associated graded module.
+
+For background, see K. Fujiwara and F. Kato, *Foundations of Rigid Geometry I*,
+[arXiv:1308.4734v5](https://arxiv.org/abs/1308.4734v5). The precise formulation
+of this first-quotient criterion is proved here. -/
+theorem finite_of_finite_quotient [Module.Finite A Q] : Module.Finite C G :=
+  Module.Finite.of_surjective (characteristic I M) (characteristic_surjective I M)
 
 end AssociatedGradedModule
 end Ideal

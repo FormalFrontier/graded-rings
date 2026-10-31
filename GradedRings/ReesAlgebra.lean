@@ -15,6 +15,8 @@ public import Mathlib.LinearAlgebra.TensorAlgebra.Basic
 
 The quotient of the Rees algebra of an ideal `I` by the extended ideal `I` is the
 canonical underlying associated-graded algebra in its Rees-quotient presentation.
+Every subideal Rees algebra maps canonically to this quotient, compatibly with
+identity and successive inclusions.
 The cotangent module `I.Cotangent` maps linearly over `R ⧸ I` to this quotient by
 sending the class of `x` to the class of `x X`. Its image generates the quotient
 as an algebra, so the induced map from its tensor algebra is surjective.
@@ -37,6 +39,39 @@ universe u
 namespace reesAlgebra
 
 variable {R : Type u} [CommRing R] (I : Ideal R)
+
+/-- Inclusion of a subideal Rees algebra followed by the quotient by the extended ideal. -/
+noncomputable def quotientMapOfLE (K : Ideal R) (hKI : K ≤ I) :
+    reesAlgebra K →ₐ[R] (reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))) :=
+  (Ideal.Quotient.mkₐ R (I.map (algebraMap R (reesAlgebra I)))).comp
+    (Subalgebra.inclusion (S := reesAlgebra K) (T := reesAlgebra I)
+      (fun _ hp n => pow_le_pow_left' hKI n (hp n)))
+
+/-- The subideal map sends a polynomial to its class in the quotient Rees algebra. -/
+@[simp]
+theorem quotientMapOfLE_apply (K : Ideal R) (hKI : K ≤ I) (a : reesAlgebra K) :
+    quotientMapOfLE I K hKI a =
+      Ideal.Quotient.mk (I.map (algebraMap R (reesAlgebra I)))
+        (Subalgebra.inclusion (S := reesAlgebra K) (T := reesAlgebra I)
+          (fun _ hp n => pow_le_pow_left' hKI n (hp n)) a) := rfl
+
+/-- For the same ideal, the subideal map is the quotient map. -/
+@[simp]
+theorem quotientMapOfLE_refl :
+    quotientMapOfLE I I le_rfl =
+      Ideal.Quotient.mkₐ R (I.map (algebraMap R (reesAlgebra I))) := by
+  ext a
+  rfl
+
+/-- The subideal map is compatible with successive inclusions. -/
+theorem quotientMapOfLE_comp_inclusion (K : Ideal R) (hKI : K ≤ I)
+    (L : Ideal R) (hLK : L ≤ K) :
+    quotientMapOfLE I L (hLK.trans hKI) =
+      (quotientMapOfLE I K hKI).comp
+        (Subalgebra.inclusion (S := reesAlgebra L) (T := reesAlgebra K)
+          (fun _ hp n => pow_le_pow_left' hLK n (hp n))) := by
+  ext a
+  rfl
 
 /-- The degree-one map to the Rees algebra, sending `x ∈ I` to `x X`. -/
 noncomputable def degreeOne : I →ₗ[R] reesAlgebra I where
