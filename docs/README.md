@@ -1,6 +1,6 @@
 # Documentation and API references
 
-[`API.md`](API.md) is the **current, hand-maintained 25-production-leaf map**:
+[`API.md`](API.md) is the **canonical, hand-maintained current module/interface map**:
 it links the available modules and selected interfaces. It is not a native
 declaration census or a proof certificate. Import `GradedRings` for the full
 public API, or ordinary-import a subject leaf. The [root README](../README.md)

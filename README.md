@@ -1,183 +1,136 @@
 # Graded rings
 
-Reusable Lean constructions for graded rings, their quotients, localizations,
-finiteness and prime criteria, symmetric algebras, prime multiplicity, and
-selected-component Veronese rings. The headlines below distinguish the
-different weighted, finite-type and residue interfaces and their hypotheses;
-the [API map and subject guides](docs/README.md) provide detailed navigation.
+Reusable Lean constructions for graded rings, quotients and localizations,
+finiteness and primes, symmetric algebras, prime multiplicity, and
+selected-component Veronese rings. Start with the mathematics below; use the
+[canonical API map](docs/API.md#production-modules) for modules, interfaces and
+detailed hypotheses, or the [subject guides](docs/README.md) for focused clients.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
-under [Apache-2.0](LICENSE). Atlas is the responsible maintainer on behalf of the
-shared source-maintainer team. AI agents authored the mathematics, Lean proofs,
+under [Apache-2.0](LICENSE). AI agents authored the mathematics, Lean proofs,
 clients and documentation; exact contributions are listed in
 [provenance and credits](docs/PROVENANCE.md).
 
 ## Headline results
 
-This library presents reusable algebraic APIs. The statements and limitations
-below describe the library in this checkout; source-specific correspondence
-and book coverage require separate assessment.
+These are reusable algebraic APIs, not claims of source-specific correspondence
+or complete book coverage. Selected-ring and evaluation results below concern
+**naturally graded commutative rings** unless another base is stated. Old and new
+degree-zero coefficients mean the **entire actual components**, not a smaller
+chosen coefficient ring.
 
-- **Quotients and localizations:** [Homogeneous-ideal quotients](GradedRings/Quotient.lean)
-  inherit a grading, while [localization](GradedRings/Localization.lean) at
-  homogeneous denominators has a full grading and a degree-zero homogeneous-
-  fraction equivalence. These constructions allow degenerate commutative rings;
-  the localization grading uses a group of degrees. The separate [degree-multiplying
-  map](docs/degree-multiplying-homogeneous-localization.md) works for natural
-  gradings under explicit degree compatibility of an ordinary ring homomorphism
-  and mapped denominators, without requiring a domain or positive factor.
-  [Homogeneous localization](GradedRings/HomogeneousLocalizationReduced.lean)
-  preserves reducedness for any additive commutative monoid of degrees with
-  decidable equality and any denominator submonoid.
-- **Finiteness and prime criteria:** In a naturally graded commutative ring,
-  [finite type over degree zero](GradedRings/FiniteType.lean) is equivalent to
+- **Quotients and localizations.** For commutative rings,
+  [homogeneous-ideal quotients](GradedRings/Quotient.lean) inherit the image grading
+  for additive-monoid degrees with decidable equality. [Full localization](GradedRings/Localization.lean)
+  at homogeneous denominators uses an additive commutative **group** of degrees;
+  its degree-zero component is equivalent to equal-degree homogeneous fractions.
+  Both allow zero rings without a domain assumption; localization also permits
+  zero-divisor denominators.
+- **Localization maps and reducedness.** The [degree-multiplying map](docs/degree-multiplying-homogeneous-localization.md)
+  uses natural gradings, an ordinary unital ring homomorphism, explicit degree
+  compatibility and mapped denominators. Even factor zero requires its degree
+  witness; source charts may be arbitrary, but restriction factors are homogeneous.
+  Separately, [homogeneous localization preserves reducedness](GradedRings/HomogeneousLocalizationReduced.lean)
+  for a **reduced commutative ring**, additive commutative **monoid** degrees with
+  decidable equality and any denominator submonoid. Neither interface requires
+  a domain, regular denominators or nontriviality; the map needs no positive factor.
+- **Finiteness and primes.** In a naturally graded commutative ring,
+  [finite type over old degree zero](GradedRings/FiniteType.lean) is equivalent to
   finite generation of the irrelevant ideal; [Noetherianity](GradedRings/Noetherian.lean)
-  is equivalent to Noetherianity of degree zero together with that finite
-  generation. For an *integer*-graded commutative ring with a positive-degree
-  homogeneous unit, [homogeneous primes](GradedRings/HomogeneousPrime.lean)
-  correspond to primes of degree zero by contraction and **radical** extension.
-- **Symmetric algebras:** The [basis-free grading and graded maps](GradedRings/SymmetricAlgebra.lean)
-  are functorial for linear maps over a commutative semiring and arbitrary
-  modules; a basis is used only for polynomial-coordinate presentations.
-- **First-order symmetric algebras:** For any commutative ring `R` and `R`-module
-  `M`, with no finiteness or freeness condition, the [augmentation ideal and its
-  conormal](GradedRings/SymmetricAlgebraSquareZero.lean) identify
-  `SymmetricAlgebra R M ⧸ augmentationIdeal² ≃ₐ[R] TrivSqZeroExt R M`
-  and `augmentationIdeal.Cotangent ≃ₗ[R] M`. Generator formulas, ideal transport
-  and naturality for linear maps use `open scoped TrivSqZeroExt`; no scheme or
-  sheaf comparison is asserted.
-- **Prime multiplicity:** A [multiplicative valuation](GradedRings/PrimeMultiplicity.lean)
-  records prime-element multiplicity in a domain with well-founded divisibility.
-  Its localization extension requires non-zero-divisor denominators; the
-  [homogeneous localization](GradedRings/HomogeneousPrimeMultiplicity.lean) and
-  [polynomial irreducibility applications](GradedRings/MvPolynomialAway.lean)
-  carry their respective homogeneous-degree and field hypotheses.
-- **Selected-component rings:** The [Veronese ring](docs/Veronese.md) selects
-  **whole** original components in multiples of `n`; it has an internal
-  grading and [degree-zero ring equivalence](docs/VeroneseZero.md) for every
-  natural `n`; its whole-ring inclusion is injective when `0 < n`. At `n = 0`,
-  its external direct sum is finite type over its actual new degree-zero ring
-  without assuming finite type of the original ring. Under the explicit
-  old-ring hypothesis
-  `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, [positive-index degree-one
-  generation](docs/VeroneseDegreeOne.md) uses all of the new degree-one
-  component over the actual new degree-zero ring, without finite generation.
-- **The zero-index selected ring:** The [all-index equivalence and zero-index
-  finite-type guide](docs/VeroneseZero.md) distinguishes the external copies
-  of old degree zero, places arbitrary coefficients in the entire actual new
-  degree-zero component and factors each summand as a power of the new
-  degree-one variable. Polynomial evaluation is surjective over that ring,
-  without a field, domain, nontriviality or finite-type assumption on `S`.
-  Whole-ring inclusion at index zero need not be injective; no polynomial
-  equivalence or source index-zero convention is asserted.
-- **Finite positive-Veronese generation:** For finitely many strictly
-  positive-weight homogeneous generators of the old ring over its actual
-  degree zero, [finite selected-ring degree-one generation](docs/FiniteVeronese.md)
-  supplies a *finite* generating set in the entire new degree one of a
-  positive selected ring over its own degree zero. Native finite type over
-  the old degree zero supplies such a family and therefore *some* positive
-  selected index. Neither conclusion assumes a field, domain, nontriviality,
-  equal weights or Noetherianity, or asserts generation at every index.
-- **Coherent high tails:** [The new algebra](docs/CoherentTailVeronese.md)
-  packages `TailEquiv 𝒜 ℬ N` with `0 < N`, a ring equivalence of the actual
-  degree-zero pieces, additive equivalences for every degree `d ≥ N`, and
-  compatibility with coefficient and high-degree products. When `N ≤ n`,
-  `selectedRingEquiv` identifies the **entire** selected rings and supplies
-  degree-preserving inverse maps; for `0 < n`, `selected_zero` gives the exact
-  degree-zero coefficient square. Neither maps on missing original low degrees
-  nor a Proj/scheme equivalence follow.
-- **Positive-weight exponent blocks:** For any finite index type and strictly
-  positive natural weights, [weighted-block decomposition](docs/WeightedBlocks.md)
-  splits a finitely supported natural exponent vector of weight `k * D` into
-  exactly `k` vectors of weight `D`, whose sum is the **whole input vector**;
-  `D = max 1 (Fintype.card ι) * ∏ i, w i` is positive but need not be minimal.
-  No coefficient ring, finite-Veronese generation or polynomial factorization
-  follows from this combinatorial result alone.
-- **Weighted-polynomial monomial adjoin:** Over any commutative semiring,
-  [weighted-homogeneous membership](docs/WeightedBlockAdjoin.md) sends every
-  polynomial of degree `k * D` for finite indices and positive natural weights
-  into the coefficient subalgebra generated by coefficient-one monomials of
-  weight `D = Finsupp.weightedBlockSize w`. Coefficients, including at `k = 0`,
-  are unrestricted; this is not generation of an entire Veronese ring.
-- **Selected weighted-polynomial degrees:** For finite variables, any natural
-  weights including zero, any commutative semiring and every prescribed `n > 0`,
-  [one finite family](docs/WeightedVeroneseGenerators.md) of homogeneous
-  polynomials generates **all** weighted degrees divisible by `n` over the
-  entire coefficient semiring. This is selected polynomial-component generation,
-  not finite type of a whole selected graded ring or degree-one generation.
-- **Prescribed positive whole-ring finite type:** Given a finite homogeneous
-  generating family of **arbitrary natural weights** over the entire old
-  degree-zero ring, [each prescribed positive selected ring](docs/VeroneseFiniteType.md)
-  is finite type over its **entire actual new zero ring**. Native finite type
-  of the old ring supplies such a family. No domain, nontriviality, field,
-  Noetherianity, positive-weight or equal-weight assumption is needed; neither
-  index zero nor degree-one generation at every index follows.
-- **Finite positive-Veronese inclusions:** If a naturally graded commutative
-  ring is finite type over its **entire old degree-zero ring**, the
-  [canonical inclusion](docs/VeroneseFinite.md) from its external selected ring
-  at every `n > 0` is finite: the **old ring** is a finite module via that
-  inclusion's actual algebra structure. This is not finite type of the
-  selected ring over its new zero component, some-index degree-one generation,
-  an index-zero statement or, by itself, a residue-module result.
-- **Whole-Veronese residue projections:** For `0 < n` and `r < n`, the
-  [residue projection](docs/VeroneseResidue.md) is linear over the **entire
-  external** selected ring acting on `S` by `inclusion.toAlgebra`. Its range
-  consists exactly of elements whose old-degree components outside residue
-  `r` vanish; it is a finite module if `S` is finite over that action, in
-  particular if `[Algebra.FiniteType (𝒮 0) S]`. This projection module alone
-  does not construct the shifted external sum; the sibling module does.
-- **Shifted whole-Veronese residue modules:** The [external shifted sum](docs/VeroneseResidueModule.md)
-  `⨁ k, 𝒮 (n * k + r)` carries convolution by the **entire** selected ring.
-  Coefficient evaluation is linear under the actual `inclusion.toAlgebra` action;
-  it is injective for `0 < n` and identifies the projection range for `r < n`.
-  Ambient module finiteness or finite type over the **full old zero ring**
-  transports to the shifted sum under those positive reduced-index hypotheses.
-  No individual-fiber whole-ring action or `n = 0` evaluation bijection is asserted.
-- **Weighted evaluation and lifts:** For any naturally graded commutative ring
-  and chosen homogeneous elements of arbitrary natural weights (including zero),
-  [ordinary polynomial evaluation](docs/WeightedEvaluation.md) preserves weighted
-  degrees and commutes with the target's actual homogeneous components. Using
-  the actual degree-zero ring as coefficients, it gives a native graded map;
-  *only when* the chosen family generates the ring over degree zero does it
-  also lift every homogeneous target element. No finite-variable, domain,
-  field or nontriviality assumption is needed.
+  is equivalent to that finite generation plus Noetherian degree zero.
+  For an **integer**-graded commutative ring with a positive-degree homogeneous
+  unit, [homogeneous primes](GradedRings/HomogeneousPrime.lean) correspond to
+  degree-zero primes by contraction and **radical** extension.
+- **Symmetric algebras and first order.** [Basis-free grading and graded maps](GradedRings/SymmetricAlgebra.lean)
+  are functorial for arbitrary modules over a commutative **semiring**; only
+  polynomial coordinates need a basis. Over a commutative **ring**, for any
+  module `M`, the [augmentation-square quotient and conormal](GradedRings/SymmetricAlgebraSquareZero.lean)
+  give `SymmetricAlgebra R M ⧸ augmentationIdeal² ≃ₐ[R] TrivSqZeroExt R M` and
+  `augmentationIdeal.Cotangent ≃ₗ[R] M`, without freeness, projectivity or finiteness.
+  Generator formulas, ideal transport and both whole-map naturalities use
+  `open scoped TrivSqZeroExt` and the released `coherent-modules` kernel
+  equivalence. The quotient's image cotangent ideal corresponds to
+  `TrivSqZeroExt.kerIdeal`, not the original augmentation ideal; no scheme or sheaf comparison.
+- **Prime multiplicity.** A [multiplicative valuation](GradedRings/PrimeMultiplicity.lean)
+  measures a prime element in a commutative domain with well-founded divisibility;
+  extension to localization requires non-zero-divisor denominators. Its
+  [homogeneous restriction](GradedRings/HomogeneousPrimeMultiplicity.lean) uses
+  additive commutative monoid degrees. The [polynomial applications](GradedRings/MvPolynomialAway.lean)
+  work over a **field**, with arbitrary variables; irreducibility at denominator
+  order one uses a positive-degree homogeneous prime polynomial.
+- **Whole selected rings, including index zero.** The [Veronese ring](docs/Veronese.md)
+  is the external sum of **whole** old components in multiples of `n`, with a
+  native grading for every natural `n`. Its [actual zero ring](docs/VeroneseZero.md)
+  is equivalent to old degree zero at every index; whole-ring inclusion is
+  injective for `n > 0`, but need not be at zero. At zero, old-zero copies occupy
+  separate external summands: each factors as a power of the new degree-one variable
+  with its arbitrary coefficient in the entire new zero ring. Polynomial
+  evaluation is surjective, hence that external sum is finite type over its new
+  zero ring, without old-ring finite type, field, domain or nontriviality.
+  No polynomial equivalence or source index-zero convention is asserted.
+- **Evaluation and homogeneous lifts.** [Weighted evaluation](docs/WeightedEvaluation.md)
+  at chosen homogeneous elements of arbitrary natural weights, **including zero**,
+  preserves degrees, is a native graded map and commutes with actual components.
+  Only lifting **every** homogeneous target element requires the chosen family
+  to generate over old degree zero. The [degree-one specialization](docs/HomogeneousLifts.md)
+  uses all of `𝒮 1` and exactly `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`,
+  including degree-zero targets. No finite-variable, domain, field or
+  nontriviality assumption is needed.
+- **Degree-one generation: all versus finite.** Under that old degree-one
+  generation hypothesis, [every positive selected index](docs/VeroneseDegreeOne.md)
+  is generated by **all** new degree one over its entire actual new zero ring,
+  without finite generation. A finite **positive-weight** homogeneous generating
+  family over old zero instead gives a [finite new degree-one family](docs/FiniteVeronese.md)
+  at `D = Finsupp.weightedBlockSize w`; native old-zero finite type gives **some**
+  positive index. These need no field, domain, nontriviality, equal weights or
+  Noetherianity; the finite-family conclusions are not all-index claims.
+- **Positive-weight blocks and monomial adjoin.** For finite indices and strictly
+  positive natural weights, [exponent decomposition](docs/WeightedBlocks.md)
+  recovers a whole finitely supported natural exponent vector of weight `k * D`
+  as **exactly `k`** weight-`D` blocks, with positive, not necessarily minimal
+  `D = max 1 (Fintype.card ι) * ∏ i, w i`. Over any commutative **semiring**,
+  [monomial-adjoin membership](docs/WeightedBlockAdjoin.md) puts weight-`k * D`
+  polynomials in the coefficient subalgebra generated by coefficient-one
+  weight-`D` monomials, including arbitrary coefficients and `k = 0`.
+  Neither result alone gives polynomial factorization or whole-ring generation.
+- **Selected weighted-polynomial components.** For finite variables, arbitrary
+  natural weights **including zero**, any commutative **semiring**, and each
+  prescribed `n > 0`, [one finite homogeneous family](docs/WeightedVeroneseGenerators.md)
+  generates **all** polynomial degrees divisible by `n` over the entire
+  coefficient semiring—not whole selected-ring finite type or degree-one generation.
+- **Finite type at each positive index.** Finite homogeneous generators of
+  arbitrary natural weights over entire old zero, or native old-zero finite
+  type, make [every prescribed positive whole selected ring](docs/VeroneseFiniteType.md)
+  finite type over its **entire actual new zero ring**. No domain, nontriviality,
+  field, Noetherianity, positive or equal weights are required. This is distinct
+  from index-zero finite type and from degree-one generation at every index.
+- **Finite inclusion and whole-ring residue modules.** Under old-zero finite
+  type, the [inclusion at each `n > 0`](docs/VeroneseFinite.md) makes the **old ring**
+  finite over the whole external selected ring via the actual `inclusion.toAlgebra`.
+  For `n > 0`, `r < n`, the [residue projection](docs/VeroneseResidue.md) is linear
+  for that same action and has exactly the elements supported in residue `r`
+  as its range. Ambient module finiteness makes this image finite; old-zero
+  finite type suffices. The [shifted sum](docs/VeroneseResidueModule.md)
+  `⨁ k, 𝒮 (n * k + r)` has whole selected-ring convolution; coefficient evaluation
+  is linear and injective for `n > 0` and **any** `r`, and identifies the projection
+  range when also `r < n`. Ambient finiteness, or full old-zero finite type,
+  transports under those positive reduced-index bounds. No individual-fiber
+  whole-ring action, arbitrary-submodule finiteness or zero-index bijection follows.
+- **Coherent high tails.** [Tail equivalence](docs/CoherentTailVeronese.md) requires
+  `N > 0`, an actual zero-ring equivalence, additive equivalences in **all**
+  degrees at least `N`, and coefficient/high-product compatibility. For `N ≤ n`
+  it identifies the **entire** selected rings with native degree-preserving
+  inverse maps; for `n > 0`, `selected_zero` is the exact coefficient square.
+  No maps across missing original low degrees or Proj/scheme equivalence follow.
 
-## Mathematical scope
+## Find an interface
 
-| Module | Main interface and assumptions |
-| --- | --- |
-| [Quotient](GradedRings/Quotient.lean) | `Ideal.Quotient.gradedRing` equips a quotient by a homogeneous ideal with the image grading. The index is an additive monoid with decidable equality; the coefficient ring is commutative, possibly the zero ring. `gradedRingHom` bundles the quotient map. |
-| [Localization](GradedRings/Localization.lean) | `GradedLocalization.gradedRing` grades ordinary localization at a submonoid of homogeneous elements, with an additive commutative **group** of degrees. `homogeneousLocalizationEquivZeroComponent` identifies equal-degree homogeneous fractions with the zero component. No domain or non-zero-divisor hypothesis is imposed on this construction. |
-| [HomogeneousLocalizationMap](GradedRings/HomogeneousLocalizationMap.lean) | `HomogeneousLocalization.mapDegreeMul` sends naturally graded homogeneous localizations across an **ordinary** unital ring homomorphism multiplying natural degrees by `d`, given explicit degree compatibility and mapped denominators. It supports arbitrary source charts and restriction along a homogeneous factor, factor-one recovery, identity and composition. No domain, denominator-regularity or positive-`d` assumption. See the [thirteen-name guide](docs/degree-multiplying-homogeneous-localization.md). |
-| [HomogeneousLocalizationReduced](GradedRings/HomogeneousLocalizationReduced.lean) | `HomogeneousLocalization.isReduced` preserves reducedness for a grading by an additive commutative monoid with decidable equality and an arbitrary denominator submonoid. The proof uses the injective canonical map into ordinary localization; no domain, denominator-regularity or nontriviality assumption. |
-| [HomogeneousLifts](GradedRings/HomogeneousLifts.lean) | `GradedRingHom.surjective_gradedAddHom` sends ambient surjectivity to every whole graded-semiring component. For any nonnegative grading of a commutative ring `S`, `MvPolynomial.exists_isHomogeneous_aeval` lifts `s ∈ 𝒮 m` through evaluation of degree-`m` polynomials with coefficients in the actual `𝒮 0` and all of `𝒮 1` as variables, given exactly `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`. Degree zero is included; no finite-generation, domain or field assumption. See the [homogeneous-lifts guide](docs/HomogeneousLifts.md). |
-| [WeightedEvaluation](GradedRings/WeightedEvaluation.lean) | `MvPolynomial.IsWeightedHomogeneous.aeval_mem`, `weightedAevalGradedHom` and `aeval_weightedHomogeneousComponent` use arbitrary chosen homogeneous elements `x i : 𝒮 (w i)`, arbitrary natural weights and actual degree-zero coefficients without a generation hypothesis; `exists_isWeightedHomogeneous_aeval` additionally requires `Algebra.adjoin (𝒮 0) (Set.range (fun i => (x i : S))) = ⊤`. See the [weighted-evaluation guide](docs/WeightedEvaluation.md). |
-| [FiniteType](GradedRings/FiniteType.lean) | `GradedAlgebra.irrelevant_fg_iff_finiteType`: for a naturally graded commutative ring, the irrelevant ideal is finitely generated exactly when the ring is finite type over degree zero. Includes extraction of finite homogeneous ideal generators. |
-| [Noetherian](GradedRings/Noetherian.lean) | `isNoetherianRing_iff_gradeZero_and_irrelevant_fg`: Noetherianity is equivalent to Noetherianity of degree zero plus finite generation of the irrelevant ideal. No domain or nontriviality assumption. |
-| [HomogeneousPrime](GradedRings/HomogeneousPrime.lean) | In an integer-graded commutative ring with a positive-degree homogeneous unit, `homogeneousPrimeEquivDegreeZeroPrime` identifies homogeneous prime ideals with primes of degree zero. The inverse is **radical extension**, not plain extension. |
-| [SymmetricAlgebra](GradedRings/SymmetricAlgebra.lean) | Basis-free grading, `gradedMap` and linear-equivalence functoriality over a commutative **semiring** and arbitrary modules. A basis is needed only for the degree-preserving polynomial-coordinate presentation. |
-| [SymmetricAlgebraSquareZero](GradedRings/SymmetricAlgebraSquareZero.lean) | For any commutative ring and arbitrary module, `augmentationIdeal_eq_span_ι`, `squareZeroQuotientEquiv`, `augmentationCotangentEquiv` and both whole-map naturalities. The quotient's image cotangent ideal is identified with `TrivSqZeroExt.kerIdeal`, not with the original augmentation ideal. Importing this leaf provides the canonical released `coherent-modules` kernel equivalence and scoped actions. |
-| [PrimeMultiplicity](GradedRings/PrimeMultiplicity.lean) | For a prime element in a commutative domain with well-founded divisibility, `valuation` sends nonzero `r` to `exp (-multiplicity p r)`. Its extension to localization requires denominators to be non-zero-divisors. |
-| [HomogeneousPrimeMultiplicity](GradedRings/HomogeneousPrimeMultiplicity.lean) | Restricts that valuation to degree-zero homogeneous localization. On a nonzero homogeneous numerator over `p^n`, its value is `exp (n - multiplicity p x)`. Degrees form an additive commutative monoid. |
-| [MvPolynomialAway](GradedRings/MvPolynomialAway.lean) | Over a field and an arbitrary variable type, bounds multiplicity by homogeneous degree, characterizes units by valuation one, and proves irreducibility at denominator order one for a positive-degree homogeneous prime polynomial. |
-| [Veronese](GradedRings/Veronese.lean) | `GradedRing.Veronese.VeroneseRing 𝒮 n` selects the whole old components `𝒮 (n*j)` and has an internal grading for any `n`. The canonical inclusion is injective and identifies the whole degree-zero component when `0 < n`. No finiteness/domain assumption or scheme API. See the [selected-component guide](docs/Veronese.md). |
-| [CoherentTailVeronese](GradedRings/CoherentTailVeronese.lean) | `GradedRing.Veronese.CoherentTail.TailEquiv 𝒜 ℬ N` packages an actual degree-zero ring equivalence, additive equivalences in all degrees at least `N > 0`, and compatibility with coefficients and products. For `N ≤ n`, `selectedRingEquiv` identifies the **whole** selected rings; `selectedGradedHom` and its inverse preserve selected degrees, and `selected_zero` commutes with the degree-zero coefficient equivalence when `0 < n`. Arbitrary natural-graded commutative rings, including zero rings, are allowed; no low-degree map is implied. See the [coherent-tail guide](docs/CoherentTailVeronese.md). |
-| [WeightedBlocks](GradedRings/WeightedBlocks.lean) | `Finsupp.weightedBlockSize_pos` and `Finsupp.exists_weightedBlocks` give a positive explicit bound and an exact `Fin k` decomposition of whole finitely supported natural vectors for finite indices, positive natural weights and weight `k * weightedBlockSize w`. See the [weighted-block guide](docs/WeightedBlocks.md). |
-| [WeightedBlockAdjoin](GradedRings/WeightedBlockAdjoin.lean) | `MvPolynomial.IsWeightedHomogeneous.mem_adjoin_weightedBlockSize`: a polynomial of degree `k * weightedBlockSize w` belongs to the coefficient subalgebra generated by coefficient-one monomials of that block weight, for finite indices, positive natural weights and any commutative semiring; arbitrary coefficients and `k = 0` are included. See the [monomial-adjoin guide](docs/WeightedBlockAdjoin.md). |
-| [WeightedVeroneseGenerators](GradedRings/WeightedVeroneseGenerators.lean) | `MvPolynomial.exists_finset_weightedVeronese_generators`: one finite weighted-homogeneous family over any commutative semiring generates every selected polynomial degree `n * j` for prescribed `0 < n`, finite variables and arbitrary natural weights including zero. See the [standalone guide](docs/WeightedVeroneseGenerators.md). |
-| [VeroneseFiniteType](GradedRings/VeroneseFiniteType.lean) | `GradedRing.Veronese.finiteType_of_finite_homogeneous_generators` gives finite type of the whole selected ring for **every prescribed** `n > 0` over its actual new zero component, from finite arbitrary-weight homogeneous generators over the entire old zero component. `GradedRing.Veronese.finiteType_of_finiteType` starts from native `Algebra.FiniteType (𝒮 0) S`. See the [standalone guide](docs/VeroneseFiniteType.md). |
-| [VeroneseFinite](GradedRings/VeroneseFinite.lean) | `GradedRing.Veronese.inclusion_finite 𝒮 n hn` says the canonical inclusion from the external positive selected ring to `S` is finite for `[Algebra.FiniteType (𝒮 0) S]` and `hn : 0 < n`: the old ring is finite over the selected ring via the actual `inclusion.toAlgebra`. Distinct from finite type of the selected ring over its new zero ring. See the [standalone guide](docs/VeroneseFinite.md). |
-| [VeroneseResidue](GradedRings/VeroneseResidue.lean) | `GradedRing.Veronese.residueProjection 𝒮 n r hn hr` projects the old ring onto its degree-`r` residue part, linearly over the whole selected ring through `inclusion.toAlgebra`. `mem_residueProjection_range_iff` characterizes the exact image and `residueProjection_range_finite_of_finiteType` proves its finiteness from old-zero finite type and `inclusion_finite`. See the [standalone guide](docs/VeroneseResidue.md). |
-| [VeroneseResidueModule](GradedRings/VeroneseResidueModule.lean) | `GradedRing.Veronese.ResidueModule 𝒮 n r` is the external sum of entire old components `𝒮 (n * k + r)` with the whole selected-ring convolution action. `residueEvaluation` is linear for `inclusion.toAlgebra`, injective at positive `n`, and `residueEvaluationEquiv` identifies the projection range when also `r < n`. `residueModule_finite_of_finiteType` assumes finite type over the full old zero ring. See the [shifted-sum guide](docs/VeroneseResidueModule.md). |
-| [VeroneseZero](GradedRings/VeroneseZero.lean) | `GradedRing.Veronese.zeroRingEquivAll` identifies the actual new zero ring with `𝒮 0` for every index. At index zero, `of_zero_eq_algebraMap_mul_pow`, `aeval_zeroVariable_surjective` and `finiteType_zero` prove finite type of the external sum over its entire actual new zero ring, without an old-ring finite-type or nontriviality assumption. Whole-ring inclusion is not asserted injective at zero. See the [standalone guide](docs/VeroneseZero.md). |
-| [VeroneseDegreeOne](GradedRings/VeroneseDegreeOne.lean) | `GradedRing.Veronese.adjoin_component_one_eq_top`: if `0 < n` and `Algebra.adjoin (𝒮 0) (𝒮 1 : Set S) = ⊤`, the whole selected ring is generated over its **actual new degree-zero component** by **all** of its new degree-one component. No finite-variable, finite-type, domain, field, reducedness or nontriviality assumption. See the [degree-one-generation guide](docs/VeroneseDegreeOne.md). |
-| [FiniteVeronese](GradedRings/FiniteVeronese.lean) | `GradedRing.Veronese.exists_finite_degree_one_generators` gives finite whole-ring generation over the actual new zero component from a finite positive-weight homogeneous generating family over the old zero component; `exists_positive_finite_degree_one_generators` instead starts from native `Algebra.FiniteType (𝒮 0) S` and obtains some positive index. See the [finite-generation guide](docs/FiniteVeronese.md). |
-
-For the distinctions between whole localizations and degree-zero pieces,
-polynomial presentations, selected-ring generation and geometric claims, see
-[scope distinctions](docs/API.md#scope-distinctions). The
-[current API map](docs/API.md) and [subject guides](docs/README.md) give focused
-imports, declarations and clients.
+The [canonical module/interface map](docs/API.md#production-modules) merges
+precise assumptions with declaration names and direct imports. Its
+[scope distinctions](docs/API.md#scope-distinctions) separate full localizations
+from degree-zero pieces, polynomial components from whole selected rings, and
+algebraic results from geometric claims. The [subject guides](docs/README.md)
+provide focused explanations and clients.
 
 ## Build and use
 
