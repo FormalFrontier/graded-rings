@@ -47,6 +47,21 @@ chosen coefficient ring.
   is stable: `I • F.N n = F.N (n + 1)` for all sufficiently large `n`.
   Neither `I`, the stages, nor `M` need be finitely generated. This uses the existing
   natural-number filtration and polynomial Rees-module constructions.
+- **Weighted generation of integer filtrations.** For a separated, antitone
+  integer-indexed filtration satisfying `I • F n ≤ F (n + 1)` over an
+  `I`-adically **precomplete** commutative coefficient ring,
+  [finite degree-weighted lifts generating the successive quotients](GradedRings/FilteredModule/WeightedSpan.lean)
+  generate every stage with coefficients in `I ^ ((n - d i).toNat)`.
+  Ring, module and finite indexing type have independent universes; the family
+  may be empty and the degrees may be negative. The
+  [finiteness consequences](GradedRings/FilteredModule/Finiteness.lean) keep
+  their extra hypotheses separate: eventual stability needs none, finiteness
+  of the original module needs exhaustivity, and finite generation of every
+  stage needs `I.FG`. The equality and ambient finiteness require neither
+  `I.FG` nor a Hausdorff coefficient ring. This independently generalizes the
+  filtered lifting ingredient underlying Fujiwara--Kato, *Foundations of Rigid
+  Geometry I*, Proposition 0.7.5.2; it is not the full proposition or a full
+  associated-graded construction.
 - **Associated graded modules from the first quotient.** For any ideal `I` in a
   commutative ring `R` and any `R`-module `M`, with independent universes,
   [the Rees-quotient associated graded module](GradedRings/ReesModule.lean) `G`

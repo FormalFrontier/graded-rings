@@ -27,7 +27,10 @@ project:
     whole-Veronese convolution on shifted sums of entire old components,
     canonical coefficient evaluation, positive reduced-index projection-range
     equivalence and finite-module transport from the full old zero ring, and
-    prime-multiplicity valuations with homogeneous polynomial applications.
+    prime-multiplicity valuations with homogeneous polynomial applications,
+    and weighted generation of separated compatible integer filtrations over
+    precomplete coefficient rings, with separately qualified stability,
+    ambient-finiteness and stage-finiteness consequences.
   authors:
     - Formal Frontier Agents
   license: Apache-2.0
@@ -49,6 +52,20 @@ sources:
       coefficient regrouping, chart/Proj invariance or source correspondence.
       Neither complete source coverage nor redistribution of the source text is asserted.
       The generic Lean expression was developed as an original project contribution.
+  - title: "Foundations of Rigid Geometry I"
+    authors:
+      - Kazuhiro Fujiwara
+      - Fumiharu Kato
+    type: book
+    location: "arXiv:1308.4734v5, Proposition 0.7.5.2"
+    relationship: background
+    note: >-
+      Context for an independent generalization of the filtered lifting of
+      coefficients to precomplete coefficient rings and all integer
+      degrees. The weighted equality and ambient finiteness do not require
+      finite generation of the ideal; every-stage finiteness does.
+      Neither the full proposition nor a full associated-graded construction
+      or source correspondence is asserted. No source text is redistributed.
   - title: "mathlib"
     authors:
       - The mathlib contributors
@@ -196,6 +213,16 @@ status:
     degree-zero ring. No whole-ring action on an individual old component,
     n = 0 evaluation bijection, unrestricted r >= n image equality or
     arbitrary-submodule finite-generation claim is made.
+    For separated antitone integer filtrations compatible with an ideal,
+    finite degree-weighted lifts generating the successive quotients give
+    an all-degree weighted-span formula over a precomplete coefficient ring,
+    with the original module action, independent universes and a possibly
+    empty family. Eventual stability needs no extra hypothesis. Ambient module
+    finiteness additionally needs exhaustivity, while finite generation of
+    every stage instead needs a finitely generated ideal. The equality needs
+    neither ideal finiteness nor coefficient-ring Hausdorffness. These results
+    generalize the filtered lifting ingredient underlying Proposition 0.7.5.2
+    of Foundations of Rigid Geometry I, not its full graded formulation.
   main_results:
     - declaration: Ideal.Quotient.gradedRing
       file: GradedRings/Quotient.lean
@@ -207,6 +234,14 @@ status:
       file: GradedRings/FiniteType.lean
     - declaration: GradedAlgebra.isNoetherianRing_iff_gradeZero_and_irrelevant_fg
       file: GradedRings/Noetherian.lean
+    - declaration: Submodule.eq_iSup_pow_smul_span_singleton_of_isPrecomplete
+      file: GradedRings/FilteredModule/WeightedSpan.lean
+    - declaration: Submodule.exists_eq_smul_of_weighted_generation
+      file: GradedRings/FilteredModule/Finiteness.lean
+    - declaration: Submodule.moduleFinite_of_weighted_generation
+      file: GradedRings/FilteredModule/Finiteness.lean
+    - declaration: Submodule.fg_of_weighted_generation
+      file: GradedRings/FilteredModule/Finiteness.lean
     - declaration: GradedRing.homogeneousPrimeEquivDegreeZeroPrime
       file: GradedRings/HomogeneousPrime.lean
     - declaration: SymmetricAlgebra.gradedAlgebra
