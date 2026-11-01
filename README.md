@@ -63,6 +63,12 @@ chosen coefficient ring.
   Constants act by the original `R`-action, and `I` annihilates the carrier.
   For `q : ℕ`, `a ∈ I ^ q` and `m ∈ F.N n`, the class of `aX^q` sends the
   class of `m` to the class of `a • m` in degree `n + q`.
+- **Maps of integer-filtered associated gradeds.** An original-`R`-linear map
+  preserving every stage of two integer filtrations induces a
+  [canonical quotient-Rees-linear map](GradedRings/FilteredAssociatedGraded/Map.lean).
+  It sends each homogeneous representative to its image, preserves the original
+  `R` action, and respects identities and composition. The modules have independent
+  universes; no finiteness, exhaustivity, separatedness or lower bound is required.
 - **Weighted generation of integer filtrations.** For a separated, antitone
   integer-indexed filtration satisfying `I • F n ≤ F (n + 1)` over an
   `I`-adically **precomplete** commutative coefficient ring,
