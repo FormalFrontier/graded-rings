@@ -69,6 +69,18 @@ chosen coefficient ring.
   It sends each homogeneous representative to its image, preserves the original
   `R` action, and respects identities and composition. The modules have independent
   universes; no finiteness, exhaustivity, separatedness or lower bound is required.
+- **Ideal-power quotients and coefficient multiplication.** For any ideal `I` of a
+  commutative ring `R` and every natural degree `q`, the
+  [quotient of `I ^ q` by its ideal multiple](GradedRings/ReesAlgebra/QuotientPieces.lean)
+  has an `R`-linear comparison `quotientMonomialEquiv` with the degree-`q` component
+  of the coefficient-ideal quotient of the Rees algebra. The denominator is exactly
+  the next ideal power, viewed inside `I ^ q`. On these same quotient modules,
+  [coefficient multiplication](GradedRings/ReesAlgebra/PowerQuotientMultiplication.lean)
+  `powerQuotientMul` is bilinear over `R ⧸ I`; `powerQuotientMul_mk` sends `[a]`
+  and `[b]` to `[a * b]` in degree `q + r`. Multiplication is commutative and
+  associative under the degree-sum identifications,
+  with the class of `1` in degree zero as a two-sided unit. No finiteness,
+  Noetherianity, nontriviality or positive-degree assumption is needed.
 - **Weighted generation of integer filtrations.** For a separated, antitone
   integer-indexed filtration satisfying `I • F n ≤ F (n + 1)` over an
   `I`-adically **precomplete** commutative coefficient ring,

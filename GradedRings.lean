@@ -23,6 +23,8 @@ public import GradedRings.PrimeMultiplicity
 public import GradedRings.Quotient
 public import GradedRings.ReesAlgebra
 public import GradedRings.ReesAlgebra.Grading
+public import GradedRings.ReesAlgebra.PowerQuotientMultiplication
+public import GradedRings.ReesAlgebra.QuotientPieces
 public import GradedRings.ReesModule
 public import GradedRings.AssociatedGradedRegular
 public import GradedRings.SymmetricAlgebra
