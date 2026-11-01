@@ -22,6 +22,13 @@ exhaustivity, separatedness or a lower bound. Stage quotients and their direct
 sum use Mathlib's `Submodule.mapQ` and `DirectSum.lmap`; equivalences use
 `LinearEquiv.ofLinearMap`.
 
+The induced map is injective exactly when a source-stage element mapping into the
+next target stage already belongs to the next source stage. It is surjective
+exactly when the source-stage image and the next target stage cover each target
+stage. Stagewise pullback and image equalities give injectivity and surjectivity,
+respectively, without requiring the original linear map to be injective or
+surjective.
+
 ## References
 
 * Mathlib's submodule-quotient and direct-sum universal properties.
@@ -176,6 +183,76 @@ theorem map_comp (K : I.IntFiltration P) (g : N →ₗ[R] P)
   apply LinearMap.ext
   intro z
   exact LinearMap.congr_fun h z
+
+section MapCriteria
+
+/-- The induced map is injective exactly when a source-stage element mapping into the next
+target stage already belongs to the next source stage. -/
+theorem map_injective_iff :
+    Function.Injective (F.map H f hf) ↔
+      ∀ (n : ℤ) (x : M), x ∈ F.N n → f x ∈ H.N (n + 1) → x ∈ F.N (n + 1) := by
+  change Function.Injective (DirectSum.lmap (pieceMap F H f hf)) ↔ _
+  rw [DirectSum.lmap_injective]
+  constructor
+  · intro h n x hx hfx
+    apply (F.cl_eq_zero_iff n ⟨x, hx⟩).mp
+    apply h n
+    rw [pieceMap_cl, map_zero]
+    exact (H.cl_eq_zero_iff n _).mpr hfx
+  · intro h n
+    rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
+    intro z hz
+    obtain ⟨x, rfl⟩ := F.cl_surjective n z
+    apply (F.cl_eq_zero_iff n x).mpr
+    apply h n x x.property
+    exact (H.cl_eq_zero_iff n _).mp ((pieceMap_cl F H f hf n x).symm.trans hz)
+
+/-- The induced map is surjective exactly when every target stage is covered by the image
+of the source stage modulo the next target stage. -/
+theorem map_surjective_iff :
+    Function.Surjective (F.map H f hf) ↔
+      ∀ n : ℤ, H.N n ≤ (F.N n).map f ⊔ H.N (n + 1) := by
+  change Function.Surjective (DirectSum.lmap (pieceMap F H f hf)) ↔ _
+  rw [DirectSum.lmap_surjective]
+  constructor
+  · intro hs n y hy
+    obtain ⟨z, hz⟩ := hs n (H.cl n ⟨y, hy⟩)
+    obtain ⟨x, rfl⟩ := F.cl_surjective n z
+    rw [pieceMap_cl] at hz
+    have hyx : y - f (x : M) ∈ H.N (n + 1) :=
+      (H.cl_eq_cl_iff n ⟨y, hy⟩ (stageMap F H f hf n x)).mp hz.symm
+    exact Submodule.mem_sup.mpr
+      ⟨f (x : M), Submodule.mem_map.mpr ⟨(x : M), x.property, rfl⟩,
+        y - f (x : M), hyx, (add_comm _ _).trans (sub_add_cancel _ _)⟩
+  · intro h n z
+    obtain ⟨y, rfl⟩ := H.cl_surjective n z
+    obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.mp (h n y.property)
+    obtain ⟨x, hx, rfl⟩ := Submodule.mem_map.mp ha
+    refine ⟨F.cl n ⟨x, hx⟩, ?_⟩
+    rw [pieceMap_cl, H.cl_eq_cl_iff, stageMap_coe, ← hab,
+      sub_add_eq_sub_sub, sub_self, zero_sub]
+    exact (H.N (n + 1)).neg_mem hb
+
+/-- Stagewise pullback equality makes the induced map injective, without requiring
+injectivity of the original linear map. -/
+theorem map_injective_of_comap_eq (he : ∀ n : ℤ, F.N n = (H.N n).comap f) :
+    Function.Injective (F.map H f (fun n => (he n).le)) := by
+  apply (F.map_injective_iff H f (fun n => (he n).le)).mpr
+  intro n x _ hx
+  exact (he (n + 1)).ge hx
+
+/-- Stagewise image equality makes the induced map surjective, without requiring
+surjectivity of the original linear map. -/
+theorem map_surjective_of_map_eq (he : ∀ n : ℤ, (F.N n).map f = H.N n) :
+    Function.Surjective
+      (F.map H f (fun n => Submodule.map_le_iff_le_comap.mp (he n).le)) := by
+  apply (F.map_surjective_iff H f
+    (fun n => Submodule.map_le_iff_le_comap.mp (he n).le)).mpr
+  intro n
+  rw [he n]
+  exact le_sup_left
+
+end MapCriteria
 
 section Equivalences
 

@@ -67,7 +67,14 @@ chosen coefficient ring.
   preserving every stage of two integer filtrations induces a
   [canonical quotient-Rees-linear map](GradedRings/FilteredAssociatedGraded/Map.lean).
   It sends each homogeneous representative to its image, preserves the original
-  `R` action, and respects identities and composition. A module equivalence carrying
+  `R` action, and respects identities and composition. For `f : M →ₗ[R] N` with
+  filtrations `F` and `H`, it is injective exactly when, for every `n : ℤ` and
+  `x ∈ F.N n`, membership `f x ∈ H.N (n + 1)` implies `x ∈ F.N (n + 1)`.
+  It is surjective exactly when `H.N n ≤ (F.N n).map f ⊔ H.N (n + 1)` for every
+  integer `n`. Thus stagewise pullback equality `F.N n = (H.N n).comap f` gives
+  injectivity, and stagewise image equality `(F.N n).map f = H.N n` gives
+  surjectivity, without ambient injectivity or surjectivity of `f` or normalization
+  at degree zero. A module equivalence carrying
   each filtration stage onto the corresponding stage induces a quotient-Rees-linear
   equivalence, compatibly with inverses, identities and composition. The modules have
   independent universes; no finiteness, exhaustivity, separatedness or lower bound is
