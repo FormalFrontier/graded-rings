@@ -6,6 +6,7 @@ module
 
 public import GradedRings.CoherentTailVeronese
 public import GradedRings.FiniteType
+public import GradedRings.FilteredAssociatedGraded
 public import GradedRings.FilteredModule.WeightedSpan
 public import GradedRings.FilteredModule.Finiteness
 public import GradedRings.HomogeneousLifts
