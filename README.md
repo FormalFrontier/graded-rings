@@ -67,8 +67,11 @@ chosen coefficient ring.
   preserving every stage of two integer filtrations induces a
   [canonical quotient-Rees-linear map](GradedRings/FilteredAssociatedGraded/Map.lean).
   It sends each homogeneous representative to its image, preserves the original
-  `R` action, and respects identities and composition. The modules have independent
-  universes; no finiteness, exhaustivity, separatedness or lower bound is required.
+  `R` action, and respects identities and composition. A module equivalence carrying
+  each filtration stage onto the corresponding stage induces a quotient-Rees-linear
+  equivalence, compatibly with inverses, identities and composition. The modules have
+  independent universes; no finiteness, exhaustivity, separatedness or lower bound is
+  required.
 - **Ideal-power quotients and coefficient multiplication.** For any ideal `I` of a
   commutative ring `R` and every natural degree `q`, the
   [quotient of `I ^ q` by its ideal multiple](GradedRings/ReesAlgebra/QuotientPieces.lean)

@@ -7,16 +7,20 @@ module
 public import GradedRings.FilteredAssociatedGraded.ReesAction
 
 /-!
-# Maps on integer-filtered associated graded modules
+# Maps and equivalences on integer-filtered associated graded modules
 
 An original-`R`-linear map preserving every stage of two integer filtrations
-induces a degree-preserving map on their associated graded modules. The scalar
-ring is the Rees algebra modulo the extension of the filtration ideal, with the
-canonical quotient Rees actions on both modules.
+induces a degree-preserving map on their associated graded modules. An
+original-`R`-linear equivalence carrying each stage onto the corresponding stage
+induces a linear equivalence with the maps of the original equivalence and its
+inverse as its two directions. The scalar ring is the Rees algebra modulo the
+extension of the filtration ideal, with the canonical quotient Rees actions on
+both modules.
 
-The construction applies to all integer degrees and does not require finiteness,
+The constructions apply to all integer degrees and do not require finiteness,
 exhaustivity, separatedness or a lower bound. Stage quotients and their direct
-sum use Mathlib's `Submodule.mapQ` and `DirectSum.lmap`.
+sum use Mathlib's `Submodule.mapQ` and `DirectSum.lmap`; equivalences use
+`LinearEquiv.ofLinearMap`.
 
 ## References
 
@@ -172,6 +176,90 @@ theorem map_comp (K : I.IntFiltration P) (g : N →ₗ[R] P)
   apply LinearMap.ext
   intro z
   exact LinearMap.congr_fun h z
+
+section Equivalences
+
+variable (e : M ≃ₗ[R] N) (he : ∀ n, (F.N n).map e.toLinearMap = H.N n)
+
+/-- An original-linear equivalence carrying every integer stage onto its counterpart
+induces a quotient-Rees-linear equivalence of the whole associated graded modules. -/
+noncomputable def equiv : F.AssociatedGraded ≃ₗ[C] H.AssociatedGraded :=
+  LinearEquiv.ofLinearMap
+    (F.map H e.toLinearMap
+      (fun n => Submodule.map_le_iff_le_comap.mp (he n).le))
+    (H.map F e.symm.toLinearMap
+      (fun n => ((he n).symm.trans
+        (Submodule.map_equiv_eq_comap_symm e (F.N n))).le))
+    (by
+      have h : e.toLinearMap.comp e.symm.toLinearMap =
+          (LinearMap.id : N →ₗ[R] N) := by
+        ext m
+        exact e.apply_symm_apply m
+      rw [← map_comp]
+      simpa only [h] using H.map_id)
+    (by
+      have h : e.symm.toLinearMap.comp e.toLinearMap =
+          (LinearMap.id : M →ₗ[R] M) := by
+        ext m
+        exact e.symm_apply_apply m
+      rw [← map_comp]
+      simpa only [h] using F.map_id)
+
+/-- The forward linear map is the associated graded map of the original equivalence. -/
+@[simp]
+theorem equiv_toLinearMap :
+    (F.equiv H e he).toLinearMap =
+      F.map H e.toLinearMap
+        (fun n => Submodule.map_le_iff_le_comap.mp (he n).le) := by
+  rfl
+
+/-- The induced equivalence applies the original equivalence to each representative. -/
+@[simp]
+theorem equiv_single (n : ℤ) (m : F.N n) :
+    F.equiv H e he (F.single n m) =
+      H.single n
+        ⟨e (m : M), (Submodule.map_le_iff_le_comap.mp (he n).le) m.property⟩ := by
+  change (F.equiv H e he).toLinearMap (F.single n m) = _
+  rw [equiv_toLinearMap, map_single]
+  rfl
+
+/-- Taking the inverse commutes with the induced associated graded equivalence. -/
+@[simp]
+theorem equiv_symm :
+    (F.equiv H e he).symm =
+      H.equiv F e.symm (fun n => (Submodule.map_symm_eq_iff e).mpr (he n)) := by
+  apply LinearEquiv.toLinearMap_injective
+  rfl
+
+/-- The original identity equivalence induces the identity associated graded equivalence. -/
+@[simp]
+theorem equiv_refl :
+    F.equiv F (LinearEquiv.refl R M)
+        (fun n => by
+          simpa only [LinearEquiv.refl_toLinearMap] using Submodule.map_id (F.N n)) =
+      LinearEquiv.refl C F.AssociatedGraded := by
+  apply LinearEquiv.toLinearMap_injective
+  simpa only [equiv_toLinearMap, LinearEquiv.refl_toLinearMap] using F.map_id
+
+/-- Inducing associated graded equivalences commutes with composition. -/
+theorem equiv_trans (K : I.IntFiltration P) (d : N ≃ₗ[R] P)
+    (hd : ∀ n, (H.N n).map d.toLinearMap = K.N n) :
+    F.equiv K (e.trans d)
+        (fun n => (Submodule.map_comp e.toLinearMap d.toLinearMap (F.N n)).trans
+          ((congrArg (Submodule.map d.toLinearMap) (he n)).trans (hd n))) =
+      (F.equiv H e he).trans (H.equiv K d hd) := by
+  apply LinearEquiv.toLinearMap_injective
+  change (F.equiv K (e.trans d)
+    (fun n => (Submodule.map_comp e.toLinearMap d.toLinearMap (F.N n)).trans
+      ((congrArg (Submodule.map d.toLinearMap) (he n)).trans (hd n)))).toLinearMap =
+        (H.equiv K d hd).toLinearMap.comp (F.equiv H e he).toLinearMap
+  simp only [equiv_toLinearMap]
+  exact F.map_comp H e.toLinearMap
+    (fun n => Submodule.map_le_iff_le_comap.mp (he n).le)
+    K d.toLinearMap
+    (fun n => Submodule.map_le_iff_le_comap.mp (hd n).le)
+
+end Equivalences
 
 end Ideal.IntFiltration
 
