@@ -118,6 +118,12 @@ chosen coefficient ring.
   finite-generation assumption on K**. If `Q` is Noetherian over `R` and `K` is finitely
   generated, then `G` is Noetherian over `C`. None of these results requires
   finiteness of the original `M`, Noetherianity of `R`, or finite generation of `I`.
+- **Quotient Rees augmentation.** For any ideal `I` of a commutative ring `R`,
+  [constant coefficient](GradedRings/ReesAlgebra/Augmentation.lean) induces an
+  `R/I`-algebra homomorphism from `C = reesAlgebra I / I·reesAlgebra I` to `R/I`.
+  The composite `C → R/I → C` is the degree-zero projection, and the image of
+  `R/I → C` is exactly the degree-zero component. No finiteness or nontriviality
+  assumption is needed; this does not identify the whole ring `C` with `R/I`.
 - **The regular associated graded module.** For any ideal `I` of a commutative ring
   `R`, the [regular associated graded module](GradedRings/AssociatedGradedRegular.lean)
   `Ideal.AssociatedGradedModule I R` is canonically free of rank one over

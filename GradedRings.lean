@@ -23,6 +23,7 @@ public import GradedRings.Noetherian
 public import GradedRings.PrimeMultiplicity
 public import GradedRings.Quotient
 public import GradedRings.ReesAlgebra
+public import GradedRings.ReesAlgebra.Augmentation
 public import GradedRings.ReesAlgebra.Grading
 public import GradedRings.ReesAlgebra.PowerQuotientMultiplication
 public import GradedRings.ReesAlgebra.QuotientPieces
