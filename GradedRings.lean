@@ -24,6 +24,7 @@ public import GradedRings.Quotient
 public import GradedRings.ReesAlgebra
 public import GradedRings.ReesAlgebra.Grading
 public import GradedRings.ReesModule
+public import GradedRings.AssociatedGradedRegular
 public import GradedRings.SymmetricAlgebra
 public import GradedRings.SymmetricAlgebraSquareZero
 public import GradedRings.Veronese

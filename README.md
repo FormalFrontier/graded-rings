@@ -96,6 +96,14 @@ chosen coefficient ring.
   finite-generation assumption on K**. If `Q` is Noetherian over `R` and `K` is finitely
   generated, then `G` is Noetherian over `C`. None of these results requires
   finiteness of the original `M`, Noetherianity of `R`, or finite generation of `I`.
+- **The regular associated graded module.** For any ideal `I` of a commutative ring
+  `R`, the [regular associated graded module](GradedRings/AssociatedGradedRegular.lean)
+  `Ideal.AssociatedGradedModule I R` is canonically free of rank one over
+  `C = reesAlgebra I / I·reesAlgebra I`. The equivalence `regularEquiv` sends
+  `c` to `c • regularUnit`, where the generator is the degree-zero unit class.
+  Rees-representative and every-coefficient formulas, unique scalar expressions,
+  and linear-map extensionality expose this comparison without unfolding its
+  quotients. No finiteness, completeness, separatedness or nontriviality is assumed.
 - **Symmetric algebras and first order.** [Basis-free grading and graded maps](GradedRings/SymmetricAlgebra.lean)
   are functorial for arbitrary modules over a commutative **semiring**; only
   polynomial coordinates need a basis. Over a commutative **ring**, for any
