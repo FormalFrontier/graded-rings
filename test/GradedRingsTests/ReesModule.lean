@@ -7,7 +7,7 @@ module
 import GradedRings
 
 /-!
-# A Noetherian associated graded module from its first quotient
+# Finite Rees modules and associated graded modules
 -/
 
 open Ideal
@@ -19,6 +19,18 @@ namespace GradedRingsTests.ReesModule
 
 variable {R : Type u} [CommRing R] (I : Ideal R)
 variable (M : Type v) [AddCommGroup M] [Module R M]
+
+/-- The finite-module formulation gives the power-tail criterion; with finite stages,
+the converse is precisely the reverse implication of the filtration finiteness theorem. -/
+private theorem finite_rees_iff_pow_smul (F : I.Filtration M) (hStages : ∀ i, (F.N i).FG) :
+    Module.Finite (reesAlgebra I) F.submodule ↔
+      ∃ n₀, ∀ n ≥ n₀, F.N n = I ^ (n - n₀) • F.N n₀ := by
+  constructor
+  · intro hF
+    exact (F.stable_of_submodule_fg (Module.Finite.iff_fg.mp hF)).exists_pow_smul_eq_of_ge
+  · intro hF
+    exact Module.Finite.iff_fg.mpr ((F.submodule_fg_iff_stable hStages).mpr
+      ((Ideal.Filtration.stable_iff_exists_pow_smul_eq_of_ge (F := F)).mpr hF))
 
 local notation "A" => R ⧸ I
 local notation "B" => reesAlgebra I

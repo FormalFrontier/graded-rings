@@ -41,6 +41,12 @@ chosen coefficient ring.
   For an **integer**-graded commutative ring with a positive-degree homogeneous
   unit, [homogeneous primes](GradedRings/HomogeneousPrime.lean) correspond to
   degree-zero primes by contraction and **radical** extension.
+- **Finite Rees modules and stable filtrations.** For any ideal `I` in a commutative
+  ring `R` and any `R`-module `M`, with independent universes, an
+  [`I`-filtration with finitely generated Rees module](GradedRings/ReesModule.lean)
+  is stable: `I • F.N n = F.N (n + 1)` for all sufficiently large `n`.
+  Neither `I`, the stages, nor `M` need be finitely generated. This uses the existing
+  natural-number filtration and polynomial Rees-module constructions.
 - **Associated graded modules from the first quotient.** For any ideal `I` in a
   commutative ring `R` and any `R`-module `M`, with independent universes,
   [the Rees-quotient associated graded module](GradedRings/ReesModule.lean) `G`

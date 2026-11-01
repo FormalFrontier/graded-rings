@@ -2,6 +2,11 @@
 SPDX-License-Identifier: Apache-2.0
 Authors: Formal Frontier Agents
 -/
+/-
+Copyright (c) 2022 Andrew Yang. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Andrew Yang
+-/
 module
 
 public import GradedRings.ReesAlgebra
@@ -17,7 +22,11 @@ public import Mathlib.LinearAlgebra.TensorProduct.Tower
 public import Mathlib.RingTheory.TensorProduct.Finite
 
 /-!
-# Associated graded modules of ideal-adic filtrations
+# Rees modules and associated graded modules
+
+An ideal filtration with finitely generated Rees module is stable: multiplication
+by the ideal gives the next stage in every sufficiently large degree. Neither the
+ideal, the individual stages, nor the ambient module need be finitely generated.
 
 The Rees module modulo the extended ideal carries a canonical surjection from the
 scalar extension of the first quotient of the module. More generally, for a subideal
@@ -28,6 +37,12 @@ generation of `K`. If the first quotient is Noetherian over `R` and `K` is finit
 generated, the associated graded module is Noetherian over the quotient Rees algebra.
 
 ## References
+
+The finite-Rees stability argument follows Andrew Yang's
+`Ideal.Filtration.submodule_fg_iff_stable` in Mathlib's
+[filtration theory](https://github.com/leanprover-community/mathlib4/blob/83abb3e776bdefcbc447a1e44d0debe4010039e5/Mathlib/RingTheory/Filtration.lean),
+using its bounded-degree span criterion and compactness of finitely generated submodules.
+Only the converse in that equivalence needs finite generation of the stages.
 
 For background, see K. Fujiwara and F. Kato, *Foundations of Rigid Geometry I*,
 [arXiv:1308.4734v5](https://arxiv.org/abs/1308.4734v5). The precise formulation
@@ -46,6 +61,37 @@ namespace Ideal
 
 variable {R : Type u} [CommRing R] (I : Ideal R)
 variable (M : Type v) [AddCommGroup M] [Module R M]
+
+namespace Filtration
+
+variable {I M}
+
+open PolynomialModule
+
+-- The bounded-span order homomorphism needs semireducible type comparison.
+set_option backward.isDefEq.respectTransparency.types false in
+/-- A filtration with finitely generated Rees module is stable.
+
+No finite generation of the ideal, the individual stages, or the ambient module is
+required. The bounded-degree span argument is the forward implication of Andrew Yang's
+`Ideal.Filtration.submodule_fg_iff_stable`, without its finite-stage hypothesis. -/
+theorem stable_of_submodule_fg (F : I.Filtration M) (hF : F.submodule.FG) : F.Stable := by
+  classical
+  unfold Stable
+  simp_rw [← F.submodule_eq_span_le_iff_stable_ge]
+  refine hF.stabilizes_of_iSup_eq
+    ⟨fun n₀ => Submodule.span _ (⋃ i ≤ n₀, single R i '' (F.N i : Set M)), ?_⟩ ?_
+  · intro n m hnm
+    rw [Submodule.span_le, Set.iUnion₂_subset_iff]
+    intro i hi
+    refine Set.Subset.trans ?_ Submodule.subset_span
+    refine @Set.subset_iUnion₂ _ _ _ (fun j _ => single R j '' (F.N j : Set M)) i ?_
+    exact hi.trans hnm
+  · dsimp
+    rw [← Submodule.span_iUnion, F.submodule_span_single.symm]
+    simp [Set.biUnion_le_eq_iUnion]
+
+end Filtration
 
 private theorem Filtration.mem_smul_submodule_iff (F : I.Filtration M) (K : Ideal R)
     (p : PolynomialModule R M) :
