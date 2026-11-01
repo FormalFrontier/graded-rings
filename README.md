@@ -47,15 +47,22 @@ chosen coefficient ring.
   is stable: `I • F.N n = F.N (n + 1)` for all sufficiently large `n`.
   Neither `I`, the stages, nor `M` need be finitely generated. This uses the existing
   natural-number filtration and polynomial Rees-module constructions.
-- **Integer-filtered associated graded carriers.** Over a commutative ring `R`,
+- **Integer-filtered associated gradeds and Rees actions.** Over a commutative ring `R`,
   for an antitone family of submodules of an `R`-module `M`,
   `F.N : ℤ → Submodule R M` with `I • F.N n ≤ F.N (n + 1)`, the
   [integer associated graded](GradedRings/FilteredAssociatedGraded.lean) is the
   direct sum of `F.N n` modulo the next stage inside it. It retains the original
   componentwise `R`-module structure and has a surjective coefficientwise
   representative map, with next-stage kernel and a first-isomorphism comparison.
-  No finiteness, exhaustivity, separatedness or lower bound is required.
-  The quotient-Rees scalar action is not supplied by this carrier API.
+  No finiteness, exhaustivity, separatedness, lower bound or normalization at
+  degree zero is required. The [Rees grading](GradedRings/ReesAlgebra/Grading.lean)
+  gives the polynomial Rees algebra its degree grading and its coefficient-ideal
+  quotient the image grading. On the same associated-graded carrier, the
+  [canonical representation](GradedRings/FilteredAssociatedGraded/ReesAction.lean)
+  constructs an action of `C = reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))`.
+  Constants act by the original `R`-action, and `I` annihilates the carrier.
+  For `q : ℕ`, `a ∈ I ^ q` and `m ∈ F.N n`, the class of `aX^q` sends the
+  class of `m` to the class of `a • m` in degree `n + q`.
 - **Weighted generation of integer filtrations.** For a separated, antitone
   integer-indexed filtration satisfying `I • F n ≤ F (n + 1)` over an
   `I`-adically **precomplete** commutative coefficient ring,

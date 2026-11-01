@@ -7,6 +7,7 @@ module
 public import GradedRings.CoherentTailVeronese
 public import GradedRings.FiniteType
 public import GradedRings.FilteredAssociatedGraded
+public import GradedRings.FilteredAssociatedGraded.ReesAction
 public import GradedRings.FilteredModule.WeightedSpan
 public import GradedRings.FilteredModule.Finiteness
 public import GradedRings.HomogeneousLifts
@@ -20,6 +21,7 @@ public import GradedRings.Noetherian
 public import GradedRings.PrimeMultiplicity
 public import GradedRings.Quotient
 public import GradedRings.ReesAlgebra
+public import GradedRings.ReesAlgebra.Grading
 public import GradedRings.ReesModule
 public import GradedRings.SymmetricAlgebra
 public import GradedRings.SymmetricAlgebraSquareZero
