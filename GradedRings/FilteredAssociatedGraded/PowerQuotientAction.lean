@@ -6,6 +6,7 @@ module
 
 public import GradedRings.FilteredAssociatedGraded.Coefficients
 public import GradedRings.ReesAlgebra.PowerQuotientAlgebra
+public import Mathlib.RingTheory.Finiteness.Basic
 
 /-!
 # The ideal-power quotient algebra acting on an associated graded module
@@ -25,6 +26,9 @@ Quotient-Rees-linear maps between associated gradeds commute with these scalars.
 The existing maps and linear equivalences can therefore use Mathlib's
 `restrictScalars` constructors, retaining their forward and inverse functions.
 
+Finite generation over the quotient Rees algebra gives finite generation over
+the ideal-power quotient algebra for this same action.
+
 ## Implementation notes
 
 The only module construction is Mathlib's `Module.compHom`; no new multiplication
@@ -35,6 +39,7 @@ or restriction on its integer degrees is imposed.
 
 * Mathlib's `Module.compHom`, `IsScalarTower.of_algebraMap_smul`,
   `LinearMap.CompatibleSMul` and scalar-restriction constructors.
+* Mathlib's semilinear `Module.Finite.of_surjective` for finite generation.
 * K. Fujiwara and F. Kato, *Foundations of Rigid Geometry I*, arXiv:1308.4734v5,
   Chapter 0, §7.5, for the quotient-Rees description of the associated graded action.
 -/
@@ -61,6 +66,20 @@ noncomputable instance modulePowerQuotientSum : Module D G :=
 theorem powerQuotientSum_smul (d : D) (x : G) :
     d • x = (reesAlgebra.powerQuotientSumAlgEquiv I d : C) • x :=
   rfl
+
+/-- Finite generation over the quotient Rees algebra transfers to the fixed
+ideal-power quotient action through the scalar-ring comparison. -/
+theorem moduleFinite_powerQuotientSum [Module.Finite C G] : Module.Finite D G := by
+  let gamma := (reesAlgebra.powerQuotientSumAlgEquiv I).symm
+  let f : G →ₛₗ[gamma.toRingHom] G :=
+    { toFun := id
+      map_add' := fun _ _ => rfl
+      map_smul' := by
+        intro c x
+        change c • x = gamma c • x
+        rw [F.powerQuotientSum_smul]
+        simp only [gamma, AlgEquiv.apply_symm_apply] }
+  exact Module.Finite.of_surjective f (fun x => ⟨x, rfl⟩)
 
 section ScalarRestriction
 
