@@ -33,4 +33,4 @@ weak.linter.privateModule = false
 [[lean_lib]]
 name = "GradedRingsExamples"
 srcDir = "examples"
-roots = ["QuotientLocalization", "FinitenessAndPrimes", "Symmetric", "Multiplicity"]
+roots = ["QuotientLocalization", "FinitenessAndPrimes", "Symmetric", "Multiplicity", "GradedRingsExamples.FilteredAssociatedGradedAdic"]

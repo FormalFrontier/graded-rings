@@ -43,3 +43,5 @@ public import GradedRings.VeroneseFinite
 public import GradedRings.VeroneseResidue
 public import GradedRings.VeroneseResidueModule
 public import GradedRings.VeroneseZero
+
+public import GradedRings.FilteredAssociatedGraded.Adic

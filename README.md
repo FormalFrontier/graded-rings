@@ -311,3 +311,18 @@ outside this reusable library.
 Lean and mathlib supply the foundational APIs. Authentic notices and distinct
 contributor/adaptation roles are summarized in
 [provenance and credits](docs/PROVENANCE.md).
+
+## Natural filtrations and their integer extensions
+
+`GradedRings.FilteredAssociatedGraded.Adic` extends an ideal-compatible natural
+filtration `F` of an `R`-module to an integer filtration with stage
+`F.N (Int.toNat n)`. Every nonpositive stage remains `F.N 0`; the construction
+does not require the filtration to start at the whole module. Its least-extension
+property compares stagewise inclusions with arbitrary integer filtrations.
+
+At every natural degree, including zero, the associated graded piece is canonically
+`R`-linearly equivalent to the quotient of `F.N q` by the pullback of `F.N (q+1)`.
+This equivalence preserves quotient representatives. Negative pieces of these
+extensions vanish, while general integer filtrations may have nonzero negative
+pieces. The ideal-adic extension specializes the stable filtration of the whole
+module and has stages `I ^ (Int.toNat n) • ⊤`.
