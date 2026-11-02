@@ -79,6 +79,15 @@ chosen coefficient ring.
   equivalence, compatibly with inverses, identities and composition. The modules have
   independent universes; no finiteness, exhaustivity, separatedness or lower bound is
   required.
+- **Exactness of integer associated graded maps.** For compatible original
+  linear maps `f : M →ₗ[R] N` and `g : N →ₗ[R] P`, the image of the first
+  canonical quotient-Rees-linear associated graded map equals the kernel of the
+  second exactly when, for every integer `n` and `y ∈ H.N n`, membership
+  `g y ∈ K.N (n + 1)` is equivalent to
+  `y ∈ (F.N n).map f ⊔ H.N (n + 1)`. The ambient composite need not vanish.
+  An ambient exact pair with strict stage images induces an exact pair, without
+  ambient injectivity or surjectivity. The three module universes are independent;
+  no finiteness, exhaustivity, separatedness, completeness or degree bound is needed.
 - **Ideal-power quotients and coefficient multiplication.** For any ideal `I` of a
   commutative ring `R` and every natural degree `q`, the
   [quotient of `I ^ q` by its ideal multiple](GradedRings/ReesAlgebra/QuotientPieces.lean)

@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 public import GradedRings.FilteredAssociatedGraded.ReesAction
+public import Mathlib.Algebra.Exact.Basic
 
 /-!
 # Maps and equivalences on integer-filtered associated graded modules
@@ -28,6 +29,12 @@ exactly when the source-stage image and the next target stage cover each target
 stage. Stagewise pullback and image equalities give injectivity and surjectivity,
 respectively, without requiring the original linear map to be injective or
 surjective.
+
+Exactness at the middle associated graded is equivalent to a criterion on
+original-stage representatives modulo the next stage; it does not require the
+ambient composite to vanish. An exact pair of original linear maps with strict
+stage images induces an exact pair on associated gradeds, without ambient
+injectivity or surjectivity.
 
 ## References
 
@@ -253,6 +260,134 @@ theorem map_surjective_of_map_eq (he : ∀ n : ℤ, (F.N n).map f = H.N n) :
   exact le_sup_left
 
 end MapCriteria
+
+section Exactness
+
+variable (K : I.IntFiltration P) (g : N →ₗ[R] P)
+
+/-- The canonical associated graded maps are exact at the middle module precisely
+when, for every integer stage and middle-stage representative, membership of its
+image in the next target stage is equivalent to membership of the representative
+in the source-stage image plus the next middle stage. -/
+theorem range_map_eq_ker_map_iff
+    (hg : ∀ n, H.N n ≤ (K.N n).comap g) :
+    LinearMap.range (F.map H f hf) = LinearMap.ker (H.map K g hg) ↔
+      ∀ (n : ℤ) (y : N), y ∈ H.N n →
+        (g y ∈ K.N (n + 1) ↔ y ∈ (F.N n).map f ⊔ H.N (n + 1)) := by
+  -- Exactness depends only on the functions, so compare the existing original-linear maps.
+  rw [eq_comm, ← LinearMap.exact_iff]
+  change Function.Exact (mapR F H f hf) (mapR H K g hg) ↔ _
+  have hpieces :
+      Function.Exact (mapR F H f hf) (mapR H K g hg) ↔
+        ∀ n : ℤ, LinearMap.ker (pieceMap H K g hg n) =
+          LinearMap.range (pieceMap F H f hf n) := by
+    constructor
+    · intro h n
+      apply LinearMap.exact_iff.mp
+      intro z
+      constructor
+      · intro hz
+        obtain ⟨x, hx⟩ := (h (H.inclusion n z)).mp (by
+          rw [mapR_inclusion, hz, map_zero])
+        refine ⟨F.component n x, ?_⟩
+        simpa only [component_mapR, component_inclusion] using
+          congrArg (H.component n) hx
+      · rintro ⟨x, rfl⟩
+        have hz := (h (H.inclusion n (pieceMap F H f hf n x))).mpr
+          ⟨F.inclusion n x, mapR_inclusion F H f hf n x⟩
+        simpa only [mapR_inclusion, component_inclusion, map_zero] using
+          congrArg (K.component n) hz
+    · intro h
+      apply LinearMap.exact_iff.mpr
+      -- The stock direct-sum range formula supplies finite-support lifting.
+      change LinearMap.ker (DirectSum.lmap (pieceMap H K g hg)) =
+        LinearMap.range (DirectSum.lmap (pieceMap F H f hf))
+      simp only [DirectSum.ker_lmap, DirectSum.range_lmap, h]
+  have hpiece (n : ℤ) :
+      LinearMap.ker (pieceMap H K g hg n) =
+          LinearMap.range (pieceMap F H f hf n) ↔
+        ∀ y : N, y ∈ H.N n →
+          (g y ∈ K.N (n + 1) ↔ y ∈ (F.N n).map f ⊔ H.N (n + 1)) := by
+    have hrange :
+        (LinearMap.range (stageMap F H f hf n)).map (H.N n).subtype =
+          (F.N n).map f := by
+      rw [← LinearMap.range_comp]
+      change LinearMap.range (f.comp (F.N n).subtype) = (F.N n).map f
+      rw [LinearMap.range_comp, Submodule.range_subtype]
+    have hnext : (H.nextStage n).map (H.N n).subtype = H.N (n + 1) := by
+      rw [nextStage, Submodule.map_comap_subtype,
+        inf_eq_right.mpr (H.antitone (by lia))]
+    have hsup :
+        ((F.N n).map f ⊔ H.N (n + 1)).comap (H.N n).subtype =
+          LinearMap.range (stageMap F H f hf n) ⊔ H.nextStage n := by
+      rw [← hrange, ← hnext, Submodule.comap_sup_map_of_injective
+        (show Function.Injective (H.N n).subtype from Subtype.coe_injective)]
+    -- Rebuild the quotient kernel and range with their canonical quotient instances.
+    change LinearMap.ker ((H.nextStage n).mapQ (K.nextStage n)
+        (stageMap H K g hg n) (nextStage_le_comap H K g hg n)) =
+      LinearMap.range ((F.nextStage n).mapQ (H.nextStage n)
+        (stageMap F H f hf n) (nextStage_le_comap F H f hf n)) ↔ _
+    -- Pull back the two quotient images along the surjective middle quotient map.
+    -- Its denominator is already contained in the preimage of the next target stage.
+    rw [Submodule.ker_mapQ, Submodule.range_mapQ,
+      ← (Submodule.comap_injective_of_surjective (H.nextStage n).mkQ_surjective).eq_iff,
+      Submodule.comap_map_mkQ, Submodule.comap_map_mkQ,
+      sup_eq_right.mpr (nextStage_le_comap H K g hg n),
+      sup_comm (H.nextStage n), ← hsup]
+    constructor
+    · intro h y hy
+      exact SetLike.ext_iff.mp h ⟨y, hy⟩
+    · intro h
+      ext y
+      exact h (y : N) y.property
+  rw [hpieces]
+  constructor
+  · intro h n
+    exact (hpiece n).mp (h n)
+  · intro h n
+    exact (hpiece n).mpr (h n)
+
+/-- An exact pair of original linear maps with strict stage images induces an
+exact pair of canonical associated graded maps. The strict image equalities
+already supply the preservation proofs needed by the canonical maps. -/
+theorem map_exact_of_strict
+    (hfg : Function.Exact f g)
+    (hf_strict : ∀ n : ℤ, (F.N n).map f = LinearMap.range f ⊓ H.N n)
+    (hg_strict : ∀ n : ℤ, (H.N n).map g = LinearMap.range g ⊓ K.N n) :
+    Function.Exact
+      (F.map H f (fun n => Submodule.map_le_iff_le_comap.mp
+        ((hf_strict n).le.trans inf_le_right)))
+      (H.map K g (fun n => Submodule.map_le_iff_le_comap.mp
+        ((hg_strict n).le.trans inf_le_right))) := by
+  let hf_pres : ∀ n, F.N n ≤ (H.N n).comap f := fun n =>
+    Submodule.map_le_iff_le_comap.mp ((hf_strict n).le.trans inf_le_right)
+  let hg_pres : ∀ n, H.N n ≤ (K.N n).comap g := fun n =>
+    Submodule.map_le_iff_le_comap.mp ((hg_strict n).le.trans inf_le_right)
+  apply LinearMap.exact_iff.mpr
+  refine ((F.range_map_eq_ker_map_iff H f hf_pres K g hg_pres).mpr ?_).symm
+  intro n y hy
+  constructor
+  · intro hgy
+    -- Lift the next-stage image before using ambient exactness on the difference.
+    have hgy_map : g y ∈ (H.N (n + 1)).map g :=
+      (hg_strict (n + 1)).ge ⟨⟨y, rfl⟩, hgy⟩
+    obtain ⟨y', hy', hgy'⟩ := Submodule.mem_map.mp hgy_map
+    have hy_sub : y - y' ∈ H.N n :=
+      (H.N n).sub_mem hy (H.antitone (le_add_of_nonneg_right zero_le_one) hy')
+    have hgy_sub : g (y - y') = 0 := by
+      rw [map_sub, hgy', sub_self]
+    have hy_range : y - y' ∈ LinearMap.range f := (hfg (y - y')).mp hgy_sub
+    have hy_map : y - y' ∈ (F.N n).map f :=
+      (hf_strict n).ge ⟨hy_range, hy_sub⟩
+    exact Submodule.mem_sup.mpr ⟨y - y', hy_map, y', hy', sub_add_cancel _ _⟩
+  · intro hy_sup
+    obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.mp hy_sup
+    obtain ⟨z, _, rfl⟩ := Submodule.mem_map.mp ha
+    have hgf : g (f z) = 0 := (hfg (f z)).mpr ⟨z, rfl⟩
+    rw [← hab, map_add, hgf, zero_add]
+    exact hg_pres (n + 1) hb
+
+end Exactness
 
 section Equivalences
 
