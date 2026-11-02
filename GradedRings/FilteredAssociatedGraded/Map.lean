@@ -171,6 +171,11 @@ theorem map_single (n : ℤ) (m : F.N n) :
     F.map H f hf (F.single n m) = H.single n ⟨f (m : M), hf n m.property⟩ := by
   exact mapR_single F H f hf n m
 
+/-- Taking a component commutes with the induced associated graded map. -/
+theorem component_map (n : ℤ) (z : F.AssociatedGraded) :
+    H.component n (F.map H f hf z) = pieceMap F H f hf n (F.component n z) := by
+  exact component_mapR F H f hf n z
+
 /-- The identity map induces the identity on the associated graded module. -/
 @[simp]
 theorem map_id :

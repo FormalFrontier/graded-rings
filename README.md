@@ -80,6 +80,16 @@ chosen coefficient ring.
   commutes with each coefficient map via the ordinary quotient by
   `I ^ (q + 1) • ⊤`. Identities and composition are preserved, without finiteness
   or completeness assumptions.
+- **Naturality of the ideal-adic comparison.** Every original-`R`-linear map
+  `f : M →ₗ[R] N` induces the [canonical integer-adic map](GradedRings/FilteredAssociatedGraded/AdicMap.lean)
+  `Ideal.adicAssociatedGradedHom I f`, linear over the existing quotient Rees
+  algebra, with representative, component, identity and composition laws.
+  The [comparison and its inverse are natural](GradedRings/FilteredAssociatedGraded/AdicComparisonNaturality.lean)
+  for this map and the independently defined quotient Rees map: both forward
+  routes send `[m]` in degree `q : ℕ` to the old polynomial singleton class
+  of `f m` in degree `q`. The original scalar actions and independent module
+  universes are retained, with no finiteness, completeness, separatedness or
+  nontriviality assumption.
 - **Residue-linear integer graded pieces.** For the same arbitrary ideal-compatible
   integer filtration, the [original pieces](GradedRings/FilteredAssociatedGraded/Pieces.lean)
   carry named `R ⧸ I`-module structures compatible with their original `R` actions.
@@ -367,6 +377,17 @@ modules need only send `F.N n` into `H.N n` for **every integer** `n`.
 `F.map H f hf` is linear over the same quotient-Rees coefficient ring, using
 the canonical actions, and has representative, identity and composition formulas.
 Stage preservation is an inclusion, not an equality or surjectivity condition.
+
+[`FilteredAssociatedGraded.AdicMap`](GradedRings/FilteredAssociatedGraded/AdicMap.lean)
+provides `Ideal.adicAssociatedGradedHom I f` without a separate stage-preservation
+argument: the stock ideal-smul inclusion preserves `I ^ n.toNat • ⊤` in every
+integer degree. Its singleton and component formulas specialize the generic map;
+identities and composition are preserved.
+[`FilteredAssociatedGraded.AdicComparisonNaturality`](GradedRings/FilteredAssociatedGraded/AdicComparisonNaturality.lean)
+exports `adicAssociatedGradedEquiv_naturality`, its inverse square
+`adicAssociatedGradedEquiv_symm_naturality`, and the natural-degree endpoint
+`adicAssociatedGradedEquiv_hom_single`. The existing comparison
+`Ideal.adicAssociatedGradedMap` is distinct from the map induced by `f`.
 
 [Residue coefficients](GradedRings/FilteredAssociatedGraded/Coefficients.lean)
 act on the same whole associated graded by restricting the canonical quotient-Rees

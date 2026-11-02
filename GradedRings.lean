@@ -56,6 +56,8 @@ public import GradedRings.VeroneseResidueModule
 public import GradedRings.VeroneseZero
 
 public import GradedRings.FilteredAssociatedGraded.Adic
+public import GradedRings.FilteredAssociatedGraded.AdicMap
 public import GradedRings.FilteredAssociatedGraded.AdicComparison
+public import GradedRings.FilteredAssociatedGraded.AdicComparisonNaturality
 public import GradedRings.ReesAlgebra.Generation
 public import GradedRings.ReesAlgebra.SymmetricAlgebra
