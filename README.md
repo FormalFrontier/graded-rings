@@ -456,7 +456,11 @@ polynomial and associated-graded carriers with their existing actions.
 [`ReesModule.Map`](GradedRings/ReesModule/Map.lean) also provides
 `E.reesMap L f hf` for arbitrary natural ideal filtrations and stage-preserving
 `R`-linear maps. Every coefficient is sent through `f`, with singleton, identity
-and composition formulas. At any common integer cutoff, these maps commute with
+and composition formulas. Its [range](GradedRings/ReesModule/Range.lean) consists
+exactly of target elements whose degree-`q` coefficient lies in `(E.N q).map f`
+for every natural `q`; it is surjective exactly when `(E.N q).map f = L.N q` for
+every `q`, without requiring ambient surjectivity or stage-zero normalization.
+At any common integer cutoff, these maps commute with
 the prescribed shifted projections and the existing map on full integer associated
 gradeds, as [semilinear maps along the same quotient of the Rees algebra](GradedRings/FilteredAssociatedGraded/ReesProjectionNaturality.lean).
 

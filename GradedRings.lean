@@ -46,6 +46,7 @@ public import GradedRings.ReesModule
 public import GradedRings.ReesModule.FiniteGeneration
 public import GradedRings.ReesModule.HomogeneousGenerators
 public import GradedRings.ReesModule.Map
+public import GradedRings.ReesModule.Range
 public import GradedRings.AssociatedGradedRegular
 public import GradedRings.SymmetricAlgebra
 public import GradedRings.SymmetricAlgebraSquareZero
