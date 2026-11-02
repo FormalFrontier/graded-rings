@@ -146,6 +146,14 @@ chosen coefficient ring.
   The submodule filtration is induced, not intrinsic ideal-adic. Representative
   formulas and the quotient universal property apply in all integer degrees,
   with no finiteness, normalization, separation or completeness hypotheses.
+- **Naturality of associated graded subquotients.** For ideal-compatible integer
+  filtrations `F`, `H` on independently universed modules over a commutative ring
+  `R`, a stage-preserving `R`-linear map `f` with `f(S) ≤ T` commutes with the
+  [induced-submodule and quotient maps](GradedRings/FilteredAssociatedGraded/SubquotientNaturality.lean).
+  The subquotient equivalences intertwine the quotient-by-range map induced by
+  the ambient associated graded map with the associated graded original quotient
+  map, over the canonical quotient Rees actions. No strictness, ambient
+  injectivity or surjectivity, finiteness or degree bound is required.
 - **Ideal-power quotients and coefficient multiplication.** For any ideal `I` of a
   commutative ring `R` and every natural degree `q`, the
   [quotient of `I ^ q` by its ideal multiple](GradedRings/ReesAlgebra/QuotientPieces.lean)
