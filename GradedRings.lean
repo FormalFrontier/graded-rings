@@ -9,6 +9,7 @@ public import GradedRings.FiniteType
 public import GradedRings.FilteredAssociatedGraded
 public import GradedRings.FilteredAssociatedGraded.ReesAction
 public import GradedRings.FilteredAssociatedGraded.Map
+public import GradedRings.FilteredAssociatedGraded.Prod
 public import GradedRings.FilteredAssociatedGraded.Coefficients
 public import GradedRings.FilteredAssociatedGraded.Shift
 public import GradedRings.FilteredAssociatedGraded.FiniteGeneration

@@ -103,6 +103,14 @@ chosen coefficient ring.
   and surjective onto the image, without ambient injectivity or surjectivity.
   No degree-zero normalization, finiteness, exhaustivity, separation, completeness
   or degree bound is imposed.
+- **Binary products of integer filtrations.** For any ideal `I` of a commutative
+  ring `R` and ideal-compatible integer filtrations `F`, `H` on independently
+  universed `R`-modules `M`, `N`, the product has stages `(F.N n).prod (H.N n)`
+  on the original `M × N`. Its [associated graded comparison](GradedRings/FilteredAssociatedGraded/Prod.lean)
+  is linear over `C = reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))`
+  for the canonical actions, with forward map given by the two projections and
+  inverse given by the sum of the two inclusions. No degree-zero normalization,
+  finiteness, exhaustivity, separatedness, completeness or degree bound is required.
 - **Exactness of integer associated graded maps.** For compatible original
   linear maps `f : M →ₗ[R] N` and `g : N →ₗ[R] P`, the image of the first
   canonical quotient-Rees-linear associated graded map equals the kernel of the

@@ -487,5 +487,43 @@ theorem equiv_trans (K : I.IntFiltration P) (d : N ≃ₗ[R] P)
 
 end Equivalences
 
+section AdditiveMaps
+
+/-- The zero original map induces the zero associated graded map. -/
+@[simp]
+theorem map_zero :
+    F.map H (0 : M →ₗ[R] N) (fun n _ _ => (H.N n).zero_mem) =
+      (0 : F.AssociatedGraded →ₗ[C] H.AssociatedGraded) := by
+  have h :
+      mapR F H (0 : M →ₗ[R] N) (fun n _ _ => (H.N n).zero_mem) =
+        (0 : F.AssociatedGraded →ₗ[R] H.AssociatedGraded) := by
+    apply F.linearMap_ext
+    intro n m
+    rw [mapR_single]
+    exact _root_.map_zero (H.single n)
+  apply LinearMap.ext
+  intro z
+  exact LinearMap.congr_fun h z
+
+/-- Inducing maps on associated gradeds preserves sums of stage-preserving maps. -/
+theorem map_add (f g : M →ₗ[R] N)
+    (hf : ∀ n, F.N n ≤ (H.N n).comap f)
+    (hg : ∀ n, F.N n ≤ (H.N n).comap g) :
+    F.map H (f + g) (fun n _ hm => (H.N n).add_mem (hf n hm) (hg n hm)) =
+      F.map H f hf + F.map H g hg := by
+  have h :
+      mapR F H (f + g) (fun n _ hm => (H.N n).add_mem (hf n hm) (hg n hm)) =
+        mapR F H f hf + mapR F H g hg := by
+    apply F.linearMap_ext
+    intro n m
+    simp only [LinearMap.add_apply, mapR_single]
+    exact _root_.map_add (H.single n) (stageMap F H f hf n m)
+      (stageMap F H g hg n m)
+  apply LinearMap.ext
+  intro z
+  exact LinearMap.congr_fun h z
+
+end AdditiveMaps
+
 end Ideal.IntFiltration
 

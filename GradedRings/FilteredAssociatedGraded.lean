@@ -6,6 +6,7 @@ module
 
 public import Mathlib.Algebra.DirectSum.Module
 public import Mathlib.LinearAlgebra.Isomorphisms
+public import Mathlib.LinearAlgebra.Span.Basic
 public import Mathlib.RingTheory.Filtration
 public import Mathlib.RingTheory.Ideal.Operations
 
@@ -75,6 +76,31 @@ theorem ext {F F' : I.IntFiltration M} (h : ∀ n, F.N n = F'.N n) : F = F' := b
 theorem mk_N (N : ℤ → Submodule R M) (hN : Antitone N)
     (hI : ∀ n : ℤ, I • N n ≤ N (n + 1)) :
     (IntFiltration.mk N hN hI).N = N := rfl
+
+section Products
+
+variable {N : Type w} [AddCommGroup N] [Module R N]
+variable (F : I.IntFiltration M) (H : I.IntFiltration N)
+
+/-- The product filtration on the original product module. -/
+def prod : I.IntFiltration (M × N) where
+  N := fun n => (F.N n).prod (H.N n)
+  antitone := fun _ _ h => Submodule.prod_mono (F.antitone h) (H.antitone h)
+  smul_le := fun n => Submodule.smul_le.mpr (fun _ hr _ hp =>
+    ⟨F.smul_le n (Submodule.smul_mem_smul hr hp.1),
+      H.smul_le n (Submodule.smul_mem_smul hr hp.2)⟩)
+
+/-- Each stage of the product filtration is the product of the two stages. -/
+@[simp]
+theorem prod_N (n : ℤ) : (F.prod H).N n = (F.N n).prod (H.N n) := by
+  rfl
+
+/-- Membership in a product stage is membership of both original coordinates. -/
+theorem mem_prod (n : ℤ) (p : M × N) :
+    p ∈ (F.prod H).N n ↔ p.1 ∈ F.N n ∧ p.2 ∈ H.N n := by
+  rfl
+
+end Products
 
 section Transport
 

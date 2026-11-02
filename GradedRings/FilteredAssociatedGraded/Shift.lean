@@ -181,7 +181,7 @@ private theorem shiftR_smul (d : ℤ) (c : C) (z : (F.shift d).AssociatedGraded)
         (reesAlgebra.mem_quotientHomogeneousComponent_iff I _ (c : C)).mp c.property
       obtain ⟨a, ha⟩ := (reesAlgebra.mem_homogeneousComponent_iff I _ p).mp hp
       simpa only [ha, hpc] using shiftR_monomial_smul F d _ a z
-  | add c c' hc hc' => simp only [add_smul, map_add, hc, hc']
+  | add c c' hc hc' => simp only [add_smul, _root_.map_add, hc, hc']
 
 /-- Reindex a translated associated graded, linearly for its quotient Rees action. -/
 noncomputable def shiftEquiv (d : ℤ) :
