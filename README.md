@@ -157,6 +157,15 @@ chosen coefficient ring.
   multiplication is `powerQuotientMul`. The equivalence sends each homogeneous
   insertion to its quotient monomial; its inverse decomposes arbitrary elements
   into coefficient classes. No finiteness or nontriviality assumption is needed.
+- **Ideal-power quotients acting on integer associated gradeds.** The
+  [ideal-power quotient action](GradedRings/FilteredAssociatedGraded/PowerQuotientAction.lean)
+  restricts the existing quotient-Rees action along
+  `powerQuotientSumAlgEquiv I : D ≃ₐ[R ⧸ I] C`, in the direction `D → C`,
+  where `D = reesAlgebra.powerQuotientSum I`. Use
+  `powerQuotientSum_of_mk_smul_single` to send `[a]` in degree `q` and `[m]`
+  in degree `n` to `[a • m]` in degree `n + q`. The original `R`, `R ⧸ I`
+  and `C` actions are unchanged, and both coefficient actions form scalar towers
+  with the `D`-action. No additional filtration hypotheses are required.
 - **Weighted generation of integer filtrations.** For a separated, antitone
   integer-indexed filtration satisfying `I • F n ≤ F (n + 1)` over an
   `I`-adically **precomplete** commutative coefficient ring,
