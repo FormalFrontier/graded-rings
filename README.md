@@ -98,7 +98,9 @@ chosen coefficient ring.
   gradeds linearly over the canonical quotient Rees algebra, taking degree `n`
   to degree `n + d`. Representative, inclusion, component and residue-scalar
   formulas accompany zero, composition and inverse identities using the
-  canonical filtration comparisons. No additional hypotheses are needed.
+  canonical filtration comparisons. Translation commutes with maps induced by
+  stage-preserving `R`-linear maps, both on the whole associated graded and on each
+  graded piece. No additional hypotheses are needed.
 - **Pullbacks and images of integer filtrations.** Pullback and image along an
   original-`R`-linear map have the submodule inverse images and direct images as
   their integer stages. They preserve ideal compatibility, respect identities

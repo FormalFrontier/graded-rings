@@ -72,12 +72,19 @@ private theorem nextStage_le_comap (n : ℤ) :
   intro m hm
   exact hf (n + 1) hm
 
-private def pieceMap (n : ℤ) : F.GradedPiece n →ₗ[R] H.GradedPiece n :=
+/-- The map on graded pieces induced by a stage-preserving `R`-linear map. -/
+@[no_expose]
+def pieceMap (n : ℤ) : F.GradedPiece n →ₗ[R] H.GradedPiece n :=
   (F.nextStage n).mapQ (H.nextStage n) (stageMap F H f hf n)
     (nextStage_le_comap F H f hf n)
 
-private theorem pieceMap_cl (n : ℤ) (m : F.N n) :
-    pieceMap F H f hf n (F.cl n m) = H.cl n (stageMap F H f hf n m) := rfl
+private theorem pieceMap_cl_aux (n : ℤ) (m : F.N n) :
+    pieceMap F H f hf n (F.cl n m) = H.cl n ⟨f (m : M), hf n m.property⟩ := rfl
+
+/-- The induced map sends a stage class to the class of its image. -/
+theorem pieceMap_cl (n : ℤ) (m : F.N n) :
+    pieceMap F H f hf n (F.cl n m) = H.cl n ⟨f (m : M), hf n m.property⟩ := by
+  exact pieceMap_cl_aux F H f hf n m
 
 private def mapR : F.AssociatedGraded →ₗ[R] H.AssociatedGraded :=
   DirectSum.lmap (pieceMap F H f hf)
@@ -286,7 +293,7 @@ theorem map_surjective_iff :
     obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.mp (h n y.property)
     obtain ⟨x, hx, rfl⟩ := Submodule.mem_map.mp ha
     refine ⟨F.cl n ⟨x, hx⟩, ?_⟩
-    rw [pieceMap_cl, H.cl_eq_cl_iff, stageMap_coe, ← hab,
+    rw [pieceMap_cl, H.cl_eq_cl_iff, ← hab,
       sub_add_eq_sub_sub, sub_self, zero_sub]
     exact (H.N (n + 1)).neg_mem hb
 

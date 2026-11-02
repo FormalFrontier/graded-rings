@@ -20,6 +20,10 @@ The zero, composition and inverse identities use `LinearEquiv.cast` on the
 family of associated graded modules. No normalization, boundedness, finiteness,
 exhaustivity or separatedness assumption is needed.
 
+Stage-preserving original-linear maps commute with translation, both on the
+whole associated graded over the quotient Rees algebra and on each piece over
+the original ring. The inverse naturality identity follows from the forward one.
+
 ## References
 
 * Mathlib's `Submodule.quotEquivOfEq`, `DirectSum.congrLinearEquiv`,
@@ -30,7 +34,7 @@ exhaustivity or separatedness assumption is needed.
 
 @[expose] public section
 
-universe u v
+universe u v w
 
 open scoped DirectSum
 
@@ -367,5 +371,77 @@ theorem shiftEquiv_symm (d : ℤ) :
   intro y
   obtain ⟨x, rfl⟩ := E.surjective y
   exact LinearMap.congr_fun h x
+
+variable {N : Type w} [AddCommGroup N] [Module R N]
+variable (H : I.IntFiltration N) (f : M →ₗ[R] N)
+  (hf : ∀ k : ℤ, F.N k ≤ (H.N k).comap f)
+
+/-- Translation is natural for associated graded maps over the quotient Rees algebra. -/
+theorem shiftEquiv_map (d : ℤ) :
+    (H.shiftEquiv d).toLinearMap.comp
+        ((F.shift d).map (H.shift d) f (fun k => hf (k + d))) =
+      (F.map H f hf).comp (F.shiftEquiv d).toLinearMap := by
+  apply LinearMap.restrictScalars_injective R
+  apply (F.shift d).linearMap_ext
+  intro n m
+  simp only [LinearMap.restrictScalars_apply, LinearMap.comp_apply,
+    LinearEquiv.coe_toLinearMap]
+  calc
+    H.shiftEquiv d
+        ((F.shift d).map (H.shift d) f (fun k => hf (k + d))
+          ((F.shift d).single n m)) =
+        H.shiftEquiv d
+          ((H.shift d).single n ⟨f (m : M), hf (n + d) m.property⟩) :=
+      congrArg (H.shiftEquiv d : (H.shift d).AssociatedGraded → H.AssociatedGraded)
+        ((F.shift d).map_single (H.shift d) f (fun k => hf (k + d)) n m)
+    _ = H.single (n + d) ⟨f (m : M), hf (n + d) m.property⟩ :=
+      H.shiftEquiv_single d n ⟨f (m : M), hf (n + d) m.property⟩
+    _ = F.map H f hf (F.single (n + d) ⟨(m : M), m.property⟩) :=
+      (F.map_single H f hf (n + d) ⟨(m : M), m.property⟩).symm
+    _ = F.map H f hf (F.shiftEquiv d ((F.shift d).single n m)) :=
+      congrArg (F.map H f hf : F.AssociatedGraded → H.AssociatedGraded)
+        (F.shiftEquiv_single d n m).symm
+
+/-- Inverse translation is natural for associated graded maps over the quotient Rees algebra. -/
+theorem shiftEquiv_symm_map (d : ℤ) :
+    (H.shiftEquiv d).symm.toLinearMap.comp (F.map H f hf) =
+      ((F.shift d).map (H.shift d) f (fun k => hf (k + d))).comp
+        (F.shiftEquiv d).symm.toLinearMap := by
+  apply LinearMap.ext
+  intro y
+  apply (H.shiftEquiv d).injective
+  simpa only [LinearMap.comp_apply, LinearEquiv.coe_toLinearMap,
+    LinearEquiv.apply_symm_apply] using
+    (LinearMap.congr_fun (F.shiftEquiv_map H f hf d)
+      ((F.shiftEquiv d).symm y)).symm
+
+/-- Translation of a fixed graded piece is natural for induced maps over the original ring. -/
+theorem shiftGradedPieceEquiv_pieceMap (d n : ℤ) :
+    (H.shiftGradedPieceEquiv d n).toLinearMap.comp
+        ((F.shift d).pieceMap (H.shift d) f (fun k => hf (k + d)) n) =
+      (F.pieceMap H f hf (n + d)).comp
+        (F.shiftGradedPieceEquiv d n).toLinearMap := by
+  apply LinearMap.ext
+  intro a
+  obtain ⟨m, rfl⟩ := (F.shift d).cl_surjective n a
+  simp only [LinearMap.comp_apply, LinearEquiv.coe_toLinearMap]
+  calc
+    H.shiftGradedPieceEquiv d n
+        ((F.shift d).pieceMap (H.shift d) f (fun k => hf (k + d)) n
+          ((F.shift d).cl n m)) =
+        H.shiftGradedPieceEquiv d n
+          ((H.shift d).cl n ⟨f (m : M), hf (n + d) m.property⟩) :=
+      congrArg (H.shiftGradedPieceEquiv d n :
+          (H.shift d).GradedPiece n → H.GradedPiece (n + d))
+        ((F.shift d).pieceMap_cl (H.shift d) f (fun k => hf (k + d)) n m)
+    _ = H.cl (n + d) ⟨f (m : M), hf (n + d) m.property⟩ :=
+      H.shiftGradedPieceEquiv_cl d n ⟨f (m : M), hf (n + d) m.property⟩
+    _ = F.pieceMap H f hf (n + d) (F.cl (n + d) ⟨(m : M), m.property⟩) :=
+      (F.pieceMap_cl H f hf (n + d) ⟨(m : M), m.property⟩).symm
+    _ = F.pieceMap H f hf (n + d)
+        (F.shiftGradedPieceEquiv d n ((F.shift d).cl n m)) :=
+      congrArg (F.pieceMap H f hf (n + d) :
+          F.GradedPiece (n + d) → H.GradedPiece (n + d))
+        (F.shiftGradedPieceEquiv_cl d n m).symm
 
 end Ideal.IntFiltration
