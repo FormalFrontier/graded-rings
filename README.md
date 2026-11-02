@@ -137,6 +137,14 @@ chosen coefficient ring.
   maps preserve this multiplication and send that class of `1` to the quotient
   Rees unit. No finiteness, Noetherianity, nontriviality or positive-degree
   assumption is needed.
+- **The algebra of ideal-power quotients.** The
+  [direct sum of the ideal-power quotients](GradedRings/ReesAlgebra/PowerQuotientAlgebra.lean)
+  is an `R ⧸ I`-algebra canonically equivalent to the coefficient-ideal quotient
+  of the Rees algebra. It retains componentwise addition and the original `R` and
+  `R ⧸ I` actions. Its unit is the degree-zero class of `1`, and homogeneous
+  multiplication is `powerQuotientMul`. The equivalence sends each homogeneous
+  insertion to its quotient monomial; its inverse decomposes arbitrary elements
+  into coefficient classes. No finiteness or nontriviality assumption is needed.
 - **Weighted generation of integer filtrations.** For a separated, antitone
   integer-indexed filtration satisfying `I • F n ≤ F (n + 1)` over an
   `I`-adically **precomplete** commutative coefficient ring,
