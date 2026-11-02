@@ -18,8 +18,9 @@ lower-degree singles without enlarging the submodule.
 
 No finiteness of the ideal, the individual filtration stages, or the ambient
 module is assumed. The family may be empty, and the initial stage need not be
-the whole module. This is a generator-extraction result, not a weighted formula
-for the individual stages.
+the whole module. Finite generation is equivalent to the existence of one finite
+weighted family describing every natural stage as a sum of ideal-power multiples
+of its cyclic submodules over the original ring.
 
 ## References
 
@@ -87,5 +88,25 @@ theorem exists_fin_generating_family_single_le_of_submodule_fg
     · subst j
       exact H.antitone (Nat.le_of_lt_succ q.isLt) (hx i)
     · exact (H.N j).zero_mem
+
+/-- The Rees submodule is finitely generated exactly when every natural stage
+has one finite weighted normal form over the original ring.
+
+The weights and elements are shared by all stages. No finite generation of the
+ideal, the individual stages, or the ambient module is assumed. -/
+theorem submodule_fg_iff_exists_weighted_normal_form (H : I.Filtration M) :
+    H.submodule.FG ↔
+      ∃ (m : ℕ) (w : Fin m → ℕ) (x : Fin m → M),
+        ∀ n : ℕ,
+          H.N n = ⨆ i : Fin m,
+            I ^ (n - w i) • Submodule.span R ({x i} : Set M) := by
+  constructor
+  · intro hfg
+    obtain ⟨m, w, x, _, hspan⟩ :=
+      H.exists_fin_generating_family_single_le_of_submodule_fg hfg
+    exact ⟨m, w, x,
+      H.weighted_normal_form_of_submodule_eq_span_range_single w x hspan⟩
+  · rintro ⟨m, w, x, hnormal⟩
+    exact H.submodule_fg_of_weighted_normal_form w x hnormal
 
 end Ideal.Filtration

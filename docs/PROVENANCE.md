@@ -113,8 +113,22 @@ This is distinct from the first-quotient associated-graded finiteness constructi
 The finite homogeneous Rees generating family uses Andrew Yang's filtration
 and polynomial-module APIs and Johan Commelin's finite-span extraction API.
 Its all-lower-degree form follows the existing Formal Frontier weighted-normal-form
-formalization in `GradedRings.ReesModule.FiniteGeneration`. This new bridge calls
-the imported APIs; it does not copy their implementations.
+formalization in `GradedRings.ReesModule.FiniteGeneration`. The finite weighted
+characterization combines this generating family with the same-family weighted
+span equivalence and the finite-index finite-generation theorem. These bridges
+call the imported APIs rather than copy their implementations.
+
+[Rees-module evaluation](../GradedRings/ReesModule/Evaluation.lean) restricts
+Andrew Yang's `PolynomialModule.eval` to the original initial filtration stage,
+using Mathlib's generic semilinear codomain restriction and the original
+constant-single map. Its naturality follows the library's coefficientwise
+Rees-map construction and Mathlib's `PolynomialModule.eval_map`. The initial-stage
+finite-generation consequence uses Johan Commelin's
+`Module.Finite.of_surjective`; it requires no surjectivity of the scalar hom.
+The coefficient-zero bridge `PolynomialModule.eval_zero` has only the hypotheses
+required by Mathlib's polynomial module. These are original bridges through
+imported APIs, not copies of their implementations or assertions of a
+source-specific theorem correspondence.
 
 Lean and mathlib supply the formal language and reusable graded-algebra,
 localization, polynomial, ideal, symmetric-algebra, multiplicity and valuation

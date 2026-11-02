@@ -43,6 +43,7 @@ public import GradedRings.ReesAlgebra.PowerQuotientAlgebra
 public import GradedRings.ReesAlgebra.PowerQuotientMultiplication
 public import GradedRings.ReesAlgebra.QuotientPieces
 public import GradedRings.ReesModule
+public import GradedRings.ReesModule.Evaluation
 public import GradedRings.ReesModule.FiniteGeneration
 public import GradedRings.ReesModule.HomogeneousGenerators
 public import GradedRings.ReesModule.Lattice

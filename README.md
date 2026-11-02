@@ -67,16 +67,29 @@ chosen coefficient ring.
   family whose Rees submodules are finitely generated over `reesAlgebra I`, the
   supremum filtration again has a finitely generated Rees submodule; no finiteness
   of the ideal, individual stages, or ambient module is required.
-- **Finite homogeneous generators for Rees modules.** For any ideal `I` of a
-  commutative ring `R` and any `R`-module `M`, a natural `I`-filtration with
-  finitely generated Rees module admits a finite family `x i ∈ H.N (w i)`
-  such that all `single R q (x i)` with `q ≤ w i` span that same Rees module
-  over `reesAlgebra I`
-  ([`exists_fin_generating_family_single_le_of_submodule_fg`](GradedRings/ReesModule/HomogeneousGenerators.lean)).
-  Ring and module universes are independent; the family may be empty. No
-  finiteness of the ideal, stages, or ambient module, or normalization at degree
-  zero is required. This extracts generators; it does not assert a weighted
-  normal form for the stages.
+- **Rees-module evaluation and initial-stage finiteness.** For any ideal `I` of
+  a commutative ring `R`, any `R`-module `M` and natural `I`-filtration `H`,
+  [evaluation at every `r : R`](GradedRings/ReesModule/Evaluation.lean) maps
+  `H.submodule` onto the original `H.N 0`, semilinearly along polynomial
+  evaluation composed with the Rees-algebra inclusion. The original-`R`-linear
+  constant-single map is a section at every point; the maps are natural under
+  stage-preserving linear maps. At zero this is the constant-coefficient
+  augmentation, and `H.submodule.FG` implies `(H.N 0).FG`. No ideal, stage or
+  ambient finiteness, stability or zero-stage normalization is assumed, and
+  ring and module universes are independent. No kernel-product identification
+  or quotient equivalence is asserted.
+- **Finite weighted normal forms for Rees modules.** For any ideal `I` of a
+  commutative ring `R` and any `R`-module `M`, a natural `I`-filtration has
+  finitely generated Rees module exactly when one finite family of elements
+  `x i` and natural weights `w i` satisfies
+  `H.N n = ⨆ i, I ^ (n - w i) • span_R {x i}` for every natural `n`
+  ([`submodule_fg_iff_exists_weighted_normal_form`](GradedRings/ReesModule/HomogeneousGenerators.lean)).
+  Subtraction is truncated natural subtraction. The family may be empty and
+  ring and module universes are independent. The
+  `exists_fin_generating_family_single_le_of_submodule_fg` construction also
+  selects `x i ∈ H.N (w i)` whose singles in all degrees `q ≤ w i` span the
+  same Rees module. No finiteness of the ideal, individual stages or ambient
+  module, or normalization at degree zero is required.
 - **Weighted generators for Rees modules.** A natural filtration satisfies
   `H.N n = ⨆ i, I ^ (n - w i) • span_R {x_i}` for every `n` if and only if its
   [Rees module](GradedRings/ReesModule/FiniteGeneration.lean) is spanned over
@@ -599,7 +612,10 @@ prose is distributed.
 Lean and mathlib supply the foundational APIs. The finite homogeneous Rees
 family uses Andrew Yang's filtration and polynomial-module formalizations and
 Johan Commelin's finite-span extraction API, with the same all-lower-degree
-family as the library's weighted-normal-form formalization. Authentic notices
+family as the library's weighted-normal-form formalization. Rees-module
+evaluation uses Yang's polynomial evaluation and single maps, the library's
+coefficientwise Rees maps, and Commelin's semilinear finite-image API.
+Authentic notices
 and distinct contributor/adaptation roles are summarized in
 [provenance and credits](docs/PROVENANCE.md).
 

@@ -44,6 +44,16 @@ highlights:
     declarations:
       - declaration: reesAlgebra.principalPolynomialEquiv
         file: GradedRings/ReesAlgebra/PrincipalPolynomial.lean
+  - title: Finite weighted normal forms for Rees modules
+    statement: >-
+      For any ideal I of a commutative ring R and any R-module M, a natural
+      I-filtration has finitely generated Rees module exactly when one finite
+      family of elements x_i and natural weights w_i satisfies
+      H.N n = sum_i I^(n-w_i) • R x_i for every natural n, with truncated
+      natural subtraction.
+    declarations:
+      - declaration: Ideal.Filtration.submodule_fg_iff_exists_weighted_normal_form
+        file: GradedRings/ReesModule/HomogeneousGenerators.lean
 
 sources:
   - title: "The Rising Sea: Foundations of Algebraic Geometry"
