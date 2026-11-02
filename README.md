@@ -60,6 +60,16 @@ chosen coefficient ring.
   suffice for finite generation of the Rees module; no finiteness of later stages
   is needed. Both directions use the natural-number filtration and polynomial
   Rees-module constructions.
+- **Finite homogeneous generators for Rees modules.** For any ideal `I` of a
+  commutative ring `R` and any `R`-module `M`, a natural `I`-filtration with
+  finitely generated Rees module admits a finite family `x i ∈ H.N (w i)`
+  such that all `single R q (x i)` with `q ≤ w i` span that same Rees module
+  over `reesAlgebra I`
+  ([`exists_fin_generating_family_single_le_of_submodule_fg`](GradedRings/ReesModule/HomogeneousGenerators.lean)).
+  Ring and module universes are independent; the family may be empty. No
+  finiteness of the ideal, stages, or ambient module, or normalization at degree
+  zero is required. This extracts generators; it does not assert a weighted
+  normal form for the stages.
 - **Weighted generators for Rees modules.** If a natural filtration satisfies
   `H.N n = ⨆ i, I ^ (n - w i) • span_R {x_i}`, then its
   [Rees module](GradedRings/ReesModule/FiniteGeneration.lean) is spanned over
@@ -566,8 +576,11 @@ reference does not assert exact theorem correspondence or book coverage.
 These are mathematical references; no source PDF, figures or substantial source
 prose is distributed.
 
-Lean and mathlib supply the foundational APIs. Authentic notices and distinct
-contributor/adaptation roles are summarized in
+Lean and mathlib supply the foundational APIs. The finite homogeneous Rees
+family uses Andrew Yang's filtration and polynomial-module formalizations and
+Johan Commelin's finite-span extraction API, with the same all-lower-degree
+family as the library's weighted-normal-form formalization. Authentic notices
+and distinct contributor/adaptation roles are summarized in
 [provenance and credits](docs/PROVENANCE.md).
 
 ## Natural filtrations and their integer extensions

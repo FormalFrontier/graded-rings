@@ -110,6 +110,11 @@ and finite-generation compactness argument in Mathlib's
 `Ideal.Filtration.submodule_fg_iff_stable`. Only its converse needs finite
 generation of the filtration stages; the forward stability theorem does not.
 This is distinct from the first-quotient associated-graded finiteness construction.
+The finite homogeneous Rees generating family uses Andrew Yang's filtration
+and polynomial-module APIs and Johan Commelin's finite-span extraction API.
+Its all-lower-degree form follows the existing Formal Frontier weighted-normal-form
+formalization in `GradedRings.ReesModule.FiniteGeneration`. This new bridge calls
+the imported APIs; it does not copy their implementations.
 
 Lean and mathlib supply the formal language and reusable graded-algebra,
 localization, polynomial, ideal, symmetric-algebra, multiplicity and valuation
