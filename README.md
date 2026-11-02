@@ -460,6 +460,14 @@ and composition formulas. At any common integer cutoff, these maps commute with
 the prescribed shifted projections and the existing map on full integer associated
 gradeds, as [semilinear maps along the same quotient of the Rees algebra](GradedRings/FilteredAssociatedGraded/ReesProjectionNaturality.lean).
 
+[`ReesTransition`](GradedRings/FilteredAssociatedGraded/ReesTransition.lean)
+provides injective cutoff transitions `F.natTailTransition k l hkl` for `k ≤ l`.
+They multiply the underlying polynomial by `X ^ (l - k).toNat`, preserving each
+coefficient's integer filtration degree. The multiplying polynomial need not
+belong to the Rees algebra.
+The transitions preserve identities and composition, commute with the prescribed
+shifted projections, and are natural for stage-preserving linear maps.
+
 [Residue coefficients](GradedRings/FilteredAssociatedGraded/Coefficients.lean)
 act on the same whole associated graded by restricting the canonical quotient-Rees
 action along `R/I → C`; residue representatives act by the original `R`-action.
