@@ -134,7 +134,12 @@ chosen coefficient ring.
   `exists_fin_generating_family_single_le_of_submodule_fg` construction also
   selects `x i ∈ H.N (w i)` whose singles in all degrees `q ≤ w i` span the
   same Rees module. No finiteness of the ideal, individual stages or ambient
-  module, or normalization at degree zero is required.
+  module, or normalization at degree zero is required. The bounded-degree
+  criterion in `GradedRings.ReesModule` gives eventual stability, without ideal
+  finiteness. If `I` is finitely
+  generated, finite generation of the Rees module is equivalent to finite
+  generation of every original-ring stage together with eventual stability
+  (`submodule_fg_iff_fg_stable` in the same module).
 - **Weighted generators for Rees modules.** A natural filtration satisfies
   `H.N n = ⨆ i, I ^ (n - w i) • span_R {x_i}` for every `n` if and only if its
   [Rees module](GradedRings/ReesModule/FiniteGeneration.lean) is spanned over

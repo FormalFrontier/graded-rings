@@ -115,11 +115,16 @@ the shifted-projection converse into an equivalence with ambient finiteness,
 all-integer original-stage FG and eventual ideal stability. These are not assertions
 of the full proposition, book coverage or full graded source correspondence.
 
-The finite-Rees stability theorem follows Andrew Yang's bounded-degree span
-and finite-generation compactness argument in Mathlib's
-`Ideal.Filtration.submodule_fg_iff_stable`. Only its converse needs finite
-generation of the filtration stages; the forward stability theorem does not.
-This is distinct from the first-quotient associated-graded finiteness construction.
+Andrew Yang's bounded-degree span criterion in Mathlib's
+`Ideal.Filtration.submodule_fg_iff_stable` underlies the bounded-initial-stage
+sufficiency theorem. The converse implication needs finite generation of the
+stages; forward stability does not. The bounded-degree stability criterion is
+`Ideal.Filtration.stable_of_submodule_fg` in `GradedRings.ReesModule`. With a finitely
+generated ideal, the weighted normal form gives finite generation of every original-ring
+stage, yielding the intrinsic finiteness-and-stability equivalence. The stock iff
+remains the specialization bridge under its original all-stage hypothesis,
+without adding ideal finiteness to that bridge. These statements are distinct
+from the first-quotient associated-graded finiteness construction.
 The finite homogeneous Rees generating family uses Andrew Yang's filtration
 and polynomial-module APIs and Johan Commelin's finite-span extraction API.
 Its all-lower-degree form follows the existing Formal Frontier weighted-normal-form

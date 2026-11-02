@@ -4,11 +4,12 @@ Authors: Formal Frontier Agents
 -/
 module
 
+public import GradedRings.ReesModule
 public import GradedRings.ReesModule.FiniteGeneration
-import Mathlib.RingTheory.Finiteness.Defs
+import Mathlib.RingTheory.Finiteness.Ideal
 
 /-!
-# Finite homogeneous generators for Rees modules
+# Finite homogeneous generators and stability of Rees modules
 
 A finitely generated Rees module admits finitely many original-module elements
 `x i ∈ H.N (w i)` whose polynomial singles in every degree from zero through
@@ -16,11 +17,18 @@ A finitely generated Rees module admits finitely many original-module elements
 homogeneous singles spanning the Rees module. Antitonicity then supplies all
 lower-degree singles without enlarging the submodule.
 
-No finiteness of the ideal, the individual filtration stages, or the ambient
-module is assumed. The family may be empty, and the initial stage need not be
-the whole module. Finite generation is equivalent to the existence of one finite
-weighted family describing every natural stage as a sum of ideal-power multiples
-of its cyclic submodules over the original ring.
+The homogeneous description requires no finiteness of the ideal, the individual
+stages, or the ambient module. The family may be empty, and the initial stage need
+not be the whole module. Finite generation is equivalent to the existence of one
+finite weighted family describing every natural stage as a sum of ideal-power
+multiples of its cyclic submodules over the original ring. The bounded-degree
+criterion in `GradedRings.ReesModule` gives eventual stability without any of these
+finiteness hypotheses.
+
+If the ideal is finitely generated, each stage of a finitely generated Rees module
+is finitely generated over the original ring. In this case, finite generation of
+the Rees module is equivalent to finite generation of every stage together with
+eventual stability.
 
 ## References
 
@@ -108,5 +116,32 @@ theorem submodule_fg_iff_exists_weighted_normal_form (H : I.Filtration M) :
       H.weighted_normal_form_of_submodule_eq_span_range_single w x hspan⟩
   · rintro ⟨m, w, x, hnormal⟩
     exact H.submodule_fg_of_weighted_normal_form w x hnormal
+
+/-- If the ideal and the Rees submodule are finitely generated, every filtration
+stage is finitely generated over the original ring.
+
+The finite weighted normal form expresses each stage as a finite supremum of
+finitely generated ideal powers times cyclic submodules. -/
+theorem fg_of_submodule_fg
+    (H : I.Filtration M) (hI : I.FG) (hfg : H.submodule.FG) (n : ℕ) :
+    (H.N n).FG := by
+  obtain ⟨m, w, x, hnormal⟩ :=
+    (H.submodule_fg_iff_exists_weighted_normal_form).mp hfg
+  rw [hnormal n]
+  exact Submodule.fg_iSup _ fun i =>
+    Submodule.FG.smul (Ideal.FG.pow hI) (Submodule.fg_span_singleton (x i))
+
+/-- For a finitely generated ideal, the Rees submodule is finitely generated
+exactly when every original-ring stage is finitely generated and the filtration
+is eventually stable.
+
+The stability implication itself requires no finite generation of the ideal. -/
+theorem submodule_fg_iff_fg_stable (H : I.Filtration M) (hI : I.FG) :
+    H.submodule.FG ↔ (∀ n : ℕ, (H.N n).FG) ∧ H.Stable := by
+  constructor
+  · intro hfg
+    exact ⟨H.fg_of_submodule_fg hI hfg, H.stable_of_submodule_fg hfg⟩
+  · rintro ⟨hstage, hstable⟩
+    exact H.submodule_fg_of_stable hstage hstable
 
 end Ideal.Filtration
