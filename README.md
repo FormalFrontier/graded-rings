@@ -115,6 +115,15 @@ chosen coefficient ring.
   Constants act by the original `R`-action, and `I` annihilates the carrier.
   For `q : ℕ`, `a ∈ I ^ q` and `m ∈ F.N n`, the class of `aX^q` sends the
   class of `m` to the class of `a • m` in degree `n + q`.
+- **Natural Rees and associated-graded finiteness.** For any natural `I`-filtration
+  `H` in an `R`-module, if the coefficients `R` are `I`-adically precomplete and
+  `⨅ n, H.N n = ⊥`, its original Rees submodule is finitely generated over
+  `reesAlgebra I` if and only if the associated graded of its
+  [canonical integer extension](GradedRings/ReesModule/AssociatedGraded.lean) is
+  finite over `C = reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))`.
+  The extension is constant at `H.N 0` in negative degrees. Ring and module
+  universes are independent; no ideal, stage or ambient finite generation,
+  exhaustivity, normalization at zero or coefficient Hausdorffness is required.
 - **Shifted Rees projections.** For every integer cutoff `k`, the
   [natural tail](GradedRings/FilteredAssociatedGraded/ReesProjection.lean) of an
   integer filtration has stages `F.N (k + q)`. Its polynomial Rees submodule
