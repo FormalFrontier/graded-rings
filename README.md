@@ -63,6 +63,15 @@ chosen coefficient ring.
   Constants act by the original `R`-action, and `I` annihilates the carrier.
   For `q : ℕ`, `a ∈ I ^ q` and `m ∈ F.N n`, the class of `aX^q` sends the
   class of `m` to the class of `a • m` in degree `n + q`.
+- **Ideal-adic associated graded comparison.** For any ideal `I` and module `M`, the
+  [canonical integer-adic associated graded](GradedRings/FilteredAssociatedGraded/AdicComparison.lean)
+  is linearly equivalent over the quotient Rees algebra to
+  `Ideal.AssociatedGradedModule I M`, with both original scalar actions retained.
+  The map sends homogeneous representatives to polynomial singleton classes;
+  coefficients recover the inverse components, and negative components vanish.
+  No finiteness, completeness or separatedness assumption is needed. In the regular
+  specialization, composition with `(Ideal.AssociatedGradedModule.regularEquiv I).symm`
+  identifies it with the quotient Rees algebra and sends the degree-zero unit to `1`.
 - **Residue-linear integer graded pieces.** For the same arbitrary ideal-compatible
   integer filtration, the [original pieces](GradedRings/FilteredAssociatedGraded/Pieces.lean)
   carry named `R ⧸ I`-module structures compatible with their original `R` actions.
