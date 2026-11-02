@@ -47,6 +47,7 @@ public import GradedRings.ReesAlgebra.QuotientPieces
 public import GradedRings.ReesModule
 public import GradedRings.ReesModule.Evaluation
 public import GradedRings.ReesModule.EvaluationKernel
+public import GradedRings.ReesModule.AugmentationIdeal
 public import GradedRings.ReesModule.FiniteGeneration
 public import GradedRings.ReesModule.AssociatedGraded
 public import GradedRings.ReesModule.HomogeneousGenerators

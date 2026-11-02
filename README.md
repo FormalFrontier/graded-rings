@@ -90,8 +90,20 @@ chosen coefficient ring.
   stage-preserving linear maps. At zero this is the constant-coefficient
   augmentation, and `H.submodule.FG` implies `(H.N 0).FG`. No ideal, stage or
   ambient finiteness, stability or zero-stage normalization is assumed, and
-  ring and module universes are independent. No ideal-product kernel formula
-  or quotient equivalence is asserted.
+  ring and module universes are independent.
+- **Positive Rees augmentation and stability from degree zero.** For any ideal `I`
+  of a commutative ring `R`, any `R`-module `M` and natural `I`-filtration `H`, let
+  `B = reesAlgebra I`, `E = H.submodule`, and `K₀` be the kernel of the
+  constant-coefficient augmentation `B → R`. The
+  [coefficient criterion](GradedRings/ReesModule/AugmentationIdeal.lean) says that
+  `f : E` belongs to `K₀ • ⊤` exactly when its constant coefficient vanishes and
+  its coefficient of degree `n + 1` belongs to `I • H.N n` for every `n`.
+  The equality `ker (H.evalRees (0 : R)) = K₀ • ⊤` holds if and only if
+  `∀ n, I • H.N n = H.N (n + 1)`, equivalently
+  `∀ n, H.N n = I ^ n • H.N 0`. Evaluation retains its original target `H.N 0`;
+  the augmentation is to `R`, not `R/I`. Ring and module universes are independent,
+  with no finiteness, regularity, completeness, separation or initial-stage
+  normalization assumption.
 - **Unique successor-tail factors for Rees evaluation kernels.** For any ideal
   `I` of a commutative ring `R`, any `R`-module `M`, any natural `I`-filtration
   `H`, and every `r : R`,
