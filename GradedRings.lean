@@ -20,6 +20,7 @@ public import GradedRings.FilteredAssociatedGraded.PowerQuotientAction
 public import GradedRings.FilteredAssociatedGraded.Shift
 public import GradedRings.FilteredAssociatedGraded.SubquotientShift
 public import GradedRings.FilteredAssociatedGraded.FiniteGeneration
+public import GradedRings.FilteredAssociatedGraded.ReesFiniteGeneration
 public import GradedRings.FilteredAssociatedGraded.Pieces
 public import GradedRings.FilteredModule.WeightedSpan
 public import GradedRings.FilteredModule.Finiteness

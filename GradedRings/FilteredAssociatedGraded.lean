@@ -272,6 +272,24 @@ theorem cl_eq_zero_iff (n : ℤ) (m : F.N n) :
     F.cl n m = 0 ↔ (m : M) ∈ F.N (n + 1) :=
   Submodule.Quotient.mk_eq_zero _
 
+/-- A graded piece is subsingleton exactly when its two adjacent stages agree. -/
+theorem subsingleton_gradedPiece_iff (n : ℤ) :
+    Subsingleton (F.GradedPiece n) ↔ F.N n = F.N (n + 1) := by
+  constructor
+  · intro h
+    apply le_antisymm
+    · intro m hm
+      exact (F.cl_eq_zero_iff n ⟨m, hm⟩).1 (h.elim _ _)
+    · exact F.antitone (show n ≤ n + 1 by lia)
+  · intro h
+    have hz : ∀ z : F.GradedPiece n, z = 0 := by
+      intro z
+      obtain ⟨m, rfl⟩ := F.cl_surjective n z
+      apply (F.cl_eq_zero_iff n m).2
+      rw [← h]
+      exact m.property
+    exact ⟨fun x y => (hz x).trans (hz y).symm⟩
+
 /-- Two piece representatives agree precisely when their difference is in the next stage. -/
 theorem cl_eq_cl_iff (n : ℤ) (m m' : F.N n) :
     F.cl n m = F.cl n m' ↔ (m : M) - (m' : M) ∈ F.N (n + 1) :=

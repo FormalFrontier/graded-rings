@@ -450,6 +450,21 @@ theorem shiftedReesProjection_surjective (k : ℤ)
   let : Subsingleton (F.GradedPiece n) := hlower n hn
   exact Subsingleton.elim _ _
 
+/-- The shifted Rees projection is surjective exactly when all pieces below its cutoff vanish. -/
+theorem shiftedReesProjection_surjective_iff (k : ℤ) :
+    Function.Surjective (F.shiftedReesProjection k) ↔
+      ∀ n : ℤ, n < k → Subsingleton (F.GradedPiece n) := by
+  constructor
+  · intro hsurj n hn
+    have hz : ∀ z : F.GradedPiece n, z = 0 := by
+      intro z
+      have hzmem : F.inclusion n z ∈ LinearMap.range (F.shiftedReesProjection k) :=
+        hsurj (F.inclusion n z)
+      simpa only [component_inclusion] using
+        (F.mem_range_shiftedReesProjection_iff k (F.inclusion n z)).1 hzmem n hn
+    exact ⟨fun x y => (hz x).trans (hz y).symm⟩
+  · exact F.shiftedReesProjection_surjective k
+
 /-- A finite shifted Rees module generates the full associated graded when lower pieces vanish. -/
 theorem finite_of_finite_natTail (k : ℤ)
     [Module.Finite B (F.natTail k).submodule]

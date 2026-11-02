@@ -284,9 +284,13 @@ chosen coefficient ring.
   ideal-power weights. This algebraic equivalence needs no completeness,
   separation, exhaustivity or finiteness of the ideal. Over an ideal-adically
   precomplete coefficient ring, separation gives exact weighted descriptions
-  in every integer degree and eventual stability. Exhaustivity additionally
-  gives finiteness of the original module; `I.FG` instead gives finite generation
-  of every stage, without exhaustivity. Degree-zero normalization and a lower
+  in every integer degree and eventual stability. Under these two hypotheses,
+  finiteness is also equivalent to the existence of a
+  [finitely generated natural Rees tail](GradedRings/FilteredAssociatedGraded/ReesFiniteGeneration.lean)
+  whose prescribed projection onto the whole associated graded is surjective;
+  neither exhaustivity nor finiteness of the ideal or individual stages is needed.
+  Exhaustivity additionally gives finiteness of the original module; `I.FG` instead
+  gives finite generation of every stage, without exhaustivity. Degree-zero normalization and a lower
   grading bound are not required, and the generator family may be empty.
 - **Associated graded modules from the first quotient.** For any ideal `I` in a
   commutative ring `R` and any `R`-module `M`, with independent universes,
@@ -453,6 +457,13 @@ and a separated filtration, with exhaustivity or `I.FG` added for the distinct
 ambient-module or stage-finiteness conclusions in the headlines. These interfaces,
 including the [Rees grading](GradedRings/ReesAlgebra/Grading.lean), are exported by
 `GradedRings`.
+
+[`FilteredAssociatedGraded.ReesFiniteGeneration`](GradedRings/FilteredAssociatedGraded/ReesFiniteGeneration.lean)
+converts a supplied all-integer weighted stage formula into a natural-tail formula
+at any cutoff `k` below every weight. The relative weights are `(d i - k).toNat`,
+and the ideal powers use natural subtraction. It also gives `F.N n = F.N k` for
+every `n ≤ k`. These algebraic lemmas allow arbitrary, possibly empty indexing
+families and require no finiteness, completeness, separation or exhaustivity.
 
 ## Build and use
 
