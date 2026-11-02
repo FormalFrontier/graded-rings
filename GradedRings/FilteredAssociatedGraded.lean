@@ -7,6 +7,7 @@ module
 public import Mathlib.Algebra.DirectSum.Module
 public import Mathlib.LinearAlgebra.Isomorphisms
 public import Mathlib.RingTheory.Filtration
+public import Mathlib.RingTheory.Ideal.Operations
 
 /-!
 # Associated graded modules of integer filtrations
@@ -16,6 +17,10 @@ An `Ideal.IntFiltration I M` is an antitone family of submodules of the original
 piece is the quotient of `N n` by the next stage, pulled back along the subtype
 map. The associated graded module is the external direct sum of these pieces,
 with its componentwise `R`-module structure.
+
+Pullback and image along original-`R`-linear maps preserve ideal compatibility.
+Their stages satisfy the usual image–preimage universal property, and the
+constructed filtration data respect identities and composition.
 
 The representative map from the direct sum of the stages is surjective. Its
 kernel consists of the families whose coefficients belong to the next stages;
@@ -38,7 +43,7 @@ exhaustivity, separatedness or boundedness assumption is used.
 
 @[expose] public section
 
-universe u v w
+universe u v w x
 
 open scoped DirectSum
 
@@ -70,6 +75,88 @@ theorem ext {F F' : I.IntFiltration M} (h : ∀ n, F.N n = F'.N n) : F = F' := b
 theorem mk_N (N : ℤ → Submodule R M) (hN : Antitone N)
     (hI : ∀ n : ℤ, I • N n ≤ N (n + 1)) :
     (IntFiltration.mk N hN hI).N = N := rfl
+
+section Transport
+
+variable {N : Type w} [AddCommGroup N] [Module R N]
+variable {P : Type x} [AddCommGroup P] [Module R P]
+
+/-- The pullback of an integer filtration along an original-linear map. -/
+def comap (H : I.IntFiltration N) (f : M →ₗ[R] N) : I.IntFiltration M where
+  N := fun n => (H.N n).comap f
+  antitone := fun _ _ h => Submodule.comap_mono (H.antitone h)
+  smul_le := fun n =>
+    (Submodule.smul_comap_le_comap_smul f (H.N n) I).trans
+      (Submodule.comap_mono (H.smul_le n))
+
+/-- The image of an integer filtration under an original-linear map. -/
+def image (F : I.IntFiltration M) (f : M →ₗ[R] N) : I.IntFiltration N where
+  N := fun n => (F.N n).map f
+  antitone := fun _ _ h => Submodule.map_mono (F.antitone h)
+  smul_le := fun n =>
+    (Submodule.map_smul'' I (F.N n) f).ge.trans
+      (Submodule.map_mono (F.smul_le n))
+
+/-- A pullback stage is the inverse image of the corresponding target stage. -/
+@[simp]
+theorem comap_N (H : I.IntFiltration N) (f : M →ₗ[R] N) (n : ℤ) :
+    (H.comap f).N n = (H.N n).comap f := by
+  rfl
+
+/-- An image stage is the direct image of the corresponding source stage. -/
+@[simp]
+theorem image_N (F : I.IntFiltration M) (f : M →ₗ[R] N) (n : ℤ) :
+    (F.image f).N n = (F.N n).map f := by
+  rfl
+
+/-- Pullback-stage membership is target-stage membership after applying the map. -/
+theorem mem_comap (H : I.IntFiltration N) (f : M →ₗ[R] N) (n : ℤ) (m : M) :
+    m ∈ (H.comap f).N n ↔ f m ∈ H.N n := by
+  simp only [comap_N, Submodule.mem_comap]
+
+/-- Image-stage membership means having a representative in the source stage. -/
+theorem mem_image (F : I.IntFiltration M) (f : M →ₗ[R] N) (n : ℤ) (y : N) :
+    y ∈ (F.image f).N n ↔ ∃ m : M, m ∈ F.N n ∧ f m = y := by
+  simp only [image_N, Submodule.mem_map]
+
+/-- Pullback along the identity leaves the filtration unchanged. -/
+@[simp]
+theorem comap_id (F : I.IntFiltration M) :
+    F.comap (LinearMap.id : M →ₗ[R] M) = F := by
+  apply ext
+  intro n
+  simpa only [comap_N] using Submodule.comap_id (F.N n)
+
+/-- Image under the identity leaves the filtration unchanged. -/
+@[simp]
+theorem image_id (F : I.IntFiltration M) :
+    F.image (LinearMap.id : M →ₗ[R] M) = F := by
+  apply ext
+  intro n
+  simpa only [image_N] using Submodule.map_id (F.N n)
+
+/-- Pullback reverses composition of original-linear maps. -/
+theorem comap_comp (K : I.IntFiltration P) (f : M →ₗ[R] N) (g : N →ₗ[R] P) :
+    K.comap (g.comp f) = (K.comap g).comap f := by
+  apply ext
+  intro n
+  simpa only [comap_N] using Submodule.comap_comp f g (K.N n)
+
+/-- Taking images preserves composition of original-linear maps. -/
+theorem image_comp (F : I.IntFiltration M) (f : M →ₗ[R] N) (g : N →ₗ[R] P) :
+    F.image (g.comp f) = (F.image f).image g := by
+  apply ext
+  intro n
+  simpa only [image_N] using Submodule.map_comp f g (F.N n)
+
+/-- Stagewise image containment is equivalent to stagewise pullback containment. -/
+theorem image_le_iff_le_comap (F : I.IntFiltration M) (H : I.IntFiltration N)
+    (f : M →ₗ[R] N) :
+    (∀ n : ℤ, (F.image f).N n ≤ H.N n) ↔
+      ∀ n : ℤ, F.N n ≤ (H.comap f).N n := by
+  simp only [image_N, comap_N, Submodule.map_le_iff_le_comap]
+
+end Transport
 
 variable (F : I.IntFiltration M)
 

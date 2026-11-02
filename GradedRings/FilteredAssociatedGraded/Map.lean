@@ -28,7 +28,9 @@ next target stage already belongs to the next source stage. It is surjective
 exactly when the source-stage image and the next target stage cover each target
 stage. Stagewise pullback and image equalities give injectivity and surjectivity,
 respectively, without requiring the original linear map to be injective or
-surjective.
+surjective. The canonical map from a pullback filtration is injective, and the
+canonical map onto an image filtration is surjective, with preservation derived
+from the constructed stages.
 
 Exactness at the middle associated graded is equivalent to a criterion on
 original-stage representatives modulo the next stage; it does not require the
@@ -260,6 +262,18 @@ theorem map_surjective_of_map_eq (he : ∀ n : ℤ, (F.N n).map f = H.N n) :
   exact le_sup_left
 
 end MapCriteria
+
+/-- The canonical map from the pullback filtration is injective. -/
+theorem map_comap_injective (H : I.IntFiltration N) (f : M →ₗ[R] N) :
+    Function.Injective ((H.comap f).map H f (fun _ => le_rfl)) := by
+  exact (H.comap f).map_injective_of_comap_eq H f (fun _ => rfl)
+
+/-- The canonical map onto the image filtration is surjective. -/
+theorem map_image_surjective (F : I.IntFiltration M) (f : M →ₗ[R] N) :
+    Function.Surjective
+      (F.map (F.image f) f (fun _ => Submodule.map_le_iff_le_comap.mp le_rfl)) :=
+  by
+    exact F.map_surjective_of_map_eq (F.image f) f (fun _ => rfl)
 
 section Exactness
 

@@ -87,6 +87,14 @@ chosen coefficient ring.
   equivalence, compatibly with inverses, identities and composition. The modules have
   independent universes; no finiteness, exhaustivity, separatedness or lower bound is
   required.
+- **Pullbacks and images of integer filtrations.** Pullback and image along an
+  original-`R`-linear map have the submodule inverse images and direct images as
+  their integer stages. They preserve ideal compatibility, respect identities
+  and composition, and satisfy the stagewise image–preimage universal property.
+  The existing canonical associated-graded map is injective from the pullback
+  and surjective onto the image, without ambient injectivity or surjectivity.
+  No degree-zero normalization, finiteness, exhaustivity, separation, completeness
+  or degree bound is imposed.
 - **Exactness of integer associated graded maps.** For compatible original
   linear maps `f : M →ₗ[R] N` and `g : N →ₗ[R] P`, the image of the first
   canonical quotient-Rees-linear associated graded map equals the kernel of the
