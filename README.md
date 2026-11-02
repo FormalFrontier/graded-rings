@@ -70,14 +70,15 @@ chosen coefficient ring.
   finiteness of the ideal, stages, or ambient module, or normalization at degree
   zero is required. This extracts generators; it does not assert a weighted
   normal form for the stages.
-- **Weighted generators for Rees modules.** If a natural filtration satisfies
-  `H.N n = ⨆ i, I ^ (n - w i) • span_R {x_i}`, then its
+- **Weighted generators for Rees modules.** A natural filtration satisfies
+  `H.N n = ⨆ i, I ^ (n - w i) • span_R {x_i}` for every `n` if and only if its
   [Rees module](GradedRings/ReesModule/FiniteGeneration.lean) is spanned over
   `reesAlgebra I` by `single R q x_i` for every `q ≤ w i`, including zero and
-  all intermediate degrees. The span equality allows an arbitrary index type,
-  independent of the ring and module universes. A finite index type gives finite
-  generation without assuming the ideal, the individual stages, or the ambient
-  module to be finitely generated.
+  all intermediate degrees. The characterization allows an arbitrary index type,
+  independent of the ring and module universes, with no separate stage-membership
+  assumption on the family. A finite index type gives finite generation without
+  assuming the ideal, the individual stages, or the ambient module to be finitely
+  generated.
 - **Integer-filtered associated gradeds and Rees actions.** Over a commutative ring `R`,
   for an antitone family of submodules of an `R`-module `M`,
   `F.N : ℤ → Submodule R M` with `I • F.N n ≤ F.N (n + 1)`, the

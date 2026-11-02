@@ -141,6 +141,97 @@ theorem submodule_eq_span_range_single_of_weighted_normal_form
       simpa only [coeff_single, Finsupp.single_eq_same] using hx
     · simp [coeff_single, hj]
 
+private theorem coeff_mem_weighted_span_of_mem_span_single
+    {ι : Type uι} (w : ι → ℕ) (x : ι → M) (n : ℕ)
+    {p : PolynomialModule R M}
+    (hp : p ∈ Submodule.span (reesAlgebra I)
+      (Set.range (fun a : Σ i : ι, Fin (w i + 1) =>
+        single R (a.2 : ℕ) (x a.1)))) :
+    p.coeff n ∈ ⨆ i : ι, I ^ (n - w i) • Submodule.span R ({x i} : Set M) := by
+  classical
+  -- Quantifying over scalars makes the invariant closed under the span's scalar step.
+  have h : ∀ b : reesAlgebra I,
+      (b • p).coeff n ∈ ⨆ i : ι, I ^ (n - w i) •
+        Submodule.span R ({x i} : Set M) := by
+    induction hp using Submodule.span_induction with
+    | mem y hy =>
+      rcases hy with ⟨⟨i, q⟩, rfl⟩
+      intro b
+      rw [Subalgebra.smul_def, smul_single_apply]
+      by_cases hqn : (q : ℕ) ≤ n
+      · rw [ite_eq_left hqn]
+        have hpow : I ^ (n - (q : ℕ)) ≤ I ^ (n - w i) := by
+          apply Ideal.pow_le_pow_right
+          have hq := q.isLt
+          omega
+        exact (le_iSup (fun i : ι =>
+          I ^ (n - w i) • Submodule.span R ({x i} : Set M)) i)
+          (Submodule.smul_mem_smul (hpow (b.2 _)) (Submodule.subset_span (by simp)))
+      · rw [ite_eq_right hqn]
+        exact Submodule.zero_mem _
+    | zero =>
+      intro b
+      simp
+    | add y z hy hz ihy ihz =>
+      intro b
+      simpa only [smul_add, coeff_add, Finsupp.add_apply] using
+        Submodule.add_mem _ (ihy b) (ihz b)
+    | smul a y hy ih =>
+      intro b
+      simpa only [mul_smul] using ih (b * a)
+  simpa using h 1
+
+/-- If the Rees module is spanned by all singles of a family from degree zero
+through each weight, every filtration stage has the weighted normal form. -/
+theorem weighted_normal_form_of_submodule_eq_span_range_single
+    {ι : Type uι} (H : I.Filtration M) (w : ι → ℕ) (x : ι → M)
+    (hH : H.submodule = Submodule.span (reesAlgebra I)
+      (Set.range (fun p : Σ i : ι, Fin (w i + 1) =>
+        PolynomialModule.single R (p.2 : ℕ) (x p.1)))) :
+    ∀ n : ℕ,
+      H.N n = ⨆ i : ι, I ^ (n - w i) • Submodule.span R ({x i} : Set M) := by
+  classical
+  have hx : ∀ i : ι, x i ∈ H.N (w i) := by
+    intro i
+    have hs : single R (w i) (x i) ∈ H.submodule := by
+      rw [hH]
+      apply Submodule.subset_span
+      exact ⟨⟨i, ⟨w i, Nat.lt_succ_self _⟩⟩, rfl⟩
+    simpa using (H.mem_submodule _).mp hs (w i)
+  intro n
+  apply le_antisymm
+  · intro m hm
+    have hs : single R n m ∈ H.submodule := by
+      rw [H.mem_submodule]
+      intro k
+      simp only [coeff_single, Finsupp.single_apply]
+      split_ifs with hnk
+      · simpa [← hnk] using hm
+      · exact Submodule.zero_mem _
+    rw [hH] at hs
+    simpa using coeff_mem_weighted_span_of_mem_span_single w x n hs
+  · refine iSup_le (fun i => ?_)
+    have hspan : Submodule.span R ({x i} : Set M) ≤ H.N (w i) := by
+      apply Submodule.span_le.mpr
+      intro y hy
+      rcases Set.mem_singleton_iff.mp hy with rfl
+      exact hx i
+    exact (smul_mono_right _ hspan).trans
+      ((H.pow_smul_le (n - w i) (w i)).trans (H.antitone (by omega)))
+
+/-- The Rees module is spanned by all singles of a weighted family in degrees
+up to their weights if and only if every stage has the weighted normal form. -/
+theorem submodule_eq_span_range_single_iff_weighted_normal_form
+    {ι : Type uι} (H : I.Filtration M) (w : ι → ℕ) (x : ι → M) :
+    H.submodule = Submodule.span (reesAlgebra I)
+      (Set.range (fun p : Σ i : ι, Fin (w i + 1) =>
+        PolynomialModule.single R (p.2 : ℕ) (x p.1))) ↔
+    ∀ n : ℕ,
+      H.N n = ⨆ i : ι, I ^ (n - w i) • Submodule.span R ({x i} : Set M) := by
+  constructor
+  · exact H.weighted_normal_form_of_submodule_eq_span_range_single w x
+  · exact H.submodule_eq_span_range_single_of_weighted_normal_form w x
+
 /-- A weighted normal form indexed by a finite type gives a finitely generated Rees module.
 
 No separate finite-generation assumption on the ideal, the stages, or the ambient module
