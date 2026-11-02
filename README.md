@@ -87,6 +87,14 @@ chosen coefficient ring.
   equivalence, compatibly with inverses, identities and composition. The modules have
   independent universes; no finiteness, exhaustivity, separatedness or lower bound is
   required.
+- **Integer translations.** For every integer `d`,
+  [translation of an integer filtration](GradedRings/FilteredAssociatedGraded/Shift.lean)
+  has stage `(F.shift d).N n = F.N (n + d)`. Its graded-piece equivalence
+  preserves representatives, and `shiftEquiv` identifies the whole associated
+  gradeds linearly over the canonical quotient Rees algebra, taking degree `n`
+  to degree `n + d`. Representative, inclusion, component and residue-scalar
+  formulas accompany zero, composition and inverse identities using the
+  canonical filtration comparisons. No additional hypotheses are needed.
 - **Pullbacks and images of integer filtrations.** Pullback and image along an
   original-`R`-linear map have the submodule inverse images and direct images as
   their integer stages. They preserve ideal compatibility, respect identities
