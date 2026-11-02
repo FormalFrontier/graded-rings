@@ -140,6 +140,36 @@ required by Mathlib's polynomial module. These are original bridges through
 imported APIs, not copies of their implementations or assertions of a
 source-specific theorem correspondence.
 
+The [monic polynomial-module interface](../GradedRings/PolynomialModule/Monic.lean)
+uses Andrew Yang's polynomial-module action, Mathlib's polynomial coefficient
+APIs, and its finitely supported function and finite-sum APIs. The antitone
+coefficient-preimage theorem uses descending induction above finite support;
+its constant-bottom specialization gives injectivity of monic multiplication
+on arbitrary polynomial modules. The
+[ambient linear-factor interface](../GradedRings/PolynomialModule/EvaluationKernel.lean)
+uses the stock scalar `Polynomial.X_sub_C_dvd_sub_C_eval` through Yang's
+`PolynomialModule.lsingle` and `induction_linear`, and uses the existing
+`equivPolynomialSelf` and its scalar law for agreement with scalar polynomial
+divisibility. The polynomial monic, division and coefficient formalizations are
+credited to Chris Hughes, Johannes Hölzl, Kim Morrison and Jens Wagemaker;
+Mathlib's finitely supported function API contributors supply the support,
+coefficient-extensionality and finite-sum infrastructure. These interfaces add
+no module-valued division operation or replacement polynomial-module action.
+
+The [natural Rees evaluation-kernel presentation](../GradedRings/ReesModule/EvaluationKernel.lean)
+uses Yang's filtration, Rees and polynomial-module APIs together with those
+generic coefficient and factor theorems. Its map reuses the existing Formal
+Frontier natural-to-integer extension, canonical cutoff transition from tail
+one to tail zero, and coefficientwise `reesMap`s with identity coefficient
+maps. The successor source is the existing
+`(H.toIntFiltration.natTail (1 : ℤ)).submodule`, not a new filtration or shift
+construction. The injective range/kernel and unique-factor laws retain the
+original semilinear evaluator into the possibly proper `H.N 0` and its
+original-`R`-linear constant section; they introduce no target Rees action.
+These are original project bridges through the imported APIs and existing
+canonical constructions, not copied implementations or assertions of
+source-specific theorem correspondence.
+
 Lean and mathlib supply the formal language and reusable graded-algebra,
 localization, polynomial, ideal, symmetric-algebra, multiplicity and valuation
 APIs. The library imports pinned mathlib rather than bundling dependency

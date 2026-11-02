@@ -67,6 +67,20 @@ chosen coefficient ring.
   family whose Rees submodules are finitely generated over `reesAlgebra I`, the
   supremum filtration again has a finitely generated Rees submodule; no finiteness
   of the ideal, individual stages, or ambient module is required.
+- **Monic multiplication and polynomial-module evaluation kernels.** Over any
+  commutative ring `R` and any `R`-module `M`, multiplication by a monic
+  polynomial `g` is injective on `PolynomialModule R M`. For any antitone family
+  `P : ℕ → Submodule R M`, the product has degree-`n` coefficient in `P n` for
+  every `n` exactly when the source has degree-`n` coefficient in
+  `P (n + g.natDegree)`
+  ([`monic_smul_coeff_mem_iff`](GradedRings/PolynomialModule/Monic.lean)
+  and `monic_smul_injective`). At every `r : R`, a module-valued polynomial
+  evaluates to zero exactly when it is `(X - C r) • q`; for `M = R`,
+  `equivPolynomialSelf` identifies this factor-existence statement with ordinary
+  polynomial divisibility
+  ([`eval_eq_zero_iff_exists_smul_X_sub_C`](GradedRings/PolynomialModule/EvaluationKernel.lean)
+  and `exists_smul_X_sub_C_eq_iff_dvd`). Ring and module universes are independent;
+  no regularity, nontriviality or finiteness hypothesis is needed.
 - **Rees-module evaluation and initial-stage finiteness.** For any ideal `I` of
   a commutative ring `R`, any `R`-module `M` and natural `I`-filtration `H`,
   [evaluation at every `r : R`](GradedRings/ReesModule/Evaluation.lean) maps
@@ -76,8 +90,27 @@ chosen coefficient ring.
   stage-preserving linear maps. At zero this is the constant-coefficient
   augmentation, and `H.submodule.FG` implies `(H.N 0).FG`. No ideal, stage or
   ambient finiteness, stability or zero-stage normalization is assumed, and
-  ring and module universes are independent. No kernel-product identification
+  ring and module universes are independent. No ideal-product kernel formula
   or quotient equivalence is asserted.
+- **Unique successor-tail factors for Rees evaluation kernels.** For any ideal
+  `I` of a commutative ring `R`, any `R`-module `M`, any natural `I`-filtration
+  `H`, and every `r : R`,
+  [`H.mulXSubC r`](GradedRings/ReesModule/EvaluationKernel.lean) is a
+  `reesAlgebra I`-linear map from the canonical tail
+  `(H.toIntFiltration.natTail (1 : ℤ)).submodule` into `H.submodule`.
+  Its underlying value is multiplication by the **ambient** polynomial
+  `X - C r`. It is injective, its range is `LinearMap.ker (H.evalRees r)`,
+  and every evaluation-zero element has a unique factor in this tail, whose
+  degree-`n` coefficient lies in `H.N (n + 1)`. Coefficient and admissible-single
+  formulas, compatibility at zero with the existing cutoff transition, and
+  naturality under stage-preserving linear maps describe the map. No regularity
+  of `r`, ideal/stage/ambient finiteness, stability, separatedness, exhaustivity,
+  Noetherianity, flatness or normalization of `H.N 0` is required; ring and
+  module universes are independent. The evaluator still lands semilinearly in
+  the **original**, possibly proper `H.N 0`, with only an original-`R`-linear
+  constant section. This is not a `reesAlgebra I`-linear short exact sequence
+  ending there or an ideal-product kernel formula; `X - C r` need not belong
+  to the Rees algebra.
 - **Finite weighted normal forms for Rees modules.** For any ideal `I` of a
   commutative ring `R` and any `R`-module `M`, a natural `I`-filtration has
   finitely generated Rees module exactly when one finite family of elements
@@ -508,6 +541,15 @@ belong to the Rees algebra.
 The transitions preserve identities and composition, commute with the prescribed
 shifted projections, and are natural for stage-preserving linear maps.
 
+[`ReesModule.EvaluationKernel`](GradedRings/ReesModule/EvaluationKernel.lean)
+uses the existing transition from tail one to tail zero and coefficientwise
+identity Rees maps to define `H.mulXSubC r`, rather than a new tail or shift.
+The [polynomial-module monic](GradedRings/PolynomialModule/Monic.lean) and
+[ambient evaluation-kernel](GradedRings/PolynomialModule/EvaluationKernel.lean)
+interfaces are independent of filtrations and Rees modules. All three leaves
+are publicly exported by `GradedRings`; their detailed formulas and scalar
+conventions are in the [API map](docs/API.md#polynomial-modules-and-rees-evaluation-kernels).
+
 [Residue coefficients](GradedRings/FilteredAssociatedGraded/Coefficients.lean)
 act on the same whole associated graded by restricting the canonical quotient-Rees
 action along `R/I → C`; residue representatives act by the original `R`-action.
@@ -637,7 +679,11 @@ family uses Andrew Yang's filtration and polynomial-module formalizations and
 Johan Commelin's finite-span extraction API, with the same all-lower-degree
 family as the library's weighted-normal-form formalization. Rees-module
 evaluation uses Yang's polynomial evaluation and single maps, the library's
-coefficientwise Rees maps, and Commelin's semilinear finite-image API.
+coefficientwise Rees maps, and Commelin's semilinear finite-image API. The monic
+coefficient and linear-factor interfaces also use Mathlib's polynomial
+monic/division, coefficient and finitely supported function APIs. The natural
+kernel presentation reuses the existing canonical tail transitions,
+natural-to-integer extension and coefficientwise Rees maps.
 Authentic notices
 and distinct contributor/adaptation roles are summarized in
 [provenance and credits](docs/PROVENANCE.md).

@@ -58,7 +58,10 @@ and the subject guides for the current interfaces.
 | [`GradedRings.VeroneseResidue`](../GradedRings/VeroneseResidue.lean) | `GradedRing.Veronese.residueProjection 𝒮 n r hn hr` is a linear projection over the whole external selected ring using the actual `inclusion.toAlgebra`, for `0 < n` and `r < n`. `mem_residueProjection_range_iff` characterizes the exact image by vanishing of all old-degree components outside residue `r`. The homogeneous law and range law need no field/domain/Noetherian assumptions; finiteness of the image requires ambient `Module.Finite` for this actual action, supplied in particular by full old-zero finite type via `inclusion_finite` and `residueProjection_range_finite_of_finiteType`. See the [guide](VeroneseResidue.md). |
 | [`GradedRings.VeroneseResidueModule`](../GradedRings/VeroneseResidueModule.lean) | `GradedRing.Veronese.ResidueModule 𝒮 n r = ⨁ k, 𝒮 (n * k + r)` carries convolution by the whole external selected ring. `residueEvaluation` is linear using the actual `inclusion.toAlgebra` and injective for `0 < n` with any `r`; when also `r < n`, `residueEvaluationEquiv` identifies the projection range. Under those positive reduced-index bounds, `residueModule_finite` transports ambient finiteness for that action, and `residueModule_finite_of_finiteType` uses finite type over the full old zero ring. See the [shifted-sum guide](VeroneseResidueModule.md). |
 | [`GradedRings.ReesAlgebra.Augmentation`](../GradedRings/ReesAlgebra/Augmentation.lean) | For any ideal `I` of a commutative ring `R`, `reesAlgebra.augmentation` maps `C = reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))` to `R ⧸ I` as an `R ⧸ I`-algebra homomorphism. `augmentation_mk` computes the residue of the constant coefficient, `augmentation_mk_monomial` computes every quotient monomial, and `augmentation_eq_zero_of_mem_quotientHomogeneousComponent` kills every positive homogeneous component. `algebraMap_augmentation` identifies its composite with the coefficient map as Mathlib's degree-zero projection; `coe_quotientHomogeneousComponent_zero` identifies the stock degree-zero component with the coefficient map's set range. No finiteness, Noetherianity, nontriviality or proper-ideal assumption, and no equivalence of the whole ring `C` with `R ⧸ I` is asserted. |
-| [`GradedRings.ReesModule.Evaluation`](../GradedRings/ReesModule/Evaluation.lean) | For any natural ideal filtration `H` of an `R`-module over a commutative ring, `H.evalRees r` restricts polynomial-module evaluation to the original `H.N 0`, semilinear along polynomial evaluation composed with the Rees-algebra inclusion. `single0`, its coefficient formulas and `evalRees_single0` give an original-`R`-linear section at every `r`; `evalRees_surjective`, `evalRees_reesMap` and `reesMap_single0` give surjectivity and naturality. `fg_N_zero_of_submodule_fg` deduces `(H.N 0).FG` from `H.submodule.FG`. Independent universes; no ideal/stage/ambient finiteness, normalization or stability hypothesis. `PolynomialModule.eval_zero` computes the zero specialization; `Polynomial.evalRingHom_zero` rewrites its scalar hom. No kernel-product or quotient-equivalence assertion. |
+| [`GradedRings.PolynomialModule.Monic`](../GradedRings/PolynomialModule/Monic.lean) | For `[CommRing R] [AddCommGroup M] [Module R M]`, `PolynomialModule.monic_smul_coeff_mem_iff` identifies the preimage of any antitone coefficient condition under multiplication by a monic polynomial `g`: source coefficients lie in `P (n + g.natDegree)`. `monic_smul_injective` gives injectivity on the arbitrary polynomial module. Independent universes; no ideal compatibility, nontriviality, regularity or finiteness assumption. |
+| [`GradedRings.PolynomialModule.EvaluationKernel`](../GradedRings/PolynomialModule/EvaluationKernel.lean) | For the same ring/module classes, `PolynomialModule.eval_eq_zero_iff_exists_smul_X_sub_C` says `eval r p = 0` exactly when `(X - C r) • q = p` for some module-valued polynomial `q`, at every `r : R`. For `M = R`, `exists_smul_X_sub_C_eq_iff_dvd` identifies this existence statement with `(X - C r) ∣ equivPolynomialSelf p`. No division operation, regularity or finiteness hypothesis is introduced. |
+| [`GradedRings.ReesModule.Evaluation`](../GradedRings/ReesModule/Evaluation.lean) | For any natural ideal filtration `H` of an `R`-module over a commutative ring, `H.evalRees r` restricts polynomial-module evaluation to the original `H.N 0`, semilinear along polynomial evaluation composed with the Rees-algebra inclusion. `single0`, its coefficient formulas and `evalRees_single0` give an original-`R`-linear section at every `r`; `evalRees_surjective`, `evalRees_reesMap` and `reesMap_single0` give surjectivity and naturality. `fg_N_zero_of_submodule_fg` deduces `(H.N 0).FG` from `H.submodule.FG`. Independent universes; no ideal/stage/ambient finiteness, normalization or stability hypothesis. `PolynomialModule.eval_zero` computes the zero specialization; `Polynomial.evalRingHom_zero` rewrites its scalar hom. No ideal-product kernel formula or quotient-equivalence assertion. |
+| [`GradedRings.ReesModule.EvaluationKernel`](../GradedRings/ReesModule/EvaluationKernel.lean) | For any ideal and natural filtration `H`, `H.mulXSubC r` is Rees-algebra-linear from `(H.toIntFiltration.natTail (1 : ℤ)).submodule` to `H.submodule`, with ambient value `(X - C r) • p`. `mulXSubC_injective`, `range_mulXSubC` and `evalRees_eq_zero_iff_existsUnique_mulXSubC` give injectivity, range equal to the existing semilinear evaluation kernel, and unique successor-tail factors. Coefficient, single, zero-transition and naturality laws accompany the map. Every `r`, independent universes and no extra filtration, regularity or finiteness hypotheses; the codomain of evaluation remains the original `H.N 0`. See the [detailed interface](#polynomial-modules-and-rees-evaluation-kernels). |
 | [`GradedRings.ReesModule.HomogeneousGenerators`](../GradedRings/ReesModule/HomogeneousGenerators.lean) | For an arbitrary ideal and natural filtration, `Ideal.Filtration.submodule_fg_iff_exists_weighted_normal_form` characterizes finite generation over the Rees algebra by one finite weighted family describing every stage over the original ring. The family may be empty; neither the ideal, individual stages nor ambient module need be finitely generated. `exists_fin_generating_family_single_le_of_submodule_fg` selects correct-stage elements whose singles in every degree up to their weights span the same Rees module. |
 | [`GradedRings.FilteredAssociatedGraded.ReesFiniteGeneration`](../GradedRings/FilteredAssociatedGraded/ReesFiniteGeneration.lean) | For a finitely generated ideal, precomplete coefficients, and a separated exhaustive integer filtration, `Ideal.IntFiltration.finite_associatedGraded_iff_finite_fg_stable` characterizes finiteness over the fixed quotient Rees algebra by finiteness of the original module, FG of every original-`R` integer stage, and eventual ideal stability. The more general `finite_associatedGraded_iff_exists_fg_natTail` needs only precompleteness and separation and retains surjectivity of the prescribed tail projection. Weighted-cutoff conversions require none of these hypotheses. See the [intrinsic criterion](#intrinsic-finiteness-of-integer-associated-gradeds). |
 | [`GradedRings.ReesModule.Regular`](../GradedRings/ReesModule/Regular.lean) | For any ideal `I` of a commutative ring `R`, `Ideal.Filtration.regularReesEquiv` identifies `reesAlgebra I` with the canonical Rees submodule of `I.stableFiltration (⊤ : Submodule R R)` as a module over the Rees algebra. Its forward map multiplies the degree-zero polynomial-module unit; `equivPolynomialSelf_regularReesEquiv_apply` recovers the input polynomial, and its inverse has underlying polynomial `PolynomialModule.equivPolynomialSelf`. No finite-generation, Noetherian or nontriviality assumption. |
@@ -83,6 +86,119 @@ regrouping theorem or a chart/scheme equivalence. Coherent high tails induce
 equivalent selected rings without extending the equivalence to missing low
 degrees or asserting a geometric equivalence. No claim about complete
 coverage of a mathematical book follows from this API.
+
+## Polynomial modules and Rees evaluation kernels
+
+All three interfaces use exactly `[CommRing R] [AddCommGroup M] [Module R M]`,
+with independent ring and module universes. Their ordinary direct imports are
+`GradedRings.PolynomialModule.Monic`,
+`GradedRings.PolynomialModule.EvaluationKernel`, and
+`GradedRings.ReesModule.EvaluationKernel`. The aggregate `GradedRings` publicly
+imports each leaf, so both generic interfaces are available independently of
+the natural Rees presentation. The generic leaves use only Mathlib APIs and do
+not depend on a Rees construction.
+
+### Generic coefficient preimages and ambient factors
+
+For `P : ℕ → Submodule R M` with `Antitone P`, a polynomial `g` with
+`g.Monic`, and `q : PolynomialModule R M`,
+`PolynomialModule.monic_smul_coeff_mem_iff` states
+
+```text
+(∀ n, (g • q).coeff n ∈ P n) ↔ ∀ n, q.coeff n ∈ P (n + g.natDegree).
+```
+
+No ideal or ideal-compatibility condition on `P` is needed. The shift uses the
+actual `g.natDegree`, including for monic constants and zero coefficient rings.
+The constant-bottom specialization gives `monic_smul_injective` on the arbitrary
+polynomial module, without regularity of any coefficient or freeness of `M`.
+For `M = R`, the existing scalar law of `equivPolynomialSelf` sends `g • q` to
+`g * equivPolynomialSelf q`, agreeing with scalar monic multiplication.
+
+`PolynomialModule.eval_eq_zero_iff_exists_smul_X_sub_C` states, for every
+`r : R` and `p : PolynomialModule R M`,
+
+```text
+eval r p = 0 ↔ ∃ q, (Polynomial.X - Polynomial.C r) • q = p.
+```
+
+The factor lies in the existing polynomial module; no module-valued division
+operation or chosen quotient is defined. For `p : PolynomialModule R R`,
+`exists_smul_X_sub_C_eq_iff_dvd` identifies this same existence statement with
+`(Polynomial.X - Polynomial.C r) ∣ equivPolynomialSelf p`. This is agreement
+with the stock scalar factor theorem through the existing equivalence, not a
+new scalar polynomial division theory.
+
+### The canonical successor-tail map
+
+Let `I : Ideal R` be arbitrary and `H : I.Filtration M` be a natural filtration.
+For this explanation write
+
+```text
+B = reesAlgebra I
+E = H.submodule
+S = (H.toIntFiltration.natTail (1 : ℤ)).submodule.
+```
+
+These abbreviate existing objects, not new definitions. The stage in polynomial
+degree `n` of the source filtration is `H.N (n + 1)`. In particular, a source
+constant coefficient belongs to `H.N 1`, not just `H.N 0`.
+
+The definition `Ideal.Filtration.mulXSubC` has type
+
+```text
+H.mulXSubC r : S →ₗ[B] E.
+```
+
+Its value uses the existing tail-one-to-tail-zero transition and coefficientwise
+identity `reesMap`s into `H.submodule`. More precisely, if `i0` and `i1` denote
+these identity coefficient maps from tails zero and one, the defining expression
+is `i0.comp (H.toIntFiltration.natTailTransition 0 1 h01) -
+(algebraMap R B r) • i1`. Here `h01` is just the integer inequality `0 ≤ 1`.
+This reuses the canonical natural-to-integer extension and cutoff transition;
+it introduces no successor-filtration wrapper, shift map or new scalar action.
+
+The nine accompanying laws are in `Ideal.Filtration`:
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `coe_mulXSubC` | The underlying polynomial-module value is `(Polynomial.X - Polynomial.C r) • p`. |
+| `coeff_mulXSubC_zero` | The degree-zero coefficient is `-(r • p.coeff 0)`. |
+| `coeff_mulXSubC_succ` | The degree-`n + 1` coefficient is `p.coeff n - r • p.coeff (n + 1)`. |
+| `coe_mulXSubC_single` | For `m ∈ H.N (n + 1)`, the admissible source `single R n m` maps, on underlying polynomials, to `single R (n + 1) m - single R n (r • m)`. |
+| `coe_mulXSubC_zero_transition` | At `r = 0`, the underlying polynomial value is the existing cutoff transition from tail one to tail zero. |
+| `mulXSubC_injective` | `H.mulXSubC r` is injective for every `r : R`. |
+| `range_mulXSubC` | `LinearMap.range (H.mulXSubC r) = LinearMap.ker (H.evalRees r)` as submodules over `B`. |
+| `evalRees_eq_zero_iff_existsUnique_mulXSubC` | For `p : E`, `H.evalRees r p = 0` exactly when there is a unique `q : S` with `H.mulXSubC r q = p`. |
+| `mulXSubC_naturality` | Every original-`R`-linear map preserving all natural stages commutes with `mulXSubC r` through the existing coefficientwise Rees maps on the successor tails and original Rees modules. |
+
+In the coefficient formulas, `p.coeff` means the coefficients of the underlying
+polynomial-module element. For naturality, the target module `N` has its own
+independent universe. Given `K : I.Filtration N` and `f : M →ₗ[R] N`, the sole
+compatibility condition is `∀ n, H.N n ≤ (K.N n).comap f`; neither strict stage
+images nor ambient injectivity or surjectivity is required.
+
+Evaluation is still the existing map
+
+```text
+H.evalRees r : E →ₛₗ[(Polynomial.evalRingHom r).comp
+  (reesAlgebra I).val.toRingHom] H.N 0.
+```
+
+Its kernel is a `B`-submodule because `B` is the source scalar ring of this
+semilinear map. There is no new `B` action on the original, possibly proper
+`H.N 0`; the constant-single section remains only original-`R`-linear. Thus the
+range/kernel identity does not assert a `B`-linear short exact sequence ending
+in `H.N 0`. The multiplier is an **ambient** polynomial: `X - C r` need not
+belong to `B`, and multiplication need not define a self-map of `E`. The source
+successor-tail condition is essential. No equality with a positive-ideal
+multiple or quotient equivalence is asserted.
+
+All scalars `r`, all ideals and zero rings are allowed. The zero-ring case is
+handled internally, without a `[Nontrivial R]` premise. No regularity assumption,
+finite generation of the ideal, stages or ambient module, stability,
+separatedness, exhaustivity, completeness, Noetherianity, flatness or
+normalization `H.N 0 = ⊤` is assumed.
 
 ## Intrinsic finiteness of integer associated gradeds
 

@@ -34,6 +34,8 @@ public import GradedRings.HomogeneousPrimeMultiplicity
 public import GradedRings.Localization
 public import GradedRings.MvPolynomialAway
 public import GradedRings.Noetherian
+public import GradedRings.PolynomialModule.EvaluationKernel
+public import GradedRings.PolynomialModule.Monic
 public import GradedRings.PrimeMultiplicity
 public import GradedRings.Quotient
 public import GradedRings.ReesAlgebra
@@ -44,6 +46,7 @@ public import GradedRings.ReesAlgebra.PowerQuotientMultiplication
 public import GradedRings.ReesAlgebra.QuotientPieces
 public import GradedRings.ReesModule
 public import GradedRings.ReesModule.Evaluation
+public import GradedRings.ReesModule.EvaluationKernel
 public import GradedRings.ReesModule.FiniteGeneration
 public import GradedRings.ReesModule.AssociatedGraded
 public import GradedRings.ReesModule.HomogeneousGenerators
