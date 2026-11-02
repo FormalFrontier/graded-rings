@@ -186,15 +186,43 @@ end Transport
 
 variable (F : I.IntFiltration M)
 
+/-- An exhaustive integer filtration of a finite module contains a top stage. -/
+theorem exists_eq_top_of_iSup_eq_top [Module.Finite R M]
+    (hexhaustive : (⨆ n : ℤ, F.N n) = ⊤) : ∃ k : ℤ, F.N k = ⊤ := by
+  have hcompact : IsCompactElement (⊤ : Submodule R M) :=
+    (Submodule.fg_iff_compact _).mp Module.Finite.fg_top
+  obtain ⟨_, ⟨k, rfl⟩, hk⟩ :=
+    (isCompactElement_iff_le_of_directed_sSup_le _).mp hcompact
+      (Set.range F.N) (Set.range_nonempty F.N)
+      F.antitone.directed_le.directedOn_range
+      (by simpa only [sSup_range] using hexhaustive.ge)
+  exact ⟨k, top_unique hk⟩
+
+/-- The natural filtration obtained by retaining stages at and above `k`. -/
+def natTail (k : ℤ) : I.Filtration M where
+  N := fun q => F.N (k + (q : ℤ))
+  mono := by
+    intro q
+    apply F.antitone
+    lia
+  smul_le := by
+    intro q
+    simpa only [Nat.cast_add, Nat.cast_one, add_assoc] using F.smul_le (k + (q : ℤ))
+
+/-- The natural tail retains its prescribed absolute integer stages. -/
+@[simp]
+theorem natTail_N (k : ℤ) (q : ℕ) :
+    (F.natTail k).N q = F.N (k + (q : ℤ)) := rfl
+
+/-- Membership in a natural tail stage is membership in the corresponding integer stage. -/
+@[simp]
+theorem mem_natTail (k : ℤ) (q : ℕ) (m : M) :
+    m ∈ (F.natTail k).N q ↔ m ∈ F.N (k + (q : ℤ)) := Iff.rfl
+
 /-- Every natural ideal power raises the absolute integer degree by its exponent. -/
 theorem pow_smul_le (q : ℕ) (n : ℤ) : I ^ q • F.N n ≤ F.N (n + (q : ℤ)) := by
-  let G : I.Filtration M :=
-    { N := fun t => F.N (n + (t : ℤ))
-      mono := fun t => F.antitone (by lia)
-      smul_le := fun t => by
-        simpa only [Nat.cast_add, Nat.cast_one, add_assoc] using
-          F.smul_le (n + (t : ℤ)) }
-  simpa [G] using G.pow_smul_le q 0
+  simpa only [natTail_N, Nat.add_zero, Nat.cast_zero, add_zero] using
+    (F.natTail n).pow_smul_le q 0
 
 /-- The next stage viewed as a submodule of the current stage. -/
 def nextStage (n : ℤ) : Submodule R (F.N n) :=

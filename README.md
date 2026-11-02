@@ -45,8 +45,11 @@ chosen coefficient ring.
   ring `R` and any `R`-module `M`, with independent universes, an
   [`I`-filtration with finitely generated Rees module](GradedRings/ReesModule.lean)
   is stable: `I • F.N n = F.N (n + 1)` for all sufficiently large `n`.
-  Neither `I`, the stages, nor `M` need be finitely generated. This uses the existing
-  natural-number filtration and polynomial Rees-module constructions.
+  Neither `I`, the stages, nor `M` need be finitely generated. Conversely,
+  [stability from a given degree and finite generation through that degree](GradedRings/ReesModule/FiniteGeneration.lean)
+  suffice for finite generation of the Rees module; no finiteness of later stages
+  is needed. Both directions use the natural-number filtration and polynomial
+  Rees-module constructions.
 - **Integer-filtered associated gradeds and Rees actions.** Over a commutative ring `R`,
   for an antitone family of submodules of an `R`-module `M`,
   `F.N : ℤ → Submodule R M` with `I • F.N n ≤ F.N (n + 1)`, the
@@ -63,6 +66,18 @@ chosen coefficient ring.
   Constants act by the original `R`-action, and `I` annihilates the carrier.
   For `q : ℕ`, `a ∈ I ^ q` and `m ∈ F.N n`, the class of `aX^q` sends the
   class of `m` to the class of `a • m` in degree `n + q`.
+- **Shifted Rees projections.** For every integer cutoff `k`, the
+  [natural tail](GradedRings/FilteredAssociatedGraded/ReesProjection.lean) of an
+  integer filtration has stages `F.N (k + q)`. Its polynomial Rees submodule
+  maps semilinearly to the full associated graded along `B → C`, by summing the
+  homogeneous classes of its coefficients. The kernel is the next tail pulled
+  back to this source, not generally the coefficient-ideal multiple. Its range
+  consists exactly of elements whose components below `k` vanish. If all lower
+  pieces vanish, a finite tail over `B` gives a finite associated graded over `C`,
+  without ideal finiteness, Noetherianity, completeness or normalization. In
+  particular, an exhaustive integer filtration on a finite original module has
+  finite associated graded over `C` if, at one common threshold `c`, it is stable
+  at and above `c` and its stages at and below `c` are finitely generated.
 - **Ideal-adic associated graded comparison.** For any ideal `I` and module `M`, the
   [canonical integer-adic associated graded](GradedRings/FilteredAssociatedGraded/AdicComparison.lean)
   is linearly equivalent over the quotient Rees algebra to
@@ -398,6 +413,12 @@ exports `adicAssociatedGradedEquiv_naturality`, its inverse square
 `adicAssociatedGradedEquiv_symm_naturality`, and the natural-degree endpoint
 `adicAssociatedGradedEquiv_hom_single`. The existing comparison
 `Ideal.adicAssociatedGradedMap` is distinct from the map induced by `f`.
+
+[`FilteredAssociatedGraded.ReesProjection`](GradedRings/FilteredAssociatedGraded/ReesProjection.lean)
+provides `F.natTail k`, `F.natTailSingle k q m`, and the coefficient-support-sum
+map `F.shiftedReesProjection k`. Singleton values characterize that semilinear map;
+component, next-tail-kernel, exact range and finite-image theorems use the original
+polynomial and associated-graded carriers with their existing actions.
 
 [Residue coefficients](GradedRings/FilteredAssociatedGraded/Coefficients.lean)
 act on the same whole associated graded by restricting the canonical quotient-Rees

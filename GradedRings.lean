@@ -8,6 +8,7 @@ public import GradedRings.CoherentTailVeronese
 public import GradedRings.FiniteType
 public import GradedRings.FilteredAssociatedGraded
 public import GradedRings.FilteredAssociatedGraded.ReesAction
+public import GradedRings.FilteredAssociatedGraded.ReesProjection
 public import GradedRings.FilteredAssociatedGraded.Map
 public import GradedRings.FilteredAssociatedGraded.DirectSum
 public import GradedRings.FilteredAssociatedGraded.Prod
@@ -39,6 +40,7 @@ public import GradedRings.ReesAlgebra.PowerQuotientAlgebra
 public import GradedRings.ReesAlgebra.PowerQuotientMultiplication
 public import GradedRings.ReesAlgebra.QuotientPieces
 public import GradedRings.ReesModule
+public import GradedRings.ReesModule.FiniteGeneration
 public import GradedRings.ReesModule.Map
 public import GradedRings.AssociatedGradedRegular
 public import GradedRings.SymmetricAlgebra
