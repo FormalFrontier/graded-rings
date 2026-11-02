@@ -26,7 +26,7 @@ Quotient-Rees-linear maps between associated gradeds commute with these scalars.
 The existing maps and linear equivalences can therefore use Mathlib's
 `restrictScalars` constructors, retaining their forward and inverse functions.
 
-Finite generation over the quotient Rees algebra gives finite generation over
+Finite generation over the quotient Rees algebra is equivalent to finite generation over
 the ideal-power quotient algebra for this same action.
 
 ## Implementation notes
@@ -80,6 +80,30 @@ theorem moduleFinite_powerQuotientSum [Module.Finite C G] : Module.Finite D G :=
         rw [F.powerQuotientSum_smul]
         simp only [gamma, AlgEquiv.apply_symm_apply] }
   exact Module.Finite.of_surjective f (fun x => ⟨x, rfl⟩)
+
+/-- Finite generation over the ideal-power quotient direct sum implies finite generation
+over the canonical quotient Rees ring for the fixed actions on the associated graded module. -/
+theorem moduleFinite_of_powerQuotientSum [Module.Finite D G] : Module.Finite C G := by
+  let e := reesAlgebra.powerQuotientSumAlgEquiv I
+  let f : G →ₛₗ[e.toRingHom] G :=
+    { toFun := id
+      map_add' := fun _ _ => rfl
+      map_smul' := by
+        intro d x
+        exact F.powerQuotientSum_smul d x }
+  exact Module.Finite.of_surjective f (fun x => ⟨x, rfl⟩)
+
+/-- Finite generation for the fixed ideal-power quotient and canonical quotient Rees
+actions on the associated graded module is equivalent. -/
+theorem moduleFinite_powerQuotientSum_iff :
+    Module.Finite D G ↔ Module.Finite C G := by
+  constructor
+  · intro h
+    let : Module.Finite D G := h
+    exact F.moduleFinite_of_powerQuotientSum
+  · intro h
+    let : Module.Finite C G := h
+    exact F.moduleFinite_powerQuotientSum
 
 section ScalarRestriction
 
