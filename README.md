@@ -495,7 +495,7 @@ and composition formulas. Its [range](GradedRings/ReesModule/Range.lean) consist
 exactly of target elements whose degree-`q` coefficient lies in `(E.N q).map f`
 for every natural `q`; it is surjective exactly when `(E.N q).map f = L.N q` for
 every `q`, without requiring ambient surjectivity or stage-zero normalization.
-Its [kernel](GradedRings/ReesModule/Kernel.lean) consists exactly of source elements whose every coefficient lies in the kernel of the original linear map. The Rees map is injective exactly when that linear map restricted to the degree-zero source stage is injective; ambient injectivity is not required.
+Its [kernel](GradedRings/ReesModule/Kernel.lean) consists exactly of source elements whose every coefficient lies in the kernel of the original linear map. The Rees map is injective exactly when that linear map restricted to the degree-zero source stage is injective; ambient injectivity is not required. For two composable stage-preserving maps `f` and `g`, [exactness](GradedRings/ReesModule/Exactness.lean) of their induced Rees maps is equivalent to `(E.N q).map f = L.N q ⊓ LinearMap.ker g` for every natural `q`, where `E` and `L` are the source and middle filtrations. This describes exactness at the filtered middle and does not require ambient `g ∘ f = 0`.
 At any common integer cutoff, these maps commute with
 the prescribed shifted projections and the existing map on full integer associated
 gradeds, as [semilinear maps along the same quotient of the Rees algebra](GradedRings/FilteredAssociatedGraded/ReesProjectionNaturality.lean).
