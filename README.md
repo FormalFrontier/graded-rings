@@ -75,8 +75,12 @@ chosen coefficient ring.
   preserving every stage of two integer filtrations induces a
   [canonical quotient-Rees-linear map](GradedRings/FilteredAssociatedGraded/Map.lean).
   It sends each homogeneous representative to its image, preserves the original
-  `R` action, and respects identities and composition. For `f : M →ₗ[R] N` with
-  filtrations `F` and `H`, it is injective exactly when, for every `n : ℤ` and
+  `R` action, and respects identities and composition. For stage-preserving maps
+  `f, g : M →ₗ[R] N` with filtrations `F` and `H`, their induced maps agree exactly
+  when `f m - g m ∈ H.N (n + 1)` for every `n : ℤ` and `m ∈ F.N n`
+  (`map_eq_iff`). An induced map vanishes exactly when `f m ∈ H.N (n + 1)` for
+  all such representatives (`map_eq_zero_iff`), without requiring the original
+  map to vanish. It is injective exactly when, for every `n : ℤ` and
   `x ∈ F.N n`, membership `f x ∈ H.N (n + 1)` implies `x ∈ F.N (n + 1)`.
   It is surjective exactly when `H.N n ≤ (F.N n).map f ⊔ H.N (n + 1)` for every
   integer `n`. Thus stagewise pullback equality `F.N n = (H.N n).comap f` gives

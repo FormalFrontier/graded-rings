@@ -23,6 +23,10 @@ exhaustivity, separatedness or a lower bound. Stage quotients and their direct
 sum use Mathlib's `Submodule.mapQ` and `DirectSum.lmap`; equivalences use
 `LinearEquiv.ofLinearMap`.
 
+Two induced maps agree exactly when the difference of their values on every
+source stage lies in the next target stage. An induced map vanishes exactly when
+it sends every source stage into the next target stage.
+
 The induced map is injective exactly when a source-stage element mapping into the
 next target stage already belongs to the next source stage. It is surjective
 exactly when the source-stage image and the next target stage cover each target
@@ -194,6 +198,50 @@ theorem map_comp (K : I.IntFiltration P) (g : N →ₗ[R] P)
   exact LinearMap.congr_fun h z
 
 section MapCriteria
+
+/-- Two induced associated-graded maps agree precisely when their difference raises
+every original source stage into the next target stage. -/
+theorem map_eq_iff (g : M →ₗ[R] N)
+    (hg : ∀ n, F.N n ≤ (H.N n).comap g) :
+    F.map H f hf = F.map H g hg ↔
+      ∀ (n : ℤ) (m : M), m ∈ F.N n → f m - g m ∈ H.N (n + 1) := by
+  constructor
+  · intro h n m hm
+    have hs : H.single n ⟨f m, hf n hm⟩ = H.single n ⟨g m, hg n hm⟩ := by
+      simpa only [map_single] using
+        LinearMap.congr_fun h (F.single n ⟨m, hm⟩)
+    apply (H.cl_eq_cl_iff n ⟨f m, hf n hm⟩ ⟨g m, hg n hm⟩).mp
+    apply H.inclusion_injective n
+    simpa only [single_apply] using hs
+  · intro h
+    apply LinearMap.restrictScalars_injective R
+    apply F.linearMap_ext
+    intro n m
+    simp only [LinearMap.restrictScalars_apply, map_single]
+    simp only [single_apply]
+    apply congrArg (H.inclusion n)
+    exact (H.cl_eq_cl_iff n
+      ⟨f (m : M), hf n m.property⟩ ⟨g (m : M), hg n m.property⟩).mpr
+        (h n (m : M) m.property)
+
+/-- The induced associated-graded map vanishes precisely when the original map raises
+every source stage into the next target stage. -/
+theorem map_eq_zero_iff :
+    F.map H f hf = 0 ↔
+      ∀ (n : ℤ) (m : M), m ∈ F.N n → f m ∈ H.N (n + 1) := by
+  constructor
+  · intro h n m hm
+    have hs : H.single n ⟨f m, hf n hm⟩ = 0 := by
+      simpa only [map_single, LinearMap.zero_apply] using
+        LinearMap.congr_fun h (F.single n ⟨m, hm⟩)
+    exact (H.single_eq_zero_iff n ⟨f m, hf n hm⟩).mp hs
+  · intro h
+    apply LinearMap.restrictScalars_injective R
+    apply F.linearMap_ext
+    intro n m
+    simp only [LinearMap.restrictScalars_apply, LinearMap.zero_apply, map_single]
+    exact (H.single_eq_zero_iff n ⟨f (m : M), hf n m.property⟩).mpr
+      (h n (m : M) m.property)
 
 /-- The induced map is injective exactly when a source-stage element mapping into the next
 target stage already belongs to the next source stage. -/

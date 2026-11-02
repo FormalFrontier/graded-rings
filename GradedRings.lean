@@ -50,3 +50,4 @@ public import GradedRings.VeroneseResidueModule
 public import GradedRings.VeroneseZero
 
 public import GradedRings.FilteredAssociatedGraded.Adic
+public import GradedRings.ReesAlgebra.Generation
