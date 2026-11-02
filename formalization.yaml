@@ -35,6 +35,16 @@ project:
     - Formal Frontier Agents
   license: Apache-2.0
 
+highlights:
+  - title: Quotient Rees algebra of a regular principal ideal
+    statement: >-
+      For any commutative ring R and a in R such that multiplication by a is
+      injective, the quotient Rees_R((a))/(a)Rees_R((a)) is isomorphic as an
+      R/(a)-algebra to (R/(a))[T].
+    declarations:
+      - declaration: reesAlgebra.principalPolynomialEquiv
+        file: GradedRings/ReesAlgebra/PrincipalPolynomial.lean
+
 sources:
   - title: "The Rising Sea: Foundations of Algebraic Geometry"
     authors:
