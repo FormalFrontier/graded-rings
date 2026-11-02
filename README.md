@@ -63,6 +63,14 @@ chosen coefficient ring.
   Constants act by the original `R`-action, and `I` annihilates the carrier.
   For `q : ℕ`, `a ∈ I ^ q` and `m ∈ F.N n`, the class of `aX^q` sends the
   class of `m` to the class of `a • m` in degree `n + q`.
+- **Residue-linear integer graded pieces.** For the same arbitrary ideal-compatible
+  integer filtration, the [original pieces](GradedRings/FilteredAssociatedGraded/Pieces.lean)
+  carry named `R ⧸ I`-module structures compatible with their original `R` actions.
+  Insertion and projection are residue-linear for the whole associated graded's
+  existing residue action, with the same functions, representative formulas and
+  finite reconstruction. Piece modules and towers are activated locally rather
+  than registered globally. No residue action on the stages or ambient stage
+  quotients, finiteness or degree-zero normalization is required.
 - **Maps of integer-filtered associated gradeds.** An original-`R`-linear map
   preserving every stage of two integer filtrations induces a
   [canonical quotient-Rees-linear map](GradedRings/FilteredAssociatedGraded/Map.lean).
