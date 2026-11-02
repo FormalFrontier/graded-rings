@@ -12,6 +12,7 @@ public import GradedRings.FilteredAssociatedGraded.Map
 public import GradedRings.FilteredAssociatedGraded.Prod
 public import GradedRings.FilteredAssociatedGraded.Subquotient
 public import GradedRings.FilteredAssociatedGraded.SubquotientNaturality
+public import GradedRings.FilteredAssociatedGraded.NestedQuotient
 public import GradedRings.FilteredAssociatedGraded.Coefficients
 public import GradedRings.FilteredAssociatedGraded.PowerQuotientAction
 public import GradedRings.FilteredAssociatedGraded.Shift

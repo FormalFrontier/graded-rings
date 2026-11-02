@@ -154,6 +154,16 @@ chosen coefficient ring.
   the ambient associated graded map with the associated graded original quotient
   map, over the canonical quotient Rees actions. No strictness, ambient
   injectivity or surjectivity, finiteness or degree bound is required.
+- **Nested induced quotients.** For submodules `S ≤ T` of an integer-filtered
+  module, the [nested quotient comparison](GradedRings/FilteredAssociatedGraded/NestedQuotient.lean)
+  identifies the filtration induced on `T.map S.mkQ` with the image of the
+  filtration induced on `T`. The third isomorphism carries every iterated image
+  stage onto the direct image stage. On whole associated gradeds, the subquotient
+  equivalence for `S` carries the second graded range onto the induced quotient
+  range; quotienting twice then agrees with quotienting directly by the `T`
+  range, via the third isomorphisms over the original ring and the canonical
+  quotient Rees algebra. No finiteness, normalization, exhaustivity, separatedness,
+  completeness or splitting is required.
 - **Ideal-power quotients and coefficient multiplication.** For any ideal `I` of a
   commutative ring `R` and every natural degree `q`, the
   [quotient of `I ^ q` by its ideal multiple](GradedRings/ReesAlgebra/QuotientPieces.lean)
