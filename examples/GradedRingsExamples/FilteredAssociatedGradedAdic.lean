@@ -5,6 +5,8 @@ Authors: Formal Frontier Agents
 module
 
 public import GradedRings.FilteredAssociatedGraded.Adic
+import GradedRings.FilteredAssociatedGraded.Map
+import GradedRings.FilteredAssociatedGraded.PowerQuotientAction
 import Mathlib.Tactic
 
 /-!
@@ -17,9 +19,15 @@ natural and integer graded pieces.
 The integer filtration equal to `ℤ` through degree `-2` and zero thereafter has a
 nonzero degree-`-2` piece represented by `1`. Its stages at `-2` and `-1` differ, so it
 is not the extension of a natural filtration by `Ideal.Filtration.toIntFiltration`.
+
+A stage-preserving map restricts to the ideal-power quotient scalars through
+`LinearMap.restrictScalars`. The final example computes how this map intertwines
+homogeneous scalar multiplication on representatives.
 -/
 
 @[expose] public section
+
+universe u v w
 
 namespace IntegerFiltrations
 
@@ -146,5 +154,27 @@ example :
     norm_num [negativeCutoffFiltration] at hone
   refine ⟨hstages, oneInDegreeNegativeTwo_ne_zero, ?_⟩
   exact ⟨⟨oneInDegreeNegativeTwo, 0, oneInDegreeNegativeTwo_ne_zero⟩⟩
+
+section ScalarRestriction
+
+variable {R : Type u} [CommRing R] {I : Ideal R}
+variable {M : Type v} [AddCommGroup M] [Module R M]
+variable {N : Type w} [AddCommGroup N] [Module R N]
+
+/-- Restricting a graded map intertwines degree-moving coefficient multiplication. -/
+example (F : I.IntFiltration M) (H : I.IntFiltration N) (f : M →ₗ[R] N)
+    (hf : ∀ n, F.N n ≤ (H.N n).comap f)
+    (q : ℕ) (n : ℤ) (a : ↥(I ^ q)) (m : F.N n) :
+    ((F.map H f hf).restrictScalars (reesAlgebra.powerQuotientSum I))
+        ((DirectSum.of (reesAlgebra.powerQuotient I) q
+          (Submodule.Quotient.mk a) : reesAlgebra.powerQuotientSum I) • F.single n m) =
+      H.single (n + (q : ℤ))
+        ⟨(a : R) • f (m : M),
+          H.pow_smul_le q n
+            (Submodule.smul_mem_smul a.property (hf n m.property))⟩ := by
+  rw [map_smul, LinearMap.restrictScalars_apply, F.map_single,
+    H.powerQuotientSum_of_mk_smul_single]
+
+end ScalarRestriction
 
 end IntegerFiltrations

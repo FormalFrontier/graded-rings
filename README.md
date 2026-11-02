@@ -165,7 +165,10 @@ chosen coefficient ring.
   `powerQuotientSum_of_mk_smul_single` to send `[a]` in degree `q` and `[m]`
   in degree `n` to `[a • m]` in degree `n + q`. The original `R`, `R ⧸ I`
   and `C` actions are unchanged, and both coefficient actions form scalar towers
-  with the `D`-action. No additional filtration hypotheses are required.
+  with the `D`-action. Quotient-Rees-linear maps and equivalences between
+  associated gradeds restrict to `D` using Mathlib's `restrictScalars`
+  constructors, with unchanged forward and inverse functions. No additional
+  filtration hypotheses are required.
 - **Weighted generation of integer filtrations.** For a separated, antitone
   integer-indexed filtration satisfying `I • F n ≤ F (n + 1)` over an
   `I`-adically **precomplete** commutative coefficient ring,

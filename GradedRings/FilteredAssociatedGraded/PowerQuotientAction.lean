@@ -21,6 +21,10 @@ the action without unfolding its construction. On representatives, a coefficient
 in degree `q` sends degree `n` to degree `n + q`. The coefficient actions of `R`
 and `R ⧸ I` form scalar towers with this action.
 
+Quotient-Rees-linear maps between associated gradeds commute with these scalars.
+The existing maps and linear equivalences can therefore use Mathlib's
+`restrictScalars` constructors, retaining their forward and inverse functions.
+
 ## Implementation notes
 
 The only module construction is Mathlib's `Module.compHom`; no new multiplication
@@ -29,14 +33,15 @@ or restriction on its integer degrees is imposed.
 
 ## References
 
-* Mathlib's `Module.compHom` and `IsScalarTower.of_algebraMap_smul`.
+* Mathlib's `Module.compHom`, `IsScalarTower.of_algebraMap_smul`,
+  `LinearMap.CompatibleSMul` and scalar-restriction constructors.
 * K. Fujiwara and F. Kato, *Foundations of Rigid Geometry I*, arXiv:1308.4734v5,
   Chapter 0, §7.5, for the quotient-Rees description of the associated graded action.
 -/
 
 @[expose] public section
 
-universe u v
+universe u v w
 
 namespace Ideal.IntFiltration
 
@@ -56,6 +61,19 @@ noncomputable instance modulePowerQuotientSum : Module D G :=
 theorem powerQuotientSum_smul (d : D) (x : G) :
     d • x = (reesAlgebra.powerQuotientSumAlgEquiv I d : C) • x :=
   rfl
+
+section ScalarRestriction
+
+variable {N : Type w} [AddCommGroup N] [Module R N] (H : I.IntFiltration N)
+
+/-- Quotient-Rees-linear maps between associated gradeds commute with ideal-power scalars. -/
+instance compatibleSMulPowerQuotientSum :
+    LinearMap.CompatibleSMul G H.AssociatedGraded D C where
+  map_smul L d x := by
+    rw [F.powerQuotientSum_smul, H.powerQuotientSum_smul]
+    exact L.map_smul (reesAlgebra.powerQuotientSumAlgEquiv I d) x
+
+end ScalarRestriction
 
 /-- A homogeneous coefficient insertion acts by its quotient monomial. -/
 @[simp]
