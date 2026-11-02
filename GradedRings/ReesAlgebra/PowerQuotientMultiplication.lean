@@ -17,7 +17,9 @@ the class of `a * b`.
 
 The construction uses coefficient multiplication and the two denominator checks,
 independently of any comparison with quotient Rees components. The scalar actions
-on the quotients are the existing quotient-module actions.
+on the quotients are the existing quotient-module actions. The quotient monomial
+maps preserve this multiplication and send the degree-zero class of `1` to the
+unit of the quotient Rees algebra.
 
 ## References
 
@@ -167,5 +169,23 @@ theorem powerQuotientMul_one_right (q : ℕ) (x : powerQuotient I q) :
     rw [powerQuotientMul_mk, powerQuotient_cast_mk I (Nat.add_zero q)]
     apply congrArg Submodule.Quotient.mk
     exact Subtype.ext (mul_one (a : R))
+
+/-- Quotient monomial maps preserve coefficient multiplication in the quotient Rees algebra. -/
+@[simp]
+theorem quotientMonomial_powerQuotientMul (q r : ℕ)
+    (x : powerQuotient I q) (y : powerQuotient I r) :
+    quotientMonomial I (q + r) (powerQuotientMul I q r x y) =
+      quotientMonomial I q x * quotientMonomial I r y := by
+  induction x using Submodule.Quotient.induction_on with
+  | H a =>
+    induction y using Submodule.Quotient.induction_on with
+    | H b =>
+      rw [powerQuotientMul_mk]
+      simp only [quotientMonomial_mk, ← monomial_mul_monomial, map_mul]
+
+/-- The degree-zero class of `1` maps to the unit of the quotient Rees algebra. -/
+theorem quotientMonomial_one :
+    quotientMonomial I 0 (Submodule.Quotient.mk ⟨1, by simp⟩) = 1 := by
+  rw [quotientMonomial_mk, monomial_zero_one, map_one]
 
 end reesAlgebra

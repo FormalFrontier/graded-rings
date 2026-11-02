@@ -89,8 +89,10 @@ chosen coefficient ring.
   `powerQuotientMul` is bilinear over `R ⧸ I`; `powerQuotientMul_mk` sends `[a]`
   and `[b]` to `[a * b]` in degree `q + r`. Multiplication is commutative and
   associative under the degree-sum identifications,
-  with the class of `1` in degree zero as a two-sided unit. No finiteness,
-  Noetherianity, nontriviality or positive-degree assumption is needed.
+  with the class of `1` in degree zero as a two-sided unit. The quotient monomial
+  maps preserve this multiplication and send that class of `1` to the quotient
+  Rees unit. No finiteness, Noetherianity, nontriviality or positive-degree
+  assumption is needed.
 - **Weighted generation of integer filtrations.** For a separated, antitone
   integer-indexed filtration satisfying `I • F n ≤ F (n + 1)` over an
   `I`-adically **precomplete** commutative coefficient ring,
