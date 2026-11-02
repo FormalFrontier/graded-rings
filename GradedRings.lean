@@ -64,3 +64,4 @@ public import GradedRings.FilteredAssociatedGraded.AdicComparison
 public import GradedRings.FilteredAssociatedGraded.AdicComparisonNaturality
 public import GradedRings.ReesAlgebra.Generation
 public import GradedRings.ReesAlgebra.SymmetricAlgebra
+public import GradedRings.ReesAlgebra.PrincipalPolynomial

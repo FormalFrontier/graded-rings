@@ -19,6 +19,16 @@ or complete book coverage. Selected-ring and evaluation results below concern
 degree-zero coefficients mean the **entire actual components**, not a smaller
 chosen coefficient ring.
 
+- **Polynomial covers and equivalences for principal ideals.** For any
+  commutative ring `R` and `a : R`, evaluation at the class of `a t` defines a
+  surjective `R/(a)`-algebra map `(R/(a))[T] → C`, where `C` is the Rees algebra
+  modulo its coefficient ideal. If `a` is regular, this same map is an
+  `R/(a)`-algebra equivalence, including unit generators and the zero ring.
+  Composition with augmentation is evaluation at zero
+  ([`reesAlgebra.principalPolynomialHom`](GradedRings/ReesAlgebra/PrincipalPolynomial.lean),
+  `surjective_principalPolynomialHom`,
+  `bijective_principalPolynomialHom`, `principalPolynomialEquiv`, and
+  `augmentation_comp_principalPolynomialEquiv`).
 - **Quotients and localizations.** For commutative rings,
   [homogeneous-ideal quotients](GradedRings/Quotient.lean) inherit the image grading
   for additive-monoid degrees with decidable equality. [Full localization](GradedRings/Localization.lean)
