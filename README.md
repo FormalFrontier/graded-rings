@@ -1,14 +1,14 @@
 # Graded rings
 
-Reusable Lean constructions for graded rings, quotients and localizations,
-finiteness and primes, symmetric algebras, prime multiplicity, and
-selected-component Veronese rings. Start with the mathematics below; use the
-[canonical API map](docs/API.md#production-modules) for modules, interfaces and
-detailed hypotheses, or the [subject guides](docs/README.md) for focused clients.
+Reusable Lean constructions for graded rings, integer filtrations and associated
+graded modules, quotients and localizations, finiteness and primes, symmetric
+algebras, prime multiplicity, and selected-component Veronese rings. Start with the
+mathematics below; the [interface overview](#find-an-interface) links module
+references and focused guides.
 
 Authors: Formal Frontier Agents. Original project contributions are licensed
-under [Apache-2.0](LICENSE). AI agents authored the mathematics, Lean proofs,
-clients and documentation; exact contributions are listed in
+under [Apache-2.0](LICENSE). AI agents developed the Lean formalizations,
+proofs, clients and documentation; contributor credits are summarized in
 [provenance and credits](docs/PROVENANCE.md).
 
 ## Headline results
@@ -288,6 +288,38 @@ from degree-zero pieces, polynomial components from whole selected rings, and
 algebraic results from geometric claims. The [subject guides](docs/README.md)
 provide focused explanations and clients.
 
+### Integer-filtration interfaces
+
+[`FilteredAssociatedGraded`](GradedRings/FilteredAssociatedGraded.lean) provides
+`Ideal.IntFiltration I M`, its direct-sum associated graded and the representative
+quotient API. [`FilteredAssociatedGraded.ReesAction`](GradedRings/FilteredAssociatedGraded/ReesAction.lean)
+adds the canonical quotient-Rees action, with the original `R`-action fixed.
+The representative first-isomorphism comparison concerns this direct-sum
+construction, not an identification with the natural ideal-adic Rees-module quotient.
+
+[`FilteredAssociatedGraded.Map`](GradedRings/FilteredAssociatedGraded/Map.lean)
+constructs maps for the same ideal `I`. An `R`-linear map `f` between the original
+modules need only send `F.N n` into `H.N n` for **every integer** `n`.
+`F.map H f hf` is linear over the same quotient-Rees coefficient ring, using
+the canonical actions, and has representative, identity and composition formulas.
+Stage preservation is an inclusion, not an equality or surjectivity condition.
+
+[Residue coefficients](GradedRings/FilteredAssociatedGraded/Coefficients.lean)
+act on the same whole associated graded by restricting the canonical quotient-Rees
+action along `R/I → C`; residue representatives act by the original `R`-action.
+
+The [weighted lifting](GradedRings/FilteredModule/WeightedSpan.lean) and
+[finiteness](GradedRings/FilteredModule/Finiteness.lean) interfaces take finite
+weighted lifts and generation in **every** successive quotient as hypotheses.
+The [finite-generation bridge](GradedRings/FilteredAssociatedGraded/FiniteGeneration.lean)
+derives those finite weighted generators from finiteness of the constructed
+associated graded over its canonical quotient-Rees ring, without completeness or
+separation. Applying the lifting consequences then requires precomplete coefficients
+and a separated filtration, with exhaustivity or `I.FG` added for the distinct
+ambient-module or stage-finiteness conclusions in the headlines. These interfaces,
+including the [Rees grading](GradedRings/ReesAlgebra/Grading.lean), are exported by
+`GradedRings`.
+
 ## Build and use
 
 Install the exact toolchain in `lean-toolchain`: Lean `v4.34.0-rc2`.
@@ -304,7 +336,7 @@ lake --wfail build
 
 Do not replace the manifest or substitute a moving mathlib branch. The default
 build includes the aggregate library, all regression-test modules and
-the four stored examples. Named targets are also available:
+the five stored examples. Named targets are also available:
 
 ```sh
 lake --wfail build GradedRings GradedRingsTests GradedRingsExamples
@@ -335,9 +367,8 @@ aggregate process, thread or memory bounds.
 
 ## Complete examples
 
-Each link is a complete native module with its imports, hypotheses, private
-example declarations and axiom prints, compiled by `GradedRingsExamples`.
-Examples are usage demonstrations, not additional public API.
+Each link is a complete native module with its imports and hypotheses, compiled
+by `GradedRingsExamples`. These modules demonstrate use of the library.
 
 - [Quotient and localization](examples/QuotientLocalization.lean): quotient-map
   multiplication, recombination of the quotient grading, homogeneous-fraction
@@ -351,6 +382,10 @@ Examples are usage demonstrations, not additional public API.
 - [Multiplicity](examples/Multiplicity.lean): evaluate products of prime powers,
   recognize a unit at maximal numerator multiplicity, and use denominator order
   one to force a unit factor. This file uses the aggregate import.
+- [Integer filtrations](examples/GradedRingsExamples/FilteredAssociatedGradedAdic.lean):
+  extend the zero-ideal filtration of `2ℤ` while preserving its proper initial
+  stage and nonzero degree-zero class; exhibit a general integer filtration
+  with a nonzero degree-`-2` piece, which no such natural extension can have.
 
 ## Proof ideas
 
@@ -366,12 +401,18 @@ this library supplies its algebraic ring layer, not the Proj isomorphism.
 Section 7.4.4, Exercise 7.4.E (printed page 215; degree-zero coefficient
 convention in §4.5.6, pp. 151–152) motivates homogeneous polynomial lifts
 and positive-Veronese degree-one generation under old-ring generation. The
-library does not supply coefficient regrouping, chart/Proj invariance or
-a source-specific correspondence decision.
+library does not supply coefficient regrouping or chart/Proj invariance.
 The basis-free symmetric algebra also supports projective-space applications.
+
+For background on the Rees and associated-graded algebra/module constructions
+in [`ReesAlgebra`](GradedRings/ReesAlgebra.lean) and
+[`ReesModule`](GradedRings/ReesModule.lean), see K. Fujiwara and F. Kato,
+*Foundations of Rigid Geometry I*,
+[arXiv:1308.4734v5](https://arxiv.org/abs/1308.4734v5). This scoped background
+reference does not assert exact theorem correspondence or book coverage.
+
 These are mathematical references; no source PDF, figures or substantial source
-prose is distributed. Detailed source correspondence and gaps are maintained
-outside this reusable library.
+prose is distributed.
 
 Lean and mathlib supply the foundational APIs. Authentic notices and distinct
 contributor/adaptation roles are summarized in

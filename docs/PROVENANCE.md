@@ -2,7 +2,7 @@
 
 Authors: Formal Frontier Agents. Original project code, tests and prose are
 licensed under [Apache-2.0](../LICENSE). Formal Frontier AI agents developed
-the mathematical constructions, proofs, interfaces, examples and documentation;
+the Lean formalizations, interfaces, examples and documentation;
 authorship does not itself establish legal copyright ownership. This library
 contains original project work, adaptations of earlier Formal Frontier work,
 and imported mathlib APIs. The mathematical sources motivate results but their
@@ -10,57 +10,64 @@ PDFs, diagrams, proofs and substantial prose are not redistributed here.
 
 ## Contributions and adaptations
 
-Atlas developed the original quotient grading, full graded localization,
-irrelevant-ideal finite-type and Noetherian criteria, homogeneous-prime
-correspondence, symmetric-algebra grading, prime-multiplicity results and
-native quotient/interface assembly. Other Formal Frontier contributors
-subsequently supplied dependency compatibility, native and computation-preserving
-direct/root clients, localization repairs, examples and reader documentation.
-The interface work includes the additional `valuationDef_pow` computation lemma;
-the original `valuation_apply_pow` proof remains available.
+Original Formal Frontier formalizations include the quotient grading, full
+graded localization, irrelevant-ideal finite-type and Noetherian criteria,
+homogeneous-prime correspondence, symmetric-algebra grading, prime-multiplicity
+results and native quotient interfaces. Additional contributions include
+dependency compatibility, computation-preserving interfaces and clients,
+localization repairs, examples and reader documentation. The additional
+`valuationDef_pow` computation lemma is distinct from the original
+`valuation_apply_pow` proof, which remains available.
 
-The degree-multiplying homogeneous-localization map and its direct client were
-originally written as a separate Formal Frontier incubator contribution; a
-different contributor adapted the client and registered the library and root
-imports here. Its mathematical statements and proofs were not newly originated
-by the destination assembly. The producer retains **Jujian Zhang's 2022
-copyright notice** and the attribution to **Jujian Zhang and Eric Wieser** for
-the underlying mathlib homogeneous-localization construction and native maps.
-The project adaptation and mathlib's Apache-2.0 terms do not replace those
-authentic notices.
+The integer-filtration associated graded and its representative quotient API,
+the canonical quotient-Rees representation, the induced maps of stage-preserving
+original-module linear maps, and the Rees grading use Mathlib's filtration,
+direct-sum, quotient, homogeneous-ideal and endomorphism-action APIs.
+The weighted lifting and its finiteness consequences use Mathlib's adic
+precompleteness interface. The finite-generation bridge additionally uses
+homogeneous representatives, quotient-Rees components, and Mathlib's direct-sum
+and finite-span extraction APIs. Residue coefficients restrict the canonical
+quotient-Rees action; natural filtrations extend to integer stages without
+normalizing their initial submodule. These are distinct from the natural-indexed
+finite-Rees stability and first-quotient constructions.
 
-The selected-component Veronese ring and algebra-only direct examples were
-written in an isolated incubator contribution, then separately adapted and
-registered in this library with a new guide and aggregate client. Distinct
-incubator contributors originally wrote the homogeneous-polynomial lifts,
-positive-Veronese degree-one generation, coherent-tail equivalences, weighted
-exponent blocks, weighted evaluation, polynomial monomial-adjoin membership,
-finite selected-ring degree-one generation, selected weighted-polynomial
-generators, prescribed positive selected-ring finite type, the zero-index
-selected-ring API, finite positive-Veronese inclusion, whole-ring residue
-projections and external shifted residue modules. Their original mathematical
-proofs and clients are not reattributed to the later contributors who adapted
-imports, notices, test fixtures, module registration, root witnesses, guides
-and release metadata here. The original authors and separate adaptation
-contributors are collectively credited as Formal Frontier Agents.
+The quotient-Rees augmentation uses Mathlib's constant-coefficient and quotient
+maps. The regular-module comparisons use the polynomial-module self-comparison;
+ideal-power quotient multiplication descends the existing bilinear coefficient
+map. Associated-graded map criteria and exactness use quotient kernel/range and
+direct-sum APIs. These constructions reuse the existing scalar actions and
+quotients rather than replacing them.
 
-An original assessment of finite-inclusion applicability and the zero-index
-API design were contributed by Atlas as **uncompiled mathematical designs**,
-not authorship of those later Lean proofs. Atlas also supplied uncompiled
-weighted-evaluation design notes and repaired the positive-Veronese guide.
-The positive-weight exponent decomposition was separately explained in a
-project proof exposition before its independent formalization. A correction
-removed unsupported original-project copyright-owner assertions from an
-early weighted-polynomial adjoin contribution; the repaired project author
-and Apache-2.0 notices remain, and no owner is invented. The adapted
-finite-type and zero-index test fixtures retain credit to the existing
-Formal Frontier `FiniteVeronese` examples and the related incubator client.
+The degree-multiplying homogeneous-localization map and its client reuse
+earlier Formal Frontier work; the library-specific client adaptation does not
+originate the map's mathematical statements or proofs. The implementation
+retains **Jujian Zhang's 2022 copyright notice** and the attribution to
+**Jujian Zhang and Eric Wieser** for the underlying mathlib
+homogeneous-localization construction and native maps. Project adaptations and
+mathlib's Apache-2.0 terms do not replace those authentic notices.
 
-Atlas adapted the historical native Markdown API adapter and controls from
-earlier Formal Frontier projects (including multivariate polynomials, toric
-ideals, minimal primes and integral closure) and Anchor's initial
-ideal-completion recipe. The [documentation guide](README.md) describes the
-functional historical snapshot separately from the current manual API map.
+The selected-component Veronese ring and its algebra-only clients also reuse
+earlier Formal Frontier formalizations. These contributions include
+homogeneous-polynomial lifts, positive-Veronese degree-one generation,
+coherent-tail equivalences, weighted exponent blocks, weighted evaluation,
+polynomial monomial-adjoin membership, finite selected-ring degree-one
+generation, selected weighted-polynomial generators, prescribed positive
+selected-ring finite type, the zero-index selected-ring API, finite
+positive-Veronese inclusion, whole-ring residue projections and external
+shifted residue modules. Their original mathematical proofs and clients are
+credited separately from adaptations of imports, interfaces, examples and
+documentation; they are not reattributed to the adaptation contributors. All
+these contributors are collectively credited as Formal Frontier Agents.
+
+Mathematical API designs for finite-inclusion applicability, the zero-index
+API and weighted evaluation are distinct contributions from their Lean proofs.
+Positive-weight exponent decomposition also has a separately authored
+mathematical exposition. The finite-type and zero-index examples reuse the
+existing Formal Frontier `FiniteVeronese` examples and a related selected-ring
+client. Documentation tooling draws on earlier Formal Frontier work on
+multivariate polynomials, toric ideals, minimal primes, integral closure and
+ideal completion; the [documentation guide](README.md) distinguishes that
+tooling from the current manual API map.
 
 ## Sources and boundaries
 
@@ -71,8 +78,38 @@ conventions on pp. 151–152). The selected-ring, polynomial-lift, coherent-tail
 weighted-block and finite-type APIs are reusable algebraic results, not an
 assertion of every exercise's source correspondence or a Proj/scheme
 equivalence. The [README](../README.md) and [mathematical guides](README.md)
-give their actual hypotheses and limitations; source-specific passage
-correspondence and remaining gaps are maintained outside this library.
+give their actual hypotheses and limitations.
+
+For background on the Rees and associated-graded algebra/module constructions
+in [`ReesAlgebra`](../GradedRings/ReesAlgebra.lean) and
+[`ReesModule`](../GradedRings/ReesModule.lean), see K. Fujiwara and F. Kato,
+*Foundations of Rigid Geometry I*,
+[arXiv:1308.4734v5](https://arxiv.org/abs/1308.4734v5). This scoped background
+reference does not assert exact theorem correspondence or book coverage.
+
+The [integer-filtration associated graded](../GradedRings/FilteredAssociatedGraded.lean),
+its [canonical quotient-Rees action](../GradedRings/FilteredAssociatedGraded/ReesAction.lean)
+and the [Rees grading](../GradedRings/ReesAlgebra/Grading.lean) use Chapter 0, §7.5
+of that work as mathematical context. The separate
+[weighted lifting](../GradedRings/FilteredModule/WeightedSpan.lean) and
+[its consequences](../GradedRings/FilteredModule/Finiteness.lean) independently
+generalize the filtered coefficient-lifting ingredient underlying Proposition 0.7.5.2.
+Their precomplete-coefficient, all-integer formulation takes a separated compatible
+filtration, finite weighted lifts and their generation of each successive quotient
+as input. The separate
+[finite-generation bridge](../GradedRings/FilteredAssociatedGraded/FiniteGeneration.lean)
+relates those generation inputs to finiteness of the canonical quotient-Rees
+associated graded, without completeness or separation for that equivalence.
+Its lifting consequences retain precompleteness and filtration separation;
+ambient-module finiteness additionally needs exhaustivity, while stage finiteness
+needs a finitely generated ideal instead. These are not assertions of the full
+proposition, book coverage or full graded source correspondence.
+
+The finite-Rees stability theorem follows Andrew Yang's bounded-degree span
+and finite-generation compactness argument in Mathlib's
+`Ideal.Filtration.submodule_fg_iff_stable`. Only its converse needs finite
+generation of the filtration stages; the forward stability theorem does not.
+This is distinct from the first-quotient associated-graded finiteness construction.
 
 Lean and mathlib supply the formal language and reusable graded-algebra,
 localization, polynomial, ideal, symmetric-algebra, multiplicity and valuation
@@ -85,8 +122,6 @@ Livingston and Jireh Loreaux. The original project's Apache-2.0 authorization
 does not relicense third-party material. There are no copied source PDFs,
 dependency websites, fonts or raw transcripts in the shipped library.
 
-Revision-specific contributor identities, original/adapted file comparisons,
-rights assessments, objections and exact verification/review/release evidence
-are maintained in the project's private owning records. These are not
-prerequisites for using the published mathematical API and are not a
-replacement for its documentation or the bibliography above.
+Credit for mathematical ideas or formalization approaches does not grant
+permission to copy their expression. Project author and Apache-2.0 notices do
+not establish legal copyright ownership or waive third-party rights.
