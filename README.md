@@ -109,7 +109,10 @@ chosen coefficient ring.
   formulas accompany zero, composition and inverse identities using the
   canonical filtration comparisons. Translation commutes with maps induced by
   stage-preserving `R`-linear maps, both on the whole associated graded and on each
-  graded piece. No additional hypotheses are needed.
+  graded piece. It also commutes with pullback and image filtrations. The induced
+  equivalence between the quotients by inclusion ranges commutes with the
+  [subquotient equivalence](GradedRings/FilteredAssociatedGraded/SubquotientShift.lean).
+  No additional hypotheses are needed.
 - **Pullbacks and images of integer filtrations.** Pullback and image along an
   original-`R`-linear map have the submodule inverse images and direct images as
   their integer stages. They preserve ideal compatibility, respect identities

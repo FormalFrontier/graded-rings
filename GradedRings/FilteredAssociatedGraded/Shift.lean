@@ -62,6 +62,16 @@ theorem shift_N (d n : ℤ) : (F.shift d).N n = F.N (n + d) := rfl
 theorem mem_shift (d n : ℤ) (m : M) :
     m ∈ (F.shift d).N n ↔ m ∈ F.N (n + d) := Iff.rfl
 
+/-- Translating a pullback filtration agrees with pulling back the translated filtration. -/
+theorem shift_comap {N : Type w} [AddCommGroup N] [Module R N]
+    (H : I.IntFiltration N) (f : M →ₗ[R] N) (d : ℤ) :
+    (H.comap f).shift d = (H.shift d).comap f := rfl
+
+/-- Translating an image filtration agrees with taking the image of the translated filtration. -/
+theorem shift_image {N : Type w} [AddCommGroup N] [Module R N]
+    (f : M →ₗ[R] N) (d : ℤ) :
+    (F.image f).shift d = (F.shift d).image f := rfl
+
 /-- The next-stage denominator of a translated piece, in the same ambient stage. -/
 theorem shift_nextStage (d n : ℤ) :
     (F.shift d).nextStage n = F.nextStage (n + d) := by
@@ -401,6 +411,22 @@ theorem shiftEquiv_map (d : ℤ) :
     _ = F.map H f hf (F.shiftEquiv d ((F.shift d).single n m)) :=
       congrArg (F.map H f hf : F.AssociatedGraded → H.AssociatedGraded)
         (F.shiftEquiv_single d n m).symm
+
+/-- Translation carries the range of a shifted associated graded map onto its original range. -/
+theorem shiftEquiv_range_map (d : ℤ) :
+    (LinearMap.range
+        ((F.shift d).map (H.shift d) f (fun k : ℤ => hf (k + d)))).map
+        (H.shiftEquiv d).toLinearMap =
+      LinearMap.range (F.map H f hf) := by
+  rw [← LinearMap.range_comp, F.shiftEquiv_map H f hf d]
+  apply Submodule.ext
+  intro y
+  constructor
+  · rintro ⟨x, rfl⟩
+    exact ⟨F.shiftEquiv d x, rfl⟩
+  · rintro ⟨x, rfl⟩
+    obtain ⟨z, rfl⟩ := (F.shiftEquiv d).surjective x
+    exact ⟨z, rfl⟩
 
 /-- Inverse translation is natural for associated graded maps over the quotient Rees algebra. -/
 theorem shiftEquiv_symm_map (d : ℤ) :

@@ -14,6 +14,7 @@ public import GradedRings.FilteredAssociatedGraded.Subquotient
 public import GradedRings.FilteredAssociatedGraded.Coefficients
 public import GradedRings.FilteredAssociatedGraded.PowerQuotientAction
 public import GradedRings.FilteredAssociatedGraded.Shift
+public import GradedRings.FilteredAssociatedGraded.SubquotientShift
 public import GradedRings.FilteredAssociatedGraded.FiniteGeneration
 public import GradedRings.FilteredAssociatedGraded.Pieces
 public import GradedRings.FilteredModule.WeightedSpan
