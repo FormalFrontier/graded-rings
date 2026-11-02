@@ -10,6 +10,7 @@ public import GradedRings.FilteredAssociatedGraded
 public import GradedRings.FilteredAssociatedGraded.ReesAction
 public import GradedRings.FilteredAssociatedGraded.ReesProjection
 public import GradedRings.FilteredAssociatedGraded.Map
+public import GradedRings.FilteredAssociatedGraded.ReesProjectionNaturality
 public import GradedRings.FilteredAssociatedGraded.DirectSum
 public import GradedRings.FilteredAssociatedGraded.Prod
 public import GradedRings.FilteredAssociatedGraded.Subquotient

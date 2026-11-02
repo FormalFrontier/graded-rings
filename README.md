@@ -442,6 +442,13 @@ map `F.shiftedReesProjection k`. Singleton values characterize that semilinear m
 component, next-tail-kernel, exact range and finite-image theorems use the original
 polynomial and associated-graded carriers with their existing actions.
 
+[`ReesModule.Map`](GradedRings/ReesModule/Map.lean) also provides
+`E.reesMap L f hf` for arbitrary natural ideal filtrations and stage-preserving
+`R`-linear maps. Every coefficient is sent through `f`, with singleton, identity
+and composition formulas. At any common integer cutoff, these maps commute with
+the prescribed shifted projections and the existing map on full integer associated
+gradeds, as [semilinear maps along the same quotient of the Rees algebra](GradedRings/FilteredAssociatedGraded/ReesProjectionNaturality.lean).
+
 [Residue coefficients](GradedRings/FilteredAssociatedGraded/Coefficients.lean)
 act on the same whole associated graded by restricting the canonical quotient-Rees
 action along `R/I → C`; residue representatives act by the original `R`-action.

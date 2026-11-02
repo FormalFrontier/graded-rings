@@ -7,7 +7,12 @@ module
 public import GradedRings.ReesModule
 
 /-!
-# Maps on quotient Rees modules
+# Maps of Rees submodules and quotient Rees modules
+
+A linear map preserving every stage of two natural-number ideal filtrations
+induces a coefficientwise map of their Rees submodules, linear over the Rees
+algebra. Its polynomial, coefficient, and singleton formulas characterize it,
+and it preserves identities and composition.
 
 An original-ring linear map induces a map on the quotient of the Rees module by
 the extended ideal. Its value is obtained by applying `PolynomialModule.map` to
@@ -29,6 +34,102 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 universe u v w x
+
+namespace Ideal.Filtration
+
+variable {R : Type u} [CommRing R] {I : Ideal R}
+variable {M : Type v} [AddCommGroup M] [Module R M]
+variable {N : Type w} [AddCommGroup N] [Module R N]
+variable (F : I.Filtration M) (H : I.Filtration N) (f : M →ₗ[R] N)
+
+local notation "B" => reesAlgebra I
+
+/-- A stage-preserving linear map induces a coefficientwise map of Rees
+submodules, linear over the Rees algebra. -/
+noncomputable def reesMap (hf : ∀ q, F.N q ≤ (H.N q).comap f) :
+    F.submodule →ₗ[B] H.submodule where
+  toFun := fun p =>
+    ⟨PolynomialModule.map R f (p : PolynomialModule R M), by
+      apply (H.mem_submodule _).2
+      intro q
+      exact hf q ((F.mem_submodule _).1 p.property q)⟩
+  map_add' p q := Subtype.ext ((PolynomialModule.map R f).map_add _ _)
+  map_smul' b p := by
+    apply Subtype.ext
+    change PolynomialModule.map R f ((b : Polynomial R) • (p : PolynomialModule R M)) =
+      (b : Polynomial R) • PolynomialModule.map R f (p : PolynomialModule R M)
+    simpa using PolynomialModule.map_smul R f (b : Polynomial R)
+      (p : PolynomialModule R M)
+
+variable (hf : ∀ q, F.N q ≤ (H.N q).comap f)
+
+/-- The underlying polynomial map of the Rees-submodule map is
+`PolynomialModule.map`. -/
+theorem coe_reesMap (p : F.submodule) :
+    (F.reesMap H f hf p : PolynomialModule R N) =
+      PolynomialModule.map R f (p : PolynomialModule R M) := by
+  rfl
+
+/-- Every coefficient is sent through the original linear map. -/
+@[simp]
+theorem coeff_reesMap (q : ℕ) (p : F.submodule) :
+    (F.reesMap H f hf p : PolynomialModule R N).coeff q =
+      f ((p : PolynomialModule R M).coeff q) := by
+  rfl
+
+/-- An admissible polynomial single maps to the single of its image coefficient
+in the same degree. -/
+@[simp]
+theorem reesMap_single (q : ℕ) (m : F.N q) :
+    F.reesMap H f hf
+        (⟨PolynomialModule.single R q (m : M), by
+          apply (F.mem_submodule _).2
+          intro i
+          by_cases h : q = i
+          · subst i
+            simp
+          · simp [PolynomialModule.coeff_single, h]⟩ : F.submodule) =
+      (⟨PolynomialModule.single R q (f (m : M)), by
+        apply (H.mem_submodule _).2
+        intro i
+        by_cases h : q = i
+        · subst i
+          simpa using hf q m.property
+        · simp [PolynomialModule.coeff_single, h]⟩ : H.submodule) := by
+  apply Subtype.ext
+  simpa only [coe_reesMap] using PolynomialModule.map_single R f q (m : M)
+
+/-- The identity map induces the identity on the Rees submodule. -/
+@[simp]
+theorem reesMap_id :
+    F.reesMap F (LinearMap.id : M →ₗ[R] M) (by
+      intro q m hm
+      exact hm) =
+      (LinearMap.id : F.submodule →ₗ[B] F.submodule) := by
+  apply LinearMap.ext
+  intro p
+  apply Subtype.ext
+  apply PolynomialModule.coeff_injective
+  ext q
+  simp only [coeff_reesMap, LinearMap.id_apply]
+
+variable {P : Type x} [AddCommGroup P] [Module R P]
+
+/-- The coefficientwise map of Rees submodules preserves composition. -/
+theorem reesMap_comp (K : I.Filtration P) (g : N →ₗ[R] P)
+    (hg : ∀ q, H.N q ≤ (K.N q).comap g) :
+    F.reesMap K (g.comp f) (by
+      intro q m hm
+      exact hg q (hf q hm)) =
+      (H.reesMap K g hg).comp (F.reesMap H f hf) := by
+  apply LinearMap.ext
+  intro p
+  apply Subtype.ext
+  apply PolynomialModule.coeff_injective
+  ext q
+  simp only [coeff_reesMap, LinearMap.comp_apply]
+
+end Ideal.Filtration
 
 namespace Ideal.AssociatedGradedModule
 
@@ -59,17 +160,13 @@ theorem polynomialModule_map_mem (f : M →ₗ[R] N) (p : Sₘ) :
   change f ((p : PolynomialModule R M).coeff q) ∈ I ^ q • (⊤ : Submodule R N)
   exact map_mem_power_smul I f q (p.property q)
 
-private noncomputable def reesMap (f : M →ₗ[R] N) : Sₘ →ₗ[B] Sₙ where
-  toFun p :=
-    ⟨PolynomialModule.map R f (p : PolynomialModule R M),
-      polynomialModule_map_mem I f p⟩
-  map_add' p q := Subtype.ext ((PolynomialModule.map R f).map_add _ _)
-  map_smul' b p := by
-    apply Subtype.ext
-    change PolynomialModule.map R f ((b : Polynomial R) • (p : PolynomialModule R M)) =
-      (b : Polynomial R) • PolynomialModule.map R f (p : PolynomialModule R M)
-    simpa using PolynomialModule.map_smul R f (b : Polynomial R)
-      (p : PolynomialModule R M)
+private noncomputable def reesMap (f : M →ₗ[R] N) : Sₘ →ₗ[B] Sₙ :=
+  Ideal.Filtration.reesMap
+    (I.stableFiltration (⊤ : Submodule R M))
+    (I.stableFiltration (⊤ : Submodule R N)) f (by
+      intro q
+      simpa only [Ideal.stableFiltration_N] using
+        (Submodule.smul_top_le_comap_smul_top (I ^ q) f))
 
 private theorem denominator_le_comap (f : M →ₗ[R] N) :
     Dₘ ≤ (Dₙ).comap (reesMap I f) := by
