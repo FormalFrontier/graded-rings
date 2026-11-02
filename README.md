@@ -124,6 +124,14 @@ chosen coefficient ring.
   An ambient exact pair with strict stage images induces an exact pair, without
   ambient injectivity or surjectivity. The three module universes are independent;
   no finiteness, exhaustivity, separatedness, completeness or degree bound is needed.
+- **Induced submodules and filtered quotients.** For any submodule `S`, the
+  [subquotient equivalence](GradedRings/FilteredAssociatedGraded/Subquotient.lean)
+  identifies the associated graded of `F.image S.mkQ` with the quotient of
+  `F.AssociatedGraded` by the range of the canonical map from
+  `(F.comap S.subtype).AssociatedGraded`, linearly over the quotient Rees algebra.
+  The submodule filtration is induced, not intrinsic ideal-adic. Representative
+  formulas and the quotient universal property apply in all integer degrees,
+  with no finiteness, normalization, separation or completeness hypotheses.
 - **Ideal-power quotients and coefficient multiplication.** For any ideal `I` of a
   commutative ring `R` and every natural degree `q`, the
   [quotient of `I ^ q` by its ideal multiple](GradedRings/ReesAlgebra/QuotientPieces.lean)
