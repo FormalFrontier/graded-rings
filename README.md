@@ -147,6 +147,16 @@ chosen coefficient ring.
   for the canonical actions, with forward map given by the two projections and
   inverse given by the sum of the two inclusions. No degree-zero normalization,
   finiteness, exhaustivity, separatedness, completeness or degree bound is required.
+- **Dependent direct sums of integer filtrations.** For an arbitrary family of
+  ideal-compatible integer filtrations over a commutative ring, the componentwise
+  filtration on the [dependent direct sum](GradedRings/FilteredAssociatedGraded/DirectSum.lean)
+  has associated graded canonically equivalent to the direct sum of the associated
+  gradeds, linearly over the quotient Rees algebra. Coordinates are the filtered
+  component maps; the inverse is assembled from the filtered summand inclusions.
+  Homogeneous representatives retain their summand and absolute integer degree,
+  naturally under stage-preserving linear maps. The scalar, index and module
+  universes are independent. No finite index set, common lower degree bound,
+  finiteness, exhaustivity, separatedness or completeness is required.
 - **Exactness of integer associated graded maps.** For compatible original
   linear maps `f : M →ₗ[R] N` and `g : N →ₗ[R] P`, the image of the first
   canonical quotient-Rees-linear associated graded map equals the kernel of the
