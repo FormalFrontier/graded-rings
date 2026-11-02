@@ -108,6 +108,17 @@ chosen coefficient ring.
   filtered lifting ingredient underlying Fujiwara--Kato, *Foundations of Rigid
   Geometry I*, Proposition 0.7.5.2; it is not the full proposition or a full
   associated-graded construction.
+- **Finite integer associated gradeds and weighted generators.** For the
+  [canonical quotient-Rees action](GradedRings/FilteredAssociatedGraded/FiniteGeneration.lean),
+  finiteness of the whole integer associated graded is equivalent to finite
+  homogeneous original-module lifts generating every successive quotient with
+  ideal-power weights. This algebraic equivalence needs no completeness,
+  separation, exhaustivity or finiteness of the ideal. Over an ideal-adically
+  precomplete coefficient ring, separation gives exact weighted descriptions
+  in every integer degree and eventual stability. Exhaustivity additionally
+  gives finiteness of the original module; `I.FG` instead gives finite generation
+  of every stage, without exhaustivity. Degree-zero normalization and a lower
+  grading bound are not required, and the generator family may be empty.
 - **Associated graded modules from the first quotient.** For any ideal `I` in a
   commutative ring `R` and any `R`-module `M`, with independent universes,
   [the Rees-quotient associated graded module](GradedRings/ReesModule.lean) `G`
