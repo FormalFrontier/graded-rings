@@ -8,7 +8,7 @@ public import GradedRings.FilteredAssociatedGraded.FiniteGeneration
 public import GradedRings.FilteredAssociatedGraded.ReesProjection
 
 /-!
-# Weighted cutoffs for natural tails of integer filtrations
+# Finiteness criteria for integer-filtered associated gradeds
 
 An all-integer weighted description of the stages converts to a natural-tail
 weighted description at any common lower cutoff `k` for the integer weights.
@@ -25,12 +25,28 @@ associated graded exactly when some finitely generated natural tail has a
 surjective prescribed Rees projection. This criterion does not require
 exhaustivity or finite generation of the ideal or the individual stages.
 
+For a finitely generated ideal and a separated exhaustive integer filtration over
+precomplete coefficients, finiteness over the quotient Rees algebra is equivalent
+to finiteness of the original module, finite generation of every original-scalar
+stage, and eventual stability under multiplication by the ideal.
+
+## Implementation notes
+
+The intrinsic criterion composes the weighted lifting and finiteness consequences
+with the shifted-Rees finite-image theorem. Stage finiteness concerns every integer
+degree over the original ring. Neither coefficient Hausdorffness, ambient-module
+precompleteness, Noetherianity nor degree-zero normalization is assumed. The ring
+and module have independent universes.
+
 ## References
 
 * K. Fujiwara and F. Kato, *Foundations of Rigid Geometry I*,
   arXiv:1308.4734v5, for the filtered-generation setting.
-* Andrew Yang's ideal filtrations in Mathlib, and Mathlib's integer truncation
-  and complete-lattice API.
+* Andrew Yang's ideal-filtration and Rees-module formalization in Mathlib,
+  and Mathlib's integer truncation, complete-lattice and semilinear finite-image APIs.
+* The weighted coefficient-lifting, homogeneous extraction, quotient-Rees action
+  and shifted-projection formalizations in `GradedRings.FilteredModule` and
+  `GradedRings.FilteredAssociatedGraded`.
 -/
 
 @[expose] public section
@@ -127,5 +143,28 @@ theorem finite_associatedGraded_iff_exists_fg_natTail
   · rintro ⟨k, hfg, hsurj⟩
     exact F.finite_of_fg_natTail k hfg
       ((F.shiftedReesProjection_surjective_iff k).1 hsurj)
+
+/-- Over precomplete coefficients, a separated exhaustive integer filtration for a
+finitely generated ideal has finite associated graded over the canonical quotient
+Rees algebra exactly when the original module and all its original-scalar integer
+stages are finitely generated and the filtration is eventually stable under the ideal. -/
+theorem finite_associatedGraded_iff_finite_fg_stable
+    [IsPrecomplete I R] (hI : I.FG)
+    (hsep : (⨅ n : ℤ, F.N n) = ⊥)
+    (hexhaustive : (⨆ n : ℤ, F.N n) = ⊤) :
+    Module.Finite C F.AssociatedGraded ↔
+      Module.Finite R M ∧
+        (∀ n : ℤ, (F.N n).FG) ∧
+        (∃ c : ℤ, ∀ n : ℤ, c ≤ n → I • F.N n = F.N (n + 1)) := by
+  constructor
+  · intro hfinite
+    let : Module.Finite C F.AssociatedGraded := hfinite
+    refine ⟨F.moduleFinite_of_finite_associatedGraded hsep hexhaustive,
+      F.fg_of_finite_associatedGraded hsep hI, ?_⟩
+    obtain ⟨c, hc⟩ := F.exists_eq_smul_of_finite_associatedGraded hsep
+    exact ⟨c, fun n hn => (hc n hn).symm⟩
+  · rintro ⟨hM, hstage, ⟨c, hstable⟩⟩
+    let : Module.Finite R M := hM
+    exact F.finite_of_stable_ge_of_fg_le hexhaustive c hstable (fun n _ => hstage n)
 
 end Ideal.IntFiltration

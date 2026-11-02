@@ -60,6 +60,7 @@ and the subject guides for the current interfaces.
 | [`GradedRings.ReesAlgebra.Augmentation`](../GradedRings/ReesAlgebra/Augmentation.lean) | For any ideal `I` of a commutative ring `R`, `reesAlgebra.augmentation` maps `C = reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))` to `R ⧸ I` as an `R ⧸ I`-algebra homomorphism. `augmentation_mk` computes the residue of the constant coefficient, `augmentation_mk_monomial` computes every quotient monomial, and `augmentation_eq_zero_of_mem_quotientHomogeneousComponent` kills every positive homogeneous component. `algebraMap_augmentation` identifies its composite with the coefficient map as Mathlib's degree-zero projection; `coe_quotientHomogeneousComponent_zero` identifies the stock degree-zero component with the coefficient map's set range. No finiteness, Noetherianity, nontriviality or proper-ideal assumption, and no equivalence of the whole ring `C` with `R ⧸ I` is asserted. |
 | [`GradedRings.ReesModule.Evaluation`](../GradedRings/ReesModule/Evaluation.lean) | For any natural ideal filtration `H` of an `R`-module over a commutative ring, `H.evalRees r` restricts polynomial-module evaluation to the original `H.N 0`, semilinear along polynomial evaluation composed with the Rees-algebra inclusion. `single0`, its coefficient formulas and `evalRees_single0` give an original-`R`-linear section at every `r`; `evalRees_surjective`, `evalRees_reesMap` and `reesMap_single0` give surjectivity and naturality. `fg_N_zero_of_submodule_fg` deduces `(H.N 0).FG` from `H.submodule.FG`. Independent universes; no ideal/stage/ambient finiteness, normalization or stability hypothesis. `PolynomialModule.eval_zero` computes the zero specialization; `Polynomial.evalRingHom_zero` rewrites its scalar hom. No kernel-product or quotient-equivalence assertion. |
 | [`GradedRings.ReesModule.HomogeneousGenerators`](../GradedRings/ReesModule/HomogeneousGenerators.lean) | For an arbitrary ideal and natural filtration, `Ideal.Filtration.submodule_fg_iff_exists_weighted_normal_form` characterizes finite generation over the Rees algebra by one finite weighted family describing every stage over the original ring. The family may be empty; neither the ideal, individual stages nor ambient module need be finitely generated. `exists_fin_generating_family_single_le_of_submodule_fg` selects correct-stage elements whose singles in every degree up to their weights span the same Rees module. |
+| [`GradedRings.FilteredAssociatedGraded.ReesFiniteGeneration`](../GradedRings/FilteredAssociatedGraded/ReesFiniteGeneration.lean) | For a finitely generated ideal, precomplete coefficients, and a separated exhaustive integer filtration, `Ideal.IntFiltration.finite_associatedGraded_iff_finite_fg_stable` characterizes finiteness over the fixed quotient Rees algebra by finiteness of the original module, FG of every original-`R` integer stage, and eventual ideal stability. The more general `finite_associatedGraded_iff_exists_fg_natTail` needs only precompleteness and separation and retains surjectivity of the prescribed tail projection. Weighted-cutoff conversions require none of these hypotheses. See the [intrinsic criterion](#intrinsic-finiteness-of-integer-associated-gradeds). |
 | [`GradedRings.ReesModule.Regular`](../GradedRings/ReesModule/Regular.lean) | For any ideal `I` of a commutative ring `R`, `Ideal.Filtration.regularReesEquiv` identifies `reesAlgebra I` with the canonical Rees submodule of `I.stableFiltration (⊤ : Submodule R R)` as a module over the Rees algebra. Its forward map multiplies the degree-zero polynomial-module unit; `equivPolynomialSelf_regularReesEquiv_apply` recovers the input polynomial, and its inverse has underlying polynomial `PolynomialModule.equivPolynomialSelf`. No finite-generation, Noetherian or nontriviality assumption. |
 | [`GradedRings.AssociatedGradedRegular`](../GradedRings/AssociatedGradedRegular.lean) | For any ideal `I` of a commutative ring `R`, `Ideal.AssociatedGradedModule.regularEquiv` identifies the regular associated graded module with the quotient Rees ring `C` as a `C`-module, sending `c` to `c • regularUnit`. Rees representatives, all coefficients modulo the next ideal power, unique scalar expressions and linear-map extensionality characterize the comparison. No finiteness, completeness, separatedness or nontriviality assumption. |
 | [`GradedRings.FilteredAssociatedGraded.AdicMap`](../GradedRings/FilteredAssociatedGraded/AdicMap.lean) | For any ideal `I` of a commutative ring `R` and any original-`R`-linear map `f` between independently universed modules, `Ideal.adicAssociatedGradedHom I f` specializes the generic filtered map to stages `I ^ n.toNat • ⊤`, with stock stage preservation and the existing quotient Rees actions. `adicAssociatedGradedHom_single`, `component_adicAssociatedGradedHom`, `adicAssociatedGradedHom_id` and `adicAssociatedGradedHom_comp` characterize representatives, components and functor laws. No finiteness, completeness, separatedness or nontriviality assumption. |
@@ -82,6 +83,40 @@ regrouping theorem or a chart/scheme equivalence. Coherent high tails induce
 equivalent selected rings without extending the equivalence to missing low
 degrees or asserting a geometric equivalence. No claim about complete
 coverage of a mathematical book follows from this API.
+
+## Intrinsic finiteness of integer associated gradeds
+
+Let `R` be a commutative ring, `I : Ideal R`, and `M` an additive commutative group
+with its original `R`-module structure. For any `F : I.IntFiltration M`, put
+`C = reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))`. The full direct sum
+`F.AssociatedGraded` uses its existing `Ideal.IntFiltration.moduleReesQuotient`
+action, not just residue-coefficient scalars or a natural tail.
+
+Under `[IsPrecomplete I R]`, `hI : I.FG`, separation
+`hsep : (⨅ n : ℤ, F.N n) = ⊥` and exhaustivity
+`hexhaustive : (⨆ n : ℤ, F.N n) = ⊤`, the theorem
+`F.finite_associatedGraded_iff_finite_fg_stable hI hsep hexhaustive` states
+
+```text
+Module.Finite C F.AssociatedGraded ↔
+  Module.Finite R M ∧
+    (∀ n : ℤ, (F.N n).FG) ∧
+    (∃ c : ℤ, ∀ n : ℤ, c ≤ n → I • F.N n = F.N (n + 1))
+```
+
+Use `.mp` to obtain the three original-module conclusions from finite associated
+graded, and `.mpr` to prove that finiteness from the conjunction. There is no
+finite-associated-graded instance in the hypotheses. All stages, including negative
+ones, are the original `R`-submodules; the ring and module universes are independent.
+No Noetherianity, coefficient Hausdorffness, ambient-module precompleteness,
+normalization at zero or chosen top stage is needed.
+
+The forward implication combines the weighted-generation finiteness consequences.
+The reverse implication uses `finite_of_stable_ge_of_fg_le`, which only needs
+ambient finiteness, exhaustivity, stability from `c`, and FG of stages at or below
+`c`. Without exhaustivity or ideal FG, the separate natural-tail criterion still
+applies under precompleteness and separation, but its projection-surjectivity
+condition cannot be dropped.
 
 ## Degree-multiplying localization maps
 

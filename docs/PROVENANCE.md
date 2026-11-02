@@ -31,6 +31,13 @@ quotient-Rees action; natural filtrations extend to integer stages without
 normalizing their initial submodule. These are distinct from the natural-indexed
 finite-Rees stability and first-quotient constructions.
 
+The [intrinsic integer-associated-graded finiteness criterion](../GradedRings/FilteredAssociatedGraded/ReesFiniteGeneration.lean)
+composes the library's weighted coefficient-lifting and finiteness, homogeneous
+extraction, quotient-Rees action and shifted-projection formalizations. Its bounded
+converse reuses Andrew Yang's ideal-filtration and Rees-module formalization in
+Mathlib and Mathlib's finite-span and semilinear finite-image APIs. It constructs
+no new filtration, associated graded or scalar action.
+
 The quotient-Rees augmentation uses Mathlib's constant-coefficient and quotient
 maps. The regular-module comparisons use the polynomial-module self-comparison;
 ideal-power quotient multiplication descends the existing bilinear coefficient
@@ -102,8 +109,11 @@ relates those generation inputs to finiteness of the canonical quotient-Rees
 associated graded, without completeness or separation for that equivalence.
 Its lifting consequences retain precompleteness and filtration separation;
 ambient-module finiteness additionally needs exhaustivity, while stage finiteness
-needs a finitely generated ideal instead. These are not assertions of the full
-proposition, book coverage or full graded source correspondence.
+needs a finitely generated ideal instead. Under precompleteness, separation,
+exhaustivity and ideal FG, the intrinsic criterion combines these consequences with
+the shifted-projection converse into an equivalence with ambient finiteness,
+all-integer original-stage FG and eventual ideal stability. These are not assertions
+of the full proposition, book coverage or full graded source correspondence.
 
 The finite-Rees stability theorem follows Andrew Yang's bounded-degree span
 and finite-generation compactness argument in Mathlib's

@@ -330,8 +330,14 @@ chosen coefficient ring.
   whose prescribed projection onto the whole associated graded is surjective;
   neither exhaustivity nor finiteness of the ideal or individual stages is needed.
   Exhaustivity additionally gives finiteness of the original module; `I.FG` instead
-  gives finite generation of every stage, without exhaustivity. Degree-zero normalization and a lower
-  grading bound are not required, and the generator family may be empty.
+  gives finite generation of every stage, without exhaustivity. With both exhaustivity
+  and `I.FG`, the intrinsic criterion
+  `finite_associatedGraded_iff_finite_fg_stable` says that finiteness over the same
+  quotient Rees algebra is equivalent to `Module.Finite R M`, finite generation of
+  **every original `R`-stage in every integer degree**, and eventual equality
+  `I • F.N n = F.N (n + 1)`. No Noetherianity, coefficient Hausdorffness,
+  ambient-module precompleteness, degree-zero normalization or chosen top stage is
+  required, and the generator family may be empty.
 - **Associated graded modules from the first quotient.** For any ideal `I` in a
   commutative ring `R` and any `R`-module `M`, with independent universes,
   [the Rees-quotient associated graded module](GradedRings/ReesModule.lean) `G`
@@ -524,6 +530,13 @@ at any cutoff `k` below every weight. The relative weights are `(d i - k).toNat`
 and the ideal powers use natural subtraction. It also gives `F.N n = F.N k` for
 every `n ≤ k`. These algebraic lemmas allow arbitrary, possibly empty indexing
 families and require no finiteness, completeness, separation or exhaustivity.
+For precomplete coefficients and a separated filtration, the same module supplies
+`finite_associatedGraded_iff_exists_fg_natTail`, retaining the projection-surjectivity
+condition. With exhaustivity and `I.FG`, use
+`F.finite_associatedGraded_iff_finite_fg_stable hI hsep hexhaustive` to pass in either
+direction between finite associated graded over the fixed quotient Rees algebra and
+finite original module, all-integer original-stage FG, and eventual ideal stability.
+The theorem takes no finite-associated-graded instance as a hypothesis.
 
 ## Build and use
 
