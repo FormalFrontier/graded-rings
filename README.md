@@ -107,9 +107,12 @@ chosen coefficient ring.
 - **Ideal-power quotients and coefficient multiplication.** For any ideal `I` of a
   commutative ring `R` and every natural degree `q`, the
   [quotient of `I ^ q` by its ideal multiple](GradedRings/ReesAlgebra/QuotientPieces.lean)
-  has an `R`-linear comparison `quotientMonomialEquiv` with the degree-`q` component
-  of the coefficient-ideal quotient of the Rees algebra. The denominator is exactly
-  the next ideal power, viewed inside `I ^ q`. On these same quotient modules,
+  has an `R ⧸ I`-linear comparison `quotientMonomialEquivCoefficients` with the
+  degree-`q` component of the coefficient-ideal quotient of the Rees algebra.
+  Residue scalars are inherited on the same component with its original `R`-action;
+  restricting the comparison to `R` recovers `quotientMonomialEquiv`, with the
+  same forward and inverse functions. The denominator is exactly the next ideal
+  power, viewed inside `I ^ q`. On these same quotient modules,
   [coefficient multiplication](GradedRings/ReesAlgebra/PowerQuotientMultiplication.lean)
   `powerQuotientMul` is bilinear over `R ⧸ I`; `powerQuotientMul_mk` sends `[a]`
   and `[b]` to `[a * b]` in degree `q + r`. Multiplication is commutative and

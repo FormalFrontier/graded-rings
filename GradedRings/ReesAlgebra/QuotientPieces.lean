@@ -7,20 +7,27 @@ module
 public import GradedRings.ReesAlgebra.Grading
 public import GradedRings.ReesModule
 public import GradedRings.ReesModule.Regular
+public import Mathlib.Algebra.Algebra.Tower
 
 /-!
 # Ideal-power quotients and quotient Rees components
 
 The quotient of `I ^ q` by its ideal multiple maps to the quotient Rees algebra
 by sending the class of `a` to the class of `a X^q`. Its image is the degree-`q`
-component of the existing quotient grading.
+component of the existing quotient grading. This component inherits coefficients
+in `R ⧸ I` from the ambient quotient Rees algebra, and the comparison is linear
+over these residue coefficients.
 
 ## Implementation notes
 
 The monomial kernel identification transports the coefficientwise singleton
 criterion in `Ideal.AssociatedGradedModule` along
-`Ideal.Filtration.regularReesEquiv`. No new quotient scalar action or quotient
-grading is introduced.
+`Ideal.Filtration.regularReesEquiv`. The residue-coefficient component is obtained
+from its `R`-submodule by `Submodule.orderIsoOfAlgebraMapSurjective`, so its carrier
+is unchanged. Its module structure is inherited from the ambient quotient Rees
+algebra. `LinearEquiv.extendScalarsOfSurjective` upgrades the original comparison
+without changing either of its functions. No new quotient scalar action or
+quotient grading is introduced.
 
 ## References
 
@@ -181,5 +188,112 @@ theorem quotientMonomialEquiv_mk (q : ℕ) (a : ↥(I ^ q)) :
       reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))) =
         Ideal.Quotient.mk (I.map (algebraMap R (reesAlgebra I))) (monomial I q a) :=
   rfl
+
+/-!
+## Residue coefficients on quotient components
+
+Surjectivity of `R → R ⧸ I` makes every quotient component stable under the
+ambient residue scalars. Restriction of scalars recovers its `R`-submodule,
+and the inherited action extends its original `R`-module structure. The
+residue-linear comparison retains the original forward and inverse functions.
+-/
+
+section Coefficients
+
+/-- The quotient homogeneous component as a residue-coefficient submodule of the
+existing quotient Rees algebra, with the same carrier as its `R`-submodule. -/
+noncomputable def quotientComponentSubmoduleCoefficients (q : ℕ) :
+    Submodule (R ⧸ I) (reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))) :=
+  (Submodule.orderIsoOfAlgebraMapSurjective
+    (R := R) (S := R ⧸ I)
+    (M := reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I)))
+    Ideal.Quotient.mk_surjective).symm (quotientComponentSubmodule I q)
+
+/-- Restricting the residue-coefficient component recovers the original image submodule. -/
+@[simp]
+theorem quotientComponentSubmoduleCoefficients_restrictScalars (q : ℕ) :
+    (quotientComponentSubmoduleCoefficients I q).restrictScalars R =
+      quotientComponentSubmodule I q := by
+  exact (Submodule.orderIsoOfAlgebraMapSurjective
+    (R := R) (S := R ⧸ I)
+    (M := reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I)))
+    Ideal.Quotient.mk_surjective).apply_symm_apply (quotientComponentSubmodule I q)
+
+/-- The existing quotient homogeneous component inherits residue scalars from
+its submodule of the ambient quotient Rees algebra. -/
+noncomputable instance instModuleQuotientHomogeneousComponentCoefficients (q : ℕ) :
+    Module (R ⧸ I) (quotientHomogeneousComponent I q) :=
+  inferInstanceAs (Module (R ⧸ I) (quotientComponentSubmoduleCoefficients I q))
+
+/-- Residue scalars on a quotient homogeneous component extend its original `R`-module. -/
+instance instIsScalarTowerQuotientHomogeneousComponentCoefficients (q : ℕ) :
+    IsScalarTower R (R ⧸ I) (quotientHomogeneousComponent I q) := by
+  refine ⟨fun r a x => ?_⟩
+  apply Subtype.ext
+  exact smul_assoc r a (x : reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I)))
+
+/-- Coercion to the quotient Rees algebra preserves residue scalar multiplication. -/
+@[simp]
+theorem coe_smul_quotientHomogeneousComponent (q : ℕ) (a : R ⧸ I)
+    (x : quotientHomogeneousComponent I q) :
+    ((SMul.smul a x : quotientHomogeneousComponent I q) :
+      reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))) =
+        a • (x : reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))) :=
+  rfl
+
+/-- Multiplication by a residue representative agrees with the unchanged `R`-action. -/
+@[simp]
+theorem quotientHomogeneousComponent_mk_smul (q : ℕ) (r : R)
+    (x : quotientHomogeneousComponent I q) :
+    @SMul.smul (R ⧸ I) (quotientHomogeneousComponent I q)
+        (instModuleQuotientHomogeneousComponentCoefficients I q).toSMul
+        (Ideal.Quotient.mk I r) x =
+      @SMul.smul R (quotientHomogeneousComponent I q)
+        (instModuleQuotientHomogeneousComponent I q).toSMul r x := by
+  apply Subtype.ext
+  exact algebraMap_smul (R ⧸ I) r
+    (x : reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I)))
+
+/-- The coefficient quotient is residue-linearly equivalent to the unchanged
+quotient homogeneous component, by upgrading the original `R`-linear comparison. -/
+noncomputable def quotientMonomialEquivCoefficients (q : ℕ) :
+    powerQuotient I q ≃ₗ[R ⧸ I] quotientHomogeneousComponent I q :=
+  (quotientMonomialEquiv I q).extendScalarsOfSurjective
+    (show Function.Surjective (algebraMap R (R ⧸ I)) from Ideal.Quotient.mk_surjective)
+
+/-- The residue-linear comparison has the same forward function as the original comparison. -/
+@[simp]
+theorem quotientMonomialEquivCoefficients_apply (q : ℕ) (a : powerQuotient I q) :
+    quotientMonomialEquivCoefficients I q a = quotientMonomialEquiv I q a := by
+  exact LinearEquiv.extendScalarsOfSurjective_apply _ _ a
+
+/-- Restricting the residue-linear comparison gives the original `R`-linear equivalence. -/
+@[simp]
+theorem quotientMonomialEquivCoefficients_restrictScalars (q : ℕ) :
+    (quotientMonomialEquivCoefficients I q).restrictScalars R =
+      quotientMonomialEquiv I q := by
+  apply LinearEquiv.ext
+  intro a
+  exact quotientMonomialEquivCoefficients_apply I q a
+
+/-- The residue-linear comparison has the same inverse function as the original comparison. -/
+@[simp]
+theorem quotientMonomialEquivCoefficients_symm_apply (q : ℕ)
+    (x : quotientHomogeneousComponent I q) :
+    (quotientMonomialEquivCoefficients I q).symm x =
+      (quotientMonomialEquiv I q).symm x := by
+  simp only [quotientMonomialEquivCoefficients,
+    LinearEquiv.extendScalarsOfSurjective_symm,
+    LinearEquiv.extendScalarsOfSurjective_apply]
+
+/-- A coefficient representative maps to its original quotient Rees monomial class. -/
+theorem quotientMonomialEquivCoefficients_mk (q : ℕ) (a : ↥(I ^ q)) :
+    (quotientMonomialEquivCoefficients I q (Submodule.Quotient.mk a) :
+      reesAlgebra I ⧸ I.map (algebraMap R (reesAlgebra I))) =
+        Ideal.Quotient.mk (I.map (algebraMap R (reesAlgebra I))) (monomial I q a) := by
+  rw [quotientMonomialEquivCoefficients_apply]
+  exact quotientMonomialEquiv_mk I q a
+
+end Coefficients
 
 end reesAlgebra
