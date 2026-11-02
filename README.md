@@ -29,6 +29,15 @@ chosen coefficient ring.
   `surjective_principalPolynomialHom`,
   `bijective_principalPolynomialHom`, `principalPolynomialEquiv`, and
   `augmentation_comp_principalPolynomialEquiv`).
+- **Coefficient homomorphisms of Rees algebras.** For commutative rings `R`, `S`,
+  a ring homomorphism `f : R →+* S` and ideals `I`, `J` with `I.map f ≤ J`,
+  [coefficient change](GradedRings/ReesAlgebra/Map.lean) defines
+  `reesAlgebra I →+* reesAlgebra J`. Its underlying polynomial map applies `f`
+  to every coefficient, and it respects identities and composition. A source
+  element belongs to its kernel exactly when every coefficient belongs to
+  `RingHom.ker f`. The map is surjective exactly when `f` is surjective and
+  `I.map f = J`. The ring universes are independent; no `Algebra R S` structure,
+  regularity, nontriviality or finiteness assumption is required.
 - **Quotients and localizations.** For commutative rings,
   [homogeneous-ideal quotients](GradedRings/Quotient.lean) inherit the image grading
   for additive-monoid degrees with decidable equality. [Full localization](GradedRings/Localization.lean)

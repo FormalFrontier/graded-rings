@@ -41,6 +41,7 @@ public import GradedRings.Quotient
 public import GradedRings.ReesAlgebra
 public import GradedRings.ReesAlgebra.Augmentation
 public import GradedRings.ReesAlgebra.Grading
+public import GradedRings.ReesAlgebra.Map
 public import GradedRings.ReesAlgebra.PowerQuotientAlgebra
 public import GradedRings.ReesAlgebra.PowerQuotientMultiplication
 public import GradedRings.ReesAlgebra.QuotientPieces
