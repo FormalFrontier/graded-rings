@@ -60,6 +60,13 @@ chosen coefficient ring.
   suffice for finite generation of the Rees module; no finiteness of later stages
   is needed. Both directions use the natural-number filtration and polynomial
   Rees-module constructions.
+- **Lattice operations on Rees submodules.** For any ideal `I` of a commutative
+  ring `R` and any `R`-module `M`, [Rees-submodule inclusion](GradedRings/ReesModule/Lattice.lean)
+  is equivalent to inclusion at every natural filtration stage. The construction
+  preserves binary suprema and arbitrary indexed infima and suprema. For a finite
+  family whose Rees submodules are finitely generated over `reesAlgebra I`, the
+  supremum filtration again has a finitely generated Rees submodule; no finiteness
+  of the ideal, individual stages, or ambient module is required.
 - **Finite homogeneous generators for Rees modules.** For any ideal `I` of a
   commutative ring `R` and any `R`-module `M`, a natural `I`-filtration with
   finitely generated Rees module admits a finite family `x i ∈ H.N (w i)`
