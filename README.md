@@ -72,6 +72,14 @@ chosen coefficient ring.
   No finiteness, completeness or separatedness assumption is needed. In the regular
   specialization, composition with `(Ideal.AssociatedGradedModule.regularEquiv I).symm`
   identifies it with the quotient Rees algebra and sends the degree-zero unit to `1`.
+- **Maps of quotient Rees modules.** For every ideal `I` of a commutative ring
+  `R`, an original-`R`-linear map between arbitrary, independently universed
+  modules induces a [quotient-Rees-linear map](GradedRings/ReesModule/Map.lean)
+  between their `Ideal.AssociatedGradedModule` modules. It applies the polynomial
+  module map to each Rees representative, preserves singleton degrees, and
+  commutes with each coefficient map via the ordinary quotient by
+  `I ^ (q + 1) • ⊤`. Identities and composition are preserved, without finiteness
+  or completeness assumptions.
 - **Residue-linear integer graded pieces.** For the same arbitrary ideal-compatible
   integer filtration, the [original pieces](GradedRings/FilteredAssociatedGraded/Pieces.lean)
   carry named `R ⧸ I`-module structures compatible with their original `R` actions.

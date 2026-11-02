@@ -38,6 +38,7 @@ public import GradedRings.ReesAlgebra.PowerQuotientAlgebra
 public import GradedRings.ReesAlgebra.PowerQuotientMultiplication
 public import GradedRings.ReesAlgebra.QuotientPieces
 public import GradedRings.ReesModule
+public import GradedRings.ReesModule.Map
 public import GradedRings.AssociatedGradedRegular
 public import GradedRings.SymmetricAlgebra
 public import GradedRings.SymmetricAlgebraSquareZero
