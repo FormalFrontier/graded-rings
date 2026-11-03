@@ -59,6 +59,7 @@ public import GradedRings.ReesModule.Noetherian
 public import GradedRings.ReesModule.Lattice
 public import GradedRings.ReesModule.Map
 public import GradedRings.ReesModule.Quotient
+public import GradedRings.ReesModule.QuotientEquiv
 public import GradedRings.ReesModule.Exactness
 public import GradedRings.ReesModule.Kernel
 public import GradedRings.ReesModule.Range
