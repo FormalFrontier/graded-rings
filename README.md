@@ -74,7 +74,10 @@ chosen coefficient ring.
   is Noetherian over `reesAlgebra I` exactly when its original initial stage
   `H.N 0` is Noetherian over `R` and the filtration is stable. The initial stage
   may be proper; no finite generation of `I` or Noetherianity of the ambient ring
-  or module is required.
+  or module is required. If `H.submodule` is Noetherian, every stagewise
+  subfiltration is stable. For each original submodule `N`, there is a bound `c`
+  such that `H.N (n + c) ⊓ N = I ^ n • (H.N c ⊓ N)` for every natural `n`.
+  The bound may depend on `N`, which need not be finitely generated.
 - **Lattice operations on Rees submodules.** For any ideal `I` of a commutative
   ring `R` and any `R`-module `M`, [Rees-submodule inclusion](GradedRings/ReesModule/Lattice.lean)
   is equivalent to inclusion at every natural filtration stage. The construction

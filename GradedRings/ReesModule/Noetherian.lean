@@ -8,6 +8,7 @@ import CoherentModules.RingTheory.Noetherian
 import GradedRings.ReesAlgebra.Map
 public import GradedRings.ReesModule.Annihilator
 import GradedRings.ReesModule.FiniteGeneration
+import GradedRings.ReesModule.Lattice
 
 /-!
 # Noetherianity of Rees modules
@@ -26,6 +27,10 @@ modulo the annihilator of the Rees module with a Rees algebra over the quotient
 by the annihilator of the initial stage. This effective coefficient ring and its
 Rees algebra are Noetherian. The original-action finite-module criterion then
 applies without choosing a quotient-coefficient action on the Rees module.
+
+Every stagewise subfiltration of a filtration with Noetherian Rees module is stable.
+Intersecting with a constant filtration gives a uniform Artin–Rees equality for each
+submodule of the original ambient module, without finite generation of that submodule.
 
 ## References
 
@@ -99,5 +104,27 @@ theorem isNoetherian_submodule_iff (H : I.Filtration M) :
     exact (isNoetherian_iff_finite_and_isNoetherianRing_quotient_annihilator
       (R := reesAlgebra I) (M := H.submodule)).mpr
         ⟨Module.Finite.iff_fg.mpr hfg, hquot⟩
+
+/-- Every stagewise subfiltration of a filtration with Noetherian Rees module is stable. -/
+theorem stable_of_le_of_isNoetherian_submodule (H K : I.Filtration M)
+    [IsNoetherian (reesAlgebra I) H.submodule]
+    (hKH : ∀ n : ℕ, K.N n ≤ H.N n) : K.Stable := by
+  let : IsNoetherian (reesAlgebra I) K.submodule :=
+    isNoetherian_of_le ((submodule_le_submodule_iff K H).mpr hKH)
+  exact (K.isNoetherian_submodule_iff.mp inferInstance).2
+
+/-- A filtration with Noetherian Rees module satisfies a uniform Artin–Rees equality
+for each submodule of its original ambient module. The bound may depend on the submodule. -/
+theorem exists_inf_eq_pow_smul_of_isNoetherian_submodule (H : I.Filtration M)
+    [IsNoetherian (reesAlgebra I) H.submodule] (N : Submodule R M) :
+    ∃ c : ℕ, ∀ n : ℕ, H.N (n + c) ⊓ N = (I ^ n) • (H.N c ⊓ N) := by
+  have hstable : (H ⊓ I.trivialFiltration N).Stable := by
+    apply H.stable_of_le_of_isNoetherian_submodule
+    intro n
+    simpa only [inf_N, Pi.inf_apply, Ideal.trivialFiltration_N] using
+      (inf_le_left : H.N n ⊓ N ≤ H.N n)
+  obtain ⟨c, hc⟩ := hstable.exists_pow_smul_eq
+  refine ⟨c, fun n => ?_⟩
+  simpa only [inf_N, Pi.inf_apply, Ideal.trivialFiltration_N, Nat.add_comm] using hc n
 
 end Ideal.Filtration
