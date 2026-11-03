@@ -54,6 +54,7 @@ public import GradedRings.ReesModule.AssociatedGraded
 public import GradedRings.ReesModule.HomogeneousGenerators
 public import GradedRings.ReesModule.Lattice
 public import GradedRings.ReesModule.Map
+public import GradedRings.ReesModule.Quotient
 public import GradedRings.ReesModule.Exactness
 public import GradedRings.ReesModule.Kernel
 public import GradedRings.ReesModule.Range
