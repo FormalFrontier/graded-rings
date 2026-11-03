@@ -92,3 +92,7 @@ public import GradedRings.ReesModule.PrincipalPolynomial
 public import GradedRings.ReesModule.PrincipalPolynomialEquivNaturality
 
 public import GradedRings.ReesModule.QuotientAction
+
+public import GradedRings.ReesAlgebra.PrincipalQuotient
+public import GradedRings.ReesModule.ConstantCoeff
+public import GradedRings.ReesModule.AssociatedGradedNoetherian
