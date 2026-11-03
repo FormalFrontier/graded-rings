@@ -36,6 +36,15 @@ chosen coefficient ring.
   computes coefficients in both directions, constants, the indeterminate and
   inverse monomials. Index and coefficient universes are independent; empty
   products and noncommutative coefficient semirings are included.
+- **Finite products of polynomial modules.** For a finite family of commutative
+  rings `R i` and additive commutative groups `M i` with their given `R i`-module
+  structures, the [semilinear comparison](GradedRings/PolynomialModule/Pi.lean)
+  identifies `PolynomialModule (Π i, R i) (Π i, M i)` with
+  `Π i, PolynomialModule (R i) (M i)`. It carries the original polynomial action
+  to the coordinate polynomial actions along `Polynomial.piRingEquiv R`.
+  Coefficients and singles are computed in both directions. The index, ring and
+  module universes are independent; empty products are included, with no
+  finiteness hypothesis on the rings or modules.
 - **Rees subalgebras over commutative semirings.** For every ideal `I` of a
   commutative semiring `R`, the [coefficient-power subalgebra](GradedRings/ReesAlgebra/Basic.lean)
   `I.reesSubalgebra` contains exactly the polynomials whose degree-`n` coefficient
@@ -637,7 +646,7 @@ The theorem takes no finite-associated-graded instance as a hypothesis.
 Install the exact toolchain in `lean-toolchain`: Lean `v4.34.0-rc2`.
 The direct dependencies are mathlib at
 `83abb3e776bdefcbc447a1e44d0debe4010039e5` and the released
-`coherent-modules` at `bc06b52d41f26857e2de79a8e4f24f12681339f1`;
+`coherent-modules` at `2c91cdf0cbc6bdd1911bb1517ad7b68cde5a0f83`;
 `lake-manifest.json` freezes all ten resolved Git dependencies. From a checkout, obtain matching compiled
 mathlib artifacts **before** building:
 

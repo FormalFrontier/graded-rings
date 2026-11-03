@@ -36,6 +36,7 @@ public import GradedRings.MvPolynomialAway
 public import GradedRings.Noetherian
 public import GradedRings.PolynomialModule.EvaluationKernel
 public import GradedRings.PolynomialModule.Monic
+public import GradedRings.PolynomialModule.Pi
 public import GradedRings.PrimeMultiplicity
 public import GradedRings.Quotient
 public import GradedRings.ReesAlgebra
