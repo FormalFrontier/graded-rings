@@ -69,6 +69,12 @@ chosen coefficient ring.
   suffice for finite generation of the Rees module; no finiteness of later stages
   is needed. Both directions use the natural-number filtration and polynomial
   Rees-module constructions.
+- **Noetherian Rees modules.** For any ideal `I` of a commutative ring `R` and any
+  natural `I`-filtration `H` of an `R`-module, the [original Rees module](GradedRings/ReesModule/Noetherian.lean)
+  is Noetherian over `reesAlgebra I` exactly when its original initial stage
+  `H.N 0` is Noetherian over `R` and the filtration is stable. The initial stage
+  may be proper; no finite generation of `I` or Noetherianity of the ambient ring
+  or module is required.
 - **Lattice operations on Rees submodules.** For any ideal `I` of a commutative
   ring `R` and any `R`-module `M`, [Rees-submodule inclusion](GradedRings/ReesModule/Lattice.lean)
   is equivalent to inclusion at every natural filtration stage. The construction
@@ -611,7 +617,7 @@ The theorem takes no finite-associated-graded instance as a hypothesis.
 Install the exact toolchain in `lean-toolchain`: Lean `v4.34.0-rc2`.
 The direct dependencies are mathlib at
 `83abb3e776bdefcbc447a1e44d0debe4010039e5` and the released
-`coherent-modules` at `1dfe73a0d8d506a7871d5393e274582d36161265`;
+`coherent-modules` at `bc06b52d41f26857e2de79a8e4f24f12681339f1`;
 `lake-manifest.json` freezes all ten resolved Git dependencies. From a checkout, obtain matching compiled
 mathlib artifacts **before** building:
 
