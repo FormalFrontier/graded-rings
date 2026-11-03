@@ -54,6 +54,15 @@ highlights:
     declarations:
       - declaration: Ideal.Filtration.submodule_fg_iff_exists_weighted_normal_form
         file: GradedRings/ReesModule/HomogeneousGenerators.lean
+  - title: Finite generation of associated graded modules
+    statement: >-
+      For any ideal I of a commutative ring R and any R-module M, let
+      C = Rees_R(I)/I Rees_R(I). The associated graded module gr_I(M) is
+      finitely generated over C if and only if M/IM is finitely generated
+      over R.
+    declarations:
+      - declaration: Ideal.AssociatedGradedModule.finite_iff
+        file: GradedRings/ReesModule/AssociatedGradedFinite.lean
 
 sources:
   - title: "The Rising Sea: Foundations of Algebraic Geometry"

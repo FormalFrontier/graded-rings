@@ -29,6 +29,16 @@ chosen coefficient ring.
   `surjective_principalPolynomialHom`,
   `bijective_principalPolynomialHom`, `principalPolynomialEquiv`, and
   `augmentation_comp_principalPolynomialEquiv`).
+- **Finiteness of associated graded modules.** For any ideal `I` of a commutative
+  ring `R` and any `R`-module `M`, put `C = Rees_R(I)/I Rees_R(I)`,
+  `G = gr_I(M)` and `Q = M/IM`. Then `G` is finitely generated over `C` if and
+  only if `Q` is finitely generated over `R`, with no finite-generation
+  assumption on `I`
+  ([`Ideal.AssociatedGradedModule.finite_iff`](GradedRings/ReesModule/AssociatedGradedFinite.lean)).
+  If `C` is essentially of finite type over `R`, then `G` is Noetherian over
+  `C` if and only if `Q` is Noetherian over `R`; this applies in particular
+  when `I` is finitely generated
+  ([Noetherian criterion](GradedRings/ReesModule/AssociatedGradedNoetherian.lean)).
 - **Finite products of polynomial semirings.** For any finite index type and
   family of semirings `R i`, the [polynomial comparison](GradedRings/Polynomial/Pi.lean)
   identifies `(Π i, R i)[X]` with `Π i, (R i)[X]`. Its forward map projects
