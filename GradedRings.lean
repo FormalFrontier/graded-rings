@@ -96,3 +96,4 @@ public import GradedRings.ReesModule.QuotientAction
 public import GradedRings.ReesAlgebra.PrincipalQuotient
 public import GradedRings.ReesModule.ConstantCoeff
 public import GradedRings.ReesModule.AssociatedGradedNoetherian
+public import GradedRings.ReesModule.TensorProduct
