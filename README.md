@@ -29,6 +29,19 @@ chosen coefficient ring.
   `surjective_principalPolynomialHom`,
   `bijective_principalPolynomialHom`, `principalPolynomialEquiv`, and
   `augmentation_comp_principalPolynomialEquiv`).
+- **Finite products of polynomial semirings.** For any finite index type and
+  family of semirings `R i`, the [polynomial comparison](GradedRings/Polynomial/Pi.lean)
+  identifies `(Π i, R i)[X]` with `Π i, (R i)[X]`. Its forward map projects
+  coefficients, and its inverse assembles their coordinate functions. The API
+  computes coefficients in both directions, constants, the indeterminate and
+  inverse monomials. Index and coefficient universes are independent; empty
+  products and noncommutative coefficient semirings are included.
+- **Rees subalgebras over commutative semirings.** For every ideal `I` of a
+  commutative semiring `R`, the [coefficient-power subalgebra](GradedRings/ReesAlgebra/Basic.lean)
+  `I.reesSubalgebra` contains exactly the polynomials whose degree-`n` coefficient
+  belongs to `I ^ n`. Constants are unrestricted; a monomial of degree `n` belongs
+  exactly when its coefficient belongs to `I ^ n`. In particular, `C r * X` belongs
+  exactly when `r ∈ I`. Over a commutative ring it equals Mathlib's `reesAlgebra I`.
 - **Coefficient homomorphisms and equivalences of Rees algebras.** For commutative rings `R`, `S`,
   a ring homomorphism `f : R →+* S` and ideals `I`, `J` with `I.map f ≤ J`,
   [coefficient change](GradedRings/ReesAlgebra/Map.lean) defines

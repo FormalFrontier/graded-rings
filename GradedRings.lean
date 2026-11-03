@@ -40,6 +40,8 @@ public import GradedRings.PrimeMultiplicity
 public import GradedRings.Quotient
 public import GradedRings.ReesAlgebra
 public import GradedRings.ReesAlgebra.Augmentation
+public import GradedRings.Polynomial.Pi
+public import GradedRings.ReesAlgebra.Basic
 public import GradedRings.ReesAlgebra.Grading
 public import GradedRings.ReesAlgebra.Map
 public import GradedRings.ReesAlgebra.PowerQuotientAlgebra
