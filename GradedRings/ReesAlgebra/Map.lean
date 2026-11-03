@@ -16,7 +16,9 @@ A ring homomorphism carrying one ideal into another induces a coefficient
 homomorphism between their Rees algebras. Its underlying polynomial is the
 coefficient map, and its kernel is characterized coefficientwise. Surjectivity
 is equivalent to surjectivity on coefficients together with equality of the
-image ideal and the target ideal.
+image ideal and the target ideal. Injectivity is equivalent to injectivity on
+coefficients. A coefficient-ring equivalence induces a ring equivalence to the
+Rees algebra of the image ideal, compatible with inverses and composition.
 
 The construction uses Mathlib's polynomial coefficient homomorphism,
 subalgebra restriction, and ideal-image and ideal-power APIs.
@@ -199,5 +201,214 @@ surjective and its ideal image is the target ideal. -/
 theorem map_surjective_iff (f : R →+* S) (h : I.map f ≤ J) :
     Function.Surjective (map f h) ↔ Function.Surjective f ∧ I.map f = J :=
   ⟨surjective_map_conditions f h, fun hs => map_surjective_of_surjective f h hs.1 hs.2⟩
+
+
+/-- A coefficient homomorphism of Rees algebras is injective exactly when the
+coefficient ring homomorphism is injective. -/
+theorem map_injective_iff (f : R →+* S) (h : I.map f ≤ J) :
+    Function.Injective (map f h) ↔ Function.Injective f := by
+  constructor
+  · intro hmap a b hab
+    have hconst :
+        map f h (algebraMap R (reesAlgebra I) a) =
+          map f h (algebraMap R (reesAlgebra I) b) := by
+      apply Subtype.ext
+      simp only [coe_map, Subalgebra.coe_algebraMap, Polynomial.algebraMap_eq,
+        Polynomial.map_C, hab]
+    have hcoeff := congrArg (fun p : reesAlgebra I => (p : R[X]).coeff 0) (hmap hconst)
+    simpa only [Subalgebra.coe_algebraMap, Polynomial.algebraMap_eq,
+      Polynomial.coeff_C_zero] using hcoeff
+  · intro hf p q hpq
+    apply Subtype.ext
+    apply Polynomial.map_injective f hf
+    simpa only [coe_map] using congrArg (fun p : reesAlgebra J => (p : S[X])) hpq
+
+/-- A coefficient-ring equivalence induces a ring equivalence from a Rees algebra
+to the Rees algebra of the image ideal. -/
+noncomputable def equivMap (e : R ≃+* S) (I : Ideal R) :
+    reesAlgebra I ≃+* reesAlgebra (I.map (e : R →+* S)) :=
+  RingEquiv.ofRingHom
+    (map (I := I) (J := I.map (e : R →+* S)) (e : R →+* S) le_rfl)
+    (map (I := I.map (e : R →+* S)) (J := I) (e.symm : S →+* R)
+      (Ideal.map_of_equiv (I := I) e).le)
+    (by
+      apply RingHom.ext
+      intro p
+      apply Subtype.ext
+      rw [RingHom.comp_apply, RingHom.id_apply]
+      have h : (e : R →+* S).comp (e.symm : S →+* R) = RingHom.id S := by
+        simpa only [RingEquiv.toRingHom_eq_coe] using
+          RingEquiv.toRingHom_comp_symm_toRingHom e
+      calc
+        _ = Polynomial.map (e : R →+* S)
+            (map (I := I.map (e : R →+* S)) (J := I) (e.symm : S →+* R)
+              (Ideal.map_of_equiv (I := I) e).le p : R[X]) :=
+          coe_map (I := I) (J := I.map (e : R →+* S)) (e : R →+* S) le_rfl _
+        _ = Polynomial.map (e : R →+* S)
+            (Polynomial.map (e.symm : S →+* R) (p : S[X])) :=
+          congrArg (Polynomial.map (e : R →+* S))
+            (coe_map (I := I.map (e : R →+* S)) (J := I) (e.symm : S →+* R)
+              (Ideal.map_of_equiv (I := I) e).le p)
+        _ = Polynomial.map ((e : R →+* S).comp (e.symm : S →+* R)) (p : S[X]) :=
+          Polynomial.map_map (e.symm : S →+* R) (e : R →+* S) (p : S[X])
+        _ = Polynomial.map (RingHom.id S) (p : S[X]) :=
+          congrArg (fun f : S →+* S => Polynomial.map f (p : S[X])) h
+        _ = (p : S[X]) := Polynomial.map_id (p := (p : S[X])))
+    (by
+      apply RingHom.ext
+      intro p
+      apply Subtype.ext
+      rw [RingHom.comp_apply, RingHom.id_apply]
+      have h : (e.symm : S →+* R).comp (e : R →+* S) = RingHom.id R := by
+        simpa only [RingEquiv.toRingHom_eq_coe] using
+          RingEquiv.symm_toRingHom_comp_toRingHom e
+      calc
+        _ = Polynomial.map (e.symm : S →+* R)
+            (map (I := I) (J := I.map (e : R →+* S)) (e : R →+* S) le_rfl p : S[X]) :=
+          coe_map (I := I.map (e : R →+* S)) (J := I) (e.symm : S →+* R)
+            (Ideal.map_of_equiv (I := I) e).le _
+        _ = Polynomial.map (e.symm : S →+* R)
+            (Polynomial.map (e : R →+* S) (p : R[X])) :=
+          congrArg (Polynomial.map (e.symm : S →+* R))
+            (coe_map (I := I) (J := I.map (e : R →+* S)) (e : R →+* S) le_rfl p)
+        _ = Polynomial.map ((e.symm : S →+* R).comp (e : R →+* S)) (p : R[X]) :=
+          Polynomial.map_map (e : R →+* S) (e.symm : S →+* R) (p : R[X])
+        _ = Polynomial.map (RingHom.id R) (p : R[X]) :=
+          congrArg (fun f : R →+* R => Polynomial.map f (p : R[X])) h
+        _ = (p : R[X]) := Polynomial.map_id (p := (p : R[X])))
+
+/-- The polynomial underlying a coefficient equivalence is the coefficient map. -/
+@[simp]
+theorem coe_equivMap (e : R ≃+* S) (I : Ideal R) (p : reesAlgebra I) :
+    ((equivMap e I : reesAlgebra I ≃+* reesAlgebra (I.map (e : R →+* S))) p : S[X]) =
+      Polynomial.map (e : R →+* S) (p : R[X]) := by
+  have h : (equivMap e I : reesAlgebra I →+* reesAlgebra (I.map (e : R →+* S))) =
+      map (I := I) (J := I.map (e : R →+* S)) (e : R →+* S) le_rfl := by
+    unfold equivMap
+    exact RingEquiv.coe_ringHom_ofRingHom _ _ _ _
+  exact (congrArg
+    (fun f : reesAlgebra I →+* reesAlgebra (I.map (e : R →+* S)) => (f p : S[X])) h).trans
+      (coe_map (e : R →+* S) le_rfl p)
+
+/-- A coefficient equivalence applies the ring equivalence to each coefficient. -/
+theorem coeff_equivMap (e : R ≃+* S) (I : Ideal R) (p : reesAlgebra I) (n : ℕ) :
+    (equivMap e I p : S[X]).coeff n = e ((p : R[X]).coeff n) := by
+  rw [coe_equivMap, Polynomial.coeff_map, RingEquiv.coe_toRingHom]
+
+/-- The inverse coefficient equivalence maps polynomial coefficients by the inverse ring
+equivalence. -/
+@[simp]
+theorem coe_equivMap_symm (e : R ≃+* S) (I : Ideal R)
+    (p : reesAlgebra (I.map (e : R →+* S))) :
+    ((equivMap e I : reesAlgebra I ≃+* reesAlgebra (I.map (e : R →+* S))).symm p : R[X]) =
+      Polynomial.map (e.symm : S →+* R) (p : S[X]) := by
+  have h : ((equivMap e I).symm : reesAlgebra (I.map (e : R →+* S)) →+* reesAlgebra I) =
+      map (I := I.map (e : R →+* S)) (J := I) (e.symm : S →+* R)
+        (Ideal.map_of_equiv (I := I) e).le := by
+    unfold equivMap
+    rw [RingEquiv.ofRingHom_symm]
+    exact RingEquiv.coe_ringHom_ofRingHom _ _ _ _
+  exact (congrArg
+    (fun f : reesAlgebra (I.map (e : R →+* S)) →+* reesAlgebra I => (f p : R[X])) h).trans
+      (coe_map (e.symm : S →+* R) (Ideal.map_of_equiv (I := I) e).le p)
+
+/-- The coefficients of the inverse equivalence are obtained by the inverse coefficient
+ring equivalence. -/
+theorem coeff_equivMap_symm (e : R ≃+* S) (I : Ideal R)
+    (p : reesAlgebra (I.map (e : R →+* S))) (n : ℕ) :
+    ((equivMap e I).symm p : R[X]).coeff n = e.symm ((p : S[X]).coeff n) := by
+  rw [coe_equivMap_symm, Polynomial.coeff_map, RingEquiv.coe_toRingHom]
+
+private theorem coe_ringEquiv_cast {K L : Ideal R} (h : K = L) (p : reesAlgebra K) :
+    (RingEquiv.cast (R := fun H : Ideal R => reesAlgebra H) h p : R[X]) = (p : R[X]) := by
+  cases h
+  rfl
+
+/-- Coefficient transport by the identity equivalence is the identity after identifying
+its image ideal with the original ideal. -/
+theorem equivMap_refl (I : Ideal R) :
+    (equivMap (RingEquiv.refl R) I).trans
+      (RingEquiv.cast (R := fun H : Ideal R => reesAlgebra H)
+        (show I.map (RingEquiv.refl R : R →+* R) = I from by
+          have h : (RingEquiv.refl R : R →+* R) = RingHom.id R := by
+            simpa only [RingEquiv.toRingHom_eq_coe] using
+              (RingEquiv.toRingHom_refl (R := R))
+          exact (congrArg (fun f : R →+* R => I.map f) h).trans (Ideal.map_id I))) =
+      RingEquiv.refl (reesAlgebra I) := by
+  apply RingEquiv.ext
+  intro p
+  apply Subtype.ext
+  rw [RingEquiv.trans_apply]
+  rw [coe_ringEquiv_cast]
+  calc
+    (equivMap (RingEquiv.refl R) I p : R[X]) =
+        Polynomial.map (RingEquiv.refl R : R →+* R) (p : R[X]) :=
+      coe_equivMap (RingEquiv.refl R) I p
+    _ = Polynomial.map (RingHom.id R) (p : R[X]) :=
+      congrArg (fun f : R →+* R => Polynomial.map f (p : R[X])) (by
+        simpa only [RingEquiv.toRingHom_eq_coe] using (RingEquiv.toRingHom_refl (R := R)))
+    _ = (p : R[X]) := Polynomial.map_id (p := (p : R[X]))
+
+/-- The inverse coefficient equivalence agrees with transport by the inverse ring
+equivalence after identifying the double image ideal. -/
+theorem equivMap_symm (e : R ≃+* S) (I : Ideal R) :
+    (equivMap e I).symm =
+      (equivMap e.symm (I.map (e : R →+* S))).trans
+        (RingEquiv.cast (R := fun H : Ideal R => reesAlgebra H)
+          (Ideal.map_of_equiv (I := I) e)) := by
+  apply RingEquiv.ext
+  intro p
+  apply Subtype.ext
+  calc
+    ((equivMap e I).symm p : R[X]) =
+        Polynomial.map (e.symm : S →+* R) (p : S[X]) :=
+      coe_equivMap_symm e I p
+    _ = (equivMap e.symm (I.map (e : R →+* S)) p : R[X]) :=
+      (coe_equivMap e.symm (I.map (e : R →+* S)) p).symm
+    _ = (RingEquiv.cast (R := fun H : Ideal R => reesAlgebra H)
+        (Ideal.map_of_equiv (I := I) e)
+        (equivMap e.symm (I.map (e : R →+* S)) p) : R[X]) :=
+      (coe_ringEquiv_cast (Ideal.map_of_equiv (I := I) e)
+        (equivMap e.symm (I.map (e : R →+* S)) p)).symm
+    _ = (((equivMap e.symm (I.map (e : R →+* S))).trans
+        (RingEquiv.cast (R := fun H : Ideal R => reesAlgebra H)
+          (Ideal.map_of_equiv (I := I) e))) p : R[X]) :=
+      congrArg (fun q : reesAlgebra I => (q : R[X]))
+        (RingEquiv.trans_apply (equivMap e.symm (I.map (e : R →+* S)))
+          (RingEquiv.cast (R := fun H : Ideal R => reesAlgebra H)
+            (Ideal.map_of_equiv (I := I) e)) p).symm
+
+/-- Coefficient equivalences respect composition after the standard identification
+of sequential and composite image ideals. -/
+theorem equivMap_trans {T : Type w} [CommRing T]
+    (e : R ≃+* S) (d : S ≃+* T) (I : Ideal R) :
+    ((equivMap e I).trans (equivMap d (I.map (e : R →+* S)))).trans
+      (RingEquiv.cast (R := fun H : Ideal T => reesAlgebra H)
+        (show (I.map (e : R →+* S)).map (d : S →+* T) = I.map (e.trans d : R →+* T) from by
+          have h : (d : S →+* T).comp (e : R →+* S) = (e.trans d : R →+* T) := by
+            simpa only [RingEquiv.toRingHom_eq_coe] using
+              (RingEquiv.toRingHom_trans e d).symm
+          exact (Ideal.map_map (I := I) (e : R →+* S) (d : S →+* T)).trans
+            (congrArg (fun f : R →+* T => I.map f) h))) =
+      equivMap (e.trans d) I := by
+  apply RingEquiv.ext
+  intro p
+  apply Subtype.ext
+  rw [RingEquiv.trans_apply]
+  rw [coe_ringEquiv_cast]
+  rw [RingEquiv.trans_apply]
+  calc
+    (equivMap d (I.map (e : R →+* S)) (equivMap e I p) : T[X]) =
+        Polynomial.map (d : S →+* T) (equivMap e I p : S[X]) :=
+      coe_equivMap d (I.map (e : R →+* S)) (equivMap e I p)
+    _ = Polynomial.map (d : S →+* T) (Polynomial.map (e : R →+* S) (p : R[X])) :=
+      congrArg (Polynomial.map (d : S →+* T)) (coe_equivMap e I p)
+    _ = Polynomial.map ((d : S →+* T).comp (e : R →+* S)) (p : R[X]) :=
+      Polynomial.map_map (e : R →+* S) (d : S →+* T) (p : R[X])
+    _ = Polynomial.map (e.trans d : R →+* T) (p : R[X]) :=
+      congrArg (fun f : R →+* T => Polynomial.map f (p : R[X])) (by
+        simpa only [RingEquiv.toRingHom_eq_coe] using (RingEquiv.toRingHom_trans e d).symm)
+    _ = (equivMap (e.trans d) I p : T[X]) :=
+      (coe_equivMap (e.trans d) I p).symm
 
 end reesAlgebra
