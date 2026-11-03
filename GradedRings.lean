@@ -85,3 +85,5 @@ public import GradedRings.ReesAlgebra.SymmetricAlgebra
 public import GradedRings.ReesAlgebra.PrincipalPolynomial
 
 public import GradedRings.ReesModule.PrincipalPolynomial
+
+public import GradedRings.ReesModule.PrincipalPolynomialEquivNaturality
