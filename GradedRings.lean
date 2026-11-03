@@ -90,3 +90,5 @@ public import GradedRings.ReesAlgebra.PrincipalPolynomial
 public import GradedRings.ReesModule.PrincipalPolynomial
 
 public import GradedRings.ReesModule.PrincipalPolynomialEquivNaturality
+
+public import GradedRings.ReesModule.QuotientAction
