@@ -52,6 +52,7 @@ public import GradedRings.ReesModule.AugmentationIdeal
 public import GradedRings.ReesModule.FiniteGeneration
 public import GradedRings.ReesModule.AssociatedGraded
 public import GradedRings.ReesModule.HomogeneousGenerators
+public import GradedRings.ReesModule.Annihilator
 public import GradedRings.ReesModule.Lattice
 public import GradedRings.ReesModule.Map
 public import GradedRings.ReesModule.Quotient
