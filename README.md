@@ -6,6 +6,9 @@ algebras, prime multiplicity, and selected-component Veronese rings. Start with 
 mathematics below; the [interface overview](#find-an-interface) links module
 references and focused guides.
 
+For polynomial scalar extension over possibly noncommutative semirings, see
+[Polynomial modules](docs/PolynomialModules.md).
+
 Authors: Formal Frontier Agents. Original project contributions are licensed
 under [Apache-2.0](LICENSE). AI agents developed the Lean formalizations,
 proofs, clients and documentation; contributor credits are summarized in

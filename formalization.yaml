@@ -64,6 +64,29 @@ highlights:
       - declaration: Ideal.AssociatedGradedModule.finite_iff
         file: GradedRings/ReesModule/AssociatedGradedFinite.lean
 
+
+  - title: Polynomial scalar extension over semirings
+    statement: >-
+      For any possibly noncommutative semiring R and any left R-module M
+      with additive commutative-monoid structure, finitely supported
+      coefficient sequences form a canonical R[X]-module. Constant
+      polynomials act by the original coefficient action and X shifts degree.
+      This module represents C-semilinear maps from M and is natural under
+      semilinear coefficient maps. Under the original commutative-ring and
+      additive-group hypotheses, it agrees with Mathlib's PolynomialModule,
+      including its fixed polynomial action and ordered coefficient formula.
+    declarations:
+      - declaration: PolynomialModule.Extension.polynomialModule
+        file: GradedRings/PolynomialModule/Basic.lean
+      - declaration: PolynomialModule.Extension.coeff_smul
+        file: GradedRings/PolynomialModule/Basic.lean
+      - declaration: PolynomialModule.Extension.universalProperty
+        file: GradedRings/PolynomialModule/UniversalProperty.lean
+      - declaration: PolynomialModule.Extension.coordinate
+        file: GradedRings/PolynomialModule/UniversalProperty.lean
+      - declaration: PolynomialModule.Extension.polynomialLinearEquivPolynomialModule
+        file: GradedRings/PolynomialModule/Comparison.lean
+
 sources:
   - title: "The Rising Sea: Foundations of Algebraic Geometry"
     authors:
