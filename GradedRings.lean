@@ -98,3 +98,4 @@ public import GradedRings.ReesAlgebra.PrincipalQuotient
 public import GradedRings.ReesModule.ConstantCoeff
 public import GradedRings.ReesModule.AssociatedGradedNoetherian
 public import GradedRings.ReesModule.TensorProduct
+public import GradedRings.ReesAlgebra.FiniteType

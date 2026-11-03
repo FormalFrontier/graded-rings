@@ -15,7 +15,8 @@ The constant Rees-module singleton induces an `R`-linear map from `M ⧸ (I • 
 to the associated graded module. Taking the degree-zero coefficient is a left
 inverse to this map. Scalar multiplication by the quotient Rees algebra then
 induces a linear map from its tensor product with `M ⧸ (I • ⊤)` to the associated
-graded module.
+graded module. This tensor map is surjective: Rees monomials acting on constants
+generate every homogeneous singleton.
 
 All maps use the Rees-module representatives and the quotient Rees action on the
 associated graded module.
@@ -123,5 +124,78 @@ theorem tensorProductTo_mk_tmul_mk (b : B) (m : M) :
   rw [IsScalarTower.algebraMap_smul]
   exact ((mk I M).map_smul b
     (⟨PolynomialModule.single R 0 m, single_mem I M 0 m (by simp)⟩ : S)).symm
+
+/-- A Rees monomial acting on a represented constant gives the class of the
+corresponding singleton. -/
+theorem tensorProductTo_monomial_tmul_mk (n : ℕ) (a : R) (ha : a ∈ I ^ n) (m : M) :
+    tensorProductTo I M
+        ((Ideal.Quotient.mk J
+          ⟨Polynomial.monomial n a, reesAlgebra.monomial_mem.mpr ha⟩ : C) ⊗ₜ[R]
+          (Submodule.Quotient.mk m : Q)) =
+      mk I M ⟨PolynomialModule.single R n (a • m),
+        single_mem I M n (a • m) (Submodule.smul_mem_smul ha (by simp))⟩ := by
+  rw [tensorProductTo_mk_tmul_mk]
+  apply congrArg (mk I M)
+  apply Subtype.ext
+  change Polynomial.monomial n a • PolynomialModule.single R 0 m =
+    PolynomialModule.single R n (a • m)
+  rw [PolynomialModule.monomial_smul_single, Nat.add_zero]
+
+private theorem mk_single_mem_range_tensorProductTo
+    (n : ℕ) (m : M) (hm : m ∈ (I ^ n) • (⊤ : Submodule R M)) :
+    mk I M ⟨PolynomialModule.single R n m, single_mem I M n m hm⟩ ∈
+      LinearMap.range (tensorProductTo I M) := by
+  refine Submodule.smul_induction_on' hm ?_ ?_
+  · intro a ha m _
+    refine ⟨(Ideal.Quotient.mk J
+      ⟨Polynomial.monomial n a, reesAlgebra.monomial_mem.mpr ha⟩ : C) ⊗ₜ[R]
+        (Submodule.Quotient.mk m : Q), ?_⟩
+    exact tensorProductTo_monomial_tmul_mk I M n a ha m
+  · intro x hx y hy hxrange hyrange
+    have hsum :
+        (⟨PolynomialModule.single R n (x + y),
+          single_mem I M n (x + y) (add_mem hx hy)⟩ : S) =
+        (⟨PolynomialModule.single R n x, single_mem I M n x hx⟩ : S) +
+          ⟨PolynomialModule.single R n y, single_mem I M n y hy⟩ := by
+      apply Subtype.ext
+      exact (PolynomialModule.lsingle R n).map_add x y
+    rw [hsum, map_add]
+    exact (LinearMap.range (tensorProductTo I M)).add_mem hxrange hyrange
+
+private theorem mk_mem_range_tensorProductTo (p : S) :
+    mk I M p ∈ LinearMap.range (tensorProductTo I M) := by
+  classical
+  have hp (n : ℕ) : (p : PolynomialModule R M).coeff n ∈
+      (I ^ n) • (⊤ : Submodule R M) :=
+    ((I.stableFiltration (⊤ : Submodule R M)).mem_submodule _).1 p.property n
+  let s : ℕ → S := fun n =>
+    ⟨PolynomialModule.single R n ((p : PolynomialModule R M).coeff n),
+      single_mem I M n ((p : PolynomialModule R M).coeff n) (hp n)⟩
+  have hsum : (∑ n ∈ (p : PolynomialModule R M).coeff.support, s n) = p := by
+    apply Subtype.ext
+    change (Submodule.subtype S) (∑ n ∈ (p : PolynomialModule R M).coeff.support, s n) =
+      (p : PolynomialModule R M)
+    rw [map_sum]
+    change (∑ n ∈ (p : PolynomialModule R M).coeff.support,
+      PolynomialModule.single R n ((p : PolynomialModule R M).coeff n)) =
+        (p : PolynomialModule R M)
+    apply PolynomialModule.coeff_injective
+    rw [PolynomialModule.coeff_sum]
+    simpa only [PolynomialModule.coeff_single, Finsupp.sum] using
+      (Finsupp.sum_single ((p : PolynomialModule R M).coeff))
+  rw [← hsum, map_sum]
+  exact (LinearMap.range (tensorProductTo I M)).sum_mem fun n _ =>
+    mk_single_mem_range_tensorProductTo I M n ((p : PolynomialModule R M).coeff n) (hp n)
+
+/-- The associated graded module is generated over the quotient Rees algebra by
+its represented degree-zero classes. Equivalently, the canonical tensor map is
+surjective for every ideal and every module. -/
+theorem tensorProductTo_surjective : Function.Surjective (tensorProductTo I M) := by
+  intro z
+  change z ∈ LinearMap.range (tensorProductTo I M)
+  induction z using Submodule.Quotient.induction_on with
+  | H p =>
+      rw [show (Submodule.Quotient.mk p : G) = mk I M p from (mk_apply I M p).symm]
+      exact mk_mem_range_tensorProductTo I M p
 
 end Ideal.AssociatedGradedModule

@@ -4,8 +4,10 @@ Authors: Formal Frontier Agents
 -/
 module
 
+public import GradedRings.ReesAlgebra.FiniteType
 public import GradedRings.ReesModule.ConstantCoeff
 public import GradedRings.ReesModule.PrincipalPolynomialSemilinear
+public import GradedRings.ReesModule.TensorProduct
 public import CoherentModules.LinearAlgebra.TensorProduct.Noetherian
 public import Mathlib.Algebra.Polynomial.Module.TensorProduct
 public import Mathlib.RingTheory.Noetherian.Basic
@@ -14,8 +16,9 @@ public import Mathlib.RingTheory.Noetherian.Basic
 # Noetherianity of associated graded modules
 
 Noetherianity over the quotient Rees algebra implies Noetherianity of the
-degree-zero quotient over the coefficient ring. For a principal ideal, the
-converse holds without any regularity assumption.
+degree-zero quotient over the coefficient ring. The converse holds when the
+quotient Rees algebra is essentially of finite type over the coefficient ring.
+For a finitely generated ideal, it holds without any regularity assumption.
 -/
 
 @[expose] public section
@@ -59,6 +62,31 @@ theorem isNoetherian_quotient [IsNoetherian C (Ideal.AssociatedGradedModule I M)
     ⟨fun _ _ h => h, fun q => ⟨q, rfl⟩⟩
   exact (LinearMap.isNoetherian_iff_of_bijective e he).mpr hQ
 
+/-- When the quotient Rees algebra is essentially of finite type over the coefficient ring,
+Noetherianity of the associated graded module over the quotient Rees algebra is equivalent
+to Noetherianity of the degree-zero quotient over the coefficient ring. -/
+theorem isNoetherian_iff [Algebra.EssFiniteType R C] :
+    IsNoetherian C (Ideal.AssociatedGradedModule I M) ↔ IsNoetherian R Q := by
+  constructor
+  · intro h
+    let := h
+    exact isNoetherian_quotient (M := M) I
+  · intro h
+    let := h
+    let : IsNoetherian C (C ⊗[R] Q) :=
+      Algebra.EssFiniteType.isNoetherian_tensorProduct R C Q
+    exact isNoetherian_of_surjective (tensorProductTo I M)
+      (LinearMap.range_eq_top.mpr (tensorProductTo_surjective I M))
+
+/-- For a finitely generated ideal, the associated graded module is Noetherian over the
+quotient Rees algebra if and only if its degree-zero quotient is Noetherian over
+the coefficient ring. -/
+theorem isNoetherian_iff_of_fg (hI : I.FG) :
+    IsNoetherian C (Ideal.AssociatedGradedModule I M) ↔ IsNoetherian R Q := by
+  let : Algebra.FiniteType R C := reesAlgebra.finiteType_quotient_of_fg hI J
+  let : Algebra.EssFiniteType R C := inferInstance
+  exact isNoetherian_iff (M := M) I
+
 end Quotient
 
 section Principal
@@ -92,13 +120,7 @@ theorem isNoetherian_principal [IsNoetherian R Q] : IsNoetherian C G := by
 quotient Rees algebra if and only if its degree-zero quotient is Noetherian over
 the coefficient ring. -/
 theorem isNoetherian_principal_iff : IsNoetherian C G ↔ IsNoetherian R Q := by
-  constructor
-  · intro h
-    let := h
-    exact isNoetherian_quotient (M := M) I
-  · intro h
-    let := h
-    exact isNoetherian_principal (M := M) a
+  exact isNoetherian_iff_of_fg (M := M) I (Submodule.fg_span_singleton (R := R) a)
 
 end Principal
 
