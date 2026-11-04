@@ -22,6 +22,20 @@ or complete book coverage. Selected-ring and evaluation results below concern
 degree-zero coefficients mean the **entire actual components**, not a smaller
 chosen coefficient ring.
 
+Browse the results by topic:
+
+- [Polynomial and Rees constructions](#polynomial-and-rees-constructions)
+- [Graded quotients, localization and finiteness](#graded-quotients-localization-and-finiteness)
+- [Natural Rees modules](#natural-rees-modules)
+- [Integer filtrations and associated graded modules](#integer-filtrations-and-associated-graded-modules)
+- [Filtered finite generation](#filtered-finite-generation)
+- [Quotient Rees modules](#quotient-rees-modules)
+- [Symmetric algebras and prime multiplicity](#symmetric-algebras-and-prime-multiplicity)
+- [Veronese rings and homogeneous generation](#veronese-rings-and-homogeneous-generation)
+
+
+### Polynomial and Rees constructions
+
 - **Polynomial covers and equivalences for principal ideals.** For any
   commutative ring `R` and `a : R`, evaluation at the class of `a t` defines a
   surjective `R/(a)`-algebra map `(R/(a))[T] → C`, where `C` is the Rees algebra
@@ -77,6 +91,9 @@ chosen coefficient ring.
   identity/composition laws under the standard image-ideal identifications.
   The ring universes are independent; no `Algebra R S` structure,
   regularity, nontriviality or finiteness assumption is required.
+
+### Graded quotients, localization and finiteness
+
 - **Quotients and localizations.** For commutative rings,
   [homogeneous-ideal quotients](GradedRings/Quotient.lean) inherit the image grading
   for additive-monoid degrees with decidable equality. [Full localization](GradedRings/Localization.lean)
@@ -99,6 +116,9 @@ chosen coefficient ring.
   For an **integer**-graded commutative ring with a positive-degree homogeneous
   unit, [homogeneous primes](GradedRings/HomogeneousPrime.lean) correspond to
   degree-zero primes by contraction and **radical** extension.
+
+### Natural Rees modules
+
 - **Finite Rees modules and stable filtrations.** For any ideal `I` in a commutative
   ring `R` and any `R`-module `M`, with independent universes, an
   [`I`-filtration with finitely generated Rees module](GradedRings/ReesModule.lean)
@@ -206,6 +226,9 @@ chosen coefficient ring.
   assumption on the family. A finite index type gives finite generation without
   assuming the ideal, the individual stages, or the ambient module to be finitely
   generated.
+
+### Integer filtrations and associated graded modules
+
 - **Integer-filtered associated gradeds and Rees actions.** Over a commutative ring `R`,
   for an antitone family of submodules of an `R`-module `M`,
   `F.N : ℤ → Submodule R M` with `I • F.N n ≤ F.N (n + 1)`, the
@@ -409,6 +432,9 @@ chosen coefficient ring.
   associated gradeds restrict to `D` using Mathlib's `restrictScalars`
   constructors, with unchanged forward and inverse functions. No additional
   filtration hypotheses are required.
+
+### Filtered finite generation
+
 - **Weighted generation of integer filtrations.** For a separated, antitone
   integer-indexed filtration satisfying `I • F n ≤ F (n + 1)` over an
   `I`-adically **precomplete** commutative coefficient ring,
@@ -445,6 +471,9 @@ chosen coefficient ring.
   `I • F.N n = F.N (n + 1)`. No Noetherianity, coefficient Hausdorffness,
   ambient-module precompleteness, degree-zero normalization or chosen top stage is
   required, and the generator family may be empty.
+
+### Quotient Rees modules
+
 - **Associated graded modules from the first quotient.** For any ideal `I` in a
   commutative ring `R` and any `R`-module `M`, with independent universes,
   [the Rees-quotient associated graded module](GradedRings/ReesModule.lean) `G`
@@ -471,6 +500,9 @@ chosen coefficient ring.
   Rees-representative and every-coefficient formulas, unique scalar expressions,
   and linear-map extensionality expose this comparison without unfolding its
   quotients. No finiteness, completeness, separatedness or nontriviality is assumed.
+
+### Symmetric algebras and prime multiplicity
+
 - **Symmetric algebras and first order.** [Basis-free grading and graded maps](GradedRings/SymmetricAlgebra.lean)
   are functorial for arbitrary modules over a commutative **semiring**; only
   polynomial coordinates need a basis. Over a commutative **ring**, for any
@@ -488,6 +520,9 @@ chosen coefficient ring.
   additive commutative monoid degrees. The [polynomial applications](GradedRings/MvPolynomialAway.lean)
   work over a **field**, with arbitrary variables; irreducibility at denominator
   order one uses a positive-degree homogeneous prime polynomial.
+
+### Veronese rings and homogeneous generation
+
 - **Whole selected rings, including index zero.** The [Veronese ring](docs/Veronese.md)
   is the external sum of **whole** old components in multiples of `n`, with a
   native grading for every natural `n`. Its [actual zero ring](docs/VeroneseZero.md)
