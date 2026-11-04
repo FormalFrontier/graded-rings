@@ -105,3 +105,4 @@ public import GradedRings.ReesModule.AssociatedGradedFinite
 public import GradedRings.PolynomialModule.Basic
 public import GradedRings.PolynomialModule.UniversalProperty
 public import GradedRings.PolynomialModule.Comparison
+public import GradedRings.PolynomialModule.Finiteness

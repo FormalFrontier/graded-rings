@@ -99,6 +99,24 @@ finitely supported coordinate sequences, not on the degree type. Empty products
 are included, with no nonemptiness assumption or additional scalar action on an
 individual coefficient module.
 
+## Finite generation
+
+The [finiteness module](../GradedRings/PolynomialModule/Finiteness.lean) proves
+`PolynomialModule.Extension.finite_iff`:
+
+```lean
+Module.Finite R[X] (PolynomialModule.Extension R M) ↔ Module.Finite R M
+```
+
+This holds for every semiring `R` and every `R`-module `M` with an additive
+commutative monoid structure, without commutativity of `R` or additive inverses
+in `M`. Degree-zero copies of a finite generating set generate the extension,
+since multiplication by monomials supplies every degree. Conversely, taking the
+constant coefficient gives a surjective semilinear map along
+`Polynomial.constantCoeff`. A preservation instance lets typeclass inference
+use finite generation of `M` to obtain finite generation of its polynomial
+extension; reflection is available through the theorem, not an instance.
+
 ## Agreement with Mathlib
 
 The [comparison module](../GradedRings/PolynomialModule/Comparison.lean) applies
