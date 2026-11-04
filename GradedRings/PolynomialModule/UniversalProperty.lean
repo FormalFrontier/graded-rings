@@ -334,4 +334,68 @@ theorem coeff_coordinate_smul (i : I) (p : (∀ i, R i)[X])
 
 end Coordinate
 
+section CoordinateNaturality
+
+variable {I : Type uI} (R : I → Type uR) (S : I → Type uS)
+variable (M : I → Type uM) (N : I → Type uN)
+variable [r : ∀ i, Semiring (R i)] [s : ∀ i, Semiring (S i)]
+variable [aM : ∀ i, AddCommMonoid (M i)] [aN : ∀ i, AddCommMonoid (N i)]
+variable [μM : ∀ i, @Module (R i) (M i) (r i) (aM i)]
+variable [μN : ∀ i, @Module (S i) (N i) (s i) (aN i)]
+
+/-- Coordinate projection commutes with extension of a family of coefficient-semilinear maps. -/
+@[simp]
+theorem coordinate_map
+    (σ : ∀ i, @RingHom (R i) (S i)
+      ((r i).toNonAssocSemiring) ((s i).toNonAssocSemiring))
+    (f : ∀ i, @LinearMap (R i) (S i) (r i) (s i) (σ i)
+      (M i) (N i) (aM i) (aN i) (μM i) (μN i))
+    (i : I) (q : Extension (∀ i, R i) (∀ i, M i)) :
+    (show @LinearMap (Polynomial (∀ j, S j)) (Polynomial (S i)) _ _
+        (Polynomial.mapRingHom (Pi.evalRingHom S i))
+        (Extension (∀ j, S j) (∀ j, N j)) (Extension (S i) (N i))
+        ((@coeffEquiv (∀ j, S j) (∀ j, N j) (@Pi.semiring I S s)
+          (@Pi.addCommMonoid I N aN) (@Pi.module' I S N s aN μN)).addCommMonoid)
+        ((@coeffEquiv (S i) (N i) (s i) (aN i) (μN i)).addCommMonoid)
+        (@polynomialModule (∀ j, S j) (∀ j, N j) (@Pi.semiring I S s)
+          (@Pi.addCommMonoid I N aN) (@Pi.module' I S N s aN μN))
+        (@polynomialModule (S i) (N i) (s i) (aN i) (μN i))
+      from coordinate S N i)
+        (map
+          ({ toFun := fun m i => f i (m i)
+             map_add' := fun m m' =>
+               funext (fun i => (f i).map_add (m i) (m' i))
+             map_smul' := fun r₀ m =>
+               funext (fun i => (f i).map_smulₛₗ (r₀ i) (m i)) } :
+            @LinearMap (∀ i, R i) (∀ i, S i)
+              (@Pi.semiring I R r) (@Pi.semiring I S s)
+              (show @RingHom (∀ i, R i) (∀ i, S i)
+                  (@Pi.nonAssocSemiring I R (fun i => (r i).toNonAssocSemiring))
+                  (@Pi.nonAssocSemiring I S (fun i => (s i).toNonAssocSemiring)) from
+                @RingHom.pi I S (∀ i, R i)
+                  (fun i => (s i).toNonAssocSemiring)
+                  (@Pi.nonAssocSemiring I R (fun i => (r i).toNonAssocSemiring))
+                  (fun i => (σ i).comp
+                    (@Pi.evalRingHom I R (fun j => (r j).toNonAssocSemiring) i)))
+              (∀ i, M i) (∀ i, N i)
+              (@Pi.addCommMonoid I M aM) (@Pi.addCommMonoid I N aN)
+              (@Pi.module' I R M r aM μM) (@Pi.module' I S N s aN μN)) q) =
+      map (f i)
+        ((show @LinearMap (Polynomial (∀ j, R j)) (Polynomial (R i)) _ _
+            (Polynomial.mapRingHom (Pi.evalRingHom R i))
+            (Extension (∀ j, R j) (∀ j, M j)) (Extension (R i) (M i))
+            ((@coeffEquiv (∀ j, R j) (∀ j, M j) (@Pi.semiring I R r)
+              (@Pi.addCommMonoid I M aM) (@Pi.module' I R M r aM μM)).addCommMonoid)
+            ((@coeffEquiv (R i) (M i) (r i) (aM i) (μM i)).addCommMonoid)
+            (@polynomialModule (∀ j, R j) (∀ j, M j) (@Pi.semiring I R r)
+              (@Pi.addCommMonoid I M aM) (@Pi.module' I R M r aM μM))
+            (@polynomialModule (R i) (M i) (r i) (aM i) (μM i))
+          from coordinate R M i) q) := by
+  apply PolynomialModule.Extension.ext
+  ext n
+  simp only [coeff_coordinate, coeff_map]
+  rfl
+
+end CoordinateNaturality
+
 end PolynomialModule.Extension

@@ -293,6 +293,51 @@ theorem piEquiv_apply (q : Extension (∀ i, R i) (∀ i, M i)) (i : ι) :
 
 end Semiring
 
+section Naturality
+
+universe uS uN
+
+variable {I : Type uI} (R : I → Type uR) (S : I → Type uS)
+variable (M : I → Type uM) (N : I → Type uN)
+variable [Finite I]
+variable [r : ∀ i, Semiring (R i)] [s : ∀ i, Semiring (S i)]
+variable [aM : ∀ i, AddCommMonoid (M i)] [aN : ∀ i, AddCommMonoid (N i)]
+variable [μM : ∀ i, @Module (R i) (M i) (r i) (aM i)]
+variable [μN : ∀ i, @Module (S i) (N i) (s i) (aN i)]
+
+/-- The finite-product equivalence commutes with extension of a family of
+coefficient-semilinear maps. -/
+@[simp] theorem piEquiv_map
+    (σ : ∀ i, @RingHom (R i) (S i)
+      ((r i).toNonAssocSemiring) ((s i).toNonAssocSemiring))
+    (f : ∀ i, @LinearMap (R i) (S i) (r i) (s i) (σ i)
+      (M i) (N i) (aM i) (aN i) (μM i) (μN i))
+    (i : I) (q : Extension (∀ i, R i) (∀ i, M i)) :
+    piEquiv S N
+      (map
+          ({ toFun := fun m i => f i (m i)
+             map_add' := fun m m' =>
+               funext (fun i => (f i).map_add (m i) (m' i))
+             map_smul' := fun r₀ m =>
+               funext (fun i => (f i).map_smulₛₗ (r₀ i) (m i)) } :
+            @LinearMap (∀ i, R i) (∀ i, S i)
+              (@Pi.semiring I R r) (@Pi.semiring I S s)
+              (show @RingHom (∀ i, R i) (∀ i, S i)
+                  (@Pi.nonAssocSemiring I R (fun i => (r i).toNonAssocSemiring))
+                  (@Pi.nonAssocSemiring I S (fun i => (s i).toNonAssocSemiring)) from
+                @RingHom.pi I S (∀ i, R i)
+                  (fun i => (s i).toNonAssocSemiring)
+                  (@Pi.nonAssocSemiring I R (fun i => (r i).toNonAssocSemiring))
+                  (fun i => (σ i).comp
+                    (@Pi.evalRingHom I R (fun j => (r j).toNonAssocSemiring) i)))
+              (∀ i, M i) (∀ i, N i)
+              (@Pi.addCommMonoid I M aM) (@Pi.addCommMonoid I N aN)
+              (@Pi.module' I R M r aM μM) (@Pi.module' I S N s aN μN)) q) i =
+      map (f i) (piEquiv R M q i) := by
+  simpa only [piEquiv_apply] using (coordinate_map R S M N σ f i q)
+
+end Naturality
+
 section CommRing
 
 variable {ι : Type uι} (R : ι → Type uR) (M : ι → Type uM)
