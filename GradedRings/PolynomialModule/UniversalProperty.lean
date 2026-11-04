@@ -6,6 +6,7 @@ Authors: Rudder
 module
 
 import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.Algebra.Exact.Basic
 public import Mathlib.Algebra.Ring.Pi
 public import GradedRings.PolynomialModule.Basic
 
@@ -17,6 +18,8 @@ maps out of an extension are equivalent, additively, to coefficient-semilinear m
 the original module. The target needs only its polynomial module structure.
 
 Coefficient-semilinear maps also extend coefficientwise along the induced polynomial hom.
+This extension preserves and reflects injectivity, surjectivity and exactness of the underlying
+functions. Its image and zero fiber are characterized coefficientwise.
 Coordinate projection for dependent products is a specialization of this construction; it
 requires no finiteness or nonemptiness assumption on the coordinate type.
 
@@ -287,6 +290,88 @@ theorem map_comp (g : N →ₛₗ[τ] P) (f : M →ₛₗ[σ] N) (q : Extension 
   apply (coeffAddEquiv T P).injective
   ext n
   rfl
+
+/-- The image of a coefficientwise extension consists of the polynomials whose coefficients
+belong to the image of the original semilinear map. -/
+theorem range_map (f : M →ₛₗ[σ] N) :
+    Set.range (map f) = {q : Extension S N | ∀ n : ℕ, coeff q n ∈ Set.range f} := by
+  ext q
+  constructor
+  · rintro ⟨p, rfl⟩ n
+    exact ⟨coeff p n, (coeff_map f p n).symm⟩
+  · intro h
+    have hq : coeff q ∈ Set.range
+        (Finsupp.mapRange f f.map_zero : (ℕ →₀ M) → ℕ →₀ N) := by
+      rw [Finsupp.range_mapRange]
+      exact h
+    obtain ⟨p, hp⟩ := hq
+    refine ⟨ofCoeff R p, ?_⟩
+    apply ext
+    ext n
+    simpa only [coeff_map, coeff_ofCoeff, Finsupp.mapRange_apply] using
+      congrArg (fun a : ℕ →₀ N => a n) hp
+
+/-- A coefficientwise extension vanishes exactly when every coefficient image vanishes. -/
+theorem map_eq_zero_iff (f : M →ₛₗ[σ] N) (q : Extension R M) :
+    map f q = 0 ↔ ∀ n : ℕ, f (coeff q n) = 0 := by
+  rw [← coeff_eq_zero, Finsupp.ext_iff]
+  simp only [coeff_map, Finsupp.zero_apply]
+
+/-- Coefficientwise extension preserves and reflects injectivity. -/
+@[simp]
+theorem map_injective_iff (f : M →ₛₗ[σ] N) :
+    Function.Injective (map f) ↔ Function.Injective f := by
+  constructor
+  · intro h x y hxy
+    have hs : single R 0 x = single R 0 y := h (by
+      rw [map_single, map_single, hxy])
+    simpa only [coeff_single_apply, ite_eq_left True.intro] using
+      congrArg (fun q => coeff q 0) hs
+  · intro h q q' hq
+    apply ext
+    apply Finsupp.mapRange_injective f f.map_zero h
+    ext n
+    simpa only [Finsupp.mapRange_apply, coeff_map] using
+      congrArg (fun p => coeff p n) hq
+
+/-- Coefficientwise extension preserves and reflects surjectivity. -/
+@[simp]
+theorem map_surjective_iff (f : M →ₛₗ[σ] N) :
+    Function.Surjective (map f) ↔ Function.Surjective f := by
+  constructor
+  · intro h y
+    obtain ⟨p, hp⟩ := h (single S 0 y)
+    refine ⟨coeff p 0, ?_⟩
+    simpa only [coeff_map, coeff_single_apply, ite_eq_left True.intro] using
+      congrArg (fun q => coeff q 0) hp
+  · intro h q
+    have hq : q ∈ Set.range (map f) := by
+      rw [range_map]
+      exact fun n => h (coeff q n)
+    exact hq
+
+/-- A pair of semilinear maps is exact on underlying functions if and only if its
+coefficientwise polynomial extensions are exact. -/
+theorem exact_iff_map (f : M →ₛₗ[σ] N) (g : N →ₛₗ[τ] P) :
+    Function.Exact f g ↔ Function.Exact (map f) (map g) := by
+  constructor
+  · intro h q
+    rw [map_eq_zero_iff, range_map]
+    exact forall_congr' fun n => h (coeff q n)
+  · intro h y
+    constructor
+    · intro hy
+      have hz : map g (single S 0 y) = 0 := by
+        rw [map_single, hy, single_zero]
+      obtain ⟨q, hq⟩ := (h (single S 0 y)).mp hz
+      refine ⟨coeff q 0, ?_⟩
+      simpa only [coeff_map, coeff_single_apply, ite_eq_left True.intro] using
+        congrArg (fun p => coeff p 0) hq
+    · rintro ⟨x, rfl⟩
+      have he := congrArg (fun q => coeff q 0)
+        (h.apply_apply_eq_zero (single R 0 x))
+      simpa only [coeff_map, coeff_single_apply, ite_eq_left True.intro, coeff_zero,
+        Finsupp.zero_apply] using he
 
 end Map
 
