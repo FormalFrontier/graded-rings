@@ -7,6 +7,8 @@ module
 public import Mathlib.Algebra.Polynomial.Module.Basic
 public import CoherentModules.LinearAlgebra.FinsuppPi
 public import GradedRings.Polynomial.Pi
+public import GradedRings.PolynomialModule.UniversalProperty
+public import GradedRings.PolynomialModule.Comparison
 
 /-!
 # Polynomial modules over finite products
@@ -19,6 +21,13 @@ coefficients acts in each coordinate by its corresponding polynomial.
 The coefficient formulas characterize both directions. The single-coefficient formulas
 and the monomial action formula let users work with supported elements directly.
 
+`PolynomialModule.Extension.piEquiv R M` gives the corresponding equivalence for
+canonical extensions of modules over semirings, with additive commutative monoid
+coefficients. Its forward map is the coordinate projection, and its characteristic
+lemmas describe coefficients and single-degree elements in both directions. At
+commutative-ring and additive-group coefficients, the coefficient-preserving
+comparison with `PolynomialModule` intertwines the two finite-product equivalences.
+
 ## Implementation notes
 
 The additive equivalence composes Mathlib's `PolynomialModule.coeffAddEquiv` with
@@ -27,6 +36,9 @@ Polynomial semilinearity follows from Mathlib's convolution formula for the poly
 module action and the coefficient formula for `Polynomial.piRingEquiv`.
 Finiteness is needed only for the coordinate index; the index, ring and module universes
 are independent. No nonemptiness hypothesis is imposed.
+For canonical extensions, the additive construction uses the same finite-product
+coefficient equivalence, while polynomial semilinearity follows from
+`PolynomialModule.Extension.coordinate_smul`.
 -/
 
 @[expose] public section
@@ -136,3 +148,170 @@ theorem piEquiv_monomial_smul_single (a : ℕ) (r : ∀ i, R i) (b : ℕ)
   simp only [monomial_smul_single, piEquiv_single, Pi.smul_apply']
 
 end PolynomialModule
+
+universe uι
+
+namespace PolynomialModule.Extension
+
+/-- Canonical polynomial-module extension commutes with finite products. -/
+noncomputable def piEquiv
+    {ι : Type uι} (R : ι → Type uR) (M : ι → Type uM)
+    [finiteι : Finite ι]
+    [semiringR : ∀ i, Semiring (R i)]
+    [addCommMonoidM : ∀ i, AddCommMonoid (M i)]
+    [moduleRM : ∀ i, Module (R i) (M i)] :
+    letI coefficientProductModule :
+        Module (∀ i, R i) (∀ i, M i) := Pi.module';
+    letI sourcePolynomialModule :
+        Module (Polynomial (∀ i, R i))
+          (Extension (∀ i, R i) (∀ i, M i)) :=
+      @polynomialModule (∀ i, R i) (∀ i, M i) _ _ coefficientProductModule;
+    letI fiberPolynomialModule :
+        ∀ i, Module (Polynomial (R i)) (Extension (R i) (M i)) :=
+      fun i => polynomialModule (R := R i) (M := M i);
+    letI targetPolynomialModule :
+        Module (∀ i, Polynomial (R i))
+          (∀ i, Extension (R i) (M i)) :=
+      @Pi.module' _ _ _ _ _ fiberPolynomialModule;
+    @LinearEquiv
+      (Polynomial (∀ i, R i))
+      (∀ i, Polynomial (R i))
+      Polynomial.semiring
+      Pi.semiring
+      ((Polynomial.piRingEquiv R) :
+        Polynomial (∀ i, R i) →+* (∀ i, Polynomial (R i)))
+      (((Polynomial.piRingEquiv R).symm) :
+        (∀ i, Polynomial (R i)) →+* Polynomial (∀ i, R i))
+      (RingHomInvPair.of_ringEquiv (Polynomial.piRingEquiv R))
+      (RingHomInvPair.of_ringEquiv_symm (Polynomial.piRingEquiv R))
+      (Extension (∀ i, R i) (∀ i, M i))
+      (∀ i, Extension (R i) (M i))
+      ((coeffEquiv (∀ i, R i) (∀ i, M i)).addCommMonoid)
+      Pi.addCommMonoid
+      sourcePolynomialModule
+      targetPolynomialModule := by
+  letI coefficientProductModule :
+      Module (∀ i, R i) (∀ i, M i) := Pi.module'
+  letI sourcePolynomialModule :
+      Module (Polynomial (∀ i, R i))
+        (Extension (∀ i, R i) (∀ i, M i)) :=
+    @polynomialModule (∀ i, R i) (∀ i, M i) _ _ coefficientProductModule
+  letI fiberPolynomialModule :
+      ∀ i, Module (Polynomial (R i)) (Extension (R i) (M i)) :=
+    fun i => polynomialModule (R := R i) (M := M i)
+  letI targetPolynomialModule :
+      Module (∀ i, Polynomial (R i))
+        (∀ i, Extension (R i) (M i)) :=
+    @Pi.module' _ _ _ _ _ fiberPolynomialModule
+  letI := RingHomInvPair.of_ringEquiv (Polynomial.piRingEquiv R)
+  letI := RingHomInvPair.of_ringEquiv_symm (Polynomial.piRingEquiv R)
+  let e : Extension (∀ i, R i) (∀ i, M i) ≃+
+      (∀ i, Extension (R i) (M i)) :=
+    (coeffAddEquiv (∀ i, R i) (∀ i, M i)).trans
+      ((Finsupp.piLinearEquiv (κ := ℕ) R M).toAddEquiv.trans
+        (AddEquiv.piCongrRight fun i =>
+          (coeffAddEquiv (R i) (M i)).symm))
+  have hcoordinate
+      (q : Extension (∀ i, R i) (∀ i, M i)) (i : ι) :
+      e q i = coordinate R M i q := by
+    apply PolynomialModule.Extension.ext
+    apply Finsupp.ext
+    intro n
+    change (Finsupp.piLinearEquiv (κ := ℕ) R M q.coeff i) n =
+      (coordinate R M i q).coeff n
+    rw [Finsupp.piLinearEquiv_apply, coeff_coordinate]
+  exact
+    (show
+      @LinearEquiv
+        (Polynomial (∀ i, R i))
+        (∀ i, Polynomial (R i))
+        Polynomial.semiring
+        Pi.semiring
+        ((Polynomial.piRingEquiv R) :
+          Polynomial (∀ i, R i) →+* (∀ i, Polynomial (R i)))
+        (((Polynomial.piRingEquiv R).symm) :
+          (∀ i, Polynomial (R i)) →+* Polynomial (∀ i, R i))
+        (RingHomInvPair.of_ringEquiv (Polynomial.piRingEquiv R))
+        (RingHomInvPair.of_ringEquiv_symm (Polynomial.piRingEquiv R))
+        (Extension (∀ i, R i) (∀ i, M i))
+        (∀ i, Extension (R i) (M i))
+        ((coeffEquiv (∀ i, R i) (∀ i, M i)).addCommMonoid)
+        Pi.addCommMonoid
+        sourcePolynomialModule
+        targetPolynomialModule
+      from
+        { toAddEquiv := e
+          map_smul' := by
+            intro p q
+            funext i
+            change e (p • q) i =
+              (Polynomial.piRingEquiv R p i) • e q i
+            simpa only [hcoordinate, Polynomial.piRingEquiv_apply,
+              Polynomial.coe_mapRingHom] using
+              (coordinate_smul R M i p q) })
+
+
+section Semiring
+
+variable {ι : Type uι} (R : ι → Type uR) (M : ι → Type uM)
+variable [Finite ι] [∀ i, Semiring (R i)]
+variable [∀ i, AddCommMonoid (M i)] [∀ i, Module (R i) (M i)]
+
+/-- The finite-product equivalence takes each coefficient to its corresponding coordinate. -/
+@[simp] theorem coeff_piEquiv
+    (q : Extension (∀ i, R i) (∀ i, M i)) (i : ι) (n : ℕ) :
+    (piEquiv R M q i).coeff n = (q.coeff n) i := by
+  change (Finsupp.piLinearEquiv (κ := ℕ) R M q.coeff i) n = _
+  exact Finsupp.piLinearEquiv_apply R M q.coeff i n
+
+/-- Each component of the finite-product equivalence is the coordinate projection. -/
+theorem piEquiv_apply (q : Extension (∀ i, R i) (∀ i, M i)) (i : ι) :
+    piEquiv R M q i = coordinate R M i q := by
+  apply PolynomialModule.Extension.ext
+  apply Finsupp.ext
+  intro n
+  simp only [coeff_piEquiv, coeff_coordinate]
+
+/-- The inverse equivalence assembles the coefficients of the coordinate extensions. -/
+@[simp] theorem coeff_piEquiv_symm
+    (q : ∀ i, Extension (R i) (M i)) (n : ℕ) (i : ι) :
+    ((piEquiv R M).symm q).coeff n i = (q i).coeff n := by
+  simpa only [(piEquiv R M).apply_symm_apply] using
+    (coeff_piEquiv R M ((piEquiv R M).symm q) i n).symm
+
+/-- A single product coefficient maps to the coordinate singles at the same degree. -/
+@[simp] theorem piEquiv_single (n : ℕ) (m : ∀ i, M i) :
+    piEquiv R M (single (∀ i, R i) n m) = (fun i => single (R i) n (m i)) := by
+  funext i
+  rw [piEquiv_apply, coordinate_single]
+
+/-- Coordinate singles at a common degree assemble into a single product coefficient. -/
+@[simp] theorem piEquiv_symm_single (n : ℕ) (m : ∀ i, M i) :
+    (piEquiv R M).symm (fun i => single (R i) n (m i)) = single (∀ i, R i) n m := by
+  apply (piEquiv R M).injective
+  rw [(piEquiv R M).apply_symm_apply, piEquiv_single]
+
+end Semiring
+
+section CommRing
+
+variable {ι : Type uι} (R : ι → Type uR) (M : ι → Type uM)
+variable [Finite ι] [∀ i, CommRing (R i)]
+variable [∀ i, AddCommGroup (M i)] [∀ i, Module (R i) (M i)]
+
+/-- The coefficient-preserving comparison with `PolynomialModule` commutes with
+finite-product equivalences at commutative-ring and additive-group coefficients. -/
+theorem polynomialLinearEquivPolynomialModule_piEquiv
+    (q : Extension (∀ i, R i) (∀ i, M i)) (i : ι) :
+    polynomialLinearEquivPolynomialModule (R := R i) (M := M i) (piEquiv R M q i) =
+      PolynomialModule.piEquiv R M
+        (polynomialLinearEquivPolynomialModule (R := ∀ i, R i) (M := ∀ i, M i) q) i := by
+  apply PolynomialModule.ext
+  apply Finsupp.ext
+  intro n
+  simp only [polynomialLinearEquivPolynomialModule_apply, coeff_toPolynomialModule,
+    PolynomialModule.coeff_piEquiv, coeff_piEquiv]
+
+end CommRing
+
+end PolynomialModule.Extension

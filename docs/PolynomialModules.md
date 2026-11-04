@@ -69,6 +69,36 @@ action of the product semiring on the individual coefficient module is needed.
 The forward coordinate map assumes neither finiteness nor nonemptiness of the
 index type.
 
+## Finite products
+
+The [finite-product module](../GradedRings/PolynomialModule/Pi.lean) provides
+`PolynomialModule.Extension.piEquiv R M` for a finite family of possibly
+noncommutative semirings `R i` and their original modules `M i`. Only additive
+commutative monoids are required on the modules. The product-index, scalar and
+module universes are independent, and the public index assumption is `Finite`.
+The equivalence is semilinear along `Polynomial.piRingEquiv R`:
+
+\[
+  \operatorname{Extension}_{\prod_i R_i}(\prod_i M_i)
+    \simeq
+  \prod_i \operatorname{Extension}_{R_i}(M_i).
+\]
+
+Both polynomial actions are the canonical ones, induced by the given coefficient
+modules. `piEquiv_apply` identifies each component with `coordinate`;
+`coeff_piEquiv` and `coeff_piEquiv_symm` give the forward and inverse formulas
+
+\[
+  (E(q)_i)_n = (q_n)_i, \qquad (E^{-1}(q)_n)_i = (q_i)_n.
+\]
+
+Here `E` denotes `PolynomialModule.Extension.piEquiv R M`. The simplification
+lemmas `piEquiv_single` and `piEquiv_symm_single` preserve the common degree and
+take or assemble the coordinate coefficients. Finiteness is used only to assemble
+finitely supported coordinate sequences, not on the degree type. Empty products
+are included, with no nonemptiness assumption or additional scalar action on an
+individual coefficient module.
+
 ## Agreement with Mathlib
 
 The [comparison module](../GradedRings/PolynomialModule/Comparison.lean) applies
@@ -81,3 +111,12 @@ coefficient-scalar comparison lemmas preserve the original pointwise operations.
 
 The existing Mathlib type and its actions are unchanged. The semiring construction
 is a separate generalization with an explicit comparison at the shared floor.
+
+For finite families at these same hypotheses,
+`PolynomialModule.Extension.polynomialLinearEquivPolynomialModule_piEquiv`
+expresses the pointwise commuting square: converting each component after
+`Extension.piEquiv` is the same as applying `PolynomialModule.piEquiv` after
+converting the product extension. The proof uses the coefficient formulas for
+both equivalences. This compatibility statement retains the comparison's
+`CommRing` and `AddCommGroup` hypotheses; the extension finite-product
+equivalence itself requires only the semiring and additive-monoid hypotheses.
