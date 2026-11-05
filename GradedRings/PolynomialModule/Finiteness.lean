@@ -25,7 +25,9 @@ Polynomial extension also preserves finite presentation in the finite-subset,
 zero-kernel sense of `Module.FinitePresentation`. The proof extends the chosen
 coefficient generators in degree zero and transports their finitely generated
 zero kernel through the finite free comparison. No additive cancellation or
-change-of-generators principle is used.
+change-of-generators principle is used. When the coefficient module is an additive
+commutative group, polynomial extension also reflects this finite-subset,
+zero-kernel notion of finite presentation.
 
 The polynomial action is the one on `PolynomialModule.Extension`: constants act
 by the given coefficient action, and the variable acts by successor shift.
@@ -602,5 +604,204 @@ instance finitePresentation [h : Module.FinitePresentation R M] :
       _ = LinearMap.range J := Submodule.map_top J
       _ = LinearMap.ker L' := hrangeJ
   exact { out := ⟨s', hspan', ⟨w, hker'⟩⟩ }
+
+end PolynomialModule.Extension
+
+namespace PolynomialModule.Extension
+
+variable {R : Type u} {M : Type v} [Semiring R] [AddCommGroup M] [Module R M]
+
+private noncomputable def freeConstantCoeff (I : Type w) :
+    (I →₀ R[X]) →ₛₗ[(Polynomial.constantCoeff : R[X] →+* R)] (I →₀ R) :=
+  Finsupp.mapRange.linearMap
+    { toFun := (Polynomial.constantCoeff : R[X] →+* R)
+      map_add' := (Polynomial.constantCoeff : R[X] →+* R).map_add
+      map_smul' := (Polynomial.constantCoeff : R[X] →+* R).map_mul }
+
+private theorem freeConstantCoeff_apply {I : Type w} (z : I →₀ R[X]) (i : I) :
+    freeConstantCoeff I z i = (z i).coeff 0 := rfl
+
+private theorem freeConstantCoeff_single {I : Type w} (i : I) (b : R[X]) :
+    freeConstantCoeff I (Finsupp.single i b) = Finsupp.single i (b.coeff 0) := by
+  classical
+  ext j
+  simp only [freeConstantCoeff_apply, Finsupp.single_apply]
+  split_ifs <;> simp
+
+private noncomputable def freeConstant (I : Type w) :
+    (I →₀ R) →ₛₗ[(Polynomial.C : R →+* R[X])] (I →₀ R[X]) :=
+  Finsupp.mapRange.linearMap
+    { toFun := (Polynomial.C : R →+* R[X])
+      map_add' := (Polynomial.C : R →+* R[X]).map_add
+      map_smul' := (Polynomial.C : R →+* R[X]).map_mul }
+
+private theorem freeConstant_apply {I : Type w} (x : I →₀ R) (i : I) :
+    freeConstant I x i = Polynomial.C (x i) := rfl
+
+private theorem freeConstantCoeff_freeConstant {I : Type w} (x : I →₀ R) :
+    freeConstantCoeff I (freeConstant I x) = x := by
+  ext i
+  simp only [freeConstantCoeff_apply, freeConstant_apply, Polynomial.coeff_C_zero]
+
+private noncomputable def negCoefficients (u : Extension R M) : Extension R M :=
+  ofCoeff R (-u.coeff)
+
+private theorem negCoefficients_apply (u : Extension R M) (n : ℕ) :
+    (negCoefficients u).coeff n = -(u.coeff n) := rfl
+
+private noncomputable def tailCoefficients (u : Extension R M) : Extension R M :=
+  ofCoeff R (Finsupp.onFinset (u.coeff.support.image Nat.pred)
+    (fun n => u.coeff (n + 1)) (by
+      intro n hn
+      exact Finset.mem_image.mpr ⟨n + 1, Finsupp.mem_support_iff.mpr hn, by simp⟩))
+
+private theorem tailCoefficients_apply (u : Extension R M) (n : ℕ) :
+    (tailCoefficients u).coeff n = u.coeff (n + 1) := rfl
+
+private theorem add_X_smul_neg_tail {u : Extension R M} (hu : u.coeff 0 = 0) :
+    u + (X : R[X]) • negCoefficients (tailCoefficients u) = 0 := by
+  apply ext
+  ext n
+  cases n with
+  | zero => simp [hu]
+  | succ n => simp [negCoefficients_apply, tailCoefficients_apply]
+
+/-- Polynomial extension reflects finite presentation when the coefficient module
+is an additive commutative group. Here finite presentation uses a finite subset and
+its own finitely generated zero kernel; the scalar semiring need not be a ring or
+commutative. -/
+theorem finitePresentation_of_extension
+    (h : Module.FinitePresentation R[X] (Extension R M)) :
+    Module.FinitePresentation R M := by
+  classical
+  let s : Finset (Extension R M) := Classical.choose h.out
+  have hs : Submodule.span R[X] (s : Set (Extension R M)) = ⊤ ∧
+      (LinearMap.ker (Finsupp.linearCombination R[X]
+        ((↑) : s → Extension R M))).FG := Classical.choose_spec h.out
+  let I := ↥s
+  let L : (I →₀ R[X]) →ₗ[R[X]] Extension R M :=
+    Finsupp.linearCombination R[X] ((↑) : I → Extension R M)
+  let K : Submodule R[X] (I →₀ R[X]) := LinearMap.ker L
+  let k : Finset (I →₀ R[X]) := Classical.choose hs.2
+  have hk : Submodule.span R[X] (k : Set (I →₀ R[X])) = K :=
+    Classical.choose_spec hs.2
+  let t : Finset M := s.image (fun u => u.coeff 0)
+  let T := ↥t
+  let a : I → T := fun i =>
+    ⟨i.val.coeff 0, Finset.mem_image.mpr ⟨i.val, i.property, rfl⟩⟩
+  let p : (I →₀ R) →ₗ[R] M :=
+    Finsupp.linearCombination R (fun i : I => i.val.coeff 0)
+  let q : (T →₀ R) →ₗ[R] M := Finsupp.linearCombination R ((↑) : T → M)
+  let A : (I →₀ R) →ₗ[R] (T →₀ R) := Finsupp.lmapDomain R R a
+  let Λ : (I →₀ R[X]) →ₛₗ[(Polynomial.constantCoeff : R[X] →+* R)] (I →₀ R) :=
+    freeConstantCoeff I
+  let J : (I →₀ R) →ₛₗ[(Polynomial.C : R →+* R[X])] (I →₀ R[X]) := freeConstant I
+  let D : (I →₀ R[X]) →ₛₗ[(Polynomial.constantCoeff : R[X] →+* R)] (T →₀ R) :=
+    { toFun := fun z => A (Λ z)
+      map_add' := fun z z' => by simp only [map_add]
+      map_smul' := fun b z => by rw [Λ.map_smulₛₗ, A.map_smul] }
+  have hD (z : I →₀ R[X]) : D z = A (Λ z) := rfl
+  let ell : Finset (T →₀ R) := k.image (fun z => D z)
+  have hpq (x : I →₀ R) : q (A x) = p x :=
+    Finsupp.linearCombination_mapDomain R a x
+  have hΛJ (x : I →₀ R) : Λ (J x) = x := freeConstantCoeff_freeConstant x
+  have hcoeff (z : I →₀ R[X]) : p (Λ z) = (L z).coeff 0 := by
+    induction z using Finsupp.induction_linear with
+    | zero => simp
+    | add z z' hz hz' =>
+      simp only [map_add, coeff_add, Finsupp.add_apply, hz, hz']
+    | single i b =>
+      simpa [p, L, Λ, freeConstantCoeff_single, Finsupp.linearCombination_single]
+        using (coeff_smul b i.val 0).symm
+  have hqD (z : I →₀ R[X]) : q (D z) = (L z).coeff 0 := by
+    rw [hD, hpq, hcoeff]
+  have hL : Function.Surjective L := by
+    have hrange : LinearMap.range L = ⊤ :=
+      (Finsupp.span_eq_range_linearCombination (R := R[X])
+        (s : Set (Extension R M))).symm.trans hs.1
+    intro u
+    have hu : u ∈ LinearMap.range L := by rw [hrange]; trivial
+    exact hu
+  have Ha (j : T) : ∃ i : I, a i = j := by
+    obtain ⟨u, hu, hj⟩ := Finset.mem_image.mp j.property
+    refine ⟨⟨u, hu⟩, ?_⟩
+    exact Subtype.ext hj
+  let σ : T → I := fun j => Classical.choose (Ha j)
+  have hσ (j : T) : a (σ j) = j := Classical.choose_spec (Ha j)
+  let B : (T →₀ R) →ₗ[R] (I →₀ R) := Finsupp.lmapDomain R R σ
+  have hAB (y : T →₀ R) : A (B y) = y := by
+    induction y using Finsupp.induction_linear with
+    | zero => simp
+    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | single j r =>
+      change Finsupp.mapDomain a (Finsupp.mapDomain σ (Finsupp.single j r)) = _
+      rw [Finsupp.mapDomain_single, Finsupp.mapDomain_single, hσ]
+  have hlift (x : I →₀ R) (hx : p x = 0) :
+      ∃ z : I →₀ R[X], L z = 0 ∧ Λ z = x := by
+    let u : Extension R M := L (J x)
+    have hu : u.coeff 0 = 0 := by rw [← hcoeff, hΛJ, hx]
+    let n : Extension R M := negCoefficients (tailCoefficients u)
+    let v : I →₀ R[X] := Classical.choose (hL n)
+    have hv : L v = n := Classical.choose_spec (hL n)
+    refine ⟨J x + (X : R[X]) • v, ?_, ?_⟩
+    · rw [map_add, L.map_smul, hv]
+      exact add_X_smul_neg_tail hu
+    · rw [map_add, Λ.map_smulₛₗ, hΛJ]
+      simp
+  have hliftq (y : T →₀ R) (hy : q y = 0) :
+      ∃ z : I →₀ R[X], L z = 0 ∧ D z = y := by
+    have hx : p (B y) = 0 := by rw [← hpq, hAB, hy]
+    obtain ⟨z, hz, hzx⟩ := hlift (B y) hx
+    exact ⟨z, hz, by rw [hD, hzx, hAB]⟩
+  have hspan : Submodule.span R (t : Set M) = ⊤ := by
+    apply top_unique
+    intro m _
+    obtain ⟨z, hz⟩ := hL (single R 0 m)
+    have hm : q (D z) = m := by rw [hqD, hz]; simp
+    rw [← hm, Finsupp.span_eq_range_linearCombination]
+    exact ⟨D z, rfl⟩
+  have hkzero {z : I →₀ R[X]} (hz : z ∈ k) : L z = 0 := by
+    have hzspan : z ∈ Submodule.span R[X] (k : Set (I →₀ R[X])) :=
+      Submodule.subset_span hz
+    have hzK : z ∈ K := hk ▸ hzspan
+    exact hzK
+  have hDspan {z : I →₀ R[X]}
+      (hz : z ∈ Submodule.span R[X] (k : Set (I →₀ R[X]))) :
+      D z ∈ Submodule.span R (ell : Set (T →₀ R)) := by
+    refine Submodule.span_induction
+      (p := fun z _ => D z ∈ Submodule.span R (ell : Set (T →₀ R)))
+      ?_ ?_ ?_ ?_ hz
+    · intro z hz
+      exact Submodule.subset_span (Finset.mem_image.mpr ⟨z, hz, rfl⟩)
+    · simpa only [map_zero] using (Submodule.span R (ell : Set (T →₀ R))).zero_mem
+    · intro z z' hz hz' ih ih'
+      simpa only [map_add] using
+        (Submodule.span R (ell : Set (T →₀ R))).add_mem ih ih'
+    · intro b z hz ih
+      simpa only [D.map_smulₛₗ] using
+        (Submodule.span R (ell : Set (T →₀ R))).smul_mem (Polynomial.constantCoeff b) ih
+  have hker : Submodule.span R (ell : Set (T →₀ R)) = LinearMap.ker q := by
+    apply le_antisymm
+    · apply Submodule.span_le.mpr
+      intro y hy
+      obtain ⟨z, hz, rfl⟩ := Finset.mem_image.mp hy
+      change q (D z) = 0
+      rw [hqD, hkzero hz, coeff_zero, Finsupp.zero_apply]
+    · intro y hy
+      obtain ⟨z, hz, hzy⟩ := hliftq y hy
+      have hzK : z ∈ K := hz
+      have hzspan : z ∈ Submodule.span R[X] (k : Set (I →₀ R[X])) := hk.symm ▸ hzK
+      rw [← hzy]
+      exact hDspan hzspan
+  exact { out := ⟨t, hspan, ⟨ell, hker⟩⟩ }
+
+/-- For an additive commutative group of coefficients, polynomial extension
+preserves and reflects finite presentation in the finite-subset, zero-kernel sense. -/
+theorem finitePresentation_iff_of_addCommGroup :
+    Module.FinitePresentation R[X] (Extension R M) ↔ Module.FinitePresentation R M := by
+  constructor
+  · exact finitePresentation_of_extension
+  · intro h
+    exact finitePresentation (R := R) (M := M) (h := h)
 
 end PolynomialModule.Extension
