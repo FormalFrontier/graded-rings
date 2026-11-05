@@ -127,6 +127,28 @@ theorem coeff_single_apply (n : ℕ) (m : M) (k : ℕ) :
   apply ext
   simp
 
+/-- The sum of the coefficients of a polynomial module element. -/
+def coefficientSum : Extension R M →+ M :=
+  (Finsupp.liftAddHom (fun _ : ℕ => AddMonoidHom.id M)).comp
+    (coeffAddEquiv R M).toAddMonoidHom
+
+/-- Coefficient sum is the finite sum over the coefficient support. -/
+theorem coefficientSum_apply (q : Extension R M) :
+    coefficientSum q = q.coeff.sum (fun _ m => m) := rfl
+
+@[simp] theorem coefficientSum_ofCoeff (f : ℕ →₀ M) :
+    coefficientSum (ofCoeff R f) = f.sum (fun _ m => m) := rfl
+
+@[simp] theorem coefficientSum_single (n : ℕ) (m : M) :
+    coefficientSum (single R n m) = m := by
+  change coefficientSum (ofCoeff R (Finsupp.single n m)) = m
+  rw [coefficientSum_ofCoeff]
+  exact Finsupp.sum_single_index rfl
+
+theorem coefficientSum_add (q q' : Extension R M) :
+    coefficientSum (q + q') = coefficientSum q + coefficientSum q' :=
+  map_add coefficientSum q q'
+
 /-- Every element is the finite sum of its single coefficients. -/
 theorem sum_single (q : Extension R M) : q.coeff.sum (single R) = q := by
   apply ext
@@ -298,6 +320,46 @@ def csingle (R : Type u) {M : Type v} [Semiring R] [AddCommMonoid M] [Module R M
   map_smul' r m := by rw [C_smul, single_smul]
 
 @[simp] theorem csingle_apply (n : ℕ) (m : M) : csingle R n m = single R n m := rfl
+
+/-- Coefficient sum respects the coefficient action. -/
+@[simp] theorem coefficientSum_rsmul (r : R) (q : Extension R M) :
+    coefficientSum (r • q) = r • coefficientSum q := by
+  refine induction_linear q ?_ ?_ ?_
+  · simp
+  · intro x y hx hy
+    simp only [smul_add, coefficientSum_add, hx, hy]
+  · intro n m
+    rw [← single_smul, coefficientSum_single, coefficientSum_single]
+
+/-- A constant polynomial acts on coefficient sum through its coefficient. -/
+theorem coefficientSum_C_smul (r : R) (q : Extension R M) :
+    coefficientSum ((C r) • q) = r • coefficientSum q := by
+  rw [C_smul, coefficientSum_rsmul]
+
+/-- Successor shift preserves coefficient sum. -/
+@[simp] theorem coefficientSum_X_smul (q : Extension R M) :
+    coefficientSum ((X : R[X]) • q) = coefficientSum q := by
+  refine induction_linear q ?_ ?_ ?_
+  · simp
+  · intro x y hx hy
+    simp only [smul_add, coefficientSum_add, hx, hy]
+  · intro n m
+    simp only [X_smul_single, coefficientSum_single]
+
+/-- Polynomial scalar multiplication evaluates the scalar at one on coefficient sum. -/
+theorem coefficientSum_smul (p : R[X]) (q : Extension R M) :
+    coefficientSum (p • q) =
+      (Polynomial.eval₂AddMonoidHom (RingHom.id R) (1 : R)) p • coefficientSum q := by
+  refine Polynomial.induction_on' p ?_ ?_
+  · intro p p' hp hp'
+    simp only [add_smul, hp, hp', map_add]
+  · intro n r
+    refine induction_linear q ?_ ?_ ?_
+    · simp
+    · intro x y hx hy
+      simp only [smul_add, coefficientSum_add, hx, hy]
+    · intro k m
+      simp [Polynomial.eval₂AddMonoidHom]
 
 /-- The coefficient of a monomial acting on an arbitrary sequence. -/
 theorem monomial_smul_apply (a : ℕ) (r : R) (q : Extension R M) (n : ℕ) :

@@ -27,7 +27,10 @@ coefficient generators in degree zero and transports their finitely generated
 zero kernel through the finite free comparison. No additive cancellation or
 change-of-generators principle is used. When the coefficient module is an additive
 commutative group, polynomial extension also reflects this finite-subset,
-zero-kernel notion of finite presentation.
+zero-kernel notion of finite presentation. A chosen finite polynomial generating subset
+whose linear-combination kernel is bottom also descends by coefficient sum to a finite
+coefficient generating subset with bottom linear-combination kernel, without an additive
+group hypothesis.
 
 The polynomial action is the one on `PolynomialModule.Extension`: constants act
 by the given coefficient action, and the variable acts by successor shift.
@@ -803,5 +806,274 @@ theorem finitePresentation_iff_of_addCommGroup :
   · exact finitePresentation_of_extension
   · intro h
     exact finitePresentation (R := R) (M := M) (h := h)
+
+end PolynomialModule.Extension
+
+namespace PolynomialModule.Extension
+
+variable {R : Type u} {M : Type v} [Semiring R] [AddCommMonoid M] [Module R M]
+
+private noncomputable def scalarCoefficientSum (R : Type u) [Semiring R] : R[X] →+ R :=
+  Polynomial.eval₂AddMonoidHom (RingHom.id R) 1
+
+private noncomputable def freeCoefficientSum (I : Type w) : (I →₀ R[X]) →+ (I →₀ R) :=
+  Finsupp.mapRange.addMonoidHom (ι := I) (scalarCoefficientSum R)
+
+private theorem freeCoefficientSum_apply {I : Type w} (f : I →₀ R[X]) (i : I) :
+    freeCoefficientSum I f i = scalarCoefficientSum R (f i) := rfl
+
+private theorem freeCoefficientSum_single {I : Type w} (i : I) (p : R[X]) :
+    freeCoefficientSum I (Finsupp.single i p) =
+      Finsupp.single i (scalarCoefficientSum R p) := by
+  classical
+  ext j
+  simp only [freeCoefficientSum_apply, Finsupp.single_apply]
+  split_ifs <;> simp
+
+open Classical in
+private noncomputable def coefficientSumIndex (S : Finset (Extension R M)) :
+    S → S.image (coefficientSum (R := R)) :=
+  fun s => ⟨coefficientSum s.val, Finset.mem_image.mpr ⟨s.val, s.property, rfl⟩⟩
+
+open Classical in
+private noncomputable def descendCoefficients (S : Finset (Extension R M)) :
+    (S →₀ R[X]) →+ (S.image (coefficientSum (R := R)) →₀ R) :=
+  (Finsupp.lmapDomain R R (coefficientSumIndex S)).toAddMonoidHom.comp
+    (freeCoefficientSum S)
+
+private theorem descendCoefficients_single (S : Finset (Extension R M))
+    (s : S) (p : R[X]) :
+    descendCoefficients S (Finsupp.single s p) =
+      Finsupp.single (coefficientSumIndex S s) (scalarCoefficientSum R p) := by
+  classical
+  change Finsupp.mapDomain (coefficientSumIndex S)
+    (freeCoefficientSum S (Finsupp.single s p)) = _
+  rw [freeCoefficientSum_single, Finsupp.mapDomain_single]
+
+open Classical in
+private theorem linearCombination_descendCoefficients (S : Finset (Extension R M))
+    (f : S →₀ R[X]) :
+    Finsupp.linearCombination R ((↑) : S.image (coefficientSum (R := R)) → M)
+        (descendCoefficients S f) =
+      coefficientSum (Finsupp.linearCombination R[X] ((↑) : S → Extension R M) f) := by
+  classical
+  refine Finsupp.induction_linear f ?_ ?_ ?_
+  · simp
+  · intro f g hf hg
+    simp only [map_add, hf, hg]
+  · intro s p
+    rw [descendCoefficients_single, Finsupp.linearCombination_single,
+      Finsupp.linearCombination_single, coefficientSum_smul]
+    rfl
+
+open Classical in
+/-- Summing coefficients of a finite polynomial generating subset gives a generating
+subset of the coefficient module. -/
+theorem span_image_coefficientSum_eq_top (S : Finset (Extension R M))
+    (hS : Submodule.span R[X] (S : Set (Extension R M)) = ⊤) :
+    Submodule.span R (S.image (coefficientSum (R := R)) : Set M) = ⊤ := by
+  classical
+  let L := Finsupp.linearCombination R[X] ((↑) : S → Extension R M)
+  have hL : Function.Surjective L := by
+    apply (span_range_eq_top_iff_surjective_finsuppLinearCombination
+      (R := R[X]) (v := ((↑) : S → Extension R M))).mp
+    simpa only [Subtype.range_coe_subtype, Finset.setOfPred_mem] using hS
+  apply le_antisymm le_top
+  intro m _
+  obtain ⟨f, hf⟩ := hL (single R 0 m)
+  have hm : Finsupp.linearCombination R
+      ((↑) : S.image (coefficientSum (R := R)) → M) (descendCoefficients S f) = m := by
+    rw [linearCombination_descendCoefficients]
+    change coefficientSum (L f) = m
+    rw [hf, coefficientSum_single]
+  rw [← hm, Finsupp.linearCombination_apply]
+  exact Submodule.sum_mem _ fun t _ =>
+    Submodule.smul_mem _ _ (Submodule.subset_span t.property)
+
+private theorem freeConstant_single {I : Type w} (i : I) (r : R) :
+    freeConstant (R := R) I (Finsupp.single i r) = Finsupp.single i (Polynomial.C r) := by
+  classical
+  ext j
+  simp only [freeConstant_apply, Finsupp.single_apply]
+  split_ifs <;> simp
+
+open Classical in
+private theorem descendCoefficients_constant_section (S : Finset (Extension R M))
+    (rep : S.image (coefficientSum (R := R)) → S)
+    (hrep : ∀ t, coefficientSumIndex S (rep t) = t)
+    (a : S.image (coefficientSum (R := R)) →₀ R) :
+    descendCoefficients S
+        (freeConstant (R := R) S (Finsupp.lmapDomain R R rep a)) = a := by
+  classical
+  refine Finsupp.induction_linear a ?_ ?_ ?_
+  · simp
+  · intro a b ha hb
+    simp only [map_add, ha, hb]
+  · intro t r
+    simp only [Finsupp.lmapDomain_apply, Finsupp.mapDomain_single,
+      freeConstant_single, descendCoefficients_single, hrep]
+    congr 1
+    simp [scalarCoefficientSum, Polynomial.eval₂AddMonoidHom]
+
+private theorem descendCoefficients_X_smul (S : Finset (Extension R M)) (f : S →₀ R[X]) :
+    descendCoefficients S ((X : R[X]) • f) = descendCoefficients S f := by
+  classical
+  change Finsupp.mapDomain (coefficientSumIndex S)
+      (freeCoefficientSum S ((X : R[X]) • f)) =
+    Finsupp.mapDomain (coefficientSumIndex S) (freeCoefficientSum S f)
+  congr 1
+  ext i
+  change scalarCoefficientSum R (X * f i) = scalarCoefficientSum R (f i)
+  simp [scalarCoefficientSum, Polynomial.eval₂AddMonoidHom]
+
+private theorem exists_prefix_tail (q : Extension R M) (hq : coefficientSum q = 0) :
+    ∃ w z : Extension R M, w + z = 0 ∧ q + (X : R[X]) • w = w := by
+  classical
+  let U := q.coeff.support
+  let N : ℕ := U.sup id
+  let H := Finset.range (N + 1)
+  let prefixSum (n : ℕ) := (U.filter (fun i => i ≤ n)).sum (fun i => q.coeff i)
+  let tail (n : ℕ) := (U.filter (fun i => n < i)).sum (fun i => q.coeff i)
+  have htotalq : U.sum (fun i => q.coeff i) = 0 := hq
+  have hbound {i : ℕ} (hi : i ∈ U) : i ≤ N :=
+    Finset.le_sup (f := fun n : ℕ => n) hi
+  have hp (n : ℕ) (hn : prefixSum n ≠ 0) : n ∈ H := by
+    by_contra hnH
+    have hNn : N < n := Nat.lt_of_lt_of_le (Nat.lt_succ_self N)
+      (Nat.le_of_not_gt (fun h => hnH (Finset.mem_range.mpr h)))
+    have hfilter : U.filter (fun i => i ≤ n) = U := by
+      apply Finset.filter_eq_self.mpr
+      intro i hi
+      exact (hbound hi).trans (Nat.le_of_lt hNn)
+    apply hn
+    change (U.filter (fun i => i ≤ n)).sum (fun i => q.coeff i) = 0
+    rw [hfilter]
+    exact htotalq
+  have ht (n : ℕ) (hn : tail n ≠ 0) : n ∈ H := by
+    by_contra hnH
+    have hNn : N < n := Nat.lt_of_lt_of_le (Nat.lt_succ_self N)
+      (Nat.le_of_not_gt (fun h => hnH (Finset.mem_range.mpr h)))
+    apply hn
+    apply Finset.sum_eq_zero
+    intro i hi
+    obtain ⟨hiU, hni⟩ := Finset.mem_filter.mp hi
+    exact False.elim (not_lt_of_ge ((hbound hiU).trans (Nat.le_of_lt hNn)) hni)
+  have htotal (n : ℕ) : prefixSum n + tail n = 0 := by
+    calc
+      prefixSum n + tail n = U.sum (fun i => q.coeff i) := by
+        simpa only [prefixSum, tail, not_le] using
+          (Finset.sum_filter_add_sum_filter_not U (fun i => i ≤ n) (fun i => q.coeff i))
+      _ = 0 := htotalq
+  have hprefix_range (n : ℕ) :
+      prefixSum n = (Finset.range (n + 1)).sum (fun i => q.coeff i) := by
+    change (U.filter (fun i => i ≤ n)).sum (fun i => q.coeff i) = _
+    refine Finset.sum_subset ?_ ?_
+    · intro i hi
+      exact Finset.mem_range.mpr (Nat.lt_succ_of_le (Finset.mem_filter.mp hi).2)
+    · intro i hi hin
+      by_contra hzero
+      exact hin (Finset.mem_filter.mpr
+        ⟨Finsupp.mem_support_iff.mpr hzero, Nat.le_of_lt_succ (Finset.mem_range.mp hi)⟩)
+  let w : Extension R M := ofCoeff R (Finsupp.onFinset H prefixSum hp)
+  let z : Extension R M := ofCoeff R (Finsupp.onFinset H tail ht)
+  have hw (n : ℕ) : w.coeff n = prefixSum n := rfl
+  have hz (n : ℕ) : z.coeff n = tail n := rfl
+  refine ⟨w, z, ?_, ?_⟩
+  · apply ext
+    apply Finsupp.ext
+    intro n
+    simpa only [coeff_add, Finsupp.add_apply, coeff_zero, Finsupp.zero_apply, hw, hz] using
+      htotal n
+  · apply ext
+    apply Finsupp.ext
+    intro n
+    cases n with
+    | zero =>
+      simp only [coeff_add, Finsupp.add_apply, coeff_X_smul_zero, add_zero, hw]
+      rw [hprefix_range]
+      simp
+    | succ n =>
+      simp only [coeff_add, Finsupp.add_apply, coeff_X_smul_succ, hw]
+      rw [hprefix_range (n + 1), Finset.sum_range_succ, ← hprefix_range n]
+      exact add_comm _ _
+
+open Classical in
+/-- A spanning polynomial subset with zero own relation kernel descends, by coefficient
+sum, to a coefficient subset with zero own relation kernel. -/
+theorem ker_linearCombination_image_coefficientSum_eq_bot (S : Finset (Extension R M))
+    (hS : Submodule.span R[X] (S : Set (Extension R M)) = ⊤)
+    (hK : LinearMap.ker
+      (Finsupp.linearCombination R[X] ((↑) : S → Extension R M)) = ⊥) :
+    LinearMap.ker (Finsupp.linearCombination R
+      ((↑) : S.image (coefficientSum (R := R)) → M)) = ⊥ := by
+  classical
+  let T := S.image (coefficientSum (R := R))
+  let Ls := Finsupp.linearCombination R[X] ((↑) : S → Extension R M)
+  let LT := Finsupp.linearCombination R ((↑) : T → M)
+  have hL : Function.Surjective Ls := by
+    apply (span_range_eq_top_iff_surjective_finsuppLinearCombination
+      (R := R[X]) (v := ((↑) : S → Extension R M))).mp
+    simpa only [Subtype.range_coe_subtype, Finset.setOfPred_mem] using hS
+  have hEta : Function.Surjective (coefficientSumIndex S) := by
+    intro t
+    obtain ⟨s, hs, he⟩ := Finset.mem_image.mp t.property
+    exact ⟨⟨s, hs⟩, Subtype.ext he⟩
+  let rep : T → S := fun t => Classical.choose (hEta t)
+  have hrep (t : T) : coefficientSumIndex S (rep t) = t := Classical.choose_spec (hEta t)
+  let sigma := Finsupp.lmapDomain R R rep
+  let P : Extension R M → (S →₀ R[X]) := fun q => Classical.choose (hL q)
+  have hP (q : Extension R M) : Ls (P q) = q := Classical.choose_spec (hL q)
+  apply le_antisymm ?_ bot_le
+  intro a ha
+  have ha0 : LT a = 0 := ha
+  let lifted := freeConstant (R := R) S (sigma a)
+  have hlifted : descendCoefficients S lifted = a :=
+    descendCoefficients_constant_section S rep hrep a
+  let q := Ls lifted
+  have hq : coefficientSum q = 0 := by
+    change coefficientSum (Ls lifted) = 0
+    rw [← linearCombination_descendCoefficients S lifted, hlifted]
+    exact ha0
+  obtain ⟨w, z, hwz, hshift⟩ := exists_prefix_tail q hq
+  let b := P w
+  let cLift := P z
+  have hb : Ls b = w := hP w
+  have hc : Ls cLift = z := hP z
+  let u := b + cLift
+  let v := lifted + (X : R[X]) • b + cLift
+  have huK : u ∈ LinearMap.ker Ls := by
+    change Ls (b + cLift) = 0
+    rw [map_add, hb, hc, hwz]
+  have hvK : v ∈ LinearMap.ker Ls := by
+    change Ls (lifted + (X : R[X]) • b + cLift) = 0
+    rw [map_add, map_add, Ls.map_smul, hb, hc]
+    change q + (X : R[X]) • w + z = 0
+    rw [hshift, hwz]
+  have hu : u = 0 := by
+    have hu0 : u ∈ (⊥ : Submodule R[X] (S →₀ R[X])) := hK ▸ huK
+    simpa only [Submodule.mem_bot] using hu0
+  have hv : v = 0 := by
+    have hv0 : v ∈ (⊥ : Submodule R[X] (S →₀ R[X])) := hK ▸ hvK
+    simpa only [Submodule.mem_bot] using hv0
+  have huv : descendCoefficients S v = a + descendCoefficients S u := by
+    change descendCoefficients S (lifted + (X : R[X]) • b + cLift) =
+      a + descendCoefficients S (b + cLift)
+    rw [map_add, map_add, hlifted, descendCoefficients_X_smul, map_add, add_assoc]
+  have ha' : a = 0 := by
+    simpa only [hv, hu, map_zero, add_zero] using huv.symm
+  simpa only [Submodule.mem_bot] using ha'
+
+/-- A polynomial generating subset whose own relation kernel is zero gives a finite
+presentation of the coefficient module. -/
+theorem finitePresentation_of_extension_ker_eq_bot (S : Finset (Extension R M))
+    (hS : Submodule.span R[X] (S : Set (Extension R M)) = ⊤)
+    (hK : LinearMap.ker
+      (Finsupp.linearCombination R[X] ((↑) : S → Extension R M)) = ⊥) :
+    Module.FinitePresentation R M := by
+  classical
+  refine { out := ⟨S.image (coefficientSum (R := R)),
+    span_image_coefficientSum_eq_top S hS, ∅, ?_⟩ }
+  rw [Finset.coe_empty, Submodule.span_empty,
+    ker_linearCombination_image_coefficientSum_eq_bot S hS hK]
 
 end PolynomialModule.Extension
