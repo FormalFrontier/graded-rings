@@ -1077,3 +1077,255 @@ theorem finitePresentation_of_extension_ker_eq_bot (S : Finset (Extension R M))
     ker_linearCombination_image_coefficientSum_eq_bot S hS hK]
 
 end PolynomialModule.Extension
+
+namespace PolynomialModule.Extension
+
+open scoped BigOperators
+
+variable {R : Type u} {M : Type v} [Semiring R] [AddCommMonoid M] [Module R M]
+
+private theorem exists_addUnit_preimage_of_surjective
+    {I : Type w} (L : (I →₀ R[X]) →ₗ[R[X]] Extension R M)
+    (hL : Function.Surjective L)
+    (hUnitGen : ∀ m : M, IsAddUnit m →
+      m ∈ Submodule.span R
+        (Set.range (fun d : AddUnits R × M => (d.1 : R) • d.2)))
+    {e eInv : Extension R M} (he : e + eInv = 0) :
+    ∃ b bInv : I →₀ R[X], L b = e ∧ b + bInv = 0 := by
+  classical
+  let Y : M → I →₀ R[X] := fun m => Classical.choose (hL (single R 0 m))
+  have hY (m : M) : L (Y m) = single R 0 m :=
+    Classical.choose_spec (hL (single R 0 m))
+  have hCoeff (n : ℕ) : IsAddUnit (e.coeff n) := by
+    have hn : e.coeff n + eInv.coeff n = 0 := by
+      have h := congrArg (fun q : Extension R M => q.coeff n) he
+      simpa only [coeff_add, coeff_zero, Finsupp.add_apply, Finsupp.zero_apply] using h
+    refine ⟨⟨e.coeff n, eInv.coeff n, hn, ?_⟩, rfl⟩
+    rw [add_comm]
+    exact hn
+  have hrepr (n : ℕ) :
+      ∃ c : (AddUnits R × M) →₀ R,
+        c.sum (fun x a => a • ((x.1 : R) • x.2)) = e.coeff n :=
+    Finsupp.mem_span_range_iff_exists_finsupp.mp (hUnitGen (e.coeff n) (hCoeff n))
+  let d (n : ℕ) : (AddUnits R × M) →₀ R := Classical.choose (hrepr n)
+  have hd (n : ℕ) :
+      (d n).sum (fun x a => a • ((x.1 : R) • x.2)) = e.coeff n :=
+    Classical.choose_spec (hrepr n)
+  let b : I →₀ R[X] := ∑ n ∈ e.coeff.support,
+    (Polynomial.X ^ n : R[X]) •
+      ∑ x ∈ (d n).support, Polynomial.C (d n x * (x.1 : R)) • Y x.2
+  let bInv : I →₀ R[X] := ∑ n ∈ e.coeff.support,
+    (Polynomial.X ^ n : R[X]) •
+      ∑ x ∈ (d n).support, Polynomial.C (d n x * x.1.neg) • Y x.2
+  have hX (n : ℕ) (m : M) :
+      (Polynomial.X ^ n : R[X]) • single R 0 m = single R n m := by
+    induction n with
+    | zero => simp only [pow_zero, one_smul]
+    | succ n ih => rw [pow_succ', mul_smul, ih, X_smul_single]
+  refine ⟨b, bInv, ?_, ?_⟩
+  · calc
+      L b = ∑ n ∈ e.coeff.support,
+          (Polynomial.X ^ n : R[X]) • single R 0 (e.coeff n) := by
+        simp only [b, map_sum, L.map_smul, hY]
+        apply Finset.sum_congr rfl
+        intro n hn
+        apply congrArg (fun q : Extension R M => (Polynomial.X ^ n : R[X]) • q)
+        calc
+          (∑ x ∈ (d n).support,
+              Polynomial.C (d n x * (x.1 : R)) • single R 0 x.2) =
+              ∑ x ∈ (d n).support,
+                single R 0 (d n x • ((x.1 : R) • x.2)) := by
+            apply Finset.sum_congr rfl
+            intro x hx
+            rw [C_smul, ← single_smul, mul_smul]
+          _ = single R 0 (e.coeff n) := by
+            have h := congrArg (lsingle R (M := M) 0) (hd n)
+            simpa only [Finsupp.sum, map_sum, lsingle_apply] using h
+      _ = e.coeff.sum (single R) := by
+        change (∑ n ∈ e.coeff.support,
+          (Polynomial.X ^ n : R[X]) • single R 0 (e.coeff n)) =
+            ∑ n ∈ e.coeff.support, single R n (e.coeff n)
+        apply Finset.sum_congr rfl
+        intro n hn
+        exact hX n (e.coeff n)
+      _ = e := sum_single e
+  · dsimp only [b, bInv]
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_eq_zero
+    intro n hn
+    rw [← smul_add, ← Finset.sum_add_distrib]
+    have hzero :
+        (∑ x ∈ (d n).support,
+          (Polynomial.C (d n x * (x.1 : R)) • Y x.2 +
+            Polynomial.C (d n x * x.1.neg) • Y x.2)) = 0 := by
+      apply Finset.sum_eq_zero
+      intro x hx
+      have hu : d n x * (x.1 : R) + d n x * x.1.neg = 0 := by
+        rw [← mul_add, AddUnits.val_neg, mul_zero]
+      rw [← add_smul, ← Polynomial.C_add, hu, map_zero, zero_smul]
+    rw [hzero, smul_zero]
+
+end PolynomialModule.Extension
+
+namespace PolynomialModule.Extension
+
+variable {R : Type u} {M : Type v} [Semiring R] [AddCommMonoid M] [Module R M]
+
+private theorem scalarCoefficientSum_mul (p q : R[X]) :
+    scalarCoefficientSum R (p * q) =
+      scalarCoefficientSum R p * scalarCoefficientSum R q := by
+  change Polynomial.eval₂ (RingHom.id R) 1 (p * q) =
+    Polynomial.eval₂ (RingHom.id R) 1 p * Polynomial.eval₂ (RingHom.id R) 1 q
+  exact Polynomial.eval₂_mul_noncomm _ _ (fun _ => Commute.one_right _)
+
+private theorem descendCoefficients_smul (S : Finset (Extension R M))
+    (p : R[X]) (f : S →₀ R[X]) :
+    descendCoefficients S (p • f) =
+      scalarCoefficientSum R p • descendCoefficients S f := by
+  classical
+  refine Finsupp.induction_linear f ?_ ?_ ?_
+  · simp only [smul_zero, map_zero]
+  · intro f g hf hg
+    simp only [smul_add, map_add, hf, hg]
+  · intro s q
+    rw [Finsupp.smul_single', descendCoefficients_single,
+      descendCoefficients_single, Finsupp.smul_single', scalarCoefficientSum_mul]
+
+open Classical in
+private theorem exists_mem_ker_descendCoefficients (S : Finset (Extension R M))
+    (hS : Submodule.span R[X] (S : Set (Extension R M)) = ⊤)
+    (hUnitGen : ∀ m : M, IsAddUnit m →
+      m ∈ Submodule.span R
+        (Set.range (fun d : AddUnits R × M => (d.1 : R) • d.2)))
+    (a : S.image (coefficientSum (R := R)) →₀ R)
+    (ha : a ∈ LinearMap.ker (Finsupp.linearCombination R
+      ((↑) : S.image (coefficientSum (R := R)) → M))) :
+    ∃ z : S →₀ R[X],
+      z ∈ LinearMap.ker (Finsupp.linearCombination R[X] ((↑) : S → Extension R M)) ∧
+        descendCoefficients S z = a := by
+  let T := S.image (coefficientSum (R := R))
+  let L := Finsupp.linearCombination R[X] ((↑) : S → Extension R M)
+  have hL : Function.Surjective L := by
+    apply (span_range_eq_top_iff_surjective_finsuppLinearCombination
+      (R := R[X]) (v := ((↑) : S → Extension R M))).mp
+    simpa only [Subtype.range_coe_subtype, Finset.setOfPred_mem] using hS
+  have hEta : Function.Surjective (coefficientSumIndex S) := by
+    intro t
+    obtain ⟨s, hs, he⟩ := Finset.mem_image.mp t.property
+    exact ⟨⟨s, hs⟩, Subtype.ext he⟩
+  let rep : T → S := fun t => Classical.choose (hEta t)
+  have hrep (t : T) : coefficientSumIndex S (rep t) = t :=
+    Classical.choose_spec (hEta t)
+  let c := freeConstant (R := R) S (Finsupp.lmapDomain R R rep a)
+  have hc : descendCoefficients S c = a :=
+    descendCoefficients_constant_section S rep hrep a
+  have ha0 : Finsupp.linearCombination R ((↑) : T → M) a = 0 := ha
+  have hq : coefficientSum (L c) = 0 := by
+    calc
+      coefficientSum (L c) = Finsupp.linearCombination R ((↑) : T → M)
+          (descendCoefficients S c) := (linearCombination_descendCoefficients S c).symm
+      _ = 0 := by rw [hc, ha0]
+  obtain ⟨w, wInv, hw, hfix⟩ := exists_prefix_tail (L c) hq
+  obtain ⟨b, bInv, hb, hbb⟩ :=
+    exists_addUnit_preimage_of_surjective L hL hUnitGen hw
+  have hbL : w + L bInv = 0 := by
+    rw [← hb, ← map_add, hbb, map_zero]
+  refine ⟨c + (X : R[X]) • b + bInv, ?_, ?_⟩
+  · change L (c + (X : R[X]) • b + bInv) = 0
+    rw [map_add, map_add, L.map_smul, hb, hfix, hbL]
+  · rw [map_add, map_add, descendCoefficients_X_smul, hc, add_assoc,
+      ← map_add, hbb, map_zero, add_zero]
+
+open Classical in
+private theorem span_image_descendCoefficients_eq_ker (S : Finset (Extension R M))
+    (hS : Submodule.span R[X] (S : Set (Extension R M)) = ⊤)
+    (hUnitGen : ∀ m : M, IsAddUnit m →
+      m ∈ Submodule.span R
+        (Set.range (fun d : AddUnits R × M => (d.1 : R) • d.2)))
+    (k : Finset (S →₀ R[X]))
+    (hk : Submodule.span R[X] (k : Set (S →₀ R[X])) =
+      LinearMap.ker (Finsupp.linearCombination R[X] ((↑) : S → Extension R M))) :
+    Submodule.span R
+        (k.image (descendCoefficients S) :
+          Set (S.image (coefficientSum (R := R)) →₀ R)) =
+      LinearMap.ker (Finsupp.linearCombination R
+        ((↑) : S.image (coefficientSum (R := R)) → M)) := by
+  apply le_antisymm
+  · apply Submodule.span_le.mpr
+    intro a ha
+    obtain ⟨z, hz, rfl⟩ := Finset.mem_image.mp ha
+    have hzK : Finsupp.linearCombination R[X] ((↑) : S → Extension R M) z = 0 := by
+      have hz' : z ∈ Submodule.span R[X] (k : Set (S →₀ R[X])) :=
+        Submodule.subset_span hz
+      rw [hk] at hz'
+      exact hz'
+    change Finsupp.linearCombination R
+      ((↑) : S.image (coefficientSum (R := R)) → M) (descendCoefficients S z) = 0
+    rw [linearCombination_descendCoefficients, hzK, map_zero]
+  · intro a ha
+    obtain ⟨z, hz, hza⟩ := exists_mem_ker_descendCoefficients S hS hUnitGen a ha
+    rw [← hza]
+    have hzspan : z ∈ Submodule.span R[X] (k : Set (S →₀ R[X])) := by
+      rw [hk]
+      exact hz
+    refine Submodule.span_induction (p := fun z _ =>
+      descendCoefficients S z ∈ Submodule.span R
+        (k.image (descendCoefficients S) :
+          Set (S.image (coefficientSum (R := R)) →₀ R))) ?_ ?_ ?_ ?_ hzspan
+    · intro z hz
+      exact Submodule.subset_span (Finset.mem_image.mpr ⟨z, hz, rfl⟩)
+    · simp only [map_zero, Submodule.zero_mem]
+    · intro x y hx hy hx' hy'
+      rw [map_add]
+      exact Submodule.add_mem _ hx' hy'
+    · intro p x hx hx'
+      rw [descendCoefficients_smul]
+      exact Submodule.smul_mem _ _ hx'
+
+open Classical in
+/-- If additive units of the coefficient module are spanned by additive-unit scalar
+multiples, finite generation of the relations of a polynomial generating subset
+implies finite generation of the relations of its coefficient-sum image. -/
+theorem fg_ker_linearCombination_image_coefficientSum_of_addUnits_span
+    (S : Finset (Extension R M))
+    (hS : Submodule.span R[X] (S : Set (Extension R M)) = ⊤)
+    (hUnitGen : ∀ m : M, IsAddUnit m →
+      m ∈ Submodule.span R
+        (Set.range (fun d : AddUnits R × M => (d.1 : R) • d.2)))
+    (hK : (LinearMap.ker
+      (Finsupp.linearCombination R[X] ((↑) : S → Extension R M))).FG) :
+    (LinearMap.ker (Finsupp.linearCombination R
+      ((↑) : S.image (coefficientSum (R := R)) → M))).FG := by
+  classical
+  obtain ⟨k, hk⟩ := hK
+  exact ⟨k.image (descendCoefficients S),
+    span_image_descendCoefficients_eq_ker S hS hUnitGen k hk⟩
+
+/-- Finite presentation of the polynomial extension reflects to the coefficient module
+when its additive units are spanned by additive-unit scalar multiples. -/
+theorem finitePresentation_of_extension_of_isAddUnit_mem_span
+    (hUnitGen : ∀ m : M, IsAddUnit m →
+      m ∈ Submodule.span R
+        (Set.range (fun d : AddUnits R × M => (d.1 : R) • d.2)))
+    (hFP : Module.FinitePresentation R[X] (Extension R M)) :
+    Module.FinitePresentation R M := by
+  classical
+  obtain ⟨S, hS, k, hk⟩ := hFP.out
+  refine { out := ⟨S.image (coefficientSum (R := R)),
+    span_image_coefficientSum_eq_top S hS, k.image (descendCoefficients S), ?_⟩ }
+  exact span_image_descendCoefficients_eq_ker S hS hUnitGen k hk
+
+/-- Under the additive-unit spanning hypothesis, the polynomial extension is finitely
+presented exactly when the coefficient module is finitely presented. -/
+theorem finitePresentation_extension_iff_of_isAddUnit_mem_span
+    (hUnitGen : ∀ m : M, IsAddUnit m →
+      m ∈ Submodule.span R
+        (Set.range (fun d : AddUnits R × M => (d.1 : R) • d.2))) :
+    Module.FinitePresentation R[X] (Extension R M) ↔ Module.FinitePresentation R M := by
+  constructor
+  · exact finitePresentation_of_extension_of_isAddUnit_mem_span hUnitGen
+  · intro h
+    let _ : Module.FinitePresentation R M := h
+    infer_instance
+
+end PolynomialModule.Extension
