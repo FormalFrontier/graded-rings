@@ -5,9 +5,10 @@ Authors: Formal Frontier Agents
 module
 
 public import Mathlib.Algebra.Polynomial.Module.Basic
+public import Mathlib.LinearAlgebra.Pi
 public import CoherentModules.LinearAlgebra.FinsuppPi
 public import GradedRings.Polynomial.Pi
-public import GradedRings.PolynomialModule.UniversalProperty
+public import GradedRings.PolynomialModule.Regular
 public import GradedRings.PolynomialModule.Comparison
 
 /-!
@@ -28,6 +29,11 @@ lemmas describe coefficients and single-degree elements in both directions. At
 commutative-ring and additive-group coefficients, the coefficient-preserving
 comparison with `PolynomialModule` intertwines the two finite-product equivalences.
 
+For a single semiring `R`, `PolynomialModule.Extension.piLinearEquiv R M ι` identifies
+the extension of `ι → M` with `ι → Extension R M`, using the original `R`-module
+structure on `M`. The regular specialization `PolynomialModule.Extension.piRegularEquiv R ι`
+identifies the extension of a finite free module with a finite tuple of polynomials.
+
 ## Implementation notes
 
 The additive equivalence composes Mathlib's `PolynomialModule.coeffAddEquiv` with
@@ -36,9 +42,12 @@ Polynomial semilinearity follows from Mathlib's convolution formula for the poly
 module action and the coefficient formula for `Polynomial.piRingEquiv`.
 Finiteness is needed only for the coordinate index; the index, ring and module universes
 are independent. No nonemptiness hypothesis is imposed.
-For canonical extensions, the additive construction uses the same finite-product
+For `Extension.piEquiv`, the additive construction uses the same finite-product
 coefficient equivalence, while polynomial semilinearity follows from
 `PolynomialModule.Extension.coordinate_smul`.
+For homogeneous finite functions, the forward map extends each coefficient projection,
+and the inverse is a finite sum of extended coordinate inclusions. The regular
+specialization then applies `Extension.regularEquiv` pointwise.
 -/
 
 @[expose] public section
@@ -358,5 +367,231 @@ theorem polynomialLinearEquivPolynomialModule_piEquiv
     PolynomialModule.coeff_piEquiv, coeff_piEquiv]
 
 end CommRing
+
+end PolynomialModule.Extension
+
+universe u v w v'
+
+namespace PolynomialModule.Extension
+
+section Homogeneous
+
+variable {R : Type u} [Semiring R]
+variable {M : Type v} [AddCommMonoid M] [Module R M]
+
+private theorem coeff_eqMp {P : Type v'} [AddCommMonoid P] [Module R P]
+    {σ τ : Polynomial R →+* Polynomial R} (h : σ = τ)
+    (f : Extension R P →ₛₗ[σ] Extension R M) (q : Extension R P) (n : ℕ) :
+    coeff ((Eq.mp (congrArg
+      (fun ρ => Extension R P →ₛₗ[ρ] Extension R M) h) f) q) n = coeff (f q) n := by
+  cases h
+  rfl
+
+private theorem coeff_map_cast {P : Type v'} [AddCommMonoid P] [Module R P]
+    (g : P →ₗ[R] M) (q : Extension R P) (n : ℕ) :
+    coeff ((Eq.mp (congrArg
+      (fun ρ => Extension R P →ₛₗ[ρ] Extension R M)
+      (Polynomial.mapRingHom_id (R := R))) (map g)) q) n = g (coeff q n) := by
+  rw [coeff_eqMp (Polynomial.mapRingHom_id (R := R))]
+  exact coeff_map g q n
+
+variable (R M) (ι : Type w)
+
+private noncomputable def piLinearMap : Extension R (ι → M) →ₗ[Polynomial R] (ι → Extension R M) :=
+  LinearMap.pi fun i =>
+    Eq.mp (congrArg
+      (fun ρ => Extension R (ι → M) →ₛₗ[ρ] Extension R M)
+      (Polynomial.mapRingHom_id (R := R)))
+      (map (LinearMap.proj i : (ι → M) →ₗ[R] M))
+
+private theorem coeff_piLinearMap (q : Extension R (ι → M)) (i : ι) (n : ℕ) :
+    coeff (piLinearMap R M ι q i) n = coeff q n i :=
+  coeff_map_cast (LinearMap.proj i) q n
+
+variable [Finite ι]
+
+private noncomputable def piLinearMapInv :
+    (ι → Extension R M) →ₗ[Polynomial R] Extension R (ι → M) := by
+  letI : DecidableEq ι := Classical.typeDecidableEq ι
+  letI : Fintype ι := Fintype.ofFinite ι
+  exact ∑ i : ι,
+    (Eq.mp (congrArg
+      (fun ρ => Extension R M →ₛₗ[ρ] Extension R (ι → M))
+      (Polynomial.mapRingHom_id (R := R)))
+      (map (LinearMap.single R (fun _ => M) i))).comp (LinearMap.proj i)
+
+private theorem coeff_piLinearMapInv (p : ι → Extension R M) (n : ℕ) (i : ι) :
+    coeff (piLinearMapInv R M ι p) n i = coeff (p i) n := by
+  classical
+  let : Fintype ι := Fintype.ofFinite ι
+  let ev : ((ι → Extension R M) →ₗ[Polynomial R] Extension R (ι → M)) →+ M :=
+    { toFun := fun f => coeff (f p) n i
+      map_zero' := rfl
+      map_add' := fun _ _ => rfl }
+  change ev (piLinearMapInv R M ι) = _
+  simp only [piLinearMapInv, map_sum]
+  change (∑ j : ι,
+    coeff ((Eq.mp (congrArg
+      (fun ρ => Extension R M →ₛₗ[ρ] Extension R (ι → M))
+      (Polynomial.mapRingHom_id (R := R)))
+      (map (LinearMap.single R (fun _ => M) j))) (p j)) n i) = coeff (p i) n
+  trans ∑ j : ι, (LinearMap.single R (fun _ => M) j (coeff (p j) n)) i
+  · apply Finset.sum_congr rfl
+    intro j _
+    exact congrFun (coeff_map_cast (LinearMap.single R (fun _ => M) j) (p j) n) i
+  · simp [LinearMap.single_apply, Pi.single_apply]
+
+/-- Polynomial extension commutes with functions on a finite index type, over the same
+coefficient semiring and with the given coefficient module. -/
+noncomputable def piLinearEquiv :
+    Extension R (ι → M) ≃ₗ[Polynomial R] (ι → Extension R M) :=
+  LinearEquiv.ofLinearMap
+    (LinearMap.pi fun i =>
+      Eq.mp (congrArg
+        (fun ρ => Extension R (ι → M) →ₛₗ[ρ] Extension R M)
+        (Polynomial.mapRingHom_id (R := R)))
+        (map (LinearMap.proj i : (ι → M) →ₗ[R] M)))
+    (by
+      letI : DecidableEq ι := Classical.typeDecidableEq ι
+      letI : Fintype ι := Fintype.ofFinite ι
+      exact ∑ i : ι,
+        (Eq.mp (congrArg
+          (fun ρ => Extension R M →ₛₗ[ρ] Extension R (ι → M))
+          (Polynomial.mapRingHom_id (R := R)))
+          (map (LinearMap.single R (fun _ => M) i))).comp (LinearMap.proj i))
+    (by
+      apply LinearMap.ext
+      intro p
+      funext i
+      apply Extension.ext
+      apply Finsupp.ext
+      intro n
+      change coeff (piLinearMap R M ι (piLinearMapInv R M ι p) i) n = coeff (p i) n
+      rw [coeff_piLinearMap, coeff_piLinearMapInv])
+    (by
+      apply LinearMap.ext
+      intro q
+      apply Extension.ext
+      apply Finsupp.ext
+      intro n
+      funext i
+      change coeff (piLinearMapInv R M ι (piLinearMap R M ι q)) n i = coeff q n i
+      rw [coeff_piLinearMapInv, coeff_piLinearMap])
+
+@[simp]
+theorem piLinearEquiv_coeff (q : Extension R (ι → M)) (i : ι) (n : ℕ) :
+    coeff (piLinearEquiv R M ι q i) n = coeff q n i :=
+  coeff_piLinearMap R M ι q i n
+
+/-- Each coordinate of the homogeneous comparison is the extension of evaluation. -/
+theorem piLinearEquiv_apply (q : Extension R (ι → M)) (i : ι) :
+    piLinearEquiv R M ι q i = map (LinearMap.proj i : (ι → M) →ₗ[R] M) q := by
+  apply Extension.ext
+  apply Finsupp.ext
+  intro n
+  rw [piLinearEquiv_coeff, coeff_map]
+  rfl
+
+@[simp]
+theorem piLinearEquiv_apply_single (n : ℕ) (a : ι → M) (i : ι) :
+    piLinearEquiv R M ι (single R n a) i = single R n (a i) := by
+  apply Extension.ext
+  apply Finsupp.ext
+  intro k
+  rw [piLinearEquiv_coeff]
+  by_cases h : n = k <;> simp [h]
+
+@[simp]
+theorem piLinearEquiv_symm_coeff (p : ι → Extension R M) (n : ℕ) (i : ι) :
+    coeff ((piLinearEquiv R M ι).symm p) n i = coeff (p i) n :=
+  coeff_piLinearMapInv R M ι p n i
+
+open Classical in
+/-- The inverse homogeneous comparison sums the extensions of the coordinate inclusions. -/
+theorem piLinearEquiv_symm_apply (p : ι → Extension R M) :
+    (piLinearEquiv R M ι).symm p =
+      ∑ i ∈ (@Finset.univ ι (Fintype.ofFinite ι)),
+        map (LinearMap.single R (fun _ => M) i) (p i) := by
+  let : Fintype ι := Fintype.ofFinite ι
+  apply Extension.ext
+  apply Finsupp.ext
+  intro n
+  funext i
+  simp [coeff_sum, Finsupp.finsetSum_apply, Finset.sum_apply, coeff_map,
+    LinearMap.single_apply, Pi.single_apply]
+
+/-- The polynomial extension of a finite free regular module is a finite tuple of
+polynomials, with pointwise left polynomial scalar multiplication. -/
+noncomputable def piRegularEquiv : Extension R (ι → R) ≃ₗ[Polynomial R] (ι → Polynomial R) :=
+  (piLinearEquiv R R ι).trans (LinearEquiv.piCongrRight fun _ => regularEquiv R)
+
+/-- The regular finite-function comparison applies the regular comparison coordinatewise. -/
+theorem piRegularEquiv_apply (q : Extension R (ι → R)) (i : ι) :
+    piRegularEquiv R ι q i =
+      regularEquiv R (map (LinearMap.proj i : (ι → R) →ₗ[R] R) q) := by
+  change regularEquiv R (piLinearEquiv R R ι q i) = _
+  rw [piLinearEquiv_apply]
+
+@[simp]
+theorem piRegularEquiv_coeff (q : Extension R (ι → R)) (i : ι) (n : ℕ) :
+    (piRegularEquiv R ι q i).coeff n = coeff q n i := by
+  change (regularEquiv R (piLinearEquiv R R ι q i)).coeff n = _
+  rw [regularEquiv_coeff, piLinearEquiv_coeff]
+
+@[simp]
+theorem piRegularEquiv_apply_single (n : ℕ) (a : ι → R) (i : ι) :
+    piRegularEquiv R ι (single R n a) i = Polynomial.monomial n (a i) := by
+  change regularEquiv R (piLinearEquiv R R ι (single R n a) i) = _
+  rw [piLinearEquiv_apply_single, regularEquiv_apply_single]
+
+@[simp]
+theorem piRegularEquiv_symm_coeff (p : ι → Polynomial R) (n : ℕ) (i : ι) :
+    coeff ((piRegularEquiv R ι).symm p) n i = (p i).coeff n := by
+  change coeff ((piLinearEquiv R R ι).symm
+    (fun j => (regularEquiv R).symm (p j))) n i = _
+  rw [piLinearEquiv_symm_coeff, regularEquiv_symm_coeff]
+
+open Classical in
+/-- The inverse regular finite-function comparison expands a tuple in the standard
+coordinate generators. -/
+theorem piRegularEquiv_symm_apply (p : ι → Polynomial R) :
+    (piRegularEquiv R ι).symm p =
+      ∑ i ∈ (@Finset.univ ι (Fintype.ofFinite ι)),
+        p i • single R 0 (Pi.single i (1 : R)) := by
+  let : Fintype ι := Fintype.ofFinite ι
+  apply Extension.ext
+  apply Finsupp.ext
+  intro n
+  funext i
+  simp [coeff_sum, Finsupp.finsetSum_apply, Finset.sum_apply, smul_single_apply,
+    Pi.single_apply, smul_eq_mul]
+
+open Classical in
+/-- Every element of the extension of a finite free module is the polynomial-linear
+combination of its coordinate generators given by its polynomial coordinates. -/
+theorem sum_piRegularEquiv_smul_single (q : Extension R (ι → R)) :
+    (∑ i ∈ (@Finset.univ ι (Fintype.ofFinite ι)),
+      piRegularEquiv R ι q i • single R 0 (Pi.single i (1 : R))) = q := by
+  simpa only [piRegularEquiv_symm_apply] using
+    (piRegularEquiv R ι).symm_apply_apply q
+
+end Homogeneous
+
+section CommRingRegular
+
+variable {R : Type u} [CommRing R]
+
+/-- Over a commutative ring, the regular comparison agrees with the polynomial-module
+comparison followed by Mathlib's regular polynomial-module equivalence. -/
+theorem regularEquiv_eq_equivPolynomialSelf (q : Extension R R) :
+    regularEquiv R q =
+      PolynomialModule.equivPolynomialSelf (polynomialLinearEquivPolynomialModule q) := by
+  apply Polynomial.ext
+  intro n
+  rw [regularEquiv_coeff, polynomialLinearEquivPolynomialModule_apply]
+  change coeff q n = (toPolynomialModule q).coeff n
+  exact (congrArg (fun f : ℕ →₀ R => f n) (coeff_toPolynomialModule q)).symm
+
+end CommRingRegular
 
 end PolynomialModule.Extension
