@@ -6,10 +6,12 @@ module
 
 public import GradedRings.PolynomialModule.Basic
 public import Mathlib.RingTheory.Finiteness.Basic
+import GradedRings.PolynomialModule.Pi
+public import Mathlib.Algebra.Module.FinitePresentation
 import Mathlib.Algebra.Polynomial.Coeff
 
 /-!
-# Finite generation of polynomial modules
+# Finiteness of polynomial modules
 
 Extension to polynomial scalars preserves and reflects finite generation over a
 possibly noncommutative semiring. A finite generating set for the coefficient
@@ -17,19 +19,53 @@ module gives generators in degree zero, and multiplication by monomials generate
 all other degrees. Conversely, taking the constant coefficient is a surjective
 semilinear map along `Polynomial.constantCoeff`.
 
+Polynomial extension also preserves finite presentation in the finite-subset,
+zero-kernel sense of `Module.FinitePresentation`. The proof extends the chosen
+coefficient generators in degree zero and transports their finitely generated
+zero kernel through the finite free comparison. No additive cancellation or
+change-of-generators principle is used.
+
 The polynomial action is the one on `PolynomialModule.Extension`: constants act
 by the given coefficient action, and the variable acts by successor shift.
 -/
 
 @[expose] public section
 
-universe u v
+universe u v w
 
 open Polynomial
 
 namespace PolynomialModule.Extension
 
 variable {R : Type u} {M : Type v} [Semiring R] [AddCommMonoid M] [Module R M]
+
+private theorem span_image_single_eq_top [DecidableEq (Extension R M)] (s : Finset M)
+    (hs : Submodule.span R (s : Set M) = ⊤) :
+    Submodule.span R[X]
+      ((s.image (single R 0) : Finset (Extension R M)) : Set (Extension R M)) = ⊤ := by
+  classical
+  let T : Finset (Extension R M) := s.image (single R 0)
+  let P : Submodule R[X] (Extension R M) := Submodule.span R[X] (T : Set (Extension R M))
+  have hsingle0 (m : M) : single R 0 m ∈ P := by
+    have hm : m ∈ Submodule.span R (s : Set M) := by
+      rw [hs]
+      trivial
+    refine Submodule.span_induction
+      (p := fun x _ => single R 0 x ∈ P) ?_ ?_ ?_ ?_ hm
+    · intro x hx
+      apply Submodule.subset_span
+      exact Finset.mem_image.mpr ⟨x, hx, rfl⟩
+    · simpa only [single_zero] using P.zero_mem
+    · intro x y _ _ hx hy
+      simpa only [single_add] using P.add_mem hx hy
+    · intro r x _ hx
+      simpa only [single_smul, C_smul] using P.smul_mem (C r) hx
+  apply top_unique
+  intro q _
+  refine induction_linear q P.zero_mem (fun x y hx hy => P.add_mem hx hy) ?_
+  intro n m
+  simpa only [monomial_smul_single, add_zero, one_smul] using
+    P.smul_mem (monomial n (1 : R)) (hsingle0 m)
 
 /-- Extension to polynomial scalars is finitely generated exactly when the original
 coefficient module is finitely generated. Neither commutativity of the semiring nor
@@ -51,34 +87,346 @@ theorem finite_iff : Module.Finite R[X] (PolynomialModule.Extension R M) ↔
   · intro h
     classical
     obtain ⟨s, hs⟩ := h.fg_top
-    let T : Finset (PolynomialModule.Extension R M) := s.image (single R 0)
-    let P : Submodule R[X] (PolynomialModule.Extension R M) :=
-      Submodule.span R[X] (T : Set (PolynomialModule.Extension R M))
-    have hsingle0 (m : M) : single R 0 m ∈ P := by
-      have hm : m ∈ Submodule.span R (s : Set M) := by
-        rw [hs]
-        trivial
-      refine Submodule.span_induction
-        (p := fun x _ => single R 0 x ∈ P) ?_ ?_ ?_ ?_ hm
-      · intro x hx
-        apply Submodule.subset_span
-        exact Finset.mem_image.mpr ⟨x, hx, rfl⟩
-      · simpa only [single_zero] using P.zero_mem
-      · intro x y _ _ hx hy
-        simpa only [single_add] using P.add_mem hx hy
-      · intro r x _ hx
-        simpa only [single_smul, C_smul] using P.smul_mem (C r) hx
-    have hP : P = ⊤ := by
-      apply top_unique
-      intro q _
-      refine induction_linear q P.zero_mem (fun x y hx hy => P.add_mem hx hy) ?_
-      intro n m
-      simpa only [monomial_smul_single, add_zero, one_smul] using
-        P.smul_mem (monomial n (1 : R)) (hsingle0 m)
-    exact Module.Finite.of_fg_top ⟨T, hP⟩
+    exact Module.Finite.of_fg_top ⟨s.image (single R 0), span_image_single_eq_top s hs⟩
 
 /-- Polynomial extension preserves finite generation of the coefficient module. -/
 instance [Module.Finite R M] : Module.Finite R[X] (PolynomialModule.Extension R M) :=
   finite_iff.mpr inferInstance
+
+private noncomputable def mapLinearEquiv {A : Type v} {B : Type w}
+    [AddCommMonoid A] [AddCommMonoid B] [Module R A] [Module R B]
+    (e : A ≃ₗ[R] B) : Extension R A ≃ₗ[R[X]] Extension R B :=
+  LinearEquiv.ofLinearMap (mapLinear e.toLinearMap) (mapLinear e.symm.toLinearMap)
+    (by
+      apply LinearMap.ext
+      intro q
+      apply Extension.ext
+      apply Finsupp.ext
+      intro n
+      change coeff (mapLinear e.toLinearMap (mapLinear e.symm.toLinearMap q)) n = coeff q n
+      simp)
+    (by
+      apply LinearMap.ext
+      intro q
+      apply Extension.ext
+      apply Finsupp.ext
+      intro n
+      change coeff (mapLinear e.symm.toLinearMap (mapLinear e.toLinearMap q)) n = coeff q n
+      simp)
+
+private theorem coeff_mapLinearEquiv {A : Type v} {B : Type w}
+    [AddCommMonoid A] [AddCommMonoid B] [Module R A] [Module R B]
+    (e : A ≃ₗ[R] B) (q : Extension R A) (n : ℕ) :
+    coeff (mapLinearEquiv e q) n = e (coeff q n) :=
+  coeff_mapLinear e.toLinearMap q n
+
+/-- Polynomial extension preserves finite presentation in the finite-subset,
+zero-kernel sense, over a possibly noncommutative semiring. -/
+instance finitePresentation [h : Module.FinitePresentation R M] :
+    Module.FinitePresentation R[X] (Extension R M) := by
+  classical
+  let s : Finset M := Classical.choose h.out
+  have hs : Submodule.span R (s : Set M) = ⊤ ∧
+      (LinearMap.ker (Finsupp.linearCombination R ((↑) : s → M))).FG :=
+    Classical.choose_spec h.out
+  let I := ↥s
+  let F := I →₀ R
+  let L : F →ₗ[R] M := Finsupp.linearCombination R ((↑) : I → M)
+  let K : Submodule R F := LinearMap.ker L
+  let t : Finset F := Classical.choose hs.2
+  have ht : Submodule.span R (t : Set F) = K := Classical.choose_spec hs.2
+  let s' : Finset (Extension R M) := s.image (single R 0)
+  let I' := ↥s'
+  let L' : (I' →₀ R[X]) →ₗ[R[X]] Extension R M :=
+    Finsupp.linearCombination R[X] ((↑) : I' → Extension R M)
+  let fintypeI : Fintype I := { elems := s.attach, complete := Finset.mem_attach s }
+  let fintypeI' : Fintype I' := { elems := s'.attach, complete := Finset.mem_attach s' }
+  let eI : I ≃ I' :=
+    { toFun := fun i =>
+        ⟨single R 0 i.val, Finset.mem_image_of_mem (single R 0) i.property⟩
+      invFun := fun j => ⟨j.val.coeff 0, by
+        rcases Finset.mem_image.mp j.property with ⟨m, hm, hj⟩
+        rw [← hj]
+        simpa using hm⟩
+      left_inv := by
+        intro i
+        apply Subtype.ext
+        simp
+      right_inv := by
+        intro j
+        apply Subtype.ext
+        rcases Finset.mem_image.mp j.property with ⟨m, hm, hj⟩
+        change single R 0 (j.val.coeff 0) = j.val
+        rw [← hj]
+        simp }
+  let a : F ≃ₗ[R] (I → R) := Finsupp.linearEquivFunOnFinite R R I
+  let b : (I' →₀ R[X]) ≃ₗ[R[X]] (I' → R[X]) :=
+    Finsupp.linearEquivFunOnFinite R[X] R[X] I'
+  let Ea := mapLinearEquiv a
+  let fPi : Extension R (I → R) →ₗ[R[X]] (I → Extension R R) :=
+    LinearMap.pi fun i => mapLinear (LinearMap.proj i : (I → R) →ₗ[R] R)
+  let bPi : (I → Extension R R) →ₗ[R[X]] Extension R (I → R) :=
+    s.attach.sum fun i =>
+      (mapLinear (LinearMap.single R (fun _ : I => R) i)).comp (LinearMap.proj i)
+  have hattach : s.attach = (Finset.univ : Finset I) := by
+    ext i
+    simp
+  have hfPi : fPi = (piLinearEquiv R R I).toLinearMap := by
+    apply LinearMap.ext
+    intro q
+    funext i
+    apply Extension.ext
+    apply Finsupp.ext
+    intro n
+    change coeff (mapLinear (LinearMap.proj i : (I → R) →ₗ[R] R) q) n =
+      coeff (piLinearEquiv R R I q i) n
+    rw [coeff_mapLinear, piLinearEquiv_coeff]
+    rfl
+  have hbPi : bPi = (piLinearEquiv R R I).symm.toLinearMap := by
+    apply LinearMap.ext
+    intro p
+    apply Extension.ext
+    apply Finsupp.ext
+    intro n
+    funext i
+    refine Eq.trans ?_ (piLinearEquiv_symm_coeff R R I p n i).symm
+    let ev : ((I → Extension R R) →ₗ[R[X]] Extension R (I → R)) →+ R :=
+      { toFun := fun f => coeff (f p) n i
+        map_zero' := rfl
+        map_add' := fun _ _ => rfl }
+    change ev bPi = coeff (p i) n
+    simp only [bPi, map_sum]
+    change (∑ j ∈ s.attach,
+      coeff (mapLinear (LinearMap.single R (fun _ : I => R) j) (p j)) n i) =
+        coeff (p i) n
+    simp only [coeff_mapLinear]
+    rw [hattach]
+    simp [LinearMap.single_apply, Pi.single_apply]
+  have hPiRight : fPi.comp bPi = LinearMap.id := by
+    rw [hfPi, hbPi]
+    apply LinearMap.ext
+    intro p
+    exact (piLinearEquiv R R I).apply_symm_apply p
+  have hPiLeft : bPi.comp fPi = LinearMap.id := by
+    rw [hfPi, hbPi]
+    apply LinearMap.ext
+    intro q
+    exact (piLinearEquiv R R I).symm_apply_apply q
+  let ePi : Extension R (I → R) ≃ₗ[R[X]] (I → Extension R R) :=
+    LinearEquiv.ofLinearMap fPi bPi hPiRight hPiLeft
+  have hePi : ePi = piLinearEquiv R R I := by
+    apply LinearEquiv.ext
+    intro q
+    exact DFunLike.congr_fun hfPi q
+  let c := ePi.trans (LinearEquiv.piCongrRight fun _ : I => regularEquiv R)
+  have hc : c = piRegularEquiv R I := by
+    change ePi.trans (LinearEquiv.piCongrRight fun _ : I => regularEquiv R) = _
+    rw [hePi]
+    rfl
+  let rI := LinearEquiv.piCongrLeft' R[X] (fun _ : I => R[X]) eI
+  let ψ : Extension R F ≃ₗ[R[X]] (I' →₀ R[X]) :=
+    ((Ea.trans c).trans rI).trans b.symm
+  have hψcoeff (q : Extension R F) (j : I') (n : ℕ) :
+      (ψ q j).coeff n = (q.coeff n) (eI.symm j) := by
+    change (c (Ea q) (eI.symm j)).coeff n = _
+    rw [hc, piRegularEquiv_coeff, coeff_mapLinearEquiv]
+    rfl
+  have hψapply (q : Extension R F) (j : I') :
+      ψ q j = ∑ n ∈ q.coeff.support,
+        Polynomial.monomial n ((q.coeff n) (eI.symm j)) := by
+    apply Polynomial.ext
+    intro n
+    rw [hψcoeff, Polynomial.finsetSum_coeff]
+    by_cases hn : n ∈ q.coeff.support
+    · simp [Polynomial.coeff_monomial, hn]
+    · have hz : q.coeff n = 0 := Finsupp.notMem_support_iff.mp hn
+      simpa [Polynomial.coeff_monomial, hn, hz] using
+        (show (0 : F) (eI.symm j) = (0 : R) from rfl)
+  have hψsymm (u : I' →₀ R[X]) (n : ℕ) (i : I) :
+      ((ψ.symm u).coeff n) i = (u (eI i)).coeff n := by
+    have hx := hψcoeff (ψ.symm u) (eI i) n
+    simpa only [LinearEquiv.apply_symm_apply, Equiv.symm_apply_apply] using hx.symm
+  have hψsingle (n : ℕ) (f : F) (j : I') :
+      ψ (single R n f) j = Polynomial.monomial n (f (eI.symm j)) := by
+    apply Polynomial.ext
+    intro k
+    rw [hψcoeff, coeff_single_apply, Polynomial.coeff_monomial]
+    split_ifs <;> rfl
+  have hψsingle_single (i : I) (r : R) :
+      ψ (single R 0 (Finsupp.single i r)) = Finsupp.single (eI i) (C r) := by
+    apply Finsupp.ext
+    intro j
+    rw [hψsingle]
+    by_cases hij : i = eI.symm j
+    · have heij : eI i = j :=
+        (congrArg eI hij).trans (eI.apply_symm_apply j)
+      have hinner : (Finsupp.single i r : F) (eI.symm j) = r := by
+        rw [← hij, Finsupp.single_eq_same]
+      have houter : (Finsupp.single (eI i) (C r) : I' →₀ R[X]) j = C r := by
+        rw [← heij, Finsupp.single_eq_same]
+      rw [hinner, houter, Polynomial.monomial_zero_left]
+    · have heij : eI i ≠ j := by
+        intro h
+        apply hij
+        simpa only [Equiv.symm_apply_apply] using congrArg eI.symm h
+      have hinner : (Finsupp.single i r : F) (eI.symm j) = 0 :=
+        Finsupp.single_eq_of_ne' hij
+      have houter : (Finsupp.single (eI i) (C r) : I' →₀ R[X]) j = 0 :=
+        Finsupp.single_eq_of_ne' heij
+      rw [hinner, houter, Polynomial.monomial_zero_right]
+  have hintertwine : L'.comp ψ.toLinearMap = mapLinear L := by
+    apply linearMap_ext
+    intro f
+    change L' (ψ (single R 0 f)) = mapLinear L (single R 0 f)
+    rw [mapLinear_single]
+    refine Finsupp.induction_linear f ?_ ?_ ?_
+    · simp
+    · intro f g hf hg
+      simpa only [single_add, map_add] using congrArg₂ (· + ·) hf hg
+    · intro i r
+      rw [hψsingle_single]
+      have hL'single : L' (Finsupp.single (eI i) (C r)) =
+          C r • ((eI i : I') : Extension R M) :=
+        Finsupp.linearCombination_single R[X] (C r) (eI i)
+      have hLsingle : L (Finsupp.single i r) = r • (i : M) :=
+        Finsupp.linearCombination_single R r i
+      rw [hL'single, hLsingle]
+      rw [show ((eI i : I') : Extension R M) = single R 0 (i : M) from rfl]
+      simp only [single_smul, C_smul]
+  have hsurjL : Function.Surjective L := by
+    have hrange : Set.range ((↑) : I → M) = (s : Set M) := by
+      ext m
+      constructor
+      · rintro ⟨i, rfl⟩
+        exact i.property
+      · intro hm
+        exact ⟨⟨m, hm⟩, rfl⟩
+    have htop : LinearMap.range L = ⊤ := by
+      change LinearMap.range (Finsupp.linearCombination R ((↑) : I → M)) = ⊤
+      rw [Finsupp.range_linearCombination, hrange]
+      exact hs.1
+    intro m
+    have hm : m ∈ LinearMap.range L := by rw [htop]; trivial
+    exact hm
+  have hsurjNL : Function.Surjective (mapLinear L) := by
+    have hmap := (map_surjective_iff L).mpr hsurjL
+    intro q
+    obtain ⟨v, hv⟩ := hmap q
+    exact ⟨v, (mapLinear_apply L v).trans hv⟩
+  have hsurjL' : Function.Surjective L' := by
+    intro q
+    obtain ⟨v, hv⟩ := hsurjNL q
+    refine ⟨ψ v, ?_⟩
+    change (L'.comp ψ.toLinearMap) v = q
+    rw [hintertwine]
+    exact hv
+  have hspan' : Submodule.span R[X] (s' : Set (Extension R M)) = ⊤ := by
+    have hrange : Set.range ((↑) : I' → Extension R M) =
+        (s' : Set (Extension R M)) := by
+      ext q
+      constructor
+      · rintro ⟨j, rfl⟩
+        exact j.property
+      · intro hq
+        exact ⟨⟨q, hq⟩, rfl⟩
+    have htop : LinearMap.range L' = ⊤ := by
+      apply top_unique
+      intro q _
+      exact hsurjL' q
+    change LinearMap.range (Finsupp.linearCombination R[X]
+      ((↑) : I' → Extension R M)) = ⊤ at htop
+    rw [Finsupp.range_linearCombination, hrange] at htop
+    exact htop
+  have hexact : Function.Exact K.subtype L := by
+    intro f
+    constructor
+    · intro hf
+      exact ⟨⟨f, hf⟩, rfl⟩
+    · rintro ⟨k, rfl⟩
+      exact k.property
+  have hexactN : Function.Exact (mapLinear K.subtype) (mapLinear L) := by
+    intro q
+    change mapLinear L q = 0 ↔ ∃ v : Extension R K, mapLinear K.subtype v = q
+    have hx := (exact_iff_map K.subtype L).mp hexact q
+    change map L q = 0 ↔ ∃ v : Extension R K, map K.subtype v = q at hx
+    simpa only [mapLinear_apply] using hx
+  have hrangeN : LinearMap.range (mapLinear K.subtype) =
+      LinearMap.ker (mapLinear L) := by
+    ext q
+    exact (hexactN q).symm
+  let promote : ↥t → K := fun k =>
+    ⟨k.val, ht ▸ (Submodule.subset_span k.property)⟩
+  let tK : Finset K := t.attach.image promote
+  let TK : Finset (Extension R K) := tK.image (single R 0)
+  let J : Extension R K →ₗ[R[X]] (I' →₀ R[X]) :=
+    ψ.toLinearMap.comp (mapLinear K.subtype)
+  let w : Finset (I' →₀ R[X]) := TK.image J
+  have hspanK : Submodule.span R (tK : Set K) = ⊤ := by
+    apply top_unique
+    intro k _
+    have hk : (k : F) ∈ Submodule.span R (t : Set F) := by
+      rw [ht]
+      exact k.property
+    have hkspan : ∀ hK : (k : F) ∈ K,
+        (⟨(k : F), hK⟩ : K) ∈ Submodule.span R (tK : Set K) := by
+      refine Submodule.span_induction
+        (p := fun f _ => ∀ hK : f ∈ K,
+          (⟨f, hK⟩ : K) ∈ Submodule.span R (tK : Set K))
+        ?_ ?_ ?_ ?_ hk
+      · intro f hf _
+        apply Submodule.subset_span
+        exact Finset.mem_image.mpr ⟨⟨f, hf⟩, Finset.mem_attach t ⟨f, hf⟩, rfl⟩
+      · intro _
+        exact (Submodule.span R (tK : Set K)).zero_mem
+      · intro f g hf hg ihf ihg _
+        exact (Submodule.span R (tK : Set K)).add_mem (ihf (ht ▸ hf)) (ihg (ht ▸ hg))
+      · intro r f hf ihf _
+        exact (Submodule.span R (tK : Set K)).smul_mem r (ihf (ht ▸ hf))
+    exact hkspan k.property
+  let : Module.Finite R K := Module.Finite.of_fg_top ⟨tK, hspanK⟩
+  have hspanTK : Submodule.span R[X] (TK : Set (Extension R K)) = ⊤ :=
+    span_image_single_eq_top tK hspanK
+  have hrelation (k : ↥t) :
+      J (single R 0 (promote k)) = ψ (single R 0 k.val) := by
+    change ψ (mapLinear K.subtype (single R 0 (promote k))) = _
+    rw [mapLinear_single]
+    rfl
+  have hrelation_coeff (k : ↥t) (i : I) :
+      J (single R 0 (promote k)) (eI i) = C (k.val i) := by
+    rw [hrelation, hψsingle]
+    simp
+  have hrangeJ : LinearMap.range J = LinearMap.ker L' := by
+    ext u
+    constructor
+    · rintro ⟨v, rfl⟩
+      have hv : mapLinear K.subtype v ∈ LinearMap.ker (mapLinear L) := by
+        rw [← hrangeN]
+        exact ⟨v, rfl⟩
+      change L' (ψ (mapLinear K.subtype v)) = 0
+      change (L'.comp ψ.toLinearMap) (mapLinear K.subtype v) = 0
+      rw [hintertwine]
+      exact hv
+    · intro hu
+      change L' u = 0 at hu
+      have hv : ψ.symm u ∈ LinearMap.ker (mapLinear L) := by
+        change mapLinear L (ψ.symm u) = 0
+        rw [← hintertwine]
+        change L' (ψ (ψ.symm u)) = 0
+        simpa only [LinearEquiv.apply_symm_apply] using hu
+      rw [← hrangeN] at hv
+      obtain ⟨v, hv⟩ := hv
+      refine ⟨v, ?_⟩
+      change ψ (mapLinear K.subtype v) = u
+      rw [hv, LinearEquiv.apply_symm_apply]
+  have hker' : Submodule.span R[X] (w : Set (I' →₀ R[X])) = LinearMap.ker L' := by
+    calc
+      Submodule.span R[X] (w : Set (I' →₀ R[X])) =
+          (Submodule.span R[X] (TK : Set (Extension R K))).map J := by
+        simpa only [w, Finset.coe_image] using
+          (Submodule.map_span J (TK : Set (Extension R K))).symm
+      _ = (⊤ : Submodule R[X] (Extension R K)).map J := by rw [hspanTK]
+      _ = LinearMap.range J := Submodule.map_top J
+      _ = LinearMap.ker L' := hrangeJ
+  exact { out := ⟨s', hspan', ⟨w, hker'⟩⟩ }
 
 end PolynomialModule.Extension

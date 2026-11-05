@@ -6,6 +6,7 @@ Authors: Rudder
 module
 
 import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
 public import Mathlib.Algebra.Exact.Basic
 public import Mathlib.Algebra.Ring.Pi
 public import GradedRings.PolynomialModule.Basic
@@ -20,6 +21,8 @@ the original module. The target needs only its polynomial module structure.
 Coefficient-semilinear maps also extend coefficientwise along the induced polynomial hom.
 This extension preserves and reflects injectivity, surjectivity and exactness of the underlying
 functions. Its image and zero fiber are characterized coefficientwise.
+For coefficient-linear maps, `mapLinear` gives a polynomial-linear map by normalizing
+the induced polynomial hom of the identity, without changing the coefficient function.
 Coordinate projection for dependent products is a specialization of this construction; it
 requires no finiteness or nonemptiness assumption on the coordinate type.
 
@@ -269,6 +272,63 @@ theorem coeff_map (g : M →ₛₗ[σ] N) (q : Extension R M) (n : ℕ) :
 theorem map_single (g : M →ₛₗ[σ] N) (n : ℕ) (m : M) :
     map g (single R n m) = single S n (g m) :=
   mapAddHom_single g n m
+
+/-- Extend a linear map over the coefficient semiring to a linear map over its
+polynomial semiring. The source and target retain their given module structures. -/
+def mapLinear {A : Type uM} {B : Type uN} [AddCommMonoid A] [AddCommMonoid B]
+    [Module R A] [Module R B] (g : A →ₗ[R] B) :
+    Extension R A →ₗ[R[X]] Extension R B :=
+  Eq.mp (congrArg (fun ρ => Extension R A →ₛₗ[ρ] Extension R B)
+    (Polynomial.mapRingHom_id (R := R))) (map g)
+
+/-- Normalizing the scalar hom does not change the coefficientwise function. -/
+theorem mapLinear_apply {A : Type uM} {B : Type uN}
+    [AddCommMonoid A] [AddCommMonoid B] [Module R A] [Module R B]
+    (g : A →ₗ[R] B) (q : Extension R A) : mapLinear g q = map g q := by
+  have hcast {σ τ : R[X] →+* R[X]} (h : σ = τ)
+      (f : Extension R A →ₛₗ[σ] Extension R B) :
+      (Eq.mp (congrArg (fun ρ => Extension R A →ₛₗ[ρ] Extension R B) h) f) q =
+        f q := by
+    cases h
+    rfl
+  exact hcast (Polynomial.mapRingHom_id (R := R)) (map g)
+
+@[simp]
+theorem coeff_mapLinear {A : Type uM} {B : Type uN}
+    [AddCommMonoid A] [AddCommMonoid B] [Module R A] [Module R B]
+    (g : A →ₗ[R] B) (q : Extension R A) (n : ℕ) :
+    coeff (mapLinear g q) n = g (coeff q n) := by
+  rw [mapLinear_apply, coeff_map]
+
+@[simp]
+theorem mapLinear_single {A : Type uM} {B : Type uN}
+    [AddCommMonoid A] [AddCommMonoid B] [Module R A] [Module R B]
+    (g : A →ₗ[R] B) (n : ℕ) (a : A) :
+    mapLinear g (single R n a) = single R n (g a) := by
+  rw [mapLinear_apply, map_single]
+
+/-- Linear extension preserves the identity map. -/
+@[simp]
+theorem mapLinear_id {A : Type uM} [AddCommMonoid A] [Module R A] :
+    mapLinear (LinearMap.id : A →ₗ[R] A) = LinearMap.id := by
+  apply LinearMap.ext
+  intro q
+  apply Extension.ext
+  apply Finsupp.ext
+  intro n
+  simp
+
+/-- Linear extension preserves composition. -/
+theorem mapLinear_comp {A : Type uM} {B : Type uN} {C : Type uP}
+    [AddCommMonoid A] [AddCommMonoid B] [AddCommMonoid C]
+    [Module R A] [Module R B] [Module R C] (g : B →ₗ[R] C) (f : A →ₗ[R] B) :
+    mapLinear (g.comp f) = (mapLinear g).comp (mapLinear f) := by
+  apply LinearMap.ext
+  intro q
+  apply Extension.ext
+  apply Finsupp.ext
+  intro n
+  simp only [coeff_mapLinear, LinearMap.comp_apply]
 
 /-- The coefficientwise extension respects polynomial scalars through the induced hom. -/
 theorem map_smul (g : M →ₛₗ[σ] N) (p : R[X]) (q : Extension R M) :
