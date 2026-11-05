@@ -5,6 +5,8 @@ Authors: Formal Frontier Agents
 module
 
 public import GradedRings.PolynomialModule.Basic
+public import Mathlib.Algebra.Group.Units.Hom
+public import Mathlib.Algebra.Module.LinearMap.Defs
 public import Mathlib.RingTheory.Finiteness.Basic
 import GradedRings.PolynomialModule.Pi
 public import Mathlib.Algebra.Module.FinitePresentation
@@ -27,6 +29,11 @@ change-of-generators principle is used.
 
 The polynomial action is the one on `PolynomialModule.Extension`: constants act
 by the given coefficient action, and the variable acts by successor shift.
+
+For a surjective unit-reflecting homomorphism `f : R →+* S`, finite presentation
+of the extension of the regular `S`-module, restricted along `f`, forces the
+kernel of `f` to be finitely generated as a left `R`-module. This implication
+requires neither commutativity nor additive inverses.
 -/
 
 @[expose] public section
@@ -37,7 +44,7 @@ open Polynomial
 
 namespace PolynomialModule.Extension
 
-variable {R : Type u} {M : Type v} [Semiring R] [AddCommMonoid M] [Module R M]
+variable {R : Type u} {M : Type v} [rR : Semiring R] [AddCommMonoid M] [Module R M]
 
 private theorem span_image_single_eq_top [DecidableEq (Extension R M)] (s : Finset M)
     (hs : Submodule.span R (s : Set M) = ⊤) :
@@ -92,6 +99,173 @@ theorem finite_iff : Module.Finite R[X] (PolynomialModule.Extension R M) ↔
 /-- Polynomial extension preserves finite generation of the coefficient module. -/
 instance [Module.Finite R M] : Module.Finite R[X] (PolynomialModule.Extension R M) :=
   finite_iff.mpr inferInstance
+
+/-- Let `f : R →+* S` be a surjective homomorphism which reflects units. If the
+polynomial extension of the regular `S`-module restricted along `f` is finitely
+presented, then the kernel of `f` is finitely generated as a left `R`-module.
+The coefficient action in the hypothesis is `r • s = f r * s`. -/
+theorem fg_ker_compHom_of_finitePresentation {S : Type v} [sS : Semiring S]
+    (f : R →+* S) [IsLocalHom f] (hf : Function.Surjective f)
+    (h : @Module.FinitePresentation (Polynomial R)
+      (@PolynomialModule.Extension R S rR sS.toAddCommMonoid (Module.compHom S f))
+      (@Polynomial.semiring R rR)
+      ((@PolynomialModule.Extension.coeffEquiv R S rR sS.toAddCommMonoid
+        (Module.compHom S f)).addCommMonoid)
+      (@PolynomialModule.Extension.polynomialModule R S rR sS.toAddCommMonoid
+        (Module.compHom S f))) :
+    (@LinearMap.ker R R R S rR rR rR.toAddCommMonoid sS.toAddCommMonoid
+      (@Semiring.toModule R rR) (Module.compHom S f) (RingHom.id R)
+      (@Module.compHom.toLinearMap R S rR sS f)).FG := by
+  classical
+  let originalModule : @Module R S rR sS.toAddCommMonoid := Module.compHom S f
+  let _ : Module R S := originalModule
+  let ES : Type v := @PolynomialModule.Extension R S rR sS.toAddCommMonoid originalModule
+  let addES : AddCommMonoid ES :=
+    (@PolynomialModule.Extension.coeffEquiv R S rR sS.toAddCommMonoid
+      originalModule).addCommMonoid
+  let Q := Polynomial R
+  let qR : Semiring Q := @Polynomial.semiring R rR
+  let polynomialAction : @Module Q ES qR addES :=
+    @PolynomialModule.Extension.polynomialModule R S rR sS.toAddCommMonoid originalModule
+  let fL := @Module.compHom.toLinearMap R S rR sS f
+  let I0 : Submodule R R := LinearMap.ker fL
+  let E := h.out
+  let s := Classical.choose E
+  let hs := Classical.choose_spec E
+  let I := ↥s
+  let _ : Fintype I := { elems := s.attach, complete := Finset.mem_attach s }
+  let FQ := I →₀ Q
+  let Ls : FQ →ₗ[Q] ES :=
+    @Finsupp.linearCombination I ES Q qR addES polynomialAction (fun i => i.val)
+  let K := LinearMap.ker Ls
+  let k := Classical.choose hs.2
+  have hk : Submodule.span Q (k : Set FQ) = K := Classical.choose_spec hs.2
+  have hsrange : Set.range (fun i : I => i.val) = (s : Set ES) := by
+    ext x
+    constructor
+    · rintro ⟨i, rfl⟩
+      exact i.property
+    · intro hx
+      exact ⟨⟨x, hx⟩, rfl⟩
+  have hLs_surj : Function.Surjective Ls := by
+    apply LinearMap.range_eq_top.mp
+    change LinearMap.range (Finsupp.linearCombination Q (fun i : I => i.val)) = ⊤
+    rw [Finsupp.range_linearCombination, hsrange]
+    exact hs.1
+  let u := Classical.choose (hLs_surj (single R 0 (1 : S)))
+  have hu : Ls u = single R 0 (1 : S) :=
+    Classical.choose_spec (hLs_surj (single R 0 (1 : S)))
+  have hLs_sum (z : FQ) : Ls z = ∑ i, z i • i.val := by
+    calc
+      Ls z = z.sum (fun i a => a • i.val) :=
+        @Finsupp.linearCombination_apply I ES Q qR addES polynomialAction
+          (fun i => i.val) z
+      _ = ∑ i, z i • i.val :=
+        Finsupp.sum_fintype z (fun i a => a • i.val) (fun i => zero_smul Q i.val)
+  have hLs_coeff (z : FQ) :
+      (Ls z).coeff 0 = ∑ i, f ((z i).coeff 0) * i.val.coeff 0 := by
+    have hsum : (∑ i, ((z i) • i.val).coeff 0) =
+        ∑ i, f ((z i).coeff 0) * i.val.coeff 0 := by
+      apply Finset.sum_congr rfl
+      intro i _
+      calc
+        ((z i) • i.val).coeff 0 = (z i).coeff 0 • i.val.coeff 0 := by
+          simpa using coeff_smul (z i) i.val 0
+        _ = f ((z i).coeff 0) * i.val.coeff 0 :=
+          RingHom.toModule_smul f ((z i).coeff 0) (i.val.coeff 0)
+    rw [hLs_sum]
+    simpa only [coeff_sum, Finsupp.finsetSum_apply] using hsum
+  let b : I → R := fun i => Classical.choose (hf (i.val.coeff 0))
+  have fb (i : I) : f (b i) = i.val.coeff 0 :=
+    Classical.choose_spec (hf (i.val.coeff 0))
+  let r : I → R := fun i => (u i).coeff 0
+  let T : R := ∑ i, r i * b i
+  have fT : f T = 1 := by
+    calc
+      f T = ∑ i, f ((u i).coeff 0) * i.val.coeff 0 := by
+        simp only [T, map_sum, map_mul, fb, r]
+      _ = (Ls u).coeff 0 := (hLs_coeff u).symm
+      _ = 1 := by rw [hu]; simp
+  have hT : IsUnit T := IsUnit.of_map f T (by rw [fT]; exact isUnit_one)
+  let TU : Rˣ := Classical.choose hT
+  have hTU : (TU : R) = T := Classical.choose_spec hT
+  let Tinv : R := ↑(TU⁻¹)
+  have hTinv : Tinv * T = 1 := by simp [Tinv, ← hTU]
+  let d : I → R := fun i => Tinv * r i
+  let lambda : FQ →ₛₗ[(Polynomial.constantCoeff : Q →+* R)] R :=
+    { toFun := fun z => ∑ i, (z i).coeff 0 * b i
+      map_add' := fun z z' => by
+        change (∑ i, ((z + z') i).coeff 0 * b i) =
+          (∑ i, (z i).coeff 0 * b i) + ∑ i, (z' i).coeff 0 * b i
+        calc
+          (∑ i, ((z + z') i).coeff 0 * b i) =
+              ∑ i, ((z i).coeff 0 * b i + (z' i).coeff 0 * b i) := by
+            apply Finset.sum_congr rfl
+            intro i _
+            rw [Finsupp.add_apply, Polynomial.coeff_add, add_mul]
+          _ = _ := Finset.sum_add_distrib
+      map_smul' := fun p z => by
+        change (∑ i, ((p • z) i).coeff 0 * b i) =
+          p.coeff 0 * ∑ i, (z i).coeff 0 * b i
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro i _
+        change (p * z i).coeff 0 * b i = p.coeff 0 * ((z i).coeff 0 * b i)
+        rw [Polynomial.mul_coeff_zero, mul_assoc] }
+  let lambdaK : K →ₛₗ[(Polynomial.constantCoeff : Q →+* R)] R :=
+    { toFun := fun x => lambda x.val
+      map_add' := fun x y => lambda.map_add x.val y.val
+      map_smul' := fun p x => lambda.map_smul' p x.val }
+  -- Constant polynomials supply the scalar section for semilinear span transport.
+  let _ : RingHomSurjective (Polynomial.constantCoeff : Q →+* R) :=
+    ⟨fun a => ⟨C a, by simp⟩⟩
+  have hlambdaK (x : K) : lambdaK x ∈ I0 := by
+    have hx : Ls x.val = 0 := x.property
+    change f (∑ i, (x.val i).coeff 0 * b i) = 0
+    rw [map_sum]
+    simp_rw [map_mul, fb]
+    rw [← hLs_coeff, hx]
+    simp
+  have himage : K.map lambda = I0 := by
+    ext a
+    constructor
+    · rintro ⟨z, hz, rfl⟩
+      exact hlambdaK ⟨z, hz⟩
+    · intro ha
+      have hfa : f a = 0 := ha
+      -- The inverse normalizes on the left; the kernel element remains leftmost.
+      let za : FQ := Finsupp.equivFunOnFinite.symm (fun i => C (a * d i))
+      have hza_apply (i : I) : za i = C (a * d i) := rfl
+      have hkill (i : I) : (C (a * d i)) • i.val = 0 := by
+        apply PolynomialModule.Extension.ext
+        ext n
+        rw [coeff_C_smul]
+        change f (a * d i) * i.val.coeff n = 0
+        rw [map_mul, hfa, zero_mul, zero_mul]
+      have hza : za ∈ K := by
+        change Ls za = 0
+        rw [hLs_sum]
+        apply Finset.sum_eq_zero
+        intro i _
+        rw [hza_apply, hkill]
+      have hlambda_za : lambda za = a := by
+        change (∑ i, (za i).coeff 0 * b i) = a
+        simp only [hza_apply, Polynomial.coeff_C_zero]
+        calc
+          (∑ i, (a * d i) * b i) = a * Tinv * T := by
+            simp only [T, d, Finset.mul_sum, mul_assoc]
+          _ = a := by rw [mul_assoc, hTinv, mul_one]
+      exact ⟨za, hza, hlambda_za⟩
+  let w0 : Finset R := k.image lambda
+  have hw0 : Submodule.span R (w0 : Set R) = I0 := by
+    calc
+      Submodule.span R (w0 : Set R) =
+          Submodule.span R (lambda '' (k : Set FQ)) := by
+        simp only [w0, Finset.coe_image]
+      _ = (Submodule.span Q (k : Set FQ)).map lambda :=
+        (Submodule.map_span lambda (k : Set FQ)).symm
+      _ = I0 := by rw [hk, himage]
+  exact ⟨w0, hw0⟩
 
 private noncomputable def mapLinearEquiv {A : Type v} {B : Type w}
     [AddCommMonoid A] [AddCommMonoid B] [Module R A] [Module R B]
